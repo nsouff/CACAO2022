@@ -1,0 +1,71 @@
+package abstraction.eq8Romu.filiere;
+
+import java.util.HashMap;
+
+import abstraction.eq1Producteur1.Producteur1;
+import abstraction.eq2Producteur2.Producteur2;
+import abstraction.eq3Transformateur1.Transformateur1;
+import abstraction.eq4Transformateur2.Transformateur2;
+import abstraction.eq5Transformateur3.Transformateur3;
+import abstraction.eq6Distributeur1.Distributeur1;
+import abstraction.eq7Distributeur2.Distributeur2;
+import abstraction.eq8Romu.Romu;
+import abstraction.eq8Romu.clients.ClientFinal;
+import abstraction.eq8Romu.produits.Chocolat;
+
+
+public class FiliereParDefaut extends Filiere {
+	private static final double DISTRIBUTIONS_ANNUELLES[][] = {
+			//Jan1 Jan2 Fev1 Fev2 Mar1 Mar2 Avr1 Avr2 Mai1 Mai2 Jui1 Jui2 Jul1 Jul2 Aou1 Aou2 Sep1 Sep2 Oct1 Oct2 Nov1 Nov2 Dec1 Dec2
+			{ 4.5, 4.5, 4.5, 4.5, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.5, 4.5, 4.5, 4.5, },			
+			{ 5.5, 5.5, 5.0, 5.0, 4.5, 4.0, 4.0, 4.0, 4.0, 3.5, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.5, 4.0, 4.0, 4.5, 5.0, 5.0, 5.5, 5.5, },			
+			{ 3.5, 3.5, 6.0, 3.5, 3.5, 3.5, 3.5, 3.5, 9.0, 3.5, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 9.0, 9.0, },			
+			{ 3.0, 3.0, 6.0, 3.0, 3.0, 3.0, 3.0, 3.0, 9.0, 3.0, 3.0, 2.0, 2.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0,15.0,15.0, },			
+			{ 3.0, 3.0, 7.0, 3.0, 3.0, 3.0, 3.0, 3.0,10.0, 3.0, 3.0, 2.0, 2.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0,10.0, 3.0, 3.0,11.0,10.0, },			
+			{ 3.0, 3.0,10.0, 3.0, 3.0, 3.0, 3.0, 3.0,12.0, 3.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0, 3.0, 3.0, 3.0,15.0,15.0, },			
+			{ 3.0, 3.0,11.0, 3.0, 3.0, 3.0, 3.0, 3.0,13.0, 3.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0,10.0, 3.0, 3.0,11.0,10.0, },			
+	};
+	private ClientFinal cf ;
+	
+	public FiliereParDefaut() {
+		super();
+		HashMap<Chocolat, Double> repartitionInitiale = new HashMap<Chocolat, Double>();
+		repartitionInitiale.put(Chocolat.HQ_BE_O, 2.5); // Haute Qualite  ,  Bio-Equitable  , Original
+		repartitionInitiale.put(Chocolat.HQ_BE,   2.5); // Haute Qualite  ,  Bio-Equitable  , pas Original 
+		repartitionInitiale.put(Chocolat.HQ_O,   10.0); // Haute Qualite  ,pas Bio-Equitable, Original
+		repartitionInitiale.put(Chocolat.HQ,     15.0); // Haute Qualite  ,pas Bio-Equitable, pas Original 
+		repartitionInitiale.put(Chocolat.MQ_BE_O, 2.5); // Moyenne Qualite,  Bio-Equitable  , Original
+		repartitionInitiale.put(Chocolat.MQ_BE,   2.5); // Moyenne Qualite,  Bio-Equitable  , pas Original 
+		repartitionInitiale.put(Chocolat.MQ_O,   10.0); // Moyenne Qualite,pas Bio-Equitable, Original
+		repartitionInitiale.put(Chocolat.MQ,     15.0); // Moyenne Qualite,pas Bio-Equitable, pas Original 
+		repartitionInitiale.put(Chocolat.BQ_O,   15.0); // Basse Qualite  ,pas Bio-Equitable, Original
+		repartitionInitiale.put(Chocolat.BQ,     25.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
+
+		this.cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
+		this.ajouterActeur(cf);
+		this.ajouterActeur(new Producteur1());
+		this.ajouterActeur(new Producteur2());
+		this.ajouterActeur(new Transformateur1());
+		this.ajouterActeur(new Transformateur2());
+		this.ajouterActeur(new Transformateur3());
+		this.ajouterActeur(new Distributeur1());
+		this.ajouterActeur(new Distributeur2());
+		this.ajouterActeur(new Romu());
+		// A venir : superviseurs de ventes
+	}
+	/**
+	 * Redefinition afin d'interdire l'acces direct a certains superviseurs/acteurs.
+	 * Sans cela, il serait possible de contourner l'autentification
+	 */
+	public IActeur getActeur(String nom) {
+		if (!nom.startsWith("C.F.")) {
+			return super.getActeur(nom); 
+		} else {
+			return null;
+		}
+	}
+
+	public void initialiser() {
+		super.initialiser();
+	}
+}
