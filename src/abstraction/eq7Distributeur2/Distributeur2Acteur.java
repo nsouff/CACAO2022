@@ -21,7 +21,7 @@ public class Distributeur2Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "Bla bla bla";
+		return "Du bon bio la mmh...";
 	}
 
 	public Color getColor() {
