@@ -67,7 +67,7 @@ public class FenetrePrincipale extends JFrame {
 	private HashMap<IActeur, JButton>boutonsFaillite;
 	
 	public FenetrePrincipale(String[] args) {
-		super("CACAO 2021");
+		super("CACAO 2022");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		if (args.length==0) { // Filiere par defaut
