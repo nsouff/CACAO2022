@@ -25,7 +25,7 @@ public class Distributeur2Acteur implements IActeur {
 	}
 
 	public Color getColor() {
-		return new Color(52, 152, 219); 
+		return new Color(1,81,8); 
 	}
 
 	public void initialiser() {
