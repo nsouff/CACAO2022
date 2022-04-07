@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import abstraction.eq8Romu.clients.FiliereTestClientFinal;
+import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -55,12 +56,14 @@ public class Romu implements IActeur {
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
 		filieres.add("TESTCLIENT"); 
+		filieres.add("TESTCC"); 
 		return filieres;
 	}
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
 		case "TESTCLIENT" : return new FiliereTestClientFinal();
+		case "TESTCC" : return new FiliereTestContratCadre();
 	    default : return null;
 		}
 	}

@@ -11,6 +11,7 @@ import abstraction.eq6Distributeur1.Distributeur1;
 import abstraction.eq7Distributeur2.Distributeur2;
 import abstraction.eq8Romu.Romu;
 import abstraction.eq8Romu.clients.ClientFinal;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.produits.Chocolat;
 
 
@@ -26,6 +27,8 @@ public class FiliereParDefaut extends Filiere {
 			{ 3.0, 3.0,11.0, 3.0, 3.0, 3.0, 3.0, 3.0,13.0, 3.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0,10.0, 3.0, 3.0,11.0,10.0, },			
 	};
 	private ClientFinal cf ;
+	private SuperviseurVentesContratCadre superviseurCC;
+
 	
 	public FiliereParDefaut() {
 		super();
@@ -51,7 +54,10 @@ public class FiliereParDefaut extends Filiere {
 		this.ajouterActeur(new Distributeur1());
 		this.ajouterActeur(new Distributeur2());
 		this.ajouterActeur(new Romu());
-		// A venir : superviseurs de ventes
+		this.superviseurCC=new SuperviseurVentesContratCadre();
+		this.ajouterActeur(this.superviseurCC);
+		// A venir : bourse du cacao
+		// A venir : superviseurs d'appels d'offre
 	}
 	/**
 	 * Redefinition afin d'interdire l'acces direct a certains superviseurs/acteurs.
