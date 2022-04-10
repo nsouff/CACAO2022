@@ -63,7 +63,9 @@ public class Banque implements IActeur, IAssermente {
 			}
 		}
 		Filiere.LA_FILIERE.setCryptos(this.cryptogramme);
-		FenetrePrincipale.LA_FENETRE_PRINCIPALE.setCryptos(this.cryptogramme);
+		if (FenetrePrincipale.LA_FENETRE_PRINCIPALE!=null) {
+			FenetrePrincipale.LA_FENETRE_PRINCIPALE.setCryptos(this.cryptogramme);
+		}
 	}
 
 	public void setCryptogramme(Integer crypto) {
