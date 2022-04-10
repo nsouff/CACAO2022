@@ -10,6 +10,7 @@ import abstraction.eq5Transformateur3.Transformateur3;
 import abstraction.eq6Distributeur1.Distributeur1;
 import abstraction.eq7Distributeur2.Distributeur2;
 import abstraction.eq8Romu.Romu;
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -28,6 +29,7 @@ public class FiliereParDefaut extends Filiere {
 	};
 	private ClientFinal cf ;
 	private SuperviseurVentesContratCadre superviseurCC;
+	private BourseCacao bourse;
 
 	
 	public FiliereParDefaut() {
@@ -56,6 +58,8 @@ public class FiliereParDefaut extends Filiere {
 		this.ajouterActeur(new Romu());
 		this.superviseurCC=new SuperviseurVentesContratCadre();
 		this.ajouterActeur(this.superviseurCC);
+		this.bourse=new BourseCacao();
+		this.ajouterActeur(this.bourse);
 		// A venir : bourse du cacao
 		// A venir : superviseurs d'appels d'offre
 	}
