@@ -24,7 +24,7 @@ public class Transformateur2Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "Bla bla bla";
+		return "Aux petits soins pour vous";
 	}
 
 	public Color getColor() {
