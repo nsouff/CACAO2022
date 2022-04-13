@@ -8,15 +8,24 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Acteur implements IActeur {
 	protected int cryptogramme;
-	public double prixstockageVariable = 0.01 ;
-	public double prixstockageFixe = 100;
+	protected Journal journal;
+	protected Variable stockFeve;
+	protected Feve feve;
+	
+	public Variable prixstockageVariable ;
+	public Variable prixstockageFixe ;
+	
 	
 	
 
 	public Producteur1Acteur() {
+		this.journal = new Journal(this.getNom()+" activites", this);
+		this.prixstockageVariable=new Variable("prixStockageVariable", this, 0.0, 1000000000.0,0.01);
+		this.prixstockageFixe=new Variable("prixStockageFixe", this, 0.0, 1000000000.0,100);
 	}
 
 	public void initialiser() {

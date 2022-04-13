@@ -14,7 +14,7 @@ public class arbre {
 		this.ut_plantation = ut_plantation;
 	}
 	
-	public void 
+
 	public void setMaladie(int maladie) {
 		this.maladie=maladie;
 	}
@@ -23,7 +23,7 @@ public class arbre {
 	
 	}
 	public void setBioequitable() {
-		this.bioequitable= 
+	
 	}
 	public int getUt_plantation() {
 		return this.ut_plantation;
