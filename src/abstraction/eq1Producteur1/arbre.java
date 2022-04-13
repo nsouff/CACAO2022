@@ -51,4 +51,7 @@ public class arbre {
 	public int getStade_transition() {
 		return this.stade_transition;
 	}
+	public arbre() {
+		
+	}
 }
