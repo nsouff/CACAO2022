@@ -20,7 +20,7 @@ public class Transformateur3Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "Bla bla bla";
+		return "Nous sommes BIO'riginal. Venez goûter notre bon chocolat";
 	}
 
 	public Color getColor() {
