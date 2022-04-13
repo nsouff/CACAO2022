@@ -7,18 +7,6 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
 public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements IVendeurBourse{
-	protected Feve feve;
-	
-	
-	
-	public void next() {
-		super.next();
-		journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
-		if (Filiere.LA_FILIERE.getEtape()>=1) {
-			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-			journal.ajouter("le cours de "+feve+" est : "+Journal.doubleSur(bourse.getCours(feve).getValeur(), 2));
-		}
-	}
 
 
 
