@@ -46,4 +46,35 @@ public class arbre {
 	public int getStade_transition() {
 		return this.stade_transition;
 	}
+	public boolean isMalade() {
+		double d = Math.random();
+		if (d<=0.03) {
+			double stade_maladie = Math.random();
+			if (stade_maladie<=0.45) {
+				this.setMaladie(1);
+			}
+			if ((stade_maladie>0.45) && (stade_maladie<=0.7)) {
+				this.setMaladie(2);
+			}
+			if ((stade_maladie>0.7) && (stade_maladie<=0.85)) {
+				this.setMaladie(3);
+			}
+			if ((stade_maladie>0.85) && (stade_maladie<=0.95)) {
+				this.setMaladie(4);
+			}
+			if (stade_maladie>0.95) {
+				this.setMaladie(5);
+			}
+		}
+	}
+	public boolean Esperance_vie() {
+		double d = Math.random();
+		if (d<0.5) {
+			int esp = 960-(int)Math.floor(d*24);
+			this.setUt_esperance_vie(esp);
+		}
+		else {
+			int esp = 960+(int)Math.floor(d*12);
+		}
+	}
 }
