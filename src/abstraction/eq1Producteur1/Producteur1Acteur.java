@@ -14,8 +14,6 @@ public class Producteur1Acteur implements IActeur {
 	protected int cryptogramme;
 	protected Journal journal;
 	protected Variable stockFeve;
-	protected Feve feve;
-	
 	public Variable prixstockageVariable ;
 	public Variable prixstockageFixe ;
 	
@@ -26,6 +24,7 @@ public class Producteur1Acteur implements IActeur {
 		this.journal = new Journal(this.getNom()+" activites", this);
 		this.prixstockageVariable=new Variable("prixStockageVariable", this, 0.0, 1000000000.0,0.01);
 		this.prixstockageFixe=new Variable("prixStockageFixe", this, 0.0, 1000000000.0,100);
+		this.stockFeve=new Variable(this.getNom()+"Stock", this, 0.0, 1000000000.0,1000000);
 	}
 
 	public void initialiser() {

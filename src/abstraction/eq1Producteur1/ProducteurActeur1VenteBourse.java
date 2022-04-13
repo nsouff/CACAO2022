@@ -24,8 +24,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 
 	@Override
 	public double offre(Feve f, double cours) {
-		
-		return 0;
+		return this.stockFeve.getValeur();
 	}
 
 
@@ -33,6 +32,6 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 	@Override
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
-		
+		this.stockFeve.setValeur(this, this.stockFeve.getValeur()-quantiteEnKg);
 	}
 }
