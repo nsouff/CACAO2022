@@ -17,15 +17,15 @@ public class Distributeur2Acteur implements IActeur {
 	}
 
 	public String getNom() {
-		return "EQ7";
+		return "Biofour";
 	}
 
 	public String getDescription() {
-		return "Bla bla bla";
+		return "Du bon bio la mmh...";
 	}
 
 	public Color getColor() {
-		return new Color(52, 152, 219); 
+		return new Color(1,81,8); 
 	}
 
 	public void initialiser() {
@@ -70,6 +70,7 @@ public class Distributeur2Acteur implements IActeur {
 	}
 
 	public void notificationFaillite(IActeur acteur) {
+		System.out.println("F#*! you "+acteur.getNom()+" You won't miss Biofour team");
 	}
 
 	public void notificationOperationBancaire(double montant) {
