@@ -70,7 +70,7 @@ public class Distributeur2Acteur implements IActeur {
 	}
 
 	public void notificationFaillite(IActeur acteur) {
-		System.out.println("F#*! you "+acteur.getNom()+" You won't miss Biofour team");
+		System.out.println("F#*! you "+acteur.getNom()+". You won't miss Biofour team");
 	}
 
 	public void notificationOperationBancaire(double montant) {
