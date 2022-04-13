@@ -8,7 +8,7 @@ public interface IStock {
 	
 	public double getQuantite(ChocolatDeMarque chocolat);
 	
-	public double addProduit(ChocolatDeMarque chocolat, Double quantite);
+	public void addProduit(ChocolatDeMarque chocolat, Double quantite);
 	
 	public void remove(ChocolatDeMarque chocolat,Double quantite);
 	
