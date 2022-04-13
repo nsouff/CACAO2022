@@ -72,18 +72,19 @@ public class arbre {
 			}
 		}
 	}
-	public boolean Esperance_vie() {
+	public int Esperance_vie() {
 		double d = Math.random();
 		if (d<0.5) {
 			int esp = 960-(int)Math.floor(d*24);
-			this.setUt_esperance_vie(esp);
+			return esp;
 		}
 		else {
 			int esp = 960+(int)Math.floor(d*12);
+			return esp;
 		}
-=======
+	}
 	public arbre() {
 		
->>>>>>> branch 'main' of https://github.com/Keracles/CACAO2022
+
 	}
 }
