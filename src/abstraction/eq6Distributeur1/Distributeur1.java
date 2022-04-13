@@ -15,17 +15,7 @@ public class Distributeur1 extends Distributeur1Acteur {
 		super();
 	}
 		
-	historique_prix	
-	historique_demande	
-	historique_appel_offre	
-	appel_offre_instantane	
-	stock_instantane	
-	historique_stock	
-	prevision_stock	
-	historique_tete_gondole	
-	tete_gondole_instantané	
 		
-	prix_stock_actuel	
 	
 	
 }
