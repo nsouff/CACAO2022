@@ -9,15 +9,22 @@ import java.util.Hashtable;
 public class Distributeur1 extends Distributeur1Acteur {
 	private double prixInstantane;
 	private double prixStockage;
+<<<<<<< HEAD
 	private double prixStockageActuel;
 	private Map<String, Double> teteGondole = new HashMap<String, Double>();
 	private int qteStockage;
 	private Map<String, Double> Stockage = new HashMap<String, Double>();
 	private Map<String, Integer> Achat = new HashMap<String, Integer>();
 
+=======
+	private double prixStockageAactuel;
+	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
+	
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	public Distributeur1() {
 		super();
 	}
+<<<<<<< HEAD
 	
 //Emma Humeau a écrit ce code pour la gestion du stockage
 	
@@ -71,6 +78,28 @@ public class Distributeur1 extends Distributeur1Acteur {
 		return prixStockage;
 	}
 		
+=======
+	/* FONCTION POUR FIXER LES PRIX DE VENTE :
+	 * 
+	 * ENTREES : prixAchat, quantiteAchetee
+	 * SORTIES : prix 
+	 * 
+	 * V1.0 : 
+	 * - prix fixe 
+	 * - marge fixe (différente pour chaque produit)
+	 * - raisonner en marge du prix d'achat
+	 * 
+	 * V1.1 :
+	 * - 
+	 *  
+	 * 
+	 * 
+	 * V2 :
+	 * - 
+	 * 
+	 */
+	private Map<String, Double> prixVente = new HashMap<String, Double>();
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 
 	
 	
