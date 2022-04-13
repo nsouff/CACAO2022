@@ -11,15 +11,13 @@ public class Distributeur1 extends Distributeur1Acteur {
 	private double prixStockage;
 <<<<<<< HEAD
 	private double prixStockageActuel;
-	private Map<String, Double> teteGondole = new HashMap<String, Double>();
+	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
+	
 	private int qteStockage;
 	private Map<String, Double> Stockage = new HashMap<String, Double>();
 	private Map<String, Integer> Achat = new HashMap<String, Integer>();
 
-=======
-	private double prixStockageAactuel;
-	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
-	
+
 >>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	public Distributeur1() {
 		super();
