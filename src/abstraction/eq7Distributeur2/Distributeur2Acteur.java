@@ -9,7 +9,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 
-public class Distributeur2Acteur implements IActeur {
+public class Distributeur2Acteur implements IActeur{
 	
 	protected int cryptogramme;
 
