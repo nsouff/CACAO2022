@@ -65,11 +65,12 @@ public class FenetrePrincipale extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private HashMap<IActeur, JButton>boutonsFaillite;
+	private HashMap<IActeur, Integer> cryptos; // Pour acceder aux variables a acces restreint
 	
 	public FenetrePrincipale(String[] args) {
-		super("CACAO 2021");
+		super("CACAO 2022");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+		LA_FENETRE_PRINCIPALE = this;
 		if (args.length==0) { // Filiere par defaut
 			Filiere.LA_FILIERE = new FiliereParDefaut();
 		} else {
@@ -157,9 +158,9 @@ public class FenetrePrincipale extends JFrame {
 					NumberFormat dc = NumberFormat.getInstance(Locale.FRANCE);
 					dc.setMaximumFractionDigits(2);
 					dc.setMinimumFractionDigits(2);
-					String formattedText = dc.format(i.getValeur());
-					if (i.getMin()!=-Double.MAX_VALUE || i.getMax()!=Double.MAX_VALUE) {
-						tIndic.setToolTipText("["+dc.format(i.getMin())+", "+dc.format(i.getMax())+"]");
+					String formattedText = dc.format(i.getValeur(this.cryptos.get(i.getCreateur())));
+					if (i.getMin(this.cryptos.get(i.getCreateur()))!=-Double.MAX_VALUE || i.getMax(this.cryptos.get(i.getCreateur()))!=Double.MAX_VALUE) {
+						tIndic.setToolTipText("["+dc.format(i.getMin(this.cryptos.get(i.getCreateur())))+", "+dc.format(i.getMax(this.cryptos.get(i.getCreateur())))+"]");
 					}
 					tIndic.setText(formattedText);
 					CtrlJTextField controlJTextField = new CtrlJTextField(tIndic, i);
@@ -176,7 +177,7 @@ public class FenetrePrincipale extends JFrame {
 					cGraphiqueIndic.setSelectedIcon(CHECKED_IMAGE);
 					cGraphiqueIndic.setToolTipText("Montrer/Cacher le graphique");
 					FenetreGraphique graphique = new FenetreGraphique(i.getNom(), 800, 600);
-					graphique.ajouter(i.getCourbe());
+					graphique.ajouter(i.getCourbe(this.cryptos.get(i.getCreateur())));
 					// Controleur permettant quand on clique sur la fermeture 
 					// de la fenetre graphique de mettre a jour la case a cocher "graphique"
 					// et quand on clique sur la case a cocher d'afficher/masquer le graphique
@@ -195,10 +196,10 @@ public class FenetrePrincipale extends JFrame {
 					cHistorique.setIcon(UNCHECKED_IMAGE);
 					cHistorique.setSelectedIcon(CHECKED_IMAGE);
 					//cHistorique.setIcon(new ImageIcon("unch18.gif"));
-					FenetreHistorique fenetreHistorique = new FenetreHistorique(i);
-					CtrlCheckBoxHistorique cth = new CtrlCheckBoxHistorique(i.getHistorique(), cHistorique, fenetreHistorique);
+					FenetreHistorique fenetreHistorique = new FenetreHistorique(i,this.cryptos.get(i.getCreateur()));
+					CtrlCheckBoxHistorique cth = new CtrlCheckBoxHistorique(i.getHistorique(this.cryptos.get(i.getCreateur())), cHistorique, fenetreHistorique);
 					fenetreHistorique.addWindowListener(cth);
-					i.getHistorique().addObserver(cth);
+					i.getHistorique(this.cryptos.get(i.getCreateur())).addObserver(cth);
 					cHistorique.addActionListener(cth);
 					cHistorique.setAlignmentX(RIGHT_ALIGNMENT);
 					cHistorique.setBorder(BorderFactory.createEmptyBorder());
@@ -229,10 +230,10 @@ public class FenetrePrincipale extends JFrame {
 				NumberFormat dc = NumberFormat.getInstance(Locale.FRANCE);
 				dc.setMaximumFractionDigits(2);
 				dc.setMinimumFractionDigits(2);
-				String formattedText = dc.format(i.getValeur());
+				String formattedText = dc.format(i.getValeur(this.cryptos.get(i.getCreateur())));
 				tParam.setText(formattedText);
-				if (i.getMin()!=-Double.MAX_VALUE || i.getMax()!=Double.MAX_VALUE) {
-					tParam.setToolTipText("["+dc.format(i.getMin())+", "+dc.format(i.getMax())+"]");
+				if (i.getMin(this.cryptos.get(i.getCreateur()))!=-Double.MAX_VALUE || i.getMax(this.cryptos.get(i.getCreateur()))!=Double.MAX_VALUE) {
+					tParam.setToolTipText("["+dc.format(i.getMin(this.cryptos.get(i.getCreateur())))+", "+dc.format(i.getMax(this.cryptos.get(i.getCreateur())))+"]");
 				}
 				CtrlJTextField controlJTextField = new CtrlJTextField(tParam, i);
 				tParam.addActionListener(controlJTextField);
@@ -247,7 +248,7 @@ public class FenetrePrincipale extends JFrame {
 				FenetreGraphique graphique = new FenetreGraphique(i.getNom(), 800, 600);
 				cGraphiqueParam.setIcon(UNCHECKED_IMAGE);
 				cGraphiqueParam.setSelectedIcon(CHECKED_IMAGE);
-				graphique.ajouter(i.getCourbe());
+				graphique.ajouter(i.getCourbe(this.cryptos.get(i.getCreateur())));
 				// Controleur permettant quand on clique sur la fermeture 
 				// de la fenetre graphique de mettre a jour la case a cocher "graphique"
 				// et quand on clique sur la case a cocher d'afficher/masquer le graphique
@@ -264,10 +265,10 @@ public class FenetrePrincipale extends JFrame {
 				JCheckBox cHistorique = new JCheckBox();
 				cHistorique.setIcon(UNCHECKED_IMAGE);
 				cHistorique.setSelectedIcon(CHECKED_IMAGE);
-				FenetreHistorique fenetreHistorique = new FenetreHistorique(i);
-				CtrlCheckBoxHistorique cth = new CtrlCheckBoxHistorique(i.getHistorique(), cHistorique, fenetreHistorique);
+				FenetreHistorique fenetreHistorique = new FenetreHistorique(i,this.cryptos.get(i.getCreateur()));
+				CtrlCheckBoxHistorique cth = new CtrlCheckBoxHistorique(i.getHistorique(this.cryptos.get(i.getCreateur())), cHistorique, fenetreHistorique);
 				fenetreHistorique.addWindowListener(cth);
-				i.getHistorique().addObserver(cth);
+				i.getHistorique(this.cryptos.get(i.getCreateur())).addObserver(cth);
 				cHistorique.addActionListener(cth);
 				cHistorique.setAlignmentX(RIGHT_ALIGNMENT);
 				cHistorique.setBorder(BorderFactory.createEmptyBorder());
@@ -330,10 +331,10 @@ public class FenetrePrincipale extends JFrame {
 			NumberFormat dc = NumberFormat.getInstance(Locale.FRANCE);
 			dc.setMaximumFractionDigits(2);
 			dc.setMinimumFractionDigits(2);
-			String formattedText = dc.format(i.getValeur());
+			String formattedText = dc.format(i.getValeur(this.cryptos.get(i.getCreateur())));
 			tIndic.setText(formattedText);
-			if (i.getMin()!=-Double.MAX_VALUE || i.getMax()!=Double.MAX_VALUE) {
-				tIndic.setToolTipText("["+dc.format(i.getMin())+", "+dc.format(i.getMax())+"]");
+			if (i.getMin(this.cryptos.get(i.getCreateur()))!=-Double.MAX_VALUE || i.getMax(this.cryptos.get(i.getCreateur()))!=Double.MAX_VALUE) {
+				tIndic.setToolTipText("["+dc.format(i.getMin(this.cryptos.get(i.getCreateur())))+", "+dc.format(i.getMax(this.cryptos.get(i.getCreateur())))+"]");
 			}
 			CtrlJTextField controlJTextField = new CtrlJTextField(tIndic, i);
 			tIndic.addActionListener(controlJTextField);
@@ -357,7 +358,7 @@ public class FenetrePrincipale extends JFrame {
 			cGraphiqueIndic.setSelectedIcon(CHECKED_IMAGE);
 			cGraphiqueIndic.setToolTipText("Montrer/Cacher le graphique");
 			FenetreGraphique graphique = new FenetreGraphique(i.getNom(), 800, 600);
-			graphique.ajouter(i.getCourbe());
+			graphique.ajouter(i.getCourbe(this.cryptos.get(i.getCreateur())));
 			// Controleur permettant quand on clique sur la fermeture 
 			// de la fenetre graphique de mettre a jour la case a cocher "graphique"
 			// et quand on clique sur la case a cocher d'afficher/masquer le graphique
@@ -375,10 +376,10 @@ public class FenetrePrincipale extends JFrame {
 			cHistorique.setIcon(UNCHECKED_IMAGE);//new ImageIcon("unche18.gif"));
 			cHistorique.setSelectedIcon(CHECKED_IMAGE);//new ImageIcon("checkd18.gif"));
 			//cHistorique.setIcon(new ImageIcon("unch18.gif"));
-			FenetreHistorique fenetreHistorique = new FenetreHistorique(i);
-			CtrlCheckBoxHistorique cth = new CtrlCheckBoxHistorique(i.getHistorique(), cHistorique, fenetreHistorique);
+			FenetreHistorique fenetreHistorique = new FenetreHistorique(i,this.cryptos.get(i.getCreateur()));
+			CtrlCheckBoxHistorique cth = new CtrlCheckBoxHistorique(i.getHistorique(this.cryptos.get(i.getCreateur())), cHistorique, fenetreHistorique);
 			fenetreHistorique.addWindowListener(cth);
-			i.getHistorique().addObserver(cth);
+			i.getHistorique(this.cryptos.get(i.getCreateur())).addObserver(cth);
 			cHistorique.addActionListener(cth);
 			cHistorique.setAlignmentX(RIGHT_ALIGNMENT);
 			cHistorique.setBorder(BorderFactory.createEmptyBorder());
@@ -464,6 +465,11 @@ public class FenetrePrincipale extends JFrame {
 	}
 	public void notificationFaillite(IActeur acteur) {
 		this.boutonsFaillite.get(acteur).setEnabled(false);
+	}
+	public void setCryptos(HashMap<IActeur, Integer> cryptos) {
+		if (this.cryptos==null) { // Les cryptogrammes ne sont indique qu'une fois par la banque : si la methode est appelee une seconde fois c'est que l'auteur de l'appel n'est pas la banque et qu'on cherche a "pirater" l'acteur
+			this.cryptos= cryptos;
+		}
 	}
 
 	public static void main(String[] args) {
