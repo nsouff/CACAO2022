@@ -8,7 +8,6 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
-
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
