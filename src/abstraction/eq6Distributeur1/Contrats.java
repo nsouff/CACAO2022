@@ -18,6 +18,7 @@ public class Contrats implements IVendeurContratCadre, IAcheteurContratCadre{
 private float duree_contrat;
 private float prix_achat;
 private float qte_achat;
+private Object produit;
 
 public Contrats(float duree_contrat, float prix_achat, float qte_achat) {
 	this.duree_contrat = duree_contrat;
