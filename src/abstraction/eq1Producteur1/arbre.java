@@ -75,11 +75,11 @@ public class arbre {
 	public int Esperance_vie() {
 		double d = Math.random();
 		if (d<0.5) {
-			int esp = 960-(int)Math.floor(d*24);
+			int esp = 960-(int)Math.floor(d*240);
 			return esp;
 		}
 		else {
-			int esp = 960+(int)Math.floor(d*12);
+			int esp = 960+(int)Math.floor((d-0.5)*240);
 			return esp;
 		}
 	}
