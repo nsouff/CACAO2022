@@ -9,6 +9,17 @@ public class arbre {
 	private boolean transition_bio;
 	private int stade_transition;
 	
+	public arbre() {
+		this.ut_plantation=0;
+		this.ut_esperance_vie= this.Esperance_vie();
+		this.maladie=0;
+		this.qualite=0;
+		this.bioequitable=false;
+		this.transition_bio=false;
+		this.stade_transition=0;
+	}
+	
+
 	public void setUt_plantation(int ut_plantation) {
 		this.ut_plantation = ut_plantation;
 	}
@@ -20,6 +31,10 @@ public class arbre {
 	}
 	public void setQualite(int qualite) {
 		this.qualite=qualite;
+	}
+
+	public void setBioequitable() {
+	
 	}
 	public void setBioequitable(boolean bioequitable) {
 		this.bioequitable= bioequitable;
@@ -51,7 +66,8 @@ public class arbre {
 	public int getStade_transition() {
 		return this.stade_transition;
 	}
-	public boolean isMalade() {
+	
+	public void isMalade() {
 		double d = Math.random();
 		if (d<=0.03) {
 			double stade_maladie = Math.random();
@@ -83,9 +99,12 @@ public class arbre {
 			return esp;
 		}
 	}
+<<<<<<< HEAD
 	
 	public arbre() {
 		
 
 	}
+=======
+>>>>>>> branch 'main' of https://github.com/Keracles/CACAO2022
 }
