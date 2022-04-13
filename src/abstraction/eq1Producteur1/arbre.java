@@ -21,7 +21,7 @@ public class arbre {
 	public void setQualite(int qualite) {
 		this.qualite=qualite;
 	}
-	public void setBioéquitable(boolean bioequitable) {
+	public void setBioequitable(boolean bioequitable) {
 		this.bioequitable= bioequitable;
 	}
 	public void setTransition_bio(boolean transition_bio) {
@@ -30,5 +30,25 @@ public class arbre {
 	public void setStade_transition(int stade_transition) {
 		this.stade_transition = stade_transition;
 	}
-
+	public int getUt_plantation() {
+		return this.ut_plantation;
+	}
+	public int getUt_esperance_vie() {
+		return this.ut_esperance_vie;
+	}
+	public int getMaladie() {
+		return this.maladie;
+	}
+	public int getQualite() {
+		return this.qualite;
+	}
+	public boolean getBioequitable() {
+		return this.bioequitable;
+	}
+	public boolean getTransition_bio() {
+		return this.transition_bio;
+	}
+	public int getStade_transition() {
+		return this.stade_transition;
+	}
 }
