@@ -11,6 +11,10 @@ import abstraction.eq8Romu.general.Variable;
 
 public class Producteur1Acteur implements IActeur {
 	protected int cryptogramme;
+	public double prixstockageVariable = 0.01 ;
+	public double prixstockageFixe = 1000;
+	
+	
 
 	public Producteur1Acteur() {
 	}
@@ -19,7 +23,7 @@ public class Producteur1Acteur implements IActeur {
 	}
 	
 	public String getNom() {
-		return "EQ1";
+		return "CAC'AO40";
 	}
 
 	public String getDescription() {
@@ -66,7 +70,7 @@ public class Producteur1Acteur implements IActeur {
 		if (this==acteur) {
 		System.out.println("I'll be back... or not... "+this.getNom());
 		} else {
-			System.out.println("Poor "+acteur.getNom()+"... We will miss you. "+this.getNom());
+			System.out.println("Poor "+acteur.getNom()+"... Why so serious ? "+this.getNom());
 		}
 	}
 	
