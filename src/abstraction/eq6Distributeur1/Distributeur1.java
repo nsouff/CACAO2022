@@ -9,16 +9,22 @@ import java.util.Hashtable;
 public class Distributeur1 extends Distributeur1Acteur {
 	private double prixInstantane;
 	private double prixStockage;
-	private double prixStockageAactuel;
+	private double prixStockageActuel;
 	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
 	
 	public Distributeur1() {
 		super();
 	}
+	
+	/** @author Nolann
+	 * 
+	 */
+	
+	
 	/* FONCTION POUR FIXER LES PRIX DE VENTE :
 	 * 
 	 * ENTREES : prixAchat, quantiteAchetee
-	 * SORTIES : prix 
+	 * SORTIES : HashMap(chocolat,prix) 
 	 * 
 	 * V1.0 : 
 	 * - prix fixe 
@@ -26,7 +32,11 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * - raisonner en marge du prix d'achat
 	 * 
 	 * V1.1 :
-	 * - 
+	 * - marge en fonction de la stratégie d'équipe : 
+	 *  	faible marge sur tous les produits faible 
+	 *  	
+	 *  	
+	 * - coût des stocks anticipation
 	 *  
 	 * 
 	 * 
@@ -35,7 +45,7 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * 
 	 */
 	private Map<String, Double> prixVente = new HashMap<String, Double>();
-
+	public Map<String, Double> prixvente()
 	
 	
 }
