@@ -8,7 +8,6 @@ public class AchatContratCadre extends Distributeur2Acteur implements IAcheteurC
 
 	@Override
 	public boolean achete(Object produit) {
-		if ()
 		return false;
 	}
 
