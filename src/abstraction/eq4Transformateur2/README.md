@@ -2,17 +2,10 @@
 
 BARKAT Nawfel	(NawfelBarkat on GitHub)
 
-
-
-REMY Marie	( pas de pseudo  )
-
-REMY Marie 
-
-
+REMY Marie	( MARIE24161 on GitHub )
 
 TSENG Gabriel	(Gabeaugosse on GitHub)
 
 AOUAD Jad (Jad1908 on GitHub)
-
 
 
