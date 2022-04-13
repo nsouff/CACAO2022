@@ -99,12 +99,5 @@ public class arbre {
 			return esp;
 		}
 	}
-<<<<<<< HEAD
-	
-	public arbre() {
-		
 
-	}
-=======
->>>>>>> branch 'main' of https://github.com/Keracles/CACAO2022
 }
