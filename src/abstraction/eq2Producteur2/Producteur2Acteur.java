@@ -13,7 +13,11 @@ public class Producteur2Acteur implements IActeur {
 	protected int cryptogramme;
 	public double prixstockageVariable = 0.01 ;
 	public double prixstockageFixe = 100;
-
+	public double dureeaffinageBQ = 1;
+	public double dureeaffinageMQ = 2;
+	public double dureeaffinageHQ = 3;
+	
+	
 	public Producteur2Acteur() {
 	}
 
