@@ -11,7 +11,7 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class Distributeur2ChocolatDeMarque extends Distributeur2AchatContratCadre implements IDistributeurChocolatDeMarque {
+public class Distributeur2ChocolatDeMarque extends AchatContratCadre implements IDistributeurChocolatDeMarque {
 
 	@Override
 	public String getNom() {

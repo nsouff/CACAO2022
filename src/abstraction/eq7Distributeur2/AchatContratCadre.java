@@ -4,7 +4,7 @@ import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 
-public class Distributeur2AchatContratCadre extends Distributeur2Acteur implements IAcheteurContratCadre{
+public class AchatContratCadre extends Distributeur2Acteur implements IAcheteurContratCadre{
 
 	@Override
 	public boolean achete(Object produit) {
