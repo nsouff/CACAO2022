@@ -23,7 +23,7 @@ public class Producteur1Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "Bla bla bla";
+		return "On est pas ici pour enfiler des perles. On va mettre les points sur les I et les barres sur leur mère";
 	}
 
 	public Color getColor() {

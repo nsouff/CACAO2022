@@ -100,7 +100,9 @@ public class ClientFinal implements IActeur, IAssermente {
 		return new Color(187,202,208);
 	}
 	public void setCryptos(HashMap<IActeur, Integer> cryptos) {
-		this.cryptos = cryptos;
+		if (this.cryptos==null) { // Les cryptogrammes ne sont indique qu'une fois par la banque : si la methode est appelee une seconde fois c'est que l'auteur de l'appel n'est pas la banque et qu'on cherche a "pirater" l'acteur
+			this.cryptos = cryptos;
+		}
 	}
 
 	public void initialiser() {
