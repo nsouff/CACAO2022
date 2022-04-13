@@ -32,10 +32,6 @@ public class arbre {
 	public void setQualite(int qualite) {
 		this.qualite=qualite;
 	}
-
-	public void setBioequitable() {
-	
-	}
 	public void setBioequitable(boolean bioequitable) {
 		this.bioequitable= bioequitable;
 	}
