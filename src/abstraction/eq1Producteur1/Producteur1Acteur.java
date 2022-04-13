@@ -11,6 +11,9 @@ import abstraction.eq8Romu.general.Variable;
 
 public class Producteur1Acteur implements IActeur {
 	protected int cryptogramme;
+	public double prixstockageVariable = 0.01 ;
+	public double prixstockageFixe = 1000;
+	
 	
 
 	public Producteur1Acteur() {
