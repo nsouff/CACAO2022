@@ -1,5 +1,5 @@
 package abstraction.eq5Transformateur3;
 
-public class Vente {
+public class VenteContrat {
 
 }
