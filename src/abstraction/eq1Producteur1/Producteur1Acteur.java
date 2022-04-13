@@ -11,6 +11,7 @@ import abstraction.eq8Romu.general.Variable;
 
 public class Producteur1Acteur implements IActeur {
 	protected int cryptogramme;
+	
 
 	public Producteur1Acteur() {
 	}
@@ -19,7 +20,7 @@ public class Producteur1Acteur implements IActeur {
 	}
 	
 	public String getNom() {
-		return "EQ1";
+		return "CAC'AO40";
 	}
 
 	public String getDescription() {
