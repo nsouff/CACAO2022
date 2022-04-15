@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstraction.eq8Romu.appelsOffres.FiliereTestAO;
 import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
 import abstraction.eq8Romu.clients.FiliereTestClientFinal;
 import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
@@ -59,6 +60,7 @@ public class Romu implements IActeur {
 		filieres.add("TESTCLIENT"); 
 		filieres.add("TESTCC"); 
 		filieres.add("TESTBOURSE"); 
+		filieres.add("TESTAO"); 
 		return filieres;
 	}
 
@@ -67,6 +69,7 @@ public class Romu implements IActeur {
 		case "TESTCLIENT" : return new FiliereTestClientFinal();
 		case "TESTCC" : return new FiliereTestContratCadre();
 		case "TESTBOURSE" : return new FiliereTestBourse();
+		case "TESTAO" : return new FiliereTestAO();
 	    default : return null;
 		}
 	}
