@@ -21,20 +21,18 @@ public class Transformateur1 extends Transformateur1Acteur {
 	private HashMap<Feve, Double> prixAchat;
 	private HashMap<Feve, Integer> stockFeve;
 	private HashMap<Chocolat,Integer> stockChoco;
-
 	
 
 	public Transformateur1() { 
 		super();
 	}
 
-
-	public List<Double> prixmaxachat(List<Double> dernierprixvente ) {
-		List<Double> prixmaxachat = new ArrayList<Double>() ;
-		for (int i=0;i<this.dernierprixvente.size();i++) {
-			prixmaxachat.add(dernierprixvente.get(i) / (prixtransfo.get(i)*quantitévendue.get(i)*1.0));	
-		}
-		return prixmaxachat;
+	/** détermine le prix d'achat max */
+	public void prixmaxachat(HashMap<Chocolat, Double> dernierPrixVente) {
+		
+			prixAchat.put(FEVE_BASSE,dernierPrixVente.get("MQ") / prixtransfo.get(1));	
+			prixAchat.put(FEVE_MOYENNE,dernierPrixVente.get("MQ") / prixtransfo.get(0));
+			prixAchat.put(FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get("MQ_BE") / prixtransfo.get(0));
 	}
 	
 	/** détermine la quantité à transformer */ 
