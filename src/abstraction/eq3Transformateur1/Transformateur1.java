@@ -12,13 +12,13 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1 extends Transformateur1Acteur {
 
-	private List<Double> dernierprixvente ;
+	
 	private List<Double> prixtransfo ;
-	private List<Integer> stock;
-	private List<Integer> quantitévendue ;
-
-
-
+	
+	
+	private HashMap<Chocolat, Integer> quantiteVendue;
+	private HashMap<Chocolat, Double> dernierPrixVente;
+	private HashMap<Feve, Double> prixAchat;
 	private HashMap<Feve, Integer> stockFeve;
 	private HashMap<Chocolat,Integer> stockChoco;
 
