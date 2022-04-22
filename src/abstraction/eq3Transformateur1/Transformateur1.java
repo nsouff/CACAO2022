@@ -14,8 +14,8 @@ public class Transformateur1 extends Transformateur1Acteur {
 
 	
 	private List<Double> prixtransfo ;
-	
-	
+	private HashMap<Feve, Integer> quantiteAchat;
+	private HashMap<Chocolat, Integer> quantiteDemandee;
 	private HashMap<Chocolat, Integer> quantiteVendue;
 	private HashMap<Chocolat, Double> dernierPrixVente;
 	private HashMap<Feve, Double> prixAchat;
@@ -27,12 +27,18 @@ public class Transformateur1 extends Transformateur1Acteur {
 		super();
 	}
 
-	/** détermine le prix d'achat max */
-	public void prixmaxachat(HashMap<Chocolat, Double> dernierPrixVente) {
-		
-			prixAchat.put(FEVE_BASSE,dernierPrixVente.get("MQ") / prixtransfo.get(1));	
-			prixAchat.put(FEVE_MOYENNE,dernierPrixVente.get("MQ") / prixtransfo.get(0));
-			prixAchat.put(FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get("MQ_BE") / prixtransfo.get(0));
+	/** détermine le prix d'achat max; auteur Julien  */
+	public void prixMaxAchat() {		
+			prixAchat.put(Feve.FEVE_BASSE,dernierPrixVente.get(Chocolat.MQ) / prixtransfo.get(1));	
+			prixAchat.put(Feve.FEVE_MOYENNE,dernierPrixVente.get(Chocolat.MQ) / prixtransfo.get(0));
+			prixAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get(Chocolat.MQ_BE) / prixtransfo.get(0));
+	}
+	
+	/** détermine la quantité de fèves à acheter; auteur Julien */
+	public void determinationQuantiteAchat() {		
+		quantiteAchat.put(Feve.FEVE_BASSE,((quantiteDemandee.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));	
+		quantiteAchat.put(Feve.FEVE_MOYENNE,((quantiteDemandee.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
+		quantiteAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,(quantiteDemandee.get(Chocolat.MQ_BE)-stockChoco.get(Chocolat.MQ_BE)));
 	}
 	
 	/** détermine la quantité à transformer */ 
