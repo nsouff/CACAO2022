@@ -13,18 +13,18 @@ import java.util.HashMap;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1 extends Transformateur1Acteur {
-	public static final int rendementHaute=1;
-	public static final int coutTransfoNormal=1;
-	public static final int coutTransfoOriginal=2;
+	public static final double rendementHaute=1;
+	public static final double coutTransfoNormal=1;
+	public static final double coutTransfoOriginal=2;
 	
 	private List<Double> prixtransfo ;
-	private HashMap<Feve, Integer> quantiteAchat;
+	private HashMap<Feve, Double> quantiteAchat;           /** Integer --> Double*/
 	private HashMap<Chocolat, Integer> quantiteDemandee;
 	private HashMap<Chocolat, Integer> quantiteVendue;
 	private HashMap<Chocolat, Double> dernierPrixVente;
 	private HashMap<Feve, Double> prixAchat;
-	private HashMap<Feve, Integer> stockFeve;
-	private HashMap<Chocolat,Integer> stockChoco;
+	private HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
+	private HashMap<Chocolat,Double> stockChoco;           /** Integer --> Double*/
 	
 	public Transformateur1() { 
 		super();
@@ -33,7 +33,7 @@ public class Transformateur1 extends Transformateur1Acteur {
 	/**
 	 * @return the stockFeve
 	 */
-	public HashMap<Feve, Integer> getStockFeve() {
+	public HashMap<Feve, Double> getStockFeve() {
 		return stockFeve;
 	}
 
@@ -49,13 +49,6 @@ public class Transformateur1 extends Transformateur1Acteur {
 		quantiteAchat.put(Feve.FEVE_BASSE,((quantiteDemandee.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));	
 		quantiteAchat.put(Feve.FEVE_MOYENNE,((quantiteDemandee.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
 		quantiteAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,(quantiteDemandee.get(Chocolat.MQ_BE)-stockChoco.get(Chocolat.MQ_BE)));
-	}
-
-	/**
-	 * @param stockChoco the stockChoco to set
-	 */
-	public void setStockChoco(HashMap<Chocolat, Integer> stockChoco) {
-		this.stockChoco = stockChoco;
 	}
 	
 	/** détermine la quantité à transformer 
@@ -77,8 +70,8 @@ public class Transformateur1 extends Transformateur1Acteur {
 	
 	/** calcule le coût de la transformation et la quantité de chocolat produite
 	 * Alexandre */
-	public ArrayList<Integer> coutQuantiteTransfo(String typeTransfo, int quantiteFeve, boolean original) {
-		ArrayList<Integer> prixQuantite = new ArrayList<Integer>();
+	public ArrayList<Double> coutQuantiteTransfo(String typeTransfo, double quantiteFeve, boolean original) {
+		ArrayList<Double> prixQuantite = new ArrayList<Double>();
 		if (original) {
 			prixQuantite.add(quantiteFeve*coutTransfoOriginal);
 		}
@@ -100,7 +93,7 @@ public class Transformateur1 extends Transformateur1Acteur {
 				stockFeve.put(feve, stockFeve.get(feve)-quantiteFeveTransformee);
 			}
 		}
-		ArrayList<Integer> coutQuantiteTransfo = this.coutQuantiteTransfo(this.choixTypeTransfo(feve.getGamme()), quantiteFeveTransformee, original);
+		ArrayList<Double> coutQuantiteTransfo = this.coutQuantiteTransfo(this.choixTypeTransfo(feve.getGamme()), quantiteFeveTransformee, original);
 		for (Chocolat c : stockChoco.keySet()) {
 			if (c.getGamme()==Gamme.MOYENNE && c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original) {
 				stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
