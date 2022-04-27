@@ -27,7 +27,7 @@ public class Transformateur2Vente extends Transformateur2Achat {
  }
  public void enlever() {
 	 if (this.vente()){
-		 
+		 this.setStock(this.getStock()-qt);
 		 
 	 }
 	 
