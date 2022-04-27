@@ -118,7 +118,6 @@ public class Distributeur1 extends Distributeur1Acteur {
 		
 		return prixVente;
 	}
-	//private Map<String, Double> prixVente = new HashMap<String, Double>();
 
 	
 	
