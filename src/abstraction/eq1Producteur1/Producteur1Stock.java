@@ -28,6 +28,11 @@ public class Producteur1Stock {
 		return somme ;	
 	}
 	
+	//Auteur : Khéo
+	public void addLot(Feve f, double quantite) {
+		this.getFeves().get(f).add(new Producteur1Feve(quantite));
+
+	}
 	/**
 	 * @return the feves
 	 */
