@@ -11,25 +11,19 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 public class Distributeur1 extends Distributeur1Acteur {
+	private static final ArrayList<Double> NULL = null;
 	private double prixInstantane;
-	private double prixStockage;
 	private double prixStockageActuel;
 	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
-	
 	private int qteStockage;
-	private Map<String, Double> Stockage = new HashMap<String, Double>();
+	private Map<String, Double> Stockage = new HashMap<String, Double>(); 
 	private Map<String, Integer> Achat = new HashMap<String, Integer>();
 
 
+//github.com/nsouff/CACAO2022
 	public Distributeur1() {
 		super();
 	}
-
-	
-	
-	
-	
-
 	
 //Emma Humeau a écrit ce code pour la gestion du stockage
 	
@@ -83,11 +77,17 @@ public class Distributeur1 extends Distributeur1Acteur {
 		return prixStockage;
 	}
 		
+
 	//@author Nolann
+
 	/* FONCTION POUR FIXER LES PRIX DE VENTE :
 	 * 
-	 * ENTREES : prixAchat, quantiteAchetee
+	 * ENTREES : prixAchat, quantiteAchetee, variable prixVente
+<<<<<<< HEAD
 	 * SORTIES : HashMap(chocolat,(prix,quantité)) 
+=======
+	 * SORTIES : prix 
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	 * 
 	 * V1.0 : 
 	 * - prix fixe = prix achat*2
@@ -95,11 +95,7 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * - raisonner en marge du prix d'achat
 	 * 
 	 * V1.1 :
-	 * - marge en fonction de la stratégie d'équipe : 
-	 *  	faible marge sur tous les produits faible 
-	 *  	
-	 *  	
-	 * - coût des stocks anticipation
+	 * - 
 	 *  
 	 * 
 	 * 
@@ -107,14 +103,28 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * - 
 	 * 
 	 */
+
 	
 	private Map<Chocolat, ArrayList<Double>> prixVente = new HashMap<Chocolat, ArrayList<Double>>();
 //V1 : 
-	public Map<Chocolat, Double> prixvente( Map<String,Double> MprixAchat,  Map<Chocolat,Double>quantiteAchete){
-		private  Map<Chocolat,Double> prixVente = new HashMap<Chocolat, Double>();
+	public Map<Chocolat, ArrayList<Double>> prixvente( Map<Chocolat,Double> prixAchat,  Map<Chocolat,Double> quantiteAchete){
+		prixAchat.forEach((key,value)->{
+			prixVente.put(key, NULL);
+			(prixVente.get(key)).add(prixAchat.get(key)*2);
+			(prixVente.get(key)).add(quantiteAchete.get(key));
+			
+			
+		});
 		
-		
+		/*for (Chocolat key : prixAchat.keyEntry()) {
+			prixVente.put(prixAchat.getKey());
+			prixVente.get(mapentry).add(prixAchat.get(mapentry));
+			prixVente.get(mapentry).add(quantiteAchete.get(mapentry));
+			
+		}*/
+		return prixVente;
 	}
+	//private Map<String, Double> prixVente = new HashMap<String, Double>();
 
 	
 	
