@@ -19,7 +19,27 @@ public class Producteur1Stock {
 		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
 	}
 	
+	//Auteur : Khéo
+	public double getStock(Feve f){
+		double somme = 0.0 ;
+		for(Producteur1Feve Lot : this.getFeves().get(f)) {
+			somme = somme + Lot.getPoids() ;
+		}
+		return somme ;	
+	}
 	
+	//Auteur : Khéo
+	public void addLot(Feve f, double quantite) {
+		this.getFeves().get(f).add(new Producteur1Feve(quantite));
+
+	}
+	/**
+	 * @return the feves
+	 */
+	public HashMap<Feve, List<Producteur1Feve>> getFeves() {
+		return Feves;
+	}
+
 	// Auteur : Laure //
 	// Si une maladie se lance dans le stock, un pourcentage est perdu. //
 	// A faire tourner à chaque UT //

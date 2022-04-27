@@ -4,28 +4,22 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Feve {
 	private int age;
-	private Feve type;
 	private boolean perime;
 	private double poids;
 	
 	
-	/**
-	 * @param type
-	 */
-	public Producteur1Feve(Feve type, double poids) {
-		this.type = type;
+
+	public Producteur1Feve(double poids) {
 		this.age = 0;
 		this.perime = false;
 	}
 
 	/**
 	 * @param age
-	 * @param type
 	 * @param perime
 	 */
-	public Producteur1Feve(int age, Feve type, boolean perime,double poids) {
+	public Producteur1Feve(int age, boolean perime,double poids) {
 		this.age = age;
-		this.type = type;
 		this.perime = perime;
 	}
 
@@ -35,9 +29,6 @@ public class Producteur1Feve {
 	
 	public void setAge(int age) {
 		this.age=age;
-	}
-	public Feve getType() {
-		return this.type;
 	}
 	
 	/**
@@ -54,12 +45,7 @@ public class Producteur1Feve {
 		this.poids = poids;
 	}
 
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(Feve type) {
-		this.type = type;
-	}
+
 
 	/**
 	 * @return the perime
