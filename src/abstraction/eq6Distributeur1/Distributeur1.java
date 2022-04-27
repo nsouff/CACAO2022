@@ -1,6 +1,10 @@
 package abstraction.eq6Distributeur1;
 
 import java.util.Map;
+
+import abstraction.eq8Romu.produits.Chocolat;
+
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -79,14 +83,14 @@ public class Distributeur1 extends Distributeur1Acteur {
 		return prixStockage;
 	}
 		
-
+	//@author Nolann
 	/* FONCTION POUR FIXER LES PRIX DE VENTE :
 	 * 
 	 * ENTREES : prixAchat, quantiteAchetee
-	 * SORTIES : HashMap(chocolat,prix) 
+	 * SORTIES : HashMap(chocolat,(prix,quantité)) 
 	 * 
 	 * V1.0 : 
-	 * - prix fixe 
+	 * - prix fixe = prix achat*2
 	 * - marge fixe (différente pour chaque produit)
 	 * - raisonner en marge du prix d'achat
 	 * 
@@ -104,11 +108,13 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * 
 	 */
 	
-	private Map<String, Double> prixVente = new HashMap<String, Double>();
+	private Map<Chocolat, ArrayList<Double>> prixVente = new HashMap<Chocolat, ArrayList<Double>>();
 //V1 : 
-	public Map<String, Double> prixvente(float prixAchat, float quantiteAchete){
+	public Map<Chocolat, Double> prixvente( Map<String,Double> MprixAchat,  Map<Chocolat,Double>quantiteAchete){
+		private  Map<Chocolat,Double> prixVente = new HashMap<Chocolat, Double>();
 		
-}
+		
+	}
 
 	
 	
