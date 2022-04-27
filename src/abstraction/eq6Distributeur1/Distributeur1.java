@@ -25,70 +25,7 @@ public class Distributeur1 extends Distributeur1Acteur {
 		super();
 	}
 	
-	public void main() {
-		for (Map.Entry<Chocolat, Double > entry : prixInstantanneChoco.entrySet()) {
-            Chocolat keyPrix = entry.getKey();
-            Double valuePrix = entry.getValue();
 
-		for (int i=0; i<qteStockage; i++){
-			Stockage[0][i].add(valuePrix)
-		}
-
-	
-		for (Map.Entry<String, ArrayList<Double> > entry : Stockage.entrySet()) {
-            String keyStockage = entry.getKey();
-            ArrayList<Double> valueStockage = entry.getValue();
-        
-		this.prixStockageActuel = 
-	}
-	
-//Emma Humeau a écrit ce code pour la gestion du stockage
-	
-	
-	/**
-	 * @return the prixStockageActuel
-	 */
-	public double getPrixStockageActuel() {
-		return prixStockageActuel;
-	}
-
-	/**
-	 * @param prixStockageActuel the prixStockageActuel to set
-	 */
-	public void setPrixStockageActuel(double prixStockage, int qteStockage) {
-		this.prixStockageActuel = prixStockage*qteStockage;
-	}
-
-	/**
-	 * @return the qteStockage
-	 */
-	public int getQteStockage() {
-		return qteStockage;
-	}
-
-	/**
-	 * @param qteStockage the qteStockage to set
-	 */
-	
-	public void setQteStockage(int qteStockage, Map Achat) {
-		this.qteStockage = qteStockage ;
-	}
-
-	/**
-	 * @return the stockage
-	 */
-	public Map<String, Double> getStockage() {
-		return Stockage;
-	}
-
-	/**
-	 * @param stockage the stockage to set
-	 */
-	public void setStockage(Map<String, Double> stockage) {
-		Stockage = stockage;
-	}
-
-	
 
 		
 	/* FONCTION POUR FIXER LES PRIX DE VENTE :
