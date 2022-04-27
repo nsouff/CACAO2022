@@ -14,13 +14,16 @@ import abstraction.eq8Romu.general.VariableReadOnly;
 public class Producteur2Acteur implements IActeur {
 	protected int cryptogramme;
 	private Variable prixstockage ;
-	private double dureeaffinageBQ = 1;
-	private double dureeaffinageMQ = 2;
-	private double dureeaffinageHQ = 3;
+	private Variable dureeaffinageBQ ;
+	private Variable dureeaffinageMQ ;
+	private Variable dureeaffinageHQ ;
 	
 	
 	public Producteur2Acteur() {
 		this.prixstockage= new VariableReadOnly("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
+		this.dureeaffinageBQ= new VariableReadOnly("Durée affinage BQ","", this,  0.0, 1000000000, 1) ;
+		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
+		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;
 		
 	}
 
