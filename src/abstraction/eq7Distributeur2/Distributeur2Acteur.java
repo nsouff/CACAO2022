@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
+import abstraction.eq8Romu.clients.FiliereTestClientFinal;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
@@ -15,7 +18,7 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class Distributeur2Acteur implements IActeur{
+public class Distributeur2Acteur implements IActeur, IVendeurContratCadre{
 	
 	protected int cryptogramme;
 	private IStock stock;
@@ -92,12 +95,16 @@ public class Distributeur2Acteur implements IActeur{
 	// Renvoie la liste des filières proposées par l'acteur
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
+		filieres.add("TESTCCBiofour");
 		return(filieres);
 	}
 
 	// Renvoie une instance d'une filière d'après son nom
 	public Filiere getFiliere(String nom) {
-		return Filiere.LA_FILIERE;
+		switch (nom) { 
+		case "TESTCCBiofour" : return new FiliereTestCCBiofour();
+	    default : return null;
+		}
 	}
 
 	// Renvoie les indicateurs
@@ -132,6 +139,42 @@ public class Distributeur2Acteur implements IActeur{
 	// Renvoie le solde actuel de l'acteur
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
+	}
+
+	@Override
+	public boolean vend(Object produit) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double propositionPrix(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
