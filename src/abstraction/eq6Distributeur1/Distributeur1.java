@@ -108,7 +108,7 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * 
 	*/
 //V1 : 
-	public Map<Chocolat, ArrayList<Double>> prixvente( Map<Chocolat,Double> prixAchat,  Map<Chocolat,Double> quantiteAchete){
+	public Map<Chocolat, ArrayList<Double>> prixVente( Map<Chocolat,Double> prixAchat,  Map<Chocolat,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, NULL);
 			(prixVente.get(key)).add(prixAchat.get(key)*2);
