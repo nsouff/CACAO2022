@@ -15,7 +15,6 @@ import abstraction.eq8Romu.produits.Chocolat;
 public class Distributeur1Acteur implements IActeur {
 	
 	protected int cryptogramme;
-	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>(); 
 
 	public Distributeur1Acteur() {
 	}
@@ -38,17 +37,6 @@ public class Distributeur1Acteur implements IActeur {
 	public void next() {
 	}
 
-	public Double getStockage(Chocolat chocolat) {//leorouppert
-		return this.Stockage.get(chocolat);
-	}
-
-	/**
-	 * @param stockage the stockage to set
-	 */
-	public void setStockage(Chocolat chocolat, Double stock) {//leorouppert
-		this.Stockage.put(chocolat, stock);
-	}
-	
 	// Renvoie la liste des filières proposées par l'acteur
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();

@@ -118,8 +118,4 @@ public class Distributeur1 extends Distributeur1Acteur {
 		
 		return prixVente;
 	}
-
-	
-	
-	
 }
