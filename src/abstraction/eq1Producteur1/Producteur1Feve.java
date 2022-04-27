@@ -19,7 +19,6 @@ public class Producteur1Feve {
 	/**
 	 * @param age
 	 * @param type
-	 * @param malade
 	 * @param perime
 	 */
 	public Producteur1Feve(int age, String type, boolean perime) {
