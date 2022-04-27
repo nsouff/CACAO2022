@@ -1,11 +1,8 @@
 package abstraction.eq6Distributeur1;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
-
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -74,8 +71,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	public void setStockagePrix(ChocolatDeMarque choco, double prix) {
 		StockagePrix.put(choco,prix);
 	}
-<<<<<<< HEAD
-=======
+
 
 
 	/**
@@ -116,7 +112,6 @@ public class Stock extends Distributeur1{ //Emma Humeau
 //Emma Humeau tout ce qui est au dessus
 
 
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
         return this.Stockage;//Retourne toute la hashmap de notre stock
     }
