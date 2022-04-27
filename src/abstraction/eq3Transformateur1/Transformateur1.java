@@ -17,10 +17,10 @@ public class Transformateur1 extends Transformateur1Acteur {
 	public static final double coutTransfoNormal=1;
 	public static final double coutTransfoOriginal=2;
 	
-	private List<Double> prixtransfo ;
+	
 	private HashMap<Feve, Double> quantiteAchat;           /** Integer --> Double*/
 	private HashMap<Chocolat, Integer> quantiteDemandee;
-	private HashMap<Chocolat, Integer> quantiteVendue;
+	
 	private HashMap<Chocolat, Double> dernierPrixVente;
 	private HashMap<Feve, Double> prixAchat;
 	private HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
@@ -37,11 +37,11 @@ public class Transformateur1 extends Transformateur1Acteur {
 		return stockFeve;
 	}
 
-	/** détermine le prix d'achat max; auteur Julien  */
+	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  */
 	public void prixMaxAchat() {		
-			prixAchat.put(Feve.FEVE_BASSE,dernierPrixVente.get(Chocolat.MQ) / prixtransfo.get(1));	
-			prixAchat.put(Feve.FEVE_MOYENNE,dernierPrixVente.get(Chocolat.MQ) / prixtransfo.get(0));
-			prixAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get(Chocolat.MQ_BE) / prixtransfo.get(0));
+			prixAchat.put(Feve.FEVE_BASSE,dernierPrixVente.get(Chocolat.MQ) - coutTransfoNormal);	
+			prixAchat.put(Feve.FEVE_MOYENNE,dernierPrixVente.get(Chocolat.MQ) - coutTransfoNormal);
+			prixAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get(Chocolat.MQ_BE) - coutTransfoNormal);
 	}
 	
 	/** détermine la quantité de fèves à acheter; auteur Julien */
