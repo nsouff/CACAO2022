@@ -10,10 +10,9 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
-import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
-	
 	protected int cryptogramme;
 	private Stock NotreStock = new Stock();
 	/**
@@ -90,5 +89,37 @@ public class Distributeur1Acteur implements IActeur {
 		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
 	}
 
+	/**@author Nolann
+		/* FONCTION POUR FIXER LES PRIX DE VENTE :
+		 * 
+		 * ENTREES : prixAchat, quantiteAchetee, variable prixVente
+	<<<<<<< HEAD
+		 * SORTIES : HashMap(ChocolatDeMarque,(prix,quantité)) 
+	=======
+		 * SORTIES : prix 
+	>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
+		 * 
+		 * V1.0 : 
+		 * - prix fixe = prix achat*2
+		 * - marge fixe (différente pour chaque produit)
+		 * - raisonner en marge du prix d'achat
+		*/
+	//V1 : 
+	//NOLANN
+	protected Map<ChocolatDeMarque, ArrayList<Double>> prixVente = new HashMap<ChocolatDeMarque, ArrayList<Double>>();
+	private static final ArrayList<Double> NULL = null;
+
+	public Map<ChocolatDeMarque, ArrayList<Double>> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
+		prixAchat.forEach((key,value)->{
+			prixVente.put(key, NULL);
+			(prixVente.get(key)).add(prixAchat.get(key)*2);
+			(prixVente.get(key)).add(quantiteAchete.get(key));
+				
+		});
+		
+		return prixVente;
+	}
+	
+	
 }
 
