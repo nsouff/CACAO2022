@@ -9,13 +9,12 @@ public class Stock<I> {
 		private HashMap<I,Double> quantite;
 		private double stocktotal;
 		
-	public Stock(double stocktotal){
+		
+	public Stock(double stocktotal) {
+		this.quantite = new HashMap<I, Double>();
 		this.stocktotal=stocktotal;
 	}
-		
-	public Stock() {
-		this.quantite = new HashMap<I, Double>();
-	}
+	//Marie
 	public void ajouter (I produit, double qt) {
 		if (qt>0) {	
 			
@@ -37,6 +36,7 @@ public class Stock<I> {
 		throw new IllegalArgumentException("impossible");
 }
 }
+	//Marie
 	public double getQuantite(I produit) {
 		if (this.quantite.keySet().contains(produit)) {
 			return this.quantite.get(produit);
@@ -45,14 +45,15 @@ public class Stock<I> {
 		}
 		
 	}
+	// Marie
 	public double quantiteStockTotale(I produit) {
 		for(Double d: this.quantite.values()) {
-			stocktotal=stocktotal+d;
+			this.stocktotal=this.stocktotal+d;
 		}
-		return stocktotal;
+		return this.stocktotal;
 		
 	}
-	
+	// Marie
 	public double stockRestant(I produit) {
 		return (Filiere.LA_FILIERE.getIndicateur("stock max")-this.stocktotal);
 	}
