@@ -11,13 +11,13 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected HashMap<Feve, Double> quantiteAchatFeve;           /** quantité de fève qu'on souhaite acheter */
 	protected HashMap<Chocolat, Integer> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
 	protected dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
-	protected HashMap<Feve, Double> prixAchat;
+	protected HashMap<Feve, Double> prixAchatFeve;
 	protected HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
 	protected HashMap<Chocolat,Double> stockChoco;           /** Integer --> Double*/
 	
 	/** renvoie la quantité voulue; auteur Julien  */
 	public double demande(Feve f, double cours) {
-		if (cours<prixAchat.get(f)) {
+		if (cours<prixAchatFeve.get(f)) {
 			
 		}
 		return 0.;
