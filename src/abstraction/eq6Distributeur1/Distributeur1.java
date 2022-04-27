@@ -64,7 +64,7 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * @return the stockage
 	 */
 	public Double getStockage(Chocolat chocolat) {//leorouppert
-		return this.Stockage.get(chocolat);
+		return (this.Stockage).get(chocolat);
 	}
 
 	/**
