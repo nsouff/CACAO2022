@@ -39,9 +39,9 @@ public class Transformateur1 extends Transformateur1Acteur {
 
 	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  */
 	public void prixMaxAchat() {		
-			prixAchat.put(Feve.FEVE_BASSE,dernierPrixVente.get(Chocolat.MQ) - coutTransfoNormal);	
-			prixAchat.put(Feve.FEVE_MOYENNE,dernierPrixVente.get(Chocolat.MQ) - coutTransfoNormal);
-			prixAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get(Chocolat.MQ_BE) - coutTransfoNormal);
+			prixAchat.put(Feve.FEVE_BASSE,dernierPrixVente.get(Chocolat.MQ) - coutTransfo);	
+			prixAchat.put(Feve.FEVE_MOYENNE,dernierPrixVente.get(Chocolat.MQ) - coutTransfo);
+			prixAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get(Chocolat.MQ_BE) - coutTransfo);
 	}
 	
 	/** détermine la quantité de fèves à acheter; auteur Julien */
