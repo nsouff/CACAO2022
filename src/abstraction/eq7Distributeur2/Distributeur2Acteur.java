@@ -36,6 +36,7 @@ public class Distributeur2Acteur implements IActeur{
 	}
 
 	public void initialiser() {
+		this.stock = new Stock(this);
 	}
 	
 	//edgard 
