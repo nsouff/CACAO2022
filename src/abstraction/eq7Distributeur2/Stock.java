@@ -39,7 +39,7 @@ public class Stock implements IStock{
 		return v.getValeur();
 	}
 	
-	public void setQuantite(ChocolatDeMarque chocolat,double quantite) {
+	private void setQuantite(ChocolatDeMarque chocolat,double quantite) {
 		Variable v = reserve.get(chocolat);
 		v.setValeur(this.acteur, quantite);
 	}

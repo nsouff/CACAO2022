@@ -18,10 +18,16 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class Distributeur2Acteur implements IActeur, IVendeurContratCadre{
+public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
 	
 	protected int cryptogramme;
 	private IStock stock;
+	public static final int EPS_ECH_OK=2;
+	public static final int ECH_MAX=5;
+	public static final Double PRIX_MAX=100.0;
+	public static final Double PRIX_OK=50.0;
+	public static final Double EPSILON_PRIX=5.0;
+	
 
 	public Distributeur2Acteur() {
 	}
@@ -142,39 +148,72 @@ public class Distributeur2Acteur implements IActeur, IVendeurContratCadre{
 	}
 
 	@Override
-	public boolean vend(Object produit) {
+	//edgard
+	public boolean achete(Object produit) {
 		// TODO Auto-generated method stub
-		return false;
+		if (stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	@Override
-	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+	//edgard
+	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat){
 		// TODO Auto-generated method stub
-		return null;
+		Echeancier eC = contrat.getEcheancier();
+		
+		ChocolatDeMarque choc = (ChocolatDeMarque)contrat.getProduit();
+		int e = Filiere.LA_FILIERE.getEtape();
+		double ventes = 0.0;
+		for (int j=1; j<6; j++) {
+			ventes+=Filiere.LA_FILIERE.getVentes(choc, e-j);
+		}
+		double venteParStep= ventes/6;
+		double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
+		int nmbStep = (int) Math.round(chocAacheter/venteParStep);
+		Echeancier echOK = new Echeancier(e,nmbStep,venteParStep);
+		
+		if (eC.getStepFin()>ECH_MAX) {
+			return null;
+		}else {
+			if (eC.equals(echOK)) {
+				return eC;
+			}else {
+				if(eC.getStepFin()>echOK.getStepFin()) {
+					return new Echeancier(eC.getStepDebut(),eC.getNbEcheances()-EPS_ECH_OK,eC.getQuantiteTotale()/(eC.getNbEcheances()-EPS_ECH_OK));
+				}else {
+					return null;
+				}
+			}
+		}
 	}
 
 	@Override
-	public double propositionPrix(ExemplaireContratCadre contrat) {
+	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		return 0;
+		if (contrat.getPrix()>PRIX_MAX) {
+			return 0;
+		}else {
+			if(contrat.getPrix()==PRIX_OK) {
+				return contrat.getPrix();
+			}else {
+				return contrat.getPrix()-EPSILON_PRIX;
+			}
+		}
 	}
 
 	@Override
-	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		return 0;
+		this.stock.addProduit((ChocolatDeMarque)produit, quantite);
 	}
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
