@@ -17,7 +17,7 @@ public class Stock extends Distributeur1{
 	private double prixStockageActuel;
 	private Map<Chocolat, Double> teteGondole = new HashMap<Chocolat, Double>(); // (nom du chocolat,% en tête de gondole) 
 	private int qteStockage;
-	private Map<Chocolat, ArrayList<Double>[][] > Stockage = new HashMap<Chocolat, ArrayList<Double>[][] >(); //(nom choco, table 2 entrées prix et qté)
+	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>(); //(nom choco, table 2 entrées prix et qté)
 	//private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
 	
 	public void main() {
@@ -68,19 +68,13 @@ public class Stock extends Distributeur1{
 	public void setQteStockage(int qteStockage, Map Achat) {
 		this.qteStockage = qteStockage ;
 	}
-
-	/**
-	 * @return the stockage
-	 */
-	public Map<String, Double> getStockage() {
-		return Stockage;
+	
+	
+	public Double getStockage(Chocolat chocolat) {//leorouppert
+		return this.Stockage.get(chocolat);//Retourne le stock du chocolat demandé
 	}
-
-	/**
-	 * @param stockage the stockage to set
-	 */
-	public void setStockage(Map<String, Double> stockage) {
-		Stockage = stockage;
+	public void setStockage(Chocolat chocolat, Double quantite) {//leorouppert
+		this.Stockage.put(chocolat, quantite);//Modifie la valeur du stock du chocolat associé
 	}
 
 }
