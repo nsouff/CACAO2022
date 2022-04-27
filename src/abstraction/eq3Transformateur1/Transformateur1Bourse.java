@@ -15,10 +15,11 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
 	protected HashMap<Chocolat,Double> stockChoco;           /** Integer --> Double*/
 	
-	/** renvoie la quantité voulue; auteur Julien  */
+	/** renvoie la quantité de fève voulue; auteur Julien 
+	 * Pas de prise en compte pour l'instant des contrats */
 	public double demande(Feve f, double cours) {
 		if (cours<prixAchatFeve.get(f)) {
-			
+			return quantiteAchatFeve.get(f)*0.5;
 		}
 		return 0.;
 	}
