@@ -14,7 +14,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	@Override
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
-		
+		stockFeve.put(f, quantiteEnKg + stockFeve.get(f)) ;
 	}
 
 	@Override
