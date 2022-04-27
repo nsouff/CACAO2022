@@ -1,3 +1,5 @@
+// julien 27/04
+
 package abstraction.eq5Transformateur3;
 
 import java.awt.Color;
@@ -22,7 +24,7 @@ public class AcheteurContrat implements IAcheteurContratCadre {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.getDescription();
 	}
 
 	@Override
