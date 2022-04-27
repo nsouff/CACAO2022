@@ -33,6 +33,9 @@ public class arbre {
 	public void setMaladie(int maladie) {
 		this.stade_maladie=maladie;
 	}
+	public void setUt_debut_maladie(int ut) {
+		this.ut_debut_maladie=ut;
+	}
 	public void setQualite(int qualite) {
 		this.qualite=qualite;
 	}
@@ -57,6 +60,9 @@ public class arbre {
 	public int getMaladie() {
 		return this.stade_maladie;
 	}
+	public int getUt_debut_maladie( ) {
+		return this.ut_debut_maladie;
+	}
 	public int getQualite() {
 		return this.qualite;
 	}
@@ -74,24 +80,38 @@ public class arbre {
 	}
 	
 	public void MAJMaladie() {
-		double d = Math.random();
-		if (d<=0.03) {
-			double stade_maladie = Math.random();
-			if (stade_maladie<=0.45) {
-				this.setMaladie(1);
+		if (stade_maladie == 0) {
+			double d = Math.random();
+			if (d<=0.03) {
+				double stade_maladie = Math.random();
+				if (stade_maladie<=0.45) {
+					this.setMaladie(1);
+				}
+				if ((stade_maladie>0.45) && (stade_maladie<=0.7)) {
+					this.setMaladie(2);
+				}
+				if ((stade_maladie>0.7) && (stade_maladie<=0.85)) {
+					this.setMaladie(3);
+				}
+				if ((stade_maladie>0.85) && (stade_maladie<=0.95)) {
+					this.setMaladie(4);
+				}
+				if (stade_maladie>0.95) {
+					this.setMaladie(5);
+				}
 			}
-			if ((stade_maladie>0.45) && (stade_maladie<=0.7)) {
-				this.setMaladie(2);
-			}
-			if ((stade_maladie>0.7) && (stade_maladie<=0.85)) {
-				this.setMaladie(3);
-			}
-			if ((stade_maladie>0.85) && (stade_maladie<=0.95)) {
-				this.setMaladie(4);
-			}
-			if (stade_maladie>0.95) {
-				this.setMaladie(5);
-			}
+		}
+		if ((stade_maladie == 1) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 2)) {
+			this.setMaladie(0);
+		}
+		if ((stade_maladie == 2) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 5)) {
+			this.setMaladie(0);
+		}
+		if ((stade_maladie == 3) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 4)) {
+			this.setMaladie(0);
+		}
+		if ((stade_maladie == 4) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 4)) {
+			this.setMaladie(0);
 		}
 	}
 	public int Esperance_vie() {
