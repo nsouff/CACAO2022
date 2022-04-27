@@ -77,7 +77,7 @@ public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 }
 @Override
 public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-	x.setStock(x.getStock()+quantite);
+	Distributeur1.setStock(x.getStock()+quantite);
 }
 }
 
