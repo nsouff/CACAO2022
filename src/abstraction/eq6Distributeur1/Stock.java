@@ -85,7 +85,9 @@ public class Stock extends Distributeur1{ //Emma Humeau
 		return StockageQte;
 	}
 
-
+	public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
+    return this.StockageQte.get(chocolat);//Retourne le stock du chocolat demandé
+	}
 
 	/**
 	 * @param stockageQte the stockageQte to set
