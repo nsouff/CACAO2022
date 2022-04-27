@@ -25,4 +25,4 @@ public class Transformateur2Vente extends Transformateur2Achat {
  public boolean vente() {
 	 return this.StockDispo() & this.prixAcceptable(prix_ori, prix_ori);
  }
-}
+}//BLA
