@@ -17,5 +17,5 @@ public interface IStock {
 	
 	public double getSeuilRachat(ChocolatDeMarque chocolat);
 	
-	public double setSeuilRachat(ChocolatDeMarque chocolat, Double seuil);
+	public void setSeuilRachat(ChocolatDeMarque chocolat, Double seuil);
 }
