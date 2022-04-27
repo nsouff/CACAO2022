@@ -11,19 +11,32 @@ import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
  */
 public class AcheteurAO extends Distributeur1Acteur implements IAcheteurAO {
 
+    /** 
+     * @author Nathan
+     */
     @Override
     public double proposerPrix(OffreVente offre) {
+        if (this.getNotreStock().getStockage(offre.getChocolat()) < 1) {
+            return 0.0;
+        }
         if (offre.enTG()) {
             return 80.0;
         }
         return 100.0;
     }
 
+    /**
+     * @author Nathan
+     */
     @Override
     public void notifierAchatAO(PropositionAchatAO propositionRetenue) {
-        // Il faudra mettre à jour le stock
+        this.getNotreStock().setStockage(propositionRetenue.getOffre().getChocolat(), (Double) propositionRetenue.getOffre().getQuantiteKG());
     }
 
+    /**
+     * @author Nathan
+     * 
+     */
     @Override
     public void notifierPropositionNonRetenueAO(PropositionAchatAO propositionNonRetenue) {
         // Rien pour l'instant
