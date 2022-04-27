@@ -6,44 +6,8 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Gamme;
 
-public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{
+public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{ //leorouppert
 
-private float duree_contrat;
-private float prix_achat;
-private float qte_achat;
-private int num_vendeur;
-private Object produit;
-
-public Acheteur_Contrat(float duree_contrat, float prix_achat, float qte_achat, int num_vendeur) { //leorouppert
-	this.duree_contrat = duree_contrat;
-	this.prix_achat = prix_achat;
-	this.num_vendeur = num_vendeur;
-	this.qte_achat = qte_achat;
-}
-/**
- * @return the num_vendeur
- */
-public int getNum_vendeur() {//leorouppert
-	return num_vendeur;
-}
-/**
- * @return the duree_contrat
- */
-public float getDuree_contrat() {//leorouppert
-	return duree_contrat;
-}
-/**
- * @return the prix_achat
- */
-public float getPrix_achat() {//leorouppert
-	return prix_achat;
-}
-/**
- * @return the qte_achat
- */
-public float getQte_achat() {//leorouppert
-	return qte_achat;
-}
 @Override
 public boolean achete(Object produit) {//a modifier avec considération de stockage
 	if (produit instanceof Chocolat) {
@@ -77,7 +41,7 @@ public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 }
 @Override
 public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-	Distributeur1.setStockage((Chocolat) produit, Distributeur1.getStockage((Chocolat) produit) + quantite);
+	this.setStockage((Chocolat) produit, this.getStockage((Chocolat) produit) + quantite);
 }
 }
 
