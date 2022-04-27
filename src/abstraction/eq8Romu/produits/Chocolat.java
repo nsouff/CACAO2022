@@ -1,4 +1,4 @@
- package abstraction.eq8Romu.produits;
+package abstraction.eq8Romu.produits;
 
 import abstraction.eq8Romu.filiere.Filiere;
 
