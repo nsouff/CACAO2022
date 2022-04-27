@@ -108,14 +108,12 @@ public class Distributeur1Acteur implements IActeur {
 		*/
 	//V1 : 
 	//NOLANN
-	protected Map<ChocolatDeMarque, ArrayList<Double>> prixVente = new HashMap<ChocolatDeMarque, ArrayList<Double>>();
+	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
-
-	public Map<ChocolatDeMarque, ArrayList<Double>> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
+	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
-			prixVente.put(key, NULL);
-			(prixVente.get(key)).add(prixAchat.get(key)*2);
-			(prixVente.get(key)).add(quantiteAchete.get(key));
+			prixVente.put(key, (prixAchat.get(key))*2);
+			
 				
 		});
 		

@@ -10,72 +10,130 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
-public class Stock extends Distributeur1{
+public class Stock extends Distributeur1{ //Emma Humeau
 	
-	private Map<ChocolatDeMarque,Double> prixInstantanneChoco = new HashMap<ChocolatDeMarque, Double>();
-	private double prixStockageActuel;
-	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du ChocolatDeMarque,% en tête de gondole) 
-	private int qteStockage;
-	private Map<ChocolatDeMarque, Double> Stockage = new HashMap<ChocolatDeMarque, Double>();
-	//private Map<ChocolatDeMarque, Integer> Achat = new HashMap<ChocolatDeMarque, Integer>();
-	
-	public void main() {
-		for (Map.Entry<ChocolatDeMarque, Double > entry : prixInstantanneChoco.entrySet()) {
-            ChocolatDeMarque keyPrix = entry.getKey();
-            Double valuePrix = entry.getValue();
+	private Map<ChocolatDeMarque,Double> StockagePrix = new HashMap<ChocolatDeMarque, Double>();
+	private double prixStockageTotale;
 
-		for (int i=0; i<qteStockage; i++){
-			Stockage[0][i].add(valuePrix)
+	private Map<ChocolatDeMarque,Double> StockageQte = new HashMap<ChocolatDeMarque, Double>();
+	private double qteStockageTotale; 
+	
+	//abandon map3
+	//private ArrayList<Double> CouplePrixQte = new ArrayList();//[prixInstantanneChoco.size()][prixInstantanneChoco.size()];
+	//private Map<ChocolatDeMarque,  ArrayList<Double> > Stockage = new HashMap<ChocolatDeMarque, ArrayList<Double> >(); //(choco, table 2 entrées prix et qté)
+	
+	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole) 
+
+	
+
+	public void Distributeur() { //Emma Humeau
+
+		double sumprix=0;
+		double sumqte=0;
+	
+		//calcule le prix du stockage total 
+		for (Map.Entry<ChocolatDeMarque, Double > entry : StockagePrix.entrySet()) {
+            ChocolatDeMarque KeyPrix = entry.getKey();
+            Double ValuePrix = entry.getValue();
+            sumprix += ValuePrix;
+           }
+	
+		this.prixStockageTotale = sumprix;
+		
+		//calcule la qte du stockage total
+		for (Map.Entry<ChocolatDeMarque, Double > entry : StockageQte.entrySet()) {
+            ChocolatDeMarque KeyQte = entry.getKey();
+            Double ValueQte = entry.getValue();
+            sumqte += ValueQte;
 		}
 
-	
-		for (Map.Entry<String, ArrayList<Double> > entry : Stockage.entrySet()) {
-            String keyStockage = entry.getKey();
-            ArrayList<Double> valueStockage = entry.getValue();
-        
-		this.prixStockageActuel = 
-	}
-	
-//Emma Humeau a écrit ce code pour la gestion du stockage
-	
-	
-	/**
-	 * @return the prixStockageActuel
-	 */
-	public double getPrixStockageActuel() {
-		return prixStockageActuel;
+		
+		this.qteStockageTotale = sumqte;
+
+
 	}
 
-	/**
-	 * @param prixStockageActuel the prixStockageActuel to set
-	 */
-	public void setPrixStockageActuel(double prixStockage, int qteStockage) {
-		this.prixStockageActuel = prixStockage*qteStockage;
-	}
-
-	/**
-	 * @return the qteStockage
-	 */
-	public int getQteStockage() {
-		return qteStockage;
-	}
-
-	/**
-	 * @param qteStockage the qteStockage to set
-	 */
 	
-	public void setQteStockage(int qteStockage, Map Achat) {
-		this.qteStockage = qteStockage ;
+	
+
+
+	/**
+	 * @return the stockagePrix
+	 */
+	public Map<ChocolatDeMarque, Double> getStockagePrix() {
+		return StockagePrix;
 	}
+
+
+
+	/**
+	 * @param stockagePrix the stockagePrix to set
+	 */
+	public void setStockagePrix(ChocolatDeMarque choco, double prix) {
+		StockagePrix.put(choco,prix);
+	}
+<<<<<<< HEAD
+=======
+
+
+	/**
+	 * @return the stockageQte
+	 */
+	public Map<ChocolatDeMarque, Double> getStockageQte() {
+		return StockageQte;
+	}
+
+
+
+	/**
+	 * @param stockageQte the stockageQte to set
+	 */
+	public void setStockageQte(ChocolatDeMarque choco, double qte) {
+		StockageQte.put(choco, qte);
+	}
+
+
+
+	/**
+	 * @return the prixStockageTotale
+	 */
+	public double getPrixStockageTotale() {
+		return prixStockageTotale;
+	}
+
+
+
+	/**
+	 * @return the qteStockageTotale
+	 */
+	public double getQteStockageTotale() {
+		return qteStockageTotale;
+	}
+
+
+//Emma Humeau tout ce qui est au dessus
+
+
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
-		return this.Stockage;//Retourne toute la hashmap de notre stock
-	}
-	public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
-		return this.Stockage.get(chocolat);//Retourne le stock du chocolat demandé
-	}
-	public void setStockage(ChocolatDeMarque chocolat, Double quantite) {//leorouppert
-		this.Stockage.put(chocolat, quantite);//Modifie la valeur du stock du chocolat associé
-	}
+        return this.Stockage;//Retourne toute la hashmap de notre stock
+    }
+    
+    public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
+        return this.Stockage.get(chocolat);//Retourne le stock du chocolat demandé
+    }
+    
+    public void setStockage(ChocolatDeMarque chocolat, Double quantite, Double prix) {//leorouppert
+        this.Stockage.put(chocolat, ArrayList<Double>[prix][quantite]);//Modifie la valeur du stock du chocolat associé
+    }
+		
+}	
+	
 
-}
+	
+	
+
+
+
