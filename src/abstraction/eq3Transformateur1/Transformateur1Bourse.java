@@ -24,16 +24,14 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 		return 0.;
 	}
 
-	@Override
+	/** modification du stock de fèves; auteur Anna */
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
-		// TODO Auto-generated method stub
 		stockFeve.put(f, quantiteEnKg + stockFeve.get(f)) ;
 	}
 
-	@Override
+	/** */
 	public void notificationBlackList(int dureeEnStep) {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 }
