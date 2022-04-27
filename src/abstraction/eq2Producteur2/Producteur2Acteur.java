@@ -19,9 +19,6 @@ public class Producteur2Acteur implements IActeur {
 	public double prixstockageFixe = 100;
 
 	private Variable prixstockage ;
-	private double dureeaffinageBQ = 1;
-	private double dureeaffinageMQ = 2;
-	private double dureeaffinageHQ = 3;
 	
 	public Producteur2Acteur() {
 		this.prixstockage= new VariableReadOnly("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
