@@ -14,11 +14,11 @@ import java.util.LinkedList;
 
 public class Stock extends Distributeur1{ //Emma Humeau
 	
-	private Map<ChocolatDeMarque,Double> prixInstantanneChoco = new HashMap<ChocolatDeMarque, Double>();
+	private Map<ChocolatDeMarque,Double> StockagePrix = new HashMap<ChocolatDeMarque, Double>();
 	private double prixStockageTotale;
 
-	private Map<ChocolatDeMarque,Double> qteInstantanneChoco = new HashMap<ChocolatDeMarque, Double>();
-	private double qteStockageTotale;
+	private Map<ChocolatDeMarque,Double> StockageQte = new HashMap<ChocolatDeMarque, Double>();
+	private double qteStockageTotale; 
 	
 	//abandon map3
 	//private ArrayList<Double> CouplePrixQte = new ArrayList();//[prixInstantanneChoco.size()][prixInstantanneChoco.size()];
@@ -34,7 +34,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
 		double sumqte=0;
 	
 		//calcule le prix du stockage total 
-		for (Map.Entry<ChocolatDeMarque, Double > entry : prixInstantanneChoco.entrySet()) {
+		for (Map.Entry<ChocolatDeMarque, Double > entry : StockagePrix.entrySet()) {
             ChocolatDeMarque KeyPrix = entry.getKey();
             Double ValuePrix = entry.getValue();
             sumprix += ValuePrix;
@@ -43,7 +43,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
 		this.prixStockageTotale = sumprix;
 		
 		//calcule la qte du stockage total
-		for (Map.Entry<ChocolatDeMarque, Double > entry : qteInstantanneChoco.entrySet()) {
+		for (Map.Entry<ChocolatDeMarque, Double > entry : StockageQte.entrySet()) {
             ChocolatDeMarque KeyQte = entry.getKey();
             Double ValueQte = entry.getValue();
             sumqte += ValueQte;
@@ -58,23 +58,39 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	
 	
 
-    /**
-	 * @return the prixInstantanneChoco
-	 */
-	public Map<ChocolatDeMarque, Double> getPrixInstantanneChoco() {
-		return prixInstantanneChoco;
-	}
 
+	/**
+	 * @return the stockagePrix
+	 */
+	public Map<ChocolatDeMarque, Double> getStockagePrix() {
+		return StockagePrix;
+	}
 
 
 
 	/**
-	 * @param prixInstantanneChoco the prixInstantanneChoco to set
+	 * @param stockagePrix the stockagePrix to set
 	 */
-	public void setPrixInstantanneChoco(Map<ChocolatDeMarque, Double> prixInstantanneChoco) {
-		this.prixInstantanneChoco = prixInstantanneChoco;
+	public void setStockagePrix(ChocolatDeMarque choco, double prix) {
+		StockagePrix.put(choco,prix);
 	}
 
+
+	/**
+	 * @return the stockageQte
+	 */
+	public Map<ChocolatDeMarque, Double> getStockageQte() {
+		return StockageQte;
+	}
+
+
+
+	/**
+	 * @param stockageQte the stockageQte to set
+	 */
+	public void setStockageQte(ChocolatDeMarque choco, double qte) {
+		StockageQte.put(choco, qte);
+	}
 
 
 
@@ -87,37 +103,6 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 
 
-
-	/**
-	 * @param prixStockageTotale the prixStockageTotale to set
-	 */
-	public void setPrixStockageTotale(double prixStockageTotale) {
-		this.prixStockageTotale = prixStockageTotale;
-	}
-
-
-
-
-	/**
-	 * @return the qteInstantanneChoco
-	 */
-	public Map<ChocolatDeMarque, Double> getQteInstantanneChoco() {
-		return qteInstantanneChoco;
-	}
-
-
-
-
-	/**
-	 * @param qteInstantanneChoco the qteInstantanneChoco to set
-	 */
-	public void setQteInstantanneChoco(Map<ChocolatDeMarque, Double> qteInstantanneChoco) {
-		this.qteInstantanneChoco = qteInstantanneChoco;
-	}
-
-
-
-
 	/**
 	 * @return the qteStockageTotale
 	 */
@@ -126,16 +111,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	}
 
 
-
-
-	/**
-	 * @param qteStockageTotale the qteStockageTotale to set
-	 */
-	public void setQteStockageTotale(double qteStockageTotale) {
-		this.qteStockageTotale = qteStockageTotale;
-	}
-
-
+//Emma Humeau tout ce qui est au dessus
 
 
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
