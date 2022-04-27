@@ -7,13 +7,11 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
 public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements IVendeurBourse{
-
-
-
 	/**
 	 * @param feve
 	 * @param stock
 	 */
+	
 	public ProducteurActeur1VenteBourse(Feve feve, double stock) {
 		super(feve, stock);
 		// TODO Auto-generated constructor stub
