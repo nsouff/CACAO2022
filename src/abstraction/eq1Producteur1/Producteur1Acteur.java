@@ -20,6 +20,7 @@ public class Producteur1Acteur implements IActeur {
 	protected Feve feve;
 	public Variable prixstockageVariable ;
 	public Variable prixstockageFixe ;
+	private List<Double> prixmoyenFeve ;
 	
 	
 	
