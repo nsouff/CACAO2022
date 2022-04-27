@@ -18,8 +18,8 @@ import abstraction.eq8Romu.produits.Gamme;
 public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurContratCadre {
 
 	
-
-	@Override
+/* on regarde l etat de nos stocks et on lance la procédure demande 
+	acheteur + get vendeur de la classe supperviseur vente cadre */
 	public void next() {
 		// TODO Auto-generated method stub
 		super.next();
@@ -63,11 +63,9 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 		}
 	}
 
-	@Override
+// on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		
-		
 	}
 
 	// Julien & Karla
