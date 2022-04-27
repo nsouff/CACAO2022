@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2Acteur implements IActeur{
 	
 	protected int cryptogramme;
+	private IStock stock;
 
 	public Distributeur2Acteur() {
 	}
@@ -30,8 +34,31 @@ public class Distributeur2Acteur implements IActeur{
 
 	public void initialiser() {
 	}
-
+	
+	//edgard 
+	//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
+	//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
+	//On compare ces prixs et on réalise finalement le contrat avec le meilleur vendeur.
 	public void next() {
+		SuperviseurVentesContratCadre c = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		ChocolatDeMarque choc;
+		int e = Filiere.LA_FILIERE.getEtape();
+		if (stock.getQuantite(choc)<stock.getSeuilRachat(choc)) {
+			List<IVendeurContratCadre> vendeurs =c.getVendeurs(choc);
+			for (int i=0; i<vendeurs.size(); i++) {
+				double ventes = 0.0;
+				for (int j=1; j<6; j++) {
+					ventes+=Filiere.LA_FILIERE.getVentes(choc, e-j);
+				}
+				double venteParStep= ventes/6;
+				double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
+				int nmbStep = (int) Math.round(chocAacheter/venteParStep);
+				Echeancier(e,nmbStep,venteParStep);
+				c.demandeAcheteur(this, vendeurs.get(i), choc, null, cryptogramme, false);
+				
+			}
+		}
+		
 	}
 
 	
