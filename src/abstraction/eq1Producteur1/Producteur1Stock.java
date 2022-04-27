@@ -1,9 +1,10 @@
 package abstraction.eq1Producteur1;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Producteur1Stock extends Producteur1Acteur {
-	private List<Producteur1Feve> liste_feves;
+public class Producteur1Stock {
+	private  Map<Feve,List<Producteur1Feve>> ;
 	
 	
 	// Auteur : Laure //
