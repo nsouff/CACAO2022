@@ -10,7 +10,7 @@ public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurCo
 
 @Override
 public boolean achete(Object produit) {//a modifier avec considération de stockage
-	if (produit instanceof Chocolat) {
+	if (produit instanceof Chocolat && this.getNotreStock().getStockage((Chocolat) produit) <= 1) {
 		if (((Chocolat) produit).getGamme() == Gamme.BASSE && !((Chocolat) produit).isBioEquitable() && !((Chocolat) produit).isOriginal()) {
 			return true; }//BQ
 		if (((Chocolat) produit).getGamme() == Gamme.BASSE && !((Chocolat) produit).isBioEquitable() && ((Chocolat) produit).isOriginal()) {
@@ -41,7 +41,7 @@ public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 }
 @Override
 public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-	this.setStockage((Chocolat) produit, this.getStockage((Chocolat) produit) + quantite);
+	this.getNotreStock().setStockage((Chocolat) produit, this.getNotreStock().getStockage((Chocolat) produit) + quantite);
 }
 }
 

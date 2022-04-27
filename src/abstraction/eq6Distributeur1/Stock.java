@@ -17,7 +17,7 @@ public class Stock extends Distributeur1{
 	private double prixStockageActuel;
 	private Map<Chocolat, Double> teteGondole = new HashMap<Chocolat, Double>(); // (nom du chocolat,% en tête de gondole) 
 	private int qteStockage;
-	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>(); //(nom choco, table 2 entrées prix et qté)
+	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>();
 	//private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
 	
 	public void main() {

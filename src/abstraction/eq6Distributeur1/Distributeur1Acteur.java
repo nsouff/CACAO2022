@@ -15,7 +15,13 @@ import abstraction.eq8Romu.produits.Chocolat;
 public class Distributeur1Acteur implements IActeur {
 	
 	protected int cryptogramme;
-
+	private Stock NotreStock = new Stock();
+	/**
+	 * @return the notreStock
+	 */
+	public Stock getNotreStock() {
+		return NotreStock;
+	}
 	public Distributeur1Acteur() {
 	}
 	public String getNom() {
