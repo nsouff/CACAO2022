@@ -1,25 +1,39 @@
 package abstraction.eq6Distributeur1;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import abstraction.eq8Romu.produits.Chocolat;
 
+<<<<<<< HEAD
+=======
 import java.util.ArrayList;
 
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 
 public class Distributeur1 extends Distributeur1Acteur {
+<<<<<<< HEAD
+	private Map<Chocolat,Double> prixInstantanneChoco = new HashMap<Chocolat, Double>();
+=======
 	private static final ArrayList<Double> NULL = null;
 	private double prixInstantane;
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	private double prixStockageActuel;
 	private Map<Chocolat, Double> teteGondole = new HashMap<Chocolat, Double>(); // (nom du chocolat,% en tête de gondole) 
 	private int qteStockage;
+<<<<<<< HEAD
+	private Map<Chocolat, ArrayList<Double>[][] > Stockage = new HashMap<Chocolat, ArrayList<Double>[][] >(); //(nom choco, table 2 entrées prix et qté)
+	//private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
+=======
 	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>(); 
 	private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
 	private Map<Chocolat, ArrayList<Double>> prixVente = new HashMap<Chocolat, ArrayList<Double>>();
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 
 
 //github.com/nsouff/CACAO2022
@@ -27,22 +41,10 @@ public class Distributeur1 extends Distributeur1Acteur {
 		super();
 	}
 	
-//Emma Humeau a écrit ce code pour la gestion du stockage
-	
-	/**
-	 * @return the prixStockageActuel
-	 */
-	public double getPrixStockageActuel() {
-		return prixStockageActuel;
-	}
 
-	/**
-	 * @param prixStockageActuel the prixStockageActuel to set
-	 */
-	public void setPrixStockageActuel(double prixStockage, int qteStockage) {
-		this.prixStockageActuel = prixStockage*qteStockage;
-	}
 
+<<<<<<< HEAD
+=======
 	/**
 	 * @return the qteStockage
 	 */
@@ -78,11 +80,15 @@ public class Distributeur1 extends Distributeur1Acteur {
 	public double getPrixStockage() {
 		return prixStockage;
 	}
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 		
+<<<<<<< HEAD
+=======
 /*@author Nolann
 	//@author Nolann
 
 =======
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 >>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	/* FONCTION POUR FIXER LES PRIX DE VENTE :
 	 * 
