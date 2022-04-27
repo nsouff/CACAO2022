@@ -40,7 +40,10 @@ public class Distributeur1Acteur implements IActeur {
 	public void initialiser() {
 	}
 
-	public void next() {
+	public void next() {//leorouppert
+		for (int i=0, i<this.getNotreStock().getMapStock().size(), i++) {
+			if this.getNotreStock()
+		}
 	}
 
 	// Renvoie la liste des filières proposées par l'acteur

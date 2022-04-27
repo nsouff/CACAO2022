@@ -69,7 +69,9 @@ public class Stock extends Distributeur1{
 		this.qteStockage = qteStockage ;
 	}
 	
-	
+	public Map<Chocolat, Double> getMapStock() {//leorouppert
+		return this.Stockage;//Retourne toute la hashmap de notre stock
+	}
 	public Double getStockage(Chocolat chocolat) {//leorouppert
 		return this.Stockage.get(chocolat);//Retourne le stock du chocolat demandé
 	}
