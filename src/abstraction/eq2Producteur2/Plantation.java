@@ -10,6 +10,9 @@ public class Plantation {
 	
 	public Plantation () {
 		/*
+		 
+		NB : on part avec des plantations ! 
+		
 		Nombre total d'arbre nécessaire = 1 milliard (en prenant en compte la quantité de chocolat nécessaire pour l'ensemble des 3 transformateurs, 
 		le rendement moyen de nos arbres et en considérant qu'on produit un peu plus de la moitié de la quantité nécessaire pour les transformateurs 
 		(ATTENTION : à uniformiser avec les autres producteurs).
@@ -32,7 +35,5 @@ public class Plantation {
 		
 	}
 	
-	
-	
-	
+		
 }
