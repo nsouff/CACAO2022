@@ -26,9 +26,9 @@ public class FenetreHistorique extends JFrame {
 	private Historique historique;
 	private JLabel label;
     
-	public FenetreHistorique(Variable i) {
+	public FenetreHistorique(Variable i, Integer crypto) {
 		super("Historique "+i.getNom());
-		this.historique = i.getHistorique();
+		this.historique = i.getHistorique(crypto);
 
 		this.setLayout(new BorderLayout());
 		this.label = new JLabel();

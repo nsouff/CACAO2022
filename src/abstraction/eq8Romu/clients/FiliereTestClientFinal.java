@@ -66,26 +66,13 @@ public class FiliereTestClientFinal extends Filiere {
 		double[] prix2= {1.5, 0.85, 2.3};
 		String[] marques2 = {"ivoria"};
 		this.ajouterActeur(new ExempleDistributeurChocolatMarque(chocos2, stocks2, 50000, prix2, marques2));
-
-//		this.ajouterActeur(new ExempleVendeurChocolatBourse(Chocolat.CHOCOLAT_BASSE));
-//		this.ajouterActeur(new ExempleVendeurChocolatBourse(Chocolat.CHOCOLAT_MOYENNE));
-//		this.ajouterActeur(new ExempleVendeurChocolatBourse(Chocolat.CHOCOLAT_MOYENNE));
-//		this.ajouterActeur(new ExempleDistributeurChocolatMarque(new ChocolatDeMarque(Chocolat.CHOCOLAT_BASSE, "V.ChocoBourse1CHOCOLAT_BASSE"), 50000.0, 3750.0));
-//		this.ajouterActeur(new ExempleDistributeurChocolatMarque(new ChocolatDeMarque(Chocolat.CHOCOLAT_MOYENNE, "V.ChocoBourse2CHOCOLAT_MOYENNE"), 40000.0, 10000.0));
-//		this.ajouterActeur(new ExempleDistributeurChocolatMarque(new ChocolatDeMarque(Chocolat.CHOCOLAT_MOYENNE, "V.ChocoBourse2CHOCOLAT_MOYENNE"), 35000.0, 9000.0));
-//		this.ajouterActeur(new ExempleDistributeurChocolatMarque(new ChocolatDeMarque(Chocolat.CHOCOLAT_MOYENNE, "V.ChocoBourse3CHOCOLAT_MOYENNE"), 35000.0, 9000.0));
-		
-//		this.getIndicateur("D.Choco1CHOCOLAT_BASSE stock CHOCOLAT_BASSE").setValeur(cf, 1000000);
-//		this.getIndicateur("D.Choco2CHOCOLAT_BASSE stock CHOCOLAT_BASSE").setValeur(cf, 1000000);
-//		this.getIndicateur("D.Choco3CHOCOLAT_MOYENNE stock CHOCOLAT_MOYENNE").setValeur(cf, 1000000);
-//		this.getIndicateur("D.Choco4CHOCOLAT_MOYENNE stock CHOCOLAT_MOYENNE").setValeur(cf, 1000000);
 	}
 	
 	
 	public void initialiser() {
 		super.initialiser();
 		// il est possible de modifier l'attractivite initiale d'un chocolat (impossible d'appeler cette methode plus tard)
-		//cfC.initAttractiviteChoco(new ChocolatDeMarque(Chocolat.CHOCOLAT_BASSE,"D.Choco1CHOCOLAT_BASSE"), 4.5);
+		//cf.initAttractiviteChoco(new ChocolatDeMarque(Chocolat.CHOCOLAT_BASSE,"D.Choco1CHOCOLAT_BASSE"), 4.5);
 	}
 
 	
