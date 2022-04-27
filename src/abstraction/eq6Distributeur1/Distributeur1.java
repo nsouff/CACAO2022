@@ -1,19 +1,23 @@
 package abstraction.eq6Distributeur1;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import abstraction.eq8Romu.produits.Chocolat;
+
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 
 public class Distributeur1 extends Distributeur1Acteur {
-	private double prixInstantane;
+	private Map<Chocolat,Double> prixInstantanneChoco = new HashMap<Chocolat, Double>();
 	private double prixStockageActuel;
-	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
+	private Map<Chocolat, Double> teteGondole = new HashMap<Chocolat, Double>(); // (nom du chocolat,% en tête de gondole) 
 	private int qteStockage;
-	//private List<double> list = new ArrayList<double>(map.values());
-	//private Map<String, ArrayList<double>(double)> Stockage = new HashMap<String, ArrayList<double>(double) >(); //(nom choco, 
-	private Map<String, Integer> Achat = new HashMap<String, Integer>();
+	private Map<Chocolat, ArrayList<Double>[][] > Stockage = new HashMap<Chocolat, ArrayList<Double>[][] >(); //(nom choco, table 2 entrées prix et qté)
+	//private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
 
 
 //github.com/nsouff/CACAO2022
@@ -21,7 +25,25 @@ public class Distributeur1 extends Distributeur1Acteur {
 		super();
 	}
 	
+	public void main() {
+		for (Map.Entry<Chocolat, Double > entry : prixInstantanneChoco.entrySet()) {
+            Chocolat keyPrix = entry.getKey();
+            Double valuePrix = entry.getValue();
+
+		for (int i=0; i<qteStockage; i++){
+			Stockage[0][i].add(valuePrix)
+		}
+
+	
+		for (Map.Entry<String, ArrayList<Double> > entry : Stockage.entrySet()) {
+            String keyStockage = entry.getKey();
+            ArrayList<Double> valueStockage = entry.getValue();
+        
+		this.prixStockageActuel = 
+	}
+	
 //Emma Humeau a écrit ce code pour la gestion du stockage
+	
 	
 	/**
 	 * @return the prixStockageActuel
@@ -66,14 +88,9 @@ public class Distributeur1 extends Distributeur1Acteur {
 		Stockage = stockage;
 	}
 
-	/**
-	 * @return the prixStockage
-	 */
-	public double getPrixStockage() {
-		return prixStockage;
-	}
+	
+
 		
-=======
 	/* FONCTION POUR FIXER LES PRIX DE VENTE :
 	 * 
 	 * ENTREES : prixAchat, quantiteAchetee
