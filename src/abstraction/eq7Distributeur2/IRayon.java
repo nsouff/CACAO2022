@@ -26,6 +26,12 @@ public interface IRayon {
 	
 	//Rayons total
 	
-	public double getQuantiteTotale(ChocolatDeMarque chocolat);
+	public double getQuantiteTotaleChocolat(ChocolatDeMarque chocolat);
+	
+	public double getQuantiteTotale();
+	
+	public double getQuantiteTotaleClassique();
+	
+	public double getQuantiteTotaleGondole();
 	
 }
