@@ -10,6 +10,17 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 
 
 
+	/**
+	 * @param feve
+	 * @param stock
+	 */
+	public ProducteurActeur1VenteBourse(Feve feve, double stock) {
+		super(feve, stock);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	@Override
 	public double offre(Feve f, double cours) {
 		return this.stockFeve.getValeur();
