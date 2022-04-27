@@ -24,6 +24,17 @@ public class arbre {
 		this.date_transition=0;
 		this.productivite_max=this.Production_max();
 	}
+	public arbre(int qualite, boolean BE) { //Écrit par Antoine
+		this.ut_plantation = Filiere.LA_FILIERE.getEtape();
+		this.ut_esperance_vie = Esperance_vie();
+		this.stade_maladie = 0;
+		this.ut_debut_maladie = 0;
+		this.qualite = qualite;
+		this.bioequitable = BE;
+		this.transition_bio = false;
+		this.date_transition = 0;
+		this.productivite_max = this.Production_max();
+	}
 	
 	public void setUt_plantation(int ut_plantation) { //Écrit par Maxime
 		this.ut_plantation = ut_plantation;
