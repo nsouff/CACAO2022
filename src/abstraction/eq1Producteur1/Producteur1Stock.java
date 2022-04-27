@@ -1,12 +1,13 @@
 package abstraction.eq1Producteur1;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import abstraction.eq8Romu.produits.Feve;
 
 
 public class Producteur1Stock {
-	private  Map<Feve,List<Producteur1Feve>> ;
+	private  Map<Feve,Double> Feves;
 
 
 	
@@ -38,8 +39,8 @@ public class Producteur1Stock {
 		} else {
 			StockMalade = 0;
 		}
-		for (int i=0; i<(liste_feves.size()*StockMalade/100); i=i+1) {
-			liste_feves.remove(i);
+		for (int i=0; i<(this.Feves.size()*StockMalade/100); i=i+1) {
+			this.Feves.remove(i);
 		}
 		
 		// Auteur : Laure //
