@@ -29,6 +29,9 @@ public class Stock implements IStock{
 		}
 		this.acteur = acteur;
 	}
+	public Stock() {
+		this(null);
+	}
 	
 	@Override
 	public double getQuantite(ChocolatDeMarque chocolat) {
