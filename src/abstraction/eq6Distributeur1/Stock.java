@@ -10,77 +10,45 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 public class Stock extends Distributeur1{
 	
 	private Map<Chocolat,Double> prixInstantanneChoco = new HashMap<Chocolat, Double>();
 	private double prixStockageActuel;
 	private Map<Chocolat, Double> teteGondole = new HashMap<Chocolat, Double>(); // (nom du chocolat,% en tête de gondole) 
-	private int qteStockage;
-	private Map<Chocolat, ArrayList<Double>[][] > Stockage = new HashMap<Chocolat, ArrayList<Double>[][] >(); //(nom choco, table 2 entrées prix et qté)
+	private Map<Chocolat,Double> qteInstantanneChoco = new HashMap<Chocolat, Double>();
+	private double qteStockageActuel;
+	private ArrayList<Double> CouplePrixQte = new ArrayList();//[prixInstantanneChoco.size()][prixInstantanneChoco.size()];
+	private Map<Chocolat,  CouplePrixQte > Stockage = new HashMap<Chocolat,  CouplePrixQte >(); //(nom choco, table 2 entrées prix et qté)
 	//private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
 	
 	public void main() {
+		double sumprix=0;
+		double sumqte=0;
+	
 		for (Map.Entry<Chocolat, Double > entry : prixInstantanneChoco.entrySet()) {
-            Chocolat keyPrix = entry.getKey();
-            Double valuePrix = entry.getValue();
-
-		for (int i=0; i<qteStockage; i++){
-			Stockage[0][i].add(valuePrix)
+            Chocolat KeyPrix = entry.getKey();
+            Double ValuePrix = entry.getValue();
+            sumprix += ValuePrix;
+            CouplePrixQte.add(ValuePrix);
+           }
+	
+		this.prixStockageActuel = sumprix;
+		
+		for (Map.Entry<Chocolat, Double > entry : prixInstantanneChoco.entrySet()) {
+            Chocolat KeyPrix = entry.getKey();
+            Double ValuePrix = entry.getValue();
+            sumqte += ValuePrix;
 		}
+		
+		this.qteStockageActuel = sumqte;
 
+
+	}
+		
+}	
 	
-		for (Map.Entry<String, ArrayList<Double> > entry : Stockage.entrySet()) {
-            String keyStockage = entry.getKey();
-            ArrayList<Double> valueStockage = entry.getValue();
-        
-		this.prixStockageActuel = 
-	}
-	
-//Emma Humeau a écrit ce code pour la gestion du stockage
+//Emma Humeau 
 	
 	
-	/**
-	 * @return the prixStockageActuel
-	 */
-	public double getPrixStockageActuel() {
-		return prixStockageActuel;
-	}
-
-	/**
-	 * @param prixStockageActuel the prixStockageActuel to set
-	 */
-	public void setPrixStockageActuel(double prixStockage, int qteStockage) {
-		this.prixStockageActuel = prixStockage*qteStockage;
-	}
-
-	/**
-	 * @return the qteStockage
-	 */
-	public int getQteStockage() {
-		return qteStockage;
-	}
-
-	/**
-	 * @param qteStockage the qteStockage to set
-	 */
-	
-	public void setQteStockage(int qteStockage, Map Achat) {
-		this.qteStockage = qteStockage ;
-	}
-
-	/**
-	 * @return the stockage
-	 */
-	public Map<String, Double> getStockage() {
-		return Stockage;
-	}
-
-	/**
-	 * @param stockage the stockage to set
-	 */
-	public void setStockage(Map<String, Double> stockage) {
-		Stockage = stockage;
-	}
-
-}
