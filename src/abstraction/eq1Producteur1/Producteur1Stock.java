@@ -1,14 +1,12 @@
 package abstraction.eq1Producteur1;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import abstraction.eq8Romu.produits.Feve;
 
 
 public class Producteur1Stock {
-	private  Map<Feve,Double> Feves;
-
+	private  HashMap<Feve,Double> Feves;
 
 	
 	
