@@ -94,7 +94,7 @@ public class Distributeur1Acteur implements IActeur {
 		 * 
 		 * ENTREES : prixAchat, quantiteAchetee, variable prixVente
 	<<<<<<< HEAD
-		 * SORTIES : HashMap(ChocolatDeMarque,(prix,quantité)) 
+		 * SORTIES : HashMap(ChocolatDeMarque,prix de vente) 
 	=======
 		 * SORTIES : prix 
 	>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
@@ -106,12 +106,13 @@ public class Distributeur1Acteur implements IActeur {
 		*/
 	//V1 : 
 	//NOLANN
+	//Variables : 
 	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
+	//Fonction : 
 	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
-			prixVente.put(key, (prixAchat.get(key))*2);
-			
+			prixVente.put(key, (prixAchat.get(key))*2);	
 				
 		});
 		

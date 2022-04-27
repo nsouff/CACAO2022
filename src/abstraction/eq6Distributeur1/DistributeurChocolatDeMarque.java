@@ -6,13 +6,19 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements IDistributeurChocolatDeMarque{
 
-	@Override
+	//NOLANN
 	public double prix(ChocolatDeMarque choco) {
-		// TODO Auto-generated method stub
-		return ;
+		double prix = 0;
+		if(choco==null) {
+			throw new IllegalArgumentException("argument choco = null lors de l'appel de la fonction prix de DistributeurChocolatDeMarque");
+		}
+		else {
+			prix = prixVente.get(choco);
+		}
+		return prix ;
 	}
 
-	@Override
+	//EMMA
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
 		// TODO Auto-generated method stub
 		return 0;
