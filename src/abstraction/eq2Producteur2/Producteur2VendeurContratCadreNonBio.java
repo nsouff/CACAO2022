@@ -9,6 +9,10 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 
+/**
+ * @author Jules DORE
+ */
+
 public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre{
 	
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
@@ -26,6 +30,8 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 		}	
 		return point;
 	}
+	
+	
 	public List<IAcheteurContratCadre> getListeTransformateurContratCadre(){
 		List<IAcheteurContratCadre> Liste= new ArrayList<IAcheteurContratCadre>();
 		for (int i=0 ; i<this.mesContratEnTantQueVendeurNonBio.size() ; i++) {
@@ -35,6 +41,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 		}
 	return Liste;
 	}
+	
 	
 	public int getClassementTransformateur(IAcheteurContratCadre transformateur) {
 		int classement=1;
