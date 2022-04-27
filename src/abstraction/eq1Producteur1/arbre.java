@@ -17,6 +17,7 @@ public class arbre {
 		this.ut_plantation=0;
 		this.ut_esperance_vie= this.Esperance_vie();
 		this.stade_maladie=0;
+		this.ut_debut_maladie = 0;
 		this.qualite=0;
 		this.bioequitable=false;
 		this.transition_bio=false;
@@ -86,18 +87,23 @@ public class arbre {
 				double stade_maladie = Math.random();
 				if (stade_maladie<=0.45) {
 					this.setMaladie(1);
+					this.setUt_debut_maladie(Filiere.LA_FILIERE.getEtape());
 				}
 				if ((stade_maladie>0.45) && (stade_maladie<=0.7)) {
 					this.setMaladie(2);
+					this.setUt_debut_maladie(Filiere.LA_FILIERE.getEtape());
 				}
 				if ((stade_maladie>0.7) && (stade_maladie<=0.85)) {
 					this.setMaladie(3);
+					this.setUt_debut_maladie(Filiere.LA_FILIERE.getEtape());
 				}
 				if ((stade_maladie>0.85) && (stade_maladie<=0.95)) {
 					this.setMaladie(4);
+					this.setUt_debut_maladie(Filiere.LA_FILIERE.getEtape());
 				}
 				if (stade_maladie>0.95) {
 					this.setMaladie(5);
+					this.setUt_debut_maladie(Filiere.LA_FILIERE.getEtape());
 				}
 			}
 		}
