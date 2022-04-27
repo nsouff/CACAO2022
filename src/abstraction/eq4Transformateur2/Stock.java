@@ -18,8 +18,16 @@ public class Stock<I> {
 	}else{
 		throw new IllegalArgumentException("impossible");
 	}
-		
-
+	}	
+	
+	public void enlever (I produit, double qt) {
+	if (qt>0) {	
+		if (this.quantite.keySet().contains(produit) ) {
+			this.quantite.put(produit, this.quantite.get(produit)-qt);
+	}}
+	else{
+		throw new IllegalArgumentException("impossible");
+}
 }
 
 
