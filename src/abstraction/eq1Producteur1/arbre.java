@@ -10,7 +10,7 @@ public class arbre {
 	private int qualite ;
 	private boolean bioequitable;
 	private boolean transition_bio;
-	private int stade_transition;
+	private int date_transition;
 	private double productivite_max;
 	
 	public arbre() { //Écrit par Maxime
@@ -21,7 +21,7 @@ public class arbre {
 		this.qualite=0;
 		this.bioequitable=false;
 		this.transition_bio=false;
-		this.stade_transition=0;
+		this.date_transition=0;
 		this.productivite_max=this.Production_max();
 	}
 	
@@ -46,8 +46,8 @@ public class arbre {
 	public void setTransition_bio(boolean transition_bio) { //Écrit par Maxime
 		this.transition_bio=transition_bio;
 	}
-	public void setStade_transition(int stade_transition) { //Écrit par Maxime
-		this.stade_transition = stade_transition;
+	public void setDate_transition(int date_transition) {
+		this.date_transition = date_transition;
 	}
 	public void setProductivite_max(double productivite_max) { //Écrit par Maxime
 		this.productivite_max = productivite_max;
@@ -58,7 +58,7 @@ public class arbre {
 	public int getUt_esperance_vie() { //Écrit par Antoine
 		return this.ut_esperance_vie;
 	}
-	public int getMaladie() { //Écrit par Antoine
+	public int getStade_maladie() { //Écrit par Antoine
 		return this.stade_maladie;
 	}
 	public int getUt_debut_maladie( ) { //Écrit par Antoine
@@ -73,8 +73,8 @@ public class arbre {
 	public boolean getTransition_bio() { //Écrit par Antoine
 		return this.transition_bio;
 	}
-	public int getStade_transition() { //Écrit par Antoine
-		return this.stade_transition;
+	public int getDate_transition() {
+		return this.date_transition;
 	}
 	public double getProductivite_max() { //Écrit par Antoine
 		return this.productivite_max;
@@ -141,17 +141,93 @@ public class arbre {
 	public int Age() { //Écrit par Maxime
 		return Filiere.LA_FILIERE.getEtape()-this.getUt_plantation();
 	}
-	public double Recolte() { //Écrit par Maxime
-		if (this.Age()<= 72 || this.Age()>=this.getUt_esperance_vie()) {
-			return 0;
-		}
-		else {
-			if (this.Age()<= 144) {
-				return this.getProductivite_max()*(this.Age()-72)/72;
+	public double Recolte() {
+		double quantite= 0;
+		if (this.getBioequitable()) {
+			if (this.Age()<= 75 || this.Age()>=this.getUt_esperance_vie() || this.getStade_maladie()==5) {
+				return 0;
 			}
 			else {
-				return this.getProductivite_max();
+				if (this.Age()<= 150) {
+					quantite= this.getProductivite_max()*(this.Age()-75)/75;
+				}
+				else {
+					quantite= this.getProductivite_max();
+				}
+			}
+			quantite=0.8*quantite;
+			if (this.getStade_maladie()==0) {
+				return quantite;
+			}
+			else {
+				if(this.getStade_maladie()==1 || this.getStade_maladie()==2) {
+					return 0.85*quantite;
+				}
+				else {
+					if(this.getStade_maladie()==3) {
+						if(this.Age()-this.getUt_debut_maladie()<=2) {
+							return 0;
+						}
+						else {
+							return 0.8*quantite;
+						}
+					}
+					else {
+						if(this.Age()-this.getUt_debut_maladie()<=4) {
+							return 0;
+						}
+						else {
+							return 0.65*quantite;
+						}
+					}
+				}
 			}
 		}
+		else {
+			if (this.Age()<= 60 || this.Age()>=this.getUt_esperance_vie() || this.getStade_maladie()==5) {
+				return 0;
+			}
+			else {
+				if (this.Age()<= 125) {
+					quantite= this.getProductivite_max()*(this.Age()-60)/65;
+				}
+				else {
+					quantite= this.getProductivite_max();
+				}
+			}
+			if (this.getStade_maladie()==0) {
+				return quantite;
+			}
+			else {
+				if(this.getStade_maladie()==1 || this.getStade_maladie()==2) {
+					return 0.85*quantite;
+				}
+				else {
+					if(this.getStade_maladie()==3) {
+						if(this.Age()-this.getUt_debut_maladie()<=2) {
+							return 0;
+						}
+						else {
+							return 0.8*quantite;
+						}
+					}
+					else {
+						if(this.Age()-this.getUt_debut_maladie()<=4) {
+							return 0;
+						}
+						else {
+							return 0.65*quantite;
+						}
+					}
+				}
+			}
+		}
+	}
+	public void PasserBio() {
+		if (this.getTransition_bio()==true && (Filiere.LA_FILIERE.getEtape()-this.getDate_transition())>= 72) {
+			this.setBioequitable(true);
+			this.setTransition_bio(false);
+		}
+		
 	}
 }
