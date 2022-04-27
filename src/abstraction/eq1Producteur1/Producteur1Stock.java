@@ -1,25 +1,21 @@
 package abstraction.eq1Producteur1;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Stock extends Producteur1Acteur {
-	/**
-	 * @param feve
-	 * @param stock
-	 */
-	public Producteur1Stock(Feve feve, double stock) {
-		super(feve, stock);
-		// TODO Auto-generated constructor stub
-	}
+
+public class Producteur1Stock {
+	private  Map<Feve,List<Producteur1Feve>> ;
 
 
-	private List<Producteur1Feve> liste_feves;
 	
 	
 	// Auteur : Laure //
-	public void EvolutionStockPostMalade() {
+	// Si une maladie se lance dans le stock, un pourcentage est perdu. //
+	// A faire tourner à chaque UT //
+	// Renvoie le stock mis à jour //
+	public void EvolutionStockPostMaladie() {
 		int probaMalade;
 		int StockMalade;
 		int min_val = 1;
@@ -45,5 +41,12 @@ public class Producteur1Stock extends Producteur1Acteur {
 		for (int i=0; i<(liste_feves.size()*StockMalade/100); i=i+1) {
 			liste_feves.remove(i);
 		}
+		
+		// Auteur : Laure //
+		// Simule l'évolution globale du stock
+		// A faire tourner à chaque UT
+		// Renvoie le stock mis à jour //
+		
+		
 	}
 }
