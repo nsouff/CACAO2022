@@ -16,8 +16,9 @@ public class Stock<I> {
 			}else {
 				this.quantite.put(produit, qt);}
 	}else{
-		throw new 
+		throw new IllegalArgumentException("impossible");
 	}
+		
 
 }
 

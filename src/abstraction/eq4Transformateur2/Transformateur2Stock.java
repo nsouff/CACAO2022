@@ -2,9 +2,12 @@ package abstraction.eq4Transformateur2;
 
 import java.util.HashMap;
 
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.Feve;
+
 public class Transformateur2Stock extends Transformateur2 {
 	private Stock<Feve> stockfeve;
-	private Stock<Choco> choco;
+	private Stock<Chocolat> stockchocolat;
 
 
 }
