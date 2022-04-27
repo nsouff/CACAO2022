@@ -14,34 +14,27 @@ import java.util.LinkedList;
 
 public class Stock extends Distributeur1{ //Emma Humeau
 	
-	private Map<ChocolatDeMarque,Double> StockagePrix = new HashMap<ChocolatDeMarque, Double>();
-	private double prixStockageTotale;
+	private double CoûtStockageTotale;
 
 	private Map<ChocolatDeMarque,Double> StockageQte = new HashMap<ChocolatDeMarque, Double>();
 	private double qteStockageTotale; 
 	
-	//abandon map3
-	//private ArrayList<Double> CouplePrixQte = new ArrayList();//[prixInstantanneChoco.size()][prixInstantanneChoco.size()];
-	//private Map<ChocolatDeMarque,  ArrayList<Double> > Stockage = new HashMap<ChocolatDeMarque, ArrayList<Double> >(); //(choco, table 2 entrées prix et qté)
-	
 	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole) 
 
+	/**
+	 * @return the qteStockageTotale
+	 */
+	public double getqteStockageTotale() {
+		return qteStockageTotale;
+	}
 	
-
-	public void Distributeur() { //Emma Humeau
-
-		double sumprix=0;
+	/**
+	 * @param qteStockageTotale the qteStockageTotale to set
+	 */
+	public void setQteStockageTotale(double qteStockageTotale) {
+		
 		double sumqte=0;
 	
-		//calcule le prix du stockage total 
-		for (Map.Entry<ChocolatDeMarque, Double > entry : StockagePrix.entrySet()) {
-            ChocolatDeMarque KeyPrix = entry.getKey();
-            Double ValuePrix = entry.getValue();
-            sumprix += ValuePrix;
-           }
-	
-		this.prixStockageTotale = sumprix;
-		
 		//calcule la qte du stockage total
 		for (Map.Entry<ChocolatDeMarque, Double > entry : StockageQte.entrySet()) {
             ChocolatDeMarque KeyQte = entry.getKey();
@@ -51,29 +44,8 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 		
 		this.qteStockageTotale = sumqte;
-
-
 	}
 
-	
-	
-
-
-	/**
-	 * @return the stockagePrix
-	 */
-	public Map<ChocolatDeMarque, Double> getStockagePrix() {
-		return StockagePrix;
-	}
-
-
-
-	/**
-	 * @param stockagePrix the stockagePrix to set
-	 */
-	public void setStockagePrix(ChocolatDeMarque choco, double prix) {
-		StockagePrix.put(choco,prix);
-	}
 
 
 	/**
@@ -88,27 +60,14 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	/**
 	 * @param stockageQte the stockageQte to set
 	 */
-	public void setStockageQte(ChocolatDeMarque choco, double qte) {
-		StockageQte.put(choco, qte);
+	public void addStockageQte(ChocolatDeMarque choco, double qte) {
+		StockageQte.put(choco, StockageQte.get(choco)+qte);
+	}
+	
+	public void removeStockageQte(ChocolatDeMarque choco, double qte) {
+		StockageQte.replace(choco,StockageQte.get(choco),StockageQte.get(choco)-qte);
 	}
 
-
-
-	/**
-	 * @return the prixStockageTotale
-	 */
-	public double getPrixStockageTotale() {
-		return prixStockageTotale;
-	}
-
-
-
-	/**
-	 * @return the qteStockageTotale
-	 */
-	public double getQteStockageTotale() {
-		return qteStockageTotale;
-	}
 
 
 //Emma Humeau tout ce qui est au dessus
