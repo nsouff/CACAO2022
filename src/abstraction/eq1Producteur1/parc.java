@@ -5,7 +5,7 @@ import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
 
-public class parc {
+public class parc extends Producteur1Stock{
 	private ArrayList<arbre> cacaoyers;
 	private int nombre_BE;
 	private int nombre_non_BE;
@@ -163,8 +163,11 @@ public class parc {
 	}
 	
 	public void Recolte() { //Fait par Antoine
-		double BE = 0;
-		double non_BE = 0;
+		double BE_moyenne = 0;
+		double BE_haute = 0;
+		double non_BE_basse = 0;
+		double non_BE_moyenne = 0;
+		double non_BE_haute = 0;
 		if (Filiere.LA_FILIERE.getEtape()%24==20) {
 			this.MAJAleas();
 		}
@@ -172,17 +175,33 @@ public class parc {
 			for (int i=0; i<this.getCacaoyers().size(); i++) {
 				arbre arbre_i = this.getArbre(i);
 				boolean isBE = arbre_i.getBioequitable();
+				int qualite = arbre_i.getQualite();
 				double recolte = arbre_i.getProductivite_max();
-				if (isBE) {
-					BE+=recolte;
+				if ((isBE) && (qualite==2)) {
+					BE_moyenne+=recolte;
+				}
+				if ((isBE) && (qualite==3)) {
+					BE_haute+=recolte;
 				}
 				else {
-					non_BE+=recolte;
+					if (qualite==1) {
+						non_BE_basse+=recolte;
+					}
+					if (qualite==2) {
+						non_BE_moyenne+=recolte;
+					}
+					if (qualite==3) {
+						non_BE_haute+=recolte;
+					}
 				}
 			}
 		}
-		BE=BE*ParasitesBE();
-		non_BE=non_BE*Parasites_non_BE();
-		
+		double parasitesBE = ParasitesBE();
+		double parasites_non_BE = Parasites_non_BE();
+		BE_moyenne = BE_moyenne*parasitesBE;
+		BE_haute = BE_haute*parasitesBE;
+		non_BE_basse = non_BE_basse*parasites_non_BE;
+		non_BE_moyenne = non_BE_moyenne*parasites_non_BE;
+		non_BE_haute = non_BE_haute*parasites_non_BE;
 	}
 }
