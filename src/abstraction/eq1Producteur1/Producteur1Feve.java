@@ -42,7 +42,7 @@ public class Producteur1Feve {
 	 * @return the perime
 	 */
 	public boolean isPerime() {
-		return perime;
+		return this.perime;
 	}
 	/**
 	 * @param perime the perime to set

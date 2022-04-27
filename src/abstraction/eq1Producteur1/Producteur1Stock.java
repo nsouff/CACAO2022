@@ -7,6 +7,9 @@ public class Producteur1Stock extends Producteur1Acteur {
 	
 	
 	// Auteur : Laure //
+	// Si une maladie se lance dans le stock, un pourcentage est perdu. //
+	// A faire tourner à chaque UT //
+	// Renvoie le stock mis à jour //
 	public void EvolutionStockPostMalade() {
 		int probaMalade;
 		int StockMalade;
