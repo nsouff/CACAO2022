@@ -9,6 +9,8 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.Feve;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
@@ -16,12 +18,17 @@ public class Transformateur3Acteur implements IActeur {
 	protected Variable rendement;
 	protected Variable coutTransformation;
 	protected Variable coutOrginial;
+	protected Stock<Feve> stockFeves;
+	protected Stock<Chocolat> stockChocolat;
+
 	
 	public Transformateur3Acteur() {
 		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
 		this.coutTransformation = new VariableReadOnly ("coutTransformateur", "cout de transformation en milliers de dollars par etape par tonne", this,  0, 100, 5);
 		this.coutOrginial = new VariableReadOnly ("coutOrginial", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
+		this.stockFeves = new Stock<Feve> ();
+		this.stockChocolat = new Stock<Chocolat> ();
 	}
 	
 	public String getNom() {
