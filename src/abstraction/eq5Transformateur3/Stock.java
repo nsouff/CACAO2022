@@ -16,4 +16,12 @@ public Double getstock(Produit p) {
 	return this.stock.get(p);
 }
 
+public Double getstocktotal(Produit p) {
+	Double total = 0.0;
+	for (Double q : this.stock.values()) {
+		total += q;
+	}
+	return total;
+}
+
 }
