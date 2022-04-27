@@ -103,25 +103,15 @@ public class Distributeur1Acteur implements IActeur {
 		 * - prix fixe = prix achat*2
 		 * - marge fixe (différente pour chaque produit)
 		 * - raisonner en marge du prix d'achat
-		 * 
-		 * V1.1 :
-		 * - 
-		 *  
-		 * 
-		 * 
-		 * V2 :
-		 * - 
-		 * 
 		*/
 	//V1 : 
-	protected Map<ChocolatDeMarque, ArrayList<Double>> prixVente = new HashMap<ChocolatDeMarque, ArrayList<Double>>();
+	//NOLANN
+	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
-
-	public Map<ChocolatDeMarque, ArrayList<Double>> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
+	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
-			prixVente.put(key, NULL);
-			(prixVente.get(key)).add(prixAchat.get(key)*2);
-			(prixVente.get(key)).add(quantiteAchete.get(key));
+			prixVente.put(key, (prixAchat.get(key))*2);
+			
 				
 		});
 		
