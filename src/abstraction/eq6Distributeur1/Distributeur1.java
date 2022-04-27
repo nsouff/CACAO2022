@@ -72,7 +72,6 @@ public class Distributeur1 extends Distributeur1Acteur {
 		return prixStockage;
 	}
 		
-=======
 	/* FONCTION POUR FIXER LES PRIX DE VENTE :
 	 * 
 	 * ENTREES : prixAchat, quantiteAchetee
@@ -93,7 +92,6 @@ public class Distributeur1 extends Distributeur1Acteur {
 	 * 
 	 */
 	private Map<String, Double> prixVente = new HashMap<String, Double>();
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 
 	
 	
