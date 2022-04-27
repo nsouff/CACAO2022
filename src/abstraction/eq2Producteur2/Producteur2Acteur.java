@@ -13,11 +13,16 @@ import abstraction.eq8Romu.general.VariableReadOnly;
 
 public class Producteur2Acteur implements IActeur {
 	protected int cryptogramme;
+
+
+	public double prixstockageVariable = 0.01 ;
+	public double prixstockageFixe = 100;
+
 	private Variable prixstockage ;
 	private Variable dureeaffinageBQ ;
 	private Variable dureeaffinageMQ ;
 	private Variable dureeaffinageHQ ;
-	
+
 	
 	public Producteur2Acteur() {
 		this.prixstockage= new VariableReadOnly("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
@@ -90,5 +95,5 @@ public class Producteur2Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
-
+	
 }
