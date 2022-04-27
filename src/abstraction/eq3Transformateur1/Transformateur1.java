@@ -13,14 +13,12 @@ import java.util.HashMap;
 import abstraction.eq8Romu.produits.Feve;
 
 
-public class Transformateur1 extends Transformateur1Acteur {
 
+public class Transformateur1 extends Transformateur1Bourse {
 	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
 	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse */
 	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
 
-	
-	
 	private HashMap<Feve, Double> quantiteAchatFeve;                /** quantité de fève qu'on souhaite acheter */
 	private HashMap<Chocolat, Integer> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
 	private dernierPrixVenteChoco dernierPrixVenteChoco;            /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
