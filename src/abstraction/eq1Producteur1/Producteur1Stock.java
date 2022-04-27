@@ -10,7 +10,7 @@ public class Producteur1Stock extends Producteur1Acteur {
 	// Si une maladie se lance dans le stock, un pourcentage est perdu. //
 	// A faire tourner à chaque UT //
 	// Renvoie le stock mis à jour //
-	public void EvolutionStockPostMalade() {
+	public void EvolutionStockPostMaladie() {
 		int probaMalade;
 		int StockMalade;
 		int min_val = 1;
@@ -36,5 +36,12 @@ public class Producteur1Stock extends Producteur1Acteur {
 		for (int i=0; i<(liste_feves.size()*StockMalade/100); i=i+1) {
 			liste_feves.remove(i);
 		}
+		
+		// Auteur : Laure //
+		// Simule l'évolution globale du stock
+		// A faire tourner à chaque UT
+		// Renvoie le stock mis à jour //
+		
+		
 	}
 }
