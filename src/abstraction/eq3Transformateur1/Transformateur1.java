@@ -20,13 +20,7 @@ public class Transformateur1 extends Transformateur1Bourse {
 	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
 	private static final double coutStockage=4*1;                  /** coutStockageTransfo = 4*coutStockageProd */
 
-	private HashMap<Feve, Double> quantiteAchatFeve;                /** quantité de fève qu'on souhaite acheter */
-	private HashMap<Chocolat, Integer> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
-	private dernierPrixVenteChoco dernierPrixVenteChoco;            /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
-	private HashMap<Feve, Double> prixAchatFeve;
-	private HashMap<Feve, Double> stockFeve;
-	private HashMap<Chocolat,Double> stockChoco;
-	
+
 	public Transformateur1() { 
 		super();
 	}
