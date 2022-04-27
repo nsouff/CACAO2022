@@ -18,6 +18,7 @@ public class Transformateur1 extends Transformateur1Bourse {
 	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
 	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse */
 	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
+	private static final double coutStockage=4*1;                  /** coutStockageTransfo = 4*coutStockageProd */
 
 	private HashMap<Feve, Double> quantiteAchatFeve;                /** quantité de fève qu'on souhaite acheter */
 	private HashMap<Chocolat, Integer> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
@@ -32,9 +33,14 @@ public class Transformateur1 extends Transformateur1Bourse {
 
 	/**
 	 * @return the stockFeve
+	 * Alexandre
 	 */
 	public HashMap<Feve, Double> getStockFeve() {
 		return stockFeve;
+	}
+	/** getter dernierPrixVenteChoco*/
+	public dernierPrixVenteChoco getDernierPrixVenteChoco() {
+		return this.getDernierPrixVenteChoco();
 	}
 
 	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  */
@@ -107,8 +113,17 @@ public class Transformateur1 extends Transformateur1Bourse {
 	/** _________________________________________________GESTION DES STOCKS______________________________________________________
 	 *  pas de péremption en V1 */
 	
+	/** Calcule le coût de stockage pour le tour (à exécuter en fin de tour)
+	 *  Alexandre */
 	public double coutStockage() {
-		return 0;
+		double cout = 0.;
+		for (Feve f : stockFeve.keySet()) {
+			cout = cout + stockFeve.get(f)*coutStockage;
+		}
+		for (Chocolat c : stockChoco.keySet()) {
+			cout = cout + stockChoco.get(c)*coutStockage;
+		}
+		return cout;
 	}
 	
 	/** _________________________________________________VENTE DE CHOCOLAT_______________________________________________________*/
