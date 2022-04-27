@@ -15,7 +15,13 @@ import abstraction.eq8Romu.produits.Chocolat;
 public class Distributeur1Acteur implements IActeur {
 	
 	protected int cryptogramme;
-
+	private Stock NotreStock = new Stock();
+	/**
+	 * @return the notreStock
+	 */
+	public Stock getNotreStock() {
+		return NotreStock;
+	}
 	public Distributeur1Acteur() {
 	}
 	public String getNom() {
@@ -34,7 +40,10 @@ public class Distributeur1Acteur implements IActeur {
 	public void initialiser() {
 	}
 
-	public void next() {
+	public void next() {//leorouppert
+		for (int i=0, i<this.getNotreStock().getMapStock().size(), i++) {
+			if this.getNotreStock()
+		}
 	}
 
 	// Renvoie la liste des filières proposées par l'acteur
