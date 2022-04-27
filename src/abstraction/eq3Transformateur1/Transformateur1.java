@@ -14,8 +14,8 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1 extends Transformateur1Acteur {
 	public static final double rendementHaute=1;
-	public static final double coutTransfoNormal=1;
-	public static final double coutTransfoOriginal=2;
+	public static final double coutTransfo=1;         /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse */
+	public static final double coutTransfoOriginal=2; /** somme de couTransfo et du supplément pour l'original*/
 	
 	private List<Double> prixtransfo ;
 	private HashMap<Feve, Double> quantiteAchat;           /** Integer --> Double*/
@@ -75,7 +75,7 @@ public class Transformateur1 extends Transformateur1Acteur {
 		if (original) {
 			prixQuantite.add(quantiteFeve*coutTransfoOriginal);
 		}
-		prixQuantite.add(quantiteFeve*coutTransfoNormal);
+		prixQuantite.add(quantiteFeve*coutTransfo);
 		if (typeTransfo.contentEquals("transfoHaute")) {
 			prixQuantite.add(quantiteFeve*rendementHaute);
 			return prixQuantite;
