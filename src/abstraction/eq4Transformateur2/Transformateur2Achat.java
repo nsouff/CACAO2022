@@ -1,5 +1,5 @@
 package abstraction.eq4Transformateur2;
 
-public class Transformateur2Achat extends Transformateur2{
+public class Transformateur2Achat{
 
 }
