@@ -13,9 +13,8 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	}
 
 	@Override
-	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau
+		return NotreStock.getStockageQte().get(choco);
 	}
 
 	@Override
