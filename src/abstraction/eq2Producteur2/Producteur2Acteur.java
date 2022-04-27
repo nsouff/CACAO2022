@@ -1,5 +1,6 @@
 package abstraction.eq2Producteur2;
 
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +9,23 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariableReadOnly;
 
 public class Producteur2Acteur implements IActeur {
 	protected int cryptogramme;
 
+
 	public double prixstockageVariable = 0.01 ;
 	public double prixstockageFixe = 100;
 
+	private Variable prixstockage ;
+	private double dureeaffinageBQ = 1;
+	private double dureeaffinageMQ = 2;
+	private double dureeaffinageHQ = 3;
+	
 	public Producteur2Acteur() {
+		this.prixstockage= new VariableReadOnly("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
+		
 	}
 
 	public void initialiser() {
@@ -57,6 +67,7 @@ public class Producteur2Acteur implements IActeur {
 	
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
+		res.add(this.prixstockage);
 		return res; 
 	}
 
