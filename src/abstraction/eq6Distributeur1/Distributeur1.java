@@ -11,7 +11,8 @@ public class Distributeur1 extends Distributeur1Acteur {
 	private double prixStockageActuel;
 	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
 	private int qteStockage;
-	private Map<String, Double> Stockage = new HashMap<String, Double>(); 
+	//private List<double> list = new ArrayList<double>(map.values());
+	//private Map<String, ArrayList<double>(double)> Stockage = new HashMap<String, ArrayList<double>(double) >(); //(nom choco, 
 	private Map<String, Integer> Achat = new HashMap<String, Integer>();
 
 
