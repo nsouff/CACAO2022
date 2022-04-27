@@ -21,7 +21,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Distributeur2Acteur implements IActeur, IVendeurContratCadre{
 	
 	protected int cryptogramme;
-	private IStock stock;
+	protected IStock stock;
 
 	public Distributeur2Acteur() {
 	}
