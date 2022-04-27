@@ -22,6 +22,8 @@ public class Distributeur2Acteur implements IActeur, IVendeurContratCadre{
 	
 	protected int cryptogramme;
 	protected IStock stock;
+	protected List<ChocolatDeMarque> chocolats;
+	protected Journal journal;
 
 	public Distributeur2Acteur() {
 	}
