@@ -41,9 +41,10 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	public void next() {//leorouppert
-		this.getNotreStock().getMapStock().forEach((key,value)->{
+		this.getNotreStock().getStockageQte().forEach((key,value)->{
 			if (value <= 1) {
 				IVendeurContratCadre Vendeur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getVendeurs(key).get(0);
+				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(null, Vendeur, value, null, cryptogramme, false);
 			}
 		});
 	}
