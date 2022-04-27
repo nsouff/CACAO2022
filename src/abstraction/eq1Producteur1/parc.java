@@ -45,6 +45,7 @@ public class parc {
 	public void MAJParc() { 
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
 			arbre arbre_i = this.getArbre(i);
+			arbre_i.MAJMaladie();
 			if (arbre_i.getMaladie() == 5) {
 				this.getCacaoyers().remove(arbre_i);
 				if (arbre_i.getBioequitable()) {
