@@ -12,16 +12,17 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import java.util.HashMap;
 import abstraction.eq8Romu.produits.Feve;
 
+
 public class Transformateur1 extends Transformateur1Bourse {
-	public static final double rendementHaute=1;
-	public static final double coutTransfo=1;         /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse */
-	public static final double coutTransfoOriginal=2; /** somme de couTransfo et du supplément pour l'original*/
+
+	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
+	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse */
+	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
+
 	
-	
-	private HashMap<Feve, Double> quantiteAchat;           /** Integer --> Double*/
-	private HashMap<Chocolat, Integer> quantiteDemandee;
-	
-	private HashMap<Chocolat, Double> dernierPrixVente;
+	private HashMap<Feve, Double> quantiteAchatFeve;           /** quantité de fève qu'on souhaite acheter */
+	private HashMap<Chocolat, Integer> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
+	private dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
 	private HashMap<Feve, Double> prixAchat;
 	private HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
 	private HashMap<Chocolat,Double> stockChoco;           /** Integer --> Double*/
@@ -39,17 +40,19 @@ public class Transformateur1 extends Transformateur1Bourse {
 
 	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  */
 	public void prixMaxAchat() {		
-			prixAchat.put(Feve.FEVE_BASSE,dernierPrixVente.get(Chocolat.MQ) - coutTransfo);	
-			prixAchat.put(Feve.FEVE_MOYENNE,dernierPrixVente.get(Chocolat.MQ) - coutTransfo);
-			prixAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,dernierPrixVente.get(Chocolat.MQ_BE) - coutTransfo);
+			prixAchat.put(Feve.FEVE_BASSE, Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);	
+			prixAchat.put(Feve.FEVE_MOYENNE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);
+			prixAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ_BE), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ_BE)) - coutTransfo);
 	}
 	
 	/** détermine la quantité de fèves à acheter; auteur Julien */
 	public void determinationQuantiteAchat() {		
-		quantiteAchat.put(Feve.FEVE_BASSE,((quantiteDemandee.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));	
-		quantiteAchat.put(Feve.FEVE_MOYENNE,((quantiteDemandee.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
-		quantiteAchat.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,(quantiteDemandee.get(Chocolat.MQ_BE)-stockChoco.get(Chocolat.MQ_BE)));
+		quantiteAchatFeve.put(Feve.FEVE_BASSE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));	
+		quantiteAchatFeve.put(Feve.FEVE_MOYENNE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
+		quantiteAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,(quantiteDemandeeChoco.get(Chocolat.MQ_BE)-stockChoco.get(Chocolat.MQ_BE)));
 	}
+	
+	/** _______________________________________________LOT TRANSFORMATION DES FEVES ____________________________________________________________*/
 	
 	/** détermine la quantité à transformer 
 	 * Alexandre */ 
@@ -74,8 +77,9 @@ public class Transformateur1 extends Transformateur1Bourse {
 		ArrayList<Double> prixQuantite = new ArrayList<Double>();
 		if (original) {
 			prixQuantite.add(quantiteFeve*coutTransfoOriginal);
+		} else {
+			prixQuantite.add(quantiteFeve*coutTransfo);
 		}
-		prixQuantite.add(quantiteFeve*coutTransfo);
 		if (typeTransfo.contentEquals("transfoHaute")) {
 			prixQuantite.add(quantiteFeve*rendementHaute);
 			return prixQuantite;
@@ -100,4 +104,11 @@ public class Transformateur1 extends Transformateur1Bourse {
 			}
 		}
 	}
+	
+	/** _________________________________________________GESTION DES STOCKS______________________________________________________
+	 *  pas en V1 */
+	
+	/** _________________________________________________VENTE DE CHOCOLAT_______________________________________________________*/
+	
+
 }
