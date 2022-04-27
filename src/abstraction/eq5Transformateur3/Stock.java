@@ -6,22 +6,30 @@ import java.util.HashMap;
 public class Stock<Produit> {
 	private HashMap <Produit, Double> stock;
 
-public void ajouter(Produit p, double qtt) {
+	//Mise à jour les stocks
+	public void ajouter(Produit p, double qtt) {
 	if (qtt > 0) {
-		this.stock.put(p, this.stock.get(p)+qtt);
+		if (this.stock.keySet().contains(p)) {
+			this.stock.put(p, this.stock.get(p)+qtt);	
+			}
+		else {
+			this.stock.put(p, qtt);
+			}
+		}
 	}
-}
 
-public Double getstock(Produit p) {
-	return this.stock.get(p);
-}
-
-public Double getstocktotal(Produit p) {
-	Double total = 0.0;
-	for (Double q : this.stock.values()) {
-		total += q;
+	//Récupérer les stocks pour un type de produit
+	public Double getstock(Produit p) {
+		return this.stock.get(p);
 	}
-	return total;
-}
+
+	//Récupérer la valeur du stock total (tous les types de produits)
+	public Double getstocktotal(Produit p) {
+		Double total = 0.0;
+		for (Double q : this.stock.values()) {
+			total += q;
+		}
+		return total;
+	}
 
 }
