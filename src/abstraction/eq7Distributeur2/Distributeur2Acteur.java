@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstraction.eq8Romu.contratsCadres.Echeancier;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
@@ -39,13 +42,23 @@ public class Distributeur2Acteur implements IActeur{
 	//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
 	//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
 	//On compare ces prixs et on réalise finalement le contrat avec le meilleur vendeur.
+	//On réalise une moyenne des achats du client final sur les 6 steps précédents pour determiner la quantité achetée par step
+	//On compare notre stock au seuil limite pour determiner la quantité à acheter pour remettre au seuil
+	//Pour qu'un produit soit en tg, il doit être bioéquitable
+	//On réalise un contrat pour chacun des différents chocolatss produits afin de tous les avoir en stock
+	//Finalement, on fait un contrat avec le vendeur le plus offrant
 	public void next() {
 		SuperviseurVentesContratCadre c = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-		ChocolatDeMarque choc;
-		int e = Filiere.LA_FILIERE.getEtape();
-		if (stock.getQuantite(choc)<stock.getSeuilRachat(choc)) {
-			List<IVendeurContratCadre> vendeurs =c.getVendeurs(choc);
-			for (int i=0; i<vendeurs.size(); i++) {
+		for (ChocolatDeMarque choc : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			boolean tg = true;
+			if (choc.isBioEquitable()==false) {
+				tg=false;
+			}
+			List <Double> prix = new ArrayList<Double>();
+			int e = Filiere.LA_FILIERE.getEtape();
+			if (stock.getQuantite(choc)<stock.getSeuilRachat(choc)) {
+				int index = 0;
+				
 				double ventes = 0.0;
 				for (int j=1; j<6; j++) {
 					ventes+=Filiere.LA_FILIERE.getVentes(choc, e-j);
@@ -53,9 +66,22 @@ public class Distributeur2Acteur implements IActeur{
 				double venteParStep= ventes/6;
 				double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
 				int nmbStep = (int) Math.round(chocAacheter/venteParStep);
-				Echeancier(e,nmbStep,venteParStep);
-				c.demandeAcheteur(this, vendeurs.get(i), choc, null, cryptogramme, false);
+				Echeancier ech = new Echeancier(e,nmbStep,venteParStep);
 				
+				List<IVendeurContratCadre> vendeurs =c.getVendeurs(choc);
+				for (int i=0; i<vendeurs.size(); i++) {
+					ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeurs.get(i), choc, ech, this.cryptogramme, tg);
+					prix.set(i, contrat.getPrix());
+					double pMax = prix.get(0);
+					for (double p : prix) {
+						if(p>pMax) {
+							pMax=p;
+							index+=1;
+						}
+					}
+				}
+				IVendeurContratCadre vendeur= vendeurs.get(index);
+				ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choc, ech, this.cryptogramme, tg);
 			}
 		}
 		
