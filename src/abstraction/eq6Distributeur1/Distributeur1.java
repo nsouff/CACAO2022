@@ -80,7 +80,6 @@ public class Distributeur1 extends Distributeur1Acteur {
 	}
 		
 /*@author Nolann
-	//@author Nolann
 
 =======
 >>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
