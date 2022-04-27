@@ -41,8 +41,8 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	public void next() {//leorouppert
-		for (int i=0, i<this.getNotreStock().getMapStock().size(), i++) {
-			if this.getNotreStock()
+		for (int i=0, i < this.getNotreStock().getMapStock().size(), i++) {
+			if this.getNotreStock();
 		}
 	}
 

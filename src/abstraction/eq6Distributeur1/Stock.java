@@ -68,7 +68,7 @@ public class Stock extends Distributeur1{
 	public void setQteStockage(int qteStockage, Map Achat) {
 		this.qteStockage = qteStockage ;
 	}
-	
+	/**
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
 		return this.Stockage;//Retourne toute la hashmap de notre stock
 	}
