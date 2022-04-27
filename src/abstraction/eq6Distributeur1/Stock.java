@@ -12,10 +12,10 @@ import java.util.LinkedList;
 public class Stock extends Distributeur1{ //Emma Humeau
 	
 	private Map<ChocolatDeMarque,Double> StockagePrix = new HashMap<ChocolatDeMarque, Double>();
-	private double prixStockageTotale;
+	private double prixStockageTotal;
 
 	private Map<ChocolatDeMarque,Double> StockageQte = new HashMap<ChocolatDeMarque, Double>();
-	private double qteStockageTotale; 
+	private double qteStockageTotal; 
 	
 	//abandon map3
 	//private ArrayList<Double> CouplePrixQte = new ArrayList();//[prixInstantanneChoco.size()][prixInstantanneChoco.size()];
@@ -110,6 +110,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 
 //Emma Humeau tout ce qui est au dessus
+<<<<<<< HEAD
 
 
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
@@ -124,6 +125,8 @@ public class Stock extends Distributeur1{ //Emma Humeau
         this.Stockage.put(chocolat, ArrayList<Double>[prix][quantite]);//Modifie la valeur du stock du chocolat associé
     }
 		
+=======
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 }	
 	
 
