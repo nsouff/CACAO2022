@@ -1,14 +1,7 @@
 package abstraction.eq7Distributeur2;
 
-import java.awt.Color;
-import java.util.List;
-
 import abstraction.eq8Romu.clients.ClientFinal;
-import abstraction.eq8Romu.filiere.Filiere;
-import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
-import abstraction.eq8Romu.general.Journal;
-import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2ChocolatDeMarque extends AchatContratCadre implements IDistributeurChocolatDeMarque {
