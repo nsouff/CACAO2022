@@ -6,8 +6,8 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Gamme;
-
-public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{ //leorouppert
+//leorouppert
+public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{
 
 @Override
 public boolean achete(Object produit) {//a modifier avec considération de stockage
