@@ -8,13 +8,10 @@ import java.util.Hashtable;
 
 public class Distributeur1 extends Distributeur1Acteur {
 	private double prixInstantane;
-	private double prixStockage;
-<<<<<<< HEAD
 	private double prixStockageActuel;
 	private Map<String, Double> teteGondole = new HashMap<String, Double>(); // (nom du chocolat,% en tête de gondole) 
-	
 	private int qteStockage;
-	private Map<String, Double> Stockage = new HashMap<String, Double>();
+	private Map<String, Double> Stockage = new HashMap<String, Double>(); 
 	private Map<String, Integer> Achat = new HashMap<String, Integer>();
 
 
@@ -22,7 +19,6 @@ public class Distributeur1 extends Distributeur1Acteur {
 	public Distributeur1() {
 		super();
 	}
-<<<<<<< HEAD
 	
 //Emma Humeau a écrit ce code pour la gestion du stockage
 	
