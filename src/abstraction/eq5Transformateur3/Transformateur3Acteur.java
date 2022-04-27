@@ -10,11 +10,16 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariableReadOnly;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
+	protected Variable seuilTransformation;
+	
 	public Transformateur3Acteur() {
+		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en kg", this,  0, 1000000000, 1000000000);
 	}
+	
 	public String getNom() {
 		return "EQ5";
 	}
@@ -55,6 +60,7 @@ public class Transformateur3Acteur implements IActeur {
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
+		res.add(this.seuilTransformation);
 		return res;
 	}
 
