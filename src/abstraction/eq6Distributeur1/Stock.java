@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -13,16 +13,16 @@ import java.util.Hashtable;
 
 public class Stock extends Distributeur1{
 	
-	private Map<Chocolat,Double> prixInstantanneChoco = new HashMap<Chocolat, Double>();
+	private Map<ChocolatDeMarque,Double> prixInstantanneChoco = new HashMap<ChocolatDeMarque, Double>();
 	private double prixStockageActuel;
-	private Map<Chocolat, Double> teteGondole = new HashMap<Chocolat, Double>(); // (nom du chocolat,% en tête de gondole) 
+	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du ChocolatDeMarque,% en tête de gondole) 
 	private int qteStockage;
-	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>();
-	//private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
+	private Map<ChocolatDeMarque, Double> Stockage = new HashMap<ChocolatDeMarque, Double>();
+	//private Map<ChocolatDeMarque, Integer> Achat = new HashMap<ChocolatDeMarque, Integer>();
 	
 	public void main() {
-		for (Map.Entry<Chocolat, Double > entry : prixInstantanneChoco.entrySet()) {
-            Chocolat keyPrix = entry.getKey();
+		for (Map.Entry<ChocolatDeMarque, Double > entry : prixInstantanneChoco.entrySet()) {
+            ChocolatDeMarque keyPrix = entry.getKey();
             Double valuePrix = entry.getValue();
 
 		for (int i=0; i<qteStockage; i++){
@@ -69,13 +69,13 @@ public class Stock extends Distributeur1{
 		this.qteStockage = qteStockage ;
 	}
 	
-	public Map<Chocolat, Double> getMapStock() {//leorouppert
+	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
 		return this.Stockage;//Retourne toute la hashmap de notre stock
 	}
-	public Double getStockage(Chocolat chocolat) {//leorouppert
+	public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
 		return this.Stockage.get(chocolat);//Retourne le stock du chocolat demandé
 	}
-	public void setStockage(Chocolat chocolat, Double quantite) {//leorouppert
+	public void setStockage(ChocolatDeMarque chocolat, Double quantite) {//leorouppert
 		this.Stockage.put(chocolat, quantite);//Modifie la valeur du stock du chocolat associé
 	}
 
