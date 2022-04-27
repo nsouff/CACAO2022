@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
@@ -40,11 +41,12 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	public void next() {//leorouppert
-		for (int i=0; i < this.getNotreStock().getMapStock().size(); i++) {
-			if this.getNotreStock();
-		}
+		this.getNotreStock().getMapStock().forEach((key,value)->{
+			if (value <= 1) {
+				IVendeurContratCadre Vendeur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getVendeurs(key).get(0);
+			}
+		});
 	}
-
 	// Renvoie la liste des filières proposées par l'acteur
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
