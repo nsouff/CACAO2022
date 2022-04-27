@@ -3,7 +3,8 @@ package abstraction.eq1Producteur1;
 public class arbre {
 	private int ut_plantation;
 	private int ut_esperance_vie;
-	private int maladie;
+	private int stade_maladie;
+	private int ut_debut_maladie;
 	private int qualite ;
 	private boolean bioequitable;
 	private boolean transition_bio;
@@ -12,7 +13,7 @@ public class arbre {
 	public arbre() {
 		this.ut_plantation=0;
 		this.ut_esperance_vie= this.Esperance_vie();
-		this.maladie=0;
+		this.stade_maladie=0;
 		this.qualite=0;
 		this.bioequitable=false;
 		this.transition_bio=false;
@@ -27,7 +28,7 @@ public class arbre {
 		this.ut_esperance_vie=ut_esperance_vie;
 	}
 	public void setMaladie(int maladie) {
-		this.maladie=maladie;
+		this.stade_maladie=maladie;
 	}
 	public void setQualite(int qualite) {
 		this.qualite=qualite;
@@ -52,7 +53,7 @@ public class arbre {
 		return this.ut_esperance_vie;
 	}
 	public int getMaladie() {
-		return this.maladie;
+		return this.stade_maladie;
 	}
 	public int getQualite() {
 		return this.qualite;
@@ -99,5 +100,4 @@ public class arbre {
 			return esp;
 		}
 	}
-
 }
