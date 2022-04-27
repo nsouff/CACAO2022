@@ -5,10 +5,15 @@ import java.util.concurrent.ThreadLocalRandom;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Stock extends Producteur1Acteur {
+	
+	
+	
 	/**
 	 * @param feve
 	 * @param stock
 	 */
+	
+	
 	public Producteur1Stock(Feve feve, double stock) {
 		super(feve, stock);
 		// TODO Auto-generated constructor stub
