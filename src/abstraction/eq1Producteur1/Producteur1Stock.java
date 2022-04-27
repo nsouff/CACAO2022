@@ -2,7 +2,6 @@ package abstraction.eq1Producteur1;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -20,7 +19,22 @@ public class Producteur1Stock {
 		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
 	}
 	
+	//Auteur : Khéo
+	public double getStock(Feve f){
+		double somme = 0.0 ;
+		for(Producteur1Feve Lot : this.getFeves().get(f)) {
+			somme = somme + Lot.getPoids() ;
+		}
+		return somme ;	
+	}
 	
+	/**
+	 * @return the feves
+	 */
+	public HashMap<Feve, List<Producteur1Feve>> getFeves() {
+		return Feves;
+	}
+
 	// Auteur : Laure //
 	// Si une maladie se lance dans le stock, un pourcentage est perdu. //
 	// A faire tourner à chaque UT //
