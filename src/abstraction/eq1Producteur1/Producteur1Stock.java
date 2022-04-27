@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import abstraction.eq8Romu.produits.Feve;
 
+
 public class Producteur1Stock {
 	private  Map<Feve,List<Producteur1Feve>> ;
+
 
 	
 	
