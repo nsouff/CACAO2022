@@ -13,6 +13,9 @@ public class AcheteurAO extends Distributeur1Acteur implements IAcheteurAO {
 
     @Override
     public double proposerPrix(OffreVente offre) {
+        if (this.getNotreStock().getStockage(offre.getChocolat()) < 1) {
+            return 0.0;
+        }
         if (offre.enTG()) {
             return 80.0;
         }
@@ -21,7 +24,7 @@ public class AcheteurAO extends Distributeur1Acteur implements IAcheteurAO {
 
     @Override
     public void notifierAchatAO(PropositionAchatAO propositionRetenue) {
-        // Il faudra mettre à jour le stock
+        this.getNotreStock().setStockage(propositionRetenue.getOffre().getChocolat(), (Double) propositionRetenue.getOffre().getQuantiteKG());
     }
 
     @Override
