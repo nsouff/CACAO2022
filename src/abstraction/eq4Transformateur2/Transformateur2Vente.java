@@ -28,6 +28,7 @@ public class Transformateur2Vente extends Transformateur2Achat {
  public boolean vente() {
 	 return this.StockDispo() & this.prixAcceptable(prix_ori, prix_ori);
  }
+<<<<<<< HEAD
  // Gabriel
  public void enlever() {
 	 if (this.vente()){
@@ -36,3 +37,6 @@ public class Transformateur2Vente extends Transformateur2Achat {
 	 }
  } 
 }
+=======
+}//BLA
+>>>>>>> branch 'main' of https://github.com/Gabeaugosse/CACAO2022.git
