@@ -27,5 +27,5 @@ public class Transformateur2Vente extends Transformateur2Achat {
  }
  public void enlever() {
 	 
- }//T CHAUD
+ }//T CHAUD B
 }
