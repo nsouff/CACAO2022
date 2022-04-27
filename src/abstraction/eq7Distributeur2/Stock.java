@@ -8,12 +8,21 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
+/**
+ * Classe Stock Biofour -
+ * Utilise la classe Variable afin de suivre l'état des stocks
+ * @author mgloc
+ * 
+ */
 public class Stock implements IStock{
 
 	private HashMap<ChocolatDeMarque,Variable> reserve;
 	private HashMap<ChocolatDeMarque,Variable> seuilRachat;
 	private IActeur acteur;
 	
+	/**Méthode constructeur, initialise le stock vide
+	 * @param acteur
+	 */
 	public Stock(IActeur acteur) {
 		List<ChocolatDeMarque> listeChocolatsProduits = Filiere.LA_FILIERE.getChocolatsProduits();
 		
@@ -33,7 +42,11 @@ public class Stock implements IStock{
 		this(null);
 	}
 	
-	@Override
+	public IActeur getActeur() {
+		return this.acteur;
+	}
+	
+	
 	public double getQuantite(ChocolatDeMarque chocolat) {
 		Variable v = reserve.get(chocolat);
 		return v.getValeur();
@@ -43,25 +56,21 @@ public class Stock implements IStock{
 		Variable v = reserve.get(chocolat);
 		v.setValeur(this.acteur, quantite);
 	}
-
-	@Override
+	
 	public void addProduit(ChocolatDeMarque chocolat, Double quantite) {
 		double quantiteActuelle = this.getQuantite(chocolat);
 		this.setQuantite(chocolat, quantiteActuelle + quantite);
 	}
 
-	@Override
 	public void remove(ChocolatDeMarque chocolat, Double quantite) {
 		//This method allow negative stock
 		this.addProduit(chocolat, -quantite);
 	}
 
-	@Override
 	public double getSeuilRachat(ChocolatDeMarque chocolat) {
 		return seuilRachat.get(chocolat).getValeur();
 	}
 
-	@Override
 	public void setSeuilRachat(ChocolatDeMarque chocolat, Double seuil) {
 		seuilRachat.get(chocolat).setValeur(this.acteur, seuil);
 	}
