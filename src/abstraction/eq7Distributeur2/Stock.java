@@ -39,20 +39,18 @@ public class Stock implements IStock{
 
 	@Override
 	public void remove(ChocolatDeMarque chocolat, Double quantite) {
-		// TODO Auto-generated method stub
-		
+		//This method allow negative stock
+		this.addProduit(chocolat, -quantite);
 	}
 
 	@Override
 	public double getSeuilRachat(ChocolatDeMarque chocolat) {
-		// TODO Auto-generated method stub
-		return 0;
+		return seuilRachat.get(chocolat);
 	}
 
 	@Override
 	public double setSeuilRachat(ChocolatDeMarque chocolat, Double seuil) {
-		// TODO Auto-generated method stub
-		return 0;
+		return seuilRachat.replace(chocolat, seuil);
 	}
 	
 }
