@@ -7,7 +7,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 public class Producteur1Stock {
-	private  Map<Feve,Double> Feves;
+	private  HashMap<Feve,Double> Feves;
 
 
 	
