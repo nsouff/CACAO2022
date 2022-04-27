@@ -10,12 +10,17 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
-import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
-	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>(); 
-
+	private Stock NotreStock = new Stock();
+	/**
+	 * @return the notreStock
+	 */
+	public Stock getNotreStock() {
+		return NotreStock;
+	}
 	public Distributeur1Acteur() {
 	}
 	public String getNom() {
@@ -34,20 +39,12 @@ public class Distributeur1Acteur implements IActeur {
 	public void initialiser() {
 	}
 
-	public void next() {
+	public void next() {//leorouppert
+		for (int i=0, i<this.getNotreStock().getMapStock().size(), i++) {
+			if this.getNotreStock()
+		}
 	}
 
-	public Double getStockage(Chocolat chocolat) {//leorouppert
-		return this.Stockage.get(chocolat);
-	}
-
-	/**
-	 * @param stockage the stockage to set
-	 */
-	public void setStockage(Chocolat chocolat, Double stock) {//leorouppert
-		this.Stockage.put(chocolat, stock);
-	}
-	
 	// Renvoie la liste des filières proposées par l'acteur
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
@@ -97,7 +94,7 @@ public class Distributeur1Acteur implements IActeur {
 		 * 
 		 * ENTREES : prixAchat, quantiteAchetee, variable prixVente
 	<<<<<<< HEAD
-		 * SORTIES : HashMap(chocolat,(prix,quantité)) 
+		 * SORTIES : HashMap(ChocolatDeMarque,(prix,quantité)) 
 	=======
 		 * SORTIES : prix 
 	>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
@@ -117,10 +114,10 @@ public class Distributeur1Acteur implements IActeur {
 		 * 
 		*/
 	//V1 : 
-	protected Map<Chocolat, ArrayList<Double>> prixVente = new HashMap<Chocolat, ArrayList<Double>>();
+	protected Map<ChocolatDeMarque, ArrayList<Double>> prixVente = new HashMap<ChocolatDeMarque, ArrayList<Double>>();
 	private static final ArrayList<Double> NULL = null;
 
-	public Map<Chocolat, ArrayList<Double>> prixVente( Map<Chocolat,Double> prixAchat,  Map<Chocolat,Double> quantiteAchete){
+	public Map<ChocolatDeMarque, ArrayList<Double>> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, NULL);
 			(prixVente.get(key)).add(prixAchat.get(key)*2);
