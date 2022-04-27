@@ -57,14 +57,14 @@ public class Distributeur1 extends Distributeur1Acteur {
 	/**
 	 * @return the stockage
 	 */
-	public Map<String, Double> getStockage() {
-		return Stockage;
+	public Double getStockage(Chocolat chocolat) {//leorouppert
+		return this.Stockage.get(chocolat);
 	}
 
 	/**
 	 * @param stockage the stockage to set
 	 */
-	public void setStockage(Chocolat chocolat, Double stock) {
+	public void setStockage(Chocolat chocolat, Double stock) {//leorouppert
 		this.Stockage.put(chocolat, stock);
 	}
 
