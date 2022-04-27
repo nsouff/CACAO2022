@@ -33,6 +33,10 @@ public class Stock implements IStock{
 		this(null);
 	}
 	
+	public IActeur getActeur() {
+		return this.acteur;
+	}
+	
 	@Override
 	public double getQuantite(ChocolatDeMarque chocolat) {
 		Variable v = reserve.get(chocolat);
