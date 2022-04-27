@@ -11,6 +11,7 @@ import abstraction.eq8Romu.general.Variable;
 
 public class Producteur2Acteur implements IActeur {
 	protected int cryptogramme;
+	
 
 	public Producteur2Acteur() {
 	}
@@ -77,5 +78,5 @@ public class Producteur2Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
-
+	
 }
