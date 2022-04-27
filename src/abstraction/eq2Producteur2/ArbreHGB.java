@@ -5,7 +5,7 @@ import abstraction.eq8Romu.produits.Feve;
 public class ArbreHGB extends Arbre {
 	
 	public ArbreHGB() {
-		super(60, 60, 960, 0.2 + Math.random()*0.5, 3);
+		super(60, 1/60, 960, 0.2 + Math.random()*0.5, 3);
 	}
 
 	public Feve getArbreFeve() {

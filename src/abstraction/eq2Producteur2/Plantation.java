@@ -1,29 +1,10 @@
 package abstraction.eq2Producteur2;
 
+import java.util.HashMap;
+
 public class Plantation {
-	private double NbArbres; 
-	private Arbre ArbrePlante;
+	private HashMap<Arbre, Double> Proportions;
 	
-	public void plantation(double NA, Arbre AP) {
-		this.setNbArbres(NA); 
-		this.setArbrePlante(AP);
-	}
-
-	public double getNbArbres() {
-		return NbArbres;
-	}
-
-	public void setNbArbres(double nbArbres) {
-		NbArbres = nbArbres;
-	}
-
-	public Arbre getArbrePlante() {
-		return ArbrePlante;
-	}
-
-	public void setArbrePlante(Arbre arbrePlante) {
-		ArbrePlante = arbrePlante;
-	}
 	
 	
 	
