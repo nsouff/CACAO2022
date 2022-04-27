@@ -1,7 +1,9 @@
 package abstraction.eq5Transformateur3;
 
 import java.awt.Color;
+import abstraction.eq8Romu.produits.Feve;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
@@ -11,7 +13,6 @@ import abstraction.eq8Romu.general.Variable;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
-
 	public Transformateur3Acteur() {
 	}
 	public String getNom() {

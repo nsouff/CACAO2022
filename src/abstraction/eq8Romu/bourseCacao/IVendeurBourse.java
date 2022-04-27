@@ -13,6 +13,7 @@ public interface IVendeurBourse {
 	 * @return la quantite en kg de feves de type f que this souhaite vendre 
 	 */
 	public double offre(Feve f, double cours);
+		
 
 	/**
 	 * Methode appelee par la bourse pour avertir le vendeur qu'il est parvenu
