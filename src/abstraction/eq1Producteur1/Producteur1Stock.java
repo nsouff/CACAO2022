@@ -2,7 +2,19 @@ package abstraction.eq1Producteur1;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import abstraction.eq8Romu.produits.Feve;
+
 public class Producteur1Stock extends Producteur1Acteur {
+	/**
+	 * @param feve
+	 * @param stock
+	 */
+	public Producteur1Stock(Feve feve, double stock) {
+		super(feve, stock);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	private List<Producteur1Feve> liste_feves;
 	
 	
