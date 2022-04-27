@@ -12,7 +12,7 @@ public class Transformateur2Achat extends Transformateur2{
 	}
 	
 	public int quantite(int stock) { //Quantite a acheter pour garder le stock theorique
-		return stock_theorique-StockFeve.getStock();//La méthode getStock n'est pas encore créée
+		return 0;//La méthode getStock n'est pas encore créée
 	}
 	
 	public boolean deficit(int quantite, double capital, double prix_vente) { //True si l'achat nous mettrait en deficit
