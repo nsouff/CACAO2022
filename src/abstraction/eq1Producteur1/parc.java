@@ -12,7 +12,7 @@ public class parc {
 	private boolean guerre;
 	private int ut_debut_guerre;
 	private int ut_fin_guerre;
-	private int duree_aleas;
+	private int fin_aleas;
 	
 	public parc() { //Écrit par Antoine
 		this.cacaoyers = new ArrayList<arbre>();
@@ -44,8 +44,8 @@ public class parc {
 		return this.ut_fin_guerre;
 	}
 	
-	public int getDuree_aleas() { //Écrit par Antoine
-		return this.duree_aleas;
+	public int getfin_aleas() { //Écrit par Antoine
+		return this.fin_aleas;
 	}
 	
 	public void setNombre_BE(int i) { //Écrit par Antoine
@@ -68,8 +68,8 @@ public class parc {
 		this.ut_fin_guerre = ut;
 	}
 	
-	public void setDuree_aleas(int i) { //Écrit par Antoine
-		this.duree_aleas = i;
+	public void setfin_aleas(int i) { //Écrit par Antoine
+		this.fin_aleas = i;
 	}
 	public arbre getArbre(int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(i);
@@ -95,6 +95,14 @@ public class parc {
 		}
 	}
 	
+	public void MAJAleas() { //Fait par Antoine
+		double d = Math.random();
+		while (d==0) {
+			d = Math.random();
+		}
+		this.setfin_aleas((int)(Filiere.LA_FILIERE.getEtape()+Math.ceil((d+1)*2)));
+	}
+	
 	public void MAJParc() { //Écrit par Antoine
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
 			arbre arbre_i = this.getArbre(i);
@@ -110,5 +118,71 @@ public class parc {
 				}
 			}
 		}
+	}
+	
+	public double ParasitesBE() { //Fait par Antoine
+		double d = Math.random();
+		if (d<=0.2) {
+			double dd = Math.random();
+			if (dd<=0.7) {
+				return 0.1;
+			}
+			if ((dd>0.7) && (dd<=0.95)) {
+				return 0.5;
+			}
+			if ((dd>0.95) && (dd<=1)) {
+				return 0.8;
+			}
+			return 1;
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	public double Parasites_non_BE() { //Fait par Antoine
+		double d = Math.random();
+		if (d<=0.04) {
+			double dd = Math.random();
+			if (dd<=0.7) {
+				return 0.1;
+			}
+			if ((dd>0.7) && (dd<=0.95)) {
+				return 0.5;
+			}
+			if ((dd>0.95) && (dd<=1)) {
+				return 0.8;
+			}
+			else {
+				return 1;
+			}
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	public void Recolte() { //Fait par Antoine
+		double BE = 0;
+		double non_BE = 0;
+		if (Filiere.LA_FILIERE.getEtape()%24==20) {
+			this.MAJAleas();
+		}
+		if (Filiere.LA_FILIERE.getEtape()>=this.fin_aleas) {
+			for (int i=0; i<this.getCacaoyers().size(); i++) {
+				arbre arbre_i = this.getArbre(i);
+				boolean isBE = arbre_i.getBioequitable();
+				double recolte = arbre_i.getProductivite_max();
+				if (isBE) {
+					BE+=recolte;
+				}
+				else {
+					non_BE+=recolte;
+				}
+			}
+		}
+		BE=BE*ParasitesBE();
+		non_BE=non_BE*Parasites_non_BE();
+		
 	}
 }
