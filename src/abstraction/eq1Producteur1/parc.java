@@ -107,7 +107,7 @@ public class parc extends Producteur1Stock{
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
 			arbre arbre_i = this.getArbre(i);
 			arbre_i.MAJMaladie();
-			if ((arbre_i.getMaladie() == 5)
+			if ((arbre_i.getStade_maladie() == 5)
 					|| (arbre_i.Age() == arbre_i.getUt_esperance_vie())) {
 				this.getCacaoyers().remove(arbre_i);
 				if (arbre_i.getBioequitable()) {
