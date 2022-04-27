@@ -1,6 +1,7 @@
 package abstraction.eq4Transformateur2;
 
 
+
 public class Transformateur2Vente extends Transformateur2Achat {
  private double marge;
  private int prix_transfo;
