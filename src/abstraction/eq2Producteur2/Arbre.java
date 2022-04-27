@@ -1,25 +1,19 @@
 package abstraction.eq2Producteur2;
 
-import abstraction.eq8Romu.produits.Gamme;
-
 public class Arbre {
 	private double DureeCroissance;
 	private double RendementProgressif;
 	private double DureeVie;
 	private double RendementFinal;
 	private double DureeAffinage;
-	private double DureeTransformation;
-	private Gamme ArbreGamme;
 
 	
-	public void arbre (double DC, double RP, double DV, double RF, double DA, double T, Gamme AG ) {
+	public Arbre (double DC, double RP, double DV, double RF, double DA) {
 		this.setDureeCroissance(DC);
 		this.setRendementProgressif(RP); 
 		this.setDureeVie(DV); 
 		this.setRendementFinal(RF);
 		this.setDureeAffinage(DA);
-		this.setDureeTransformation(T);
-		this.setArbreGamme(AG);
 	}
 
 
@@ -62,17 +56,6 @@ public class Arbre {
 		RendementFinal = rendementFinal;
 	}
 
-
-	public double getDureeTransformation() {
-		return DureeTransformation;
-	}
-
-
-	public void setDureeTransformation(double dureeTransformation) {
-		DureeTransformation = dureeTransformation;
-	}
-
-
 	public double getDureeAffinage() {
 		return DureeAffinage;
 	}
@@ -82,15 +65,7 @@ public class Arbre {
 		DureeAffinage = dureeAffinage;
 	}
 
-
-	public Gamme getArbreGamme() {
-		return ArbreGamme;
-	}
-
-
-	public void setArbreGamme(Gamme arbreGamme) {
-		ArbreGamme = arbreGamme;
-	}
+	
 	
 	
 
