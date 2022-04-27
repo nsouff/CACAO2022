@@ -1,4 +1,5 @@
 package abstraction.eq1Producteur1;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -6,9 +7,17 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 public class Producteur1Stock {
-	private  Map<Feve,List<Producteur1Feve>> ;
-
-
+	private  HashMap<Feve,List<Producteur1Feve>> Feves;
+	
+	//Auteur : Khéo
+	public Producteur1Stock() {
+		this.Feves = new HashMap<Feve, List<Producteur1Feve>>() ;
+		Feves.put(Feve.FEVE_BASSE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_HAUTE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
+	}
 	
 	
 	// Auteur : Laure //
@@ -38,8 +47,8 @@ public class Producteur1Stock {
 		} else {
 			StockMalade = 0;
 		}
-		for (int i=0; i<(liste_feves.size()*StockMalade/100); i=i+1) {
-			liste_feves.remove(i);
+		for (int i=0; i<(this.Feves.size()*StockMalade/100); i=i+1) {
+			this.Feves.remove(i);
 		}
 		
 		// Auteur : Laure //

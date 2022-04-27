@@ -10,9 +10,9 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
 public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements IVendeurBourse{
+	
+	//Auteur : Khéo
 	private HashMap<Feve, Double> prixmoyenFeve ;
-	
-	
 	/**
 	 * @param feve
 	 * @param stock
@@ -28,7 +28,8 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 
 
 
-	@Override
+
+	//Auteur : Khéo
 	public double offre(Feve f, double cours) {
 		//On met à jour les prix de la HashMap
 		this.getPrixmoyenFeve().put(f, this.getPrixmoyenFeve().get(f)+cours);
@@ -49,13 +50,14 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 	/**
 	 * @return the prixmoyenFeve
 	 */
+	//Auteur : Khéo
 	public HashMap<Feve, Double> getPrixmoyenFeve() {
 		return prixmoyenFeve;
 	}
 
 
 
-	@Override
+	//Auteur : Khéo
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
 		this.stockFeve.setValeur(this, this.stockFeve.getValeur()-quantiteEnKg);
