@@ -15,7 +15,7 @@ public class Distributeur1 extends Distributeur1Acteur {
 	private Map<String, Integer> Achat = new HashMap<String, Integer>();
 
 
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
+//github.com/nsouff/CACAO2022
 	public Distributeur1() {
 		super();
 	}
