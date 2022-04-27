@@ -12,20 +12,15 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 public class Distributeur1 extends Distributeur1Acteur {
-<<<<<<< HEAD
+
 	private Map<Chocolat,Double> prixInstantanneChoco = new HashMap<Chocolat, Double>();
-=======
-	private static final ArrayList<Double> NULL = null;
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
+
 	private double prixInstantane;
 	private double prixStockageActuel;
 	private Map<Chocolat, Double> teteGondole = new HashMap<Chocolat, Double>(); // (nom du chocolat,% en tête de gondole) 
 	private int qteStockage;
-<<<<<<< HEAD
-	private Map<Chocolat, ArrayList<Double>[][] > Stockage = new HashMap<Chocolat, ArrayList<Double>[][] >(); //(nom choco, table 2 entrées prix et qté)
+	private Map<Chocolat, ArrayList<Double>> Stockage = new HashMap<Chocolat, ArrayList<Double>>(); //(nom choco, table 2 entrées prix et qté)
 
-=======
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	private Map<Chocolat, Double> Stockage = new HashMap<Chocolat, Double>(); 
 	private Map<Chocolat, Integer> Achat = new HashMap<Chocolat, Integer>();
 <<<<<<< HEAD

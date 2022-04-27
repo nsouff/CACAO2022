@@ -103,17 +103,9 @@ public class Distributeur1Acteur implements IActeur {
 		 * - prix fixe = prix achat*2
 		 * - marge fixe (différente pour chaque produit)
 		 * - raisonner en marge du prix d'achat
-		 * 
-		 * V1.1 :
-		 * - 
-		 *  
-		 * 
-		 * 
-		 * V2 :
-		 * - 
-		 * 
 		*/
 	//V1 : 
+	//NOLANN
 	protected Map<ChocolatDeMarque, ArrayList<Double>> prixVente = new HashMap<ChocolatDeMarque, ArrayList<Double>>();
 	private static final ArrayList<Double> NULL = null;
 
