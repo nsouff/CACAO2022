@@ -6,22 +6,22 @@ import abstraction.eq8Romu.filiere.Filiere;
 //auteur Marie
 
 public class Stock<I> {
-		private HashMap<I,Double> quantite;
+		private HashMap<I,Double> quantite_stock;
 		private double stocktotal;
 		
 		
 	public Stock(double stocktotal) {
-		this.quantite = new HashMap<I, Double>();
+		this.quantite_stock = new HashMap<I, Double>();
 		this.stocktotal=stocktotal;
 	}
 	//Marie
 	public void ajouter (I produit, double qt) {
 		if (qt>0) {	
 			
-			if (this.quantite.keySet().contains(produit) ) {
-				this.quantite.put(produit, this.quantite.get(produit)+qt);
+			if (this.quantite_stock.keySet().contains(produit) ) {
+				this.quantite_stock.put(produit, this.quantite_stock.get(produit)+qt); //
 			}else {
-				this.quantite.put(produit, qt);}
+				this.quantite_stock.put(produit, qt);}
 	}else{
 		throw new IllegalArgumentException("impossible");
 	}
@@ -29,8 +29,8 @@ public class Stock<I> {
 	
 	public void enlever (I produit, double qt) {
 	if (qt>0) {	
-		if (this.quantite.keySet().contains(produit) ) {
-			this.quantite.put(produit, this.quantite.get(produit)-qt);
+		if (this.quantite_stock.keySet().contains(produit) ) {
+			this.quantite_stock.put(produit, this.quantite_stock.get(produit)-qt);
 	}}
 	else{
 		throw new IllegalArgumentException("impossible");
@@ -38,8 +38,8 @@ public class Stock<I> {
 }
 	//Marie
 	public double getQuantite(I produit) {
-		if (this.quantite.keySet().contains(produit)) {
-			return this.quantite.get(produit);
+		if (this.quantite_stock.keySet().contains(produit)) {
+			return this.quantite_stock.get(produit);
 		}else {
 			return 0;
 		}
@@ -47,7 +47,7 @@ public class Stock<I> {
 	}
 	// Marie
 	public double quantiteStockTotale(I produit) {
-		for(Double d: this.quantite.values()) {
+		for(Double d: this.quantite_stock.values()) {
 			this.stocktotal=this.stocktotal+d;
 		}
 		return this.stocktotal;
@@ -55,7 +55,9 @@ public class Stock<I> {
 	}
 	// Marie
 	public double stockRestant(I produit) {
-		return (Filiere.LA_FILIERE.getIndicateur("stock max")-this.stocktotal);
+		return (Filiere.LA_FILIERE.getIndicateur("stock max")-this.quantiteStockTotale(produit));
 	}
-
+	public double coutStockage(Filiere.LA_FILIERE.getIndicateur("prix stockage")) { // demander comment ajouter variables
+		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix stockage")) // demander a Alexandre comment calculer prix 
+	}
 }
