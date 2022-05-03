@@ -11,6 +11,45 @@ import java.util.List;
 
 public class Transformateur2Acteur implements IActeur {
 	
+	private Integer cryptogramme;
+	private Variable qualiteHaute;  // La qualite d'un chocolat de gamme haute 
+	private Variable qualiteMoyenne;// La qualite d'un chocolat de gamme moyenne  
+	private Variable qualiteBasse;  // La qualite d'un chocolat de gamme basse
+	private Variable gainQualiteBioEquitable;// Le gain en qualite des chocolats bio equitables
+	private Variable gainQualiteOriginal;// Le gain en qualite des chocolats originaux
+	private Variable partDeLaMarqueDansLaQualitePercu;// Le gain en qualite des chocolats originaux
+	private Variable coutStockage;
+	private Variable prixSeuil;
+	private Variable pourcentageTranfoLongue;
+	private Variable prixTransformation; // a renseigner 
+	private Variable prixChocoOriginal;
+	private Variable capaciteStockage;
+	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
+	private Variable expirationFeve;
+	private Variable expirationChoco;
+
+	
+	
+	
+	public Romu() {
+		this.qualiteHaute   = new Variable("qualite haute", "<html>Qualite du chocolat<br>de gamme haute</html>",this, 0.0, 10.0, 3.0);
+		this.qualiteMoyenne = new Variable("qualite moyenne", "<html>Qualite du chocolat<br>de gamme moyenne</html>",this, 0.0, 10.0, 2.0);
+		this.qualiteBasse   = new Variable("qualite basse", "<html>Qualite du chocolat<br>de gamme basse</html>",this, 0.0, 10.0, 1.0);
+		this.gainQualiteBioEquitable  = new Variable("gain qualite bioequitable", "<html>Gain en qualite des<br>chocolats bio equitables</html>",this, 0.0, 5.0, 0.5);
+		this.gainQualiteOriginal  = new Variable("gain qualite original", "<html>Gain en qualite des<br>chocolats originaux</html>",this, 0.0, 5.0, 0.5);
+		this.partDeLaMarqueDansLaQualitePercu  = new Variable("impact marque qualite percue", "<html>% de la qualite percue de la marque dans la qualite percue du chocolat</html>",this, 0.0, 0.5, 0.3);
+		this.coutStockage = new Variable("cout stockage", "<html>Qualite du chocolat<br>de gamme haute</html>",this, 0.0, 10.0, 3.0);
+		this.prixSeuil = ;
+		this.pourcentageTransfoLongue=;
+		this.prixTransformation = ;
+		this.prixChocoOriginal=;
+		this.capaciteStockage=;
+		this.capaciteStockageFixe=;
+		this.expirationFeve=;
+		this.expirationChoco=;
+		
+	}
+	
 	protected int cryptogramme;
 
 	public Transformateur2Acteur() {
