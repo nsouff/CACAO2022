@@ -2,7 +2,7 @@ package abstraction.eq4Transformateur2;
 
 import abstraction.eq8Romu.filiere.Filiere;
 //auteur Jad
-public class Transformateur2Transfo extends Transformateur2Vente {
+public class Transformateur2Transfo extends Transformateur2Stock {
 	
 	//private double rdt=Filiere.LA_FILIERE.getIndicateur("rendement_long").getValue();
 	//private double prix_transfo= Filiere.LA_FILIERE.getIndicateur("prix_transfo").getValue();
