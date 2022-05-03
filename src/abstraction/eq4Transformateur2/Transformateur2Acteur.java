@@ -40,7 +40,9 @@ public class Transformateur2Acteur implements IActeur {
 	}
 	
 	public List<String> getNomsFilieresProposees() {
-		return new ArrayList<String>();
+		ArrayList<String> filiere = new ArrayList<String>();
+		filiere.add("OPTI'CACAO");  
+		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
