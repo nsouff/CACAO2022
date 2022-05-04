@@ -7,6 +7,7 @@ import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
 
 	@Override
+	//Yves
 	public boolean vend(Object produit) {
 		if (stockChocolat.getProduitsEnStock().contains(produit) == true) {
 			return true;
