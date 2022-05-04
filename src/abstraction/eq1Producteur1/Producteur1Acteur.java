@@ -15,7 +15,6 @@ import abstraction.eq8Romu.produits.Feve;
 public class Producteur1Acteur extends Producteur1Producteur implements IActeur {
 	private static int NB_INSTANCES = 0; // Afin d'attribuer un nom different a toutes les instances
 	protected int numero;
-	protected Integer cryptogramme;
 	protected Journal journal;
 	private List<Double> prixmoyenFeve ;
 	private Variable StockBasse;
@@ -62,6 +61,21 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 	//Auteur : Khéo
 	public void next() {
 		super.next();
+		
+		//Calcul du Prix Total de Stockage
+		double prixTotal = 0 ;
+		for (Feve f : this.getFeves().keySet()) {
+			prixTotal = prixTotal + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("prixstockage").getValeur()) ;
+		}
+		
+		//Calcul Prix Entretien Arbre 
+		
+		
+		
+		//Retirer l'argent 
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotal);
+		
+		
 		//Mis à jour Variable
 		this.getStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE));
 		this.getStockHaut_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
