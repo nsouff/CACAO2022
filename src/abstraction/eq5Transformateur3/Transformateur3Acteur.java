@@ -14,8 +14,9 @@ import abstraction.eq8Romu.produits.Feve;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
-	protected Double seuilMaxAchat; // par tonne en dollars
 	
+	//Karla
+	protected Double seuilMaxAchat; // par kg en dollars
 	protected Variable seuilTransformation;
 	protected Variable rendement;
 	protected Variable coutTransformation;
@@ -23,21 +24,23 @@ public class Transformateur3Acteur implements IActeur {
 	protected Stock<Feve> stockFeves;
 	protected Stock<Chocolat> stockChocolat;
 
-	
+	//Karla
 	public Transformateur3Acteur() {
 		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
-		this.coutTransformation = new VariableReadOnly ("coutTransformateur", "cout de transformation en milliers de dollars par etape par tonne", this,  0, 100, 5);
+		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 5);
 		this.coutOrginial = new VariableReadOnly ("coutOrginial", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2900.00;
 	}
-	
+
+	//julien
 	public String getNom() {
 		return "EQ5";
 	}
 
+	//julien
 	public String getDescription() {
 		return "Nous sommes BIO'riginal. Venez goûter notre bon chocolat";
 	}
@@ -68,6 +71,10 @@ public class Transformateur3Acteur implements IActeur {
 	// Renvoie les indicateurs
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
+		res.add(rendement);
+		res.add(seuilTransformation);
+		res.add(coutOrginial);
+		res.add(coutTransformation);
 		return res;
 	}
 
