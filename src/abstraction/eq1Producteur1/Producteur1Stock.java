@@ -21,6 +21,13 @@ public class Producteur1Stock {
 	}
 	
 	//Auteur : Khéo
+	public void initialiser() {
+	this.addLot(Feve.FEVE_BASSE, 1000000);
+	this.addLot(Feve.FEVE_MOYENNE, 1000000);
+	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 100000);
+	this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 100000);
+	}
+	//Auteur : Khéo
 	public double getStock(Feve f){
 		double somme = 0.0 ;
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
