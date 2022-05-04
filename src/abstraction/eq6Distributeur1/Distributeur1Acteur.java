@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
@@ -20,7 +22,8 @@ public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 	private Stock NotreStock = new Stock();
-
+	Random ran = new Random();
+	protected List<ExemplaireContratCadre> mesContrats;
 	/**
 	 * @return the notreStock
 	 */
@@ -45,10 +48,22 @@ public class Distributeur1Acteur implements IActeur {
 	public void initialiser() {
 	}
 
+	public void suppAnciensContrats() {//leorouppert
+		for (ExemplaireContratCadre contrat : this.mesContrats) {
+			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
+				mesContrats.remove(contrat);
+			}
+		}
+	}
+	
 	public void next() {//leorouppert
+		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 50) {
-				IVendeurContratCadre Vendeur = supCCadre.getVendeurs(key).get(0);
+				journal.ajouter("Recherche d'un vendeur aupres de qui acheter");
+				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
+				IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
+				journal.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
 			}
 		});
