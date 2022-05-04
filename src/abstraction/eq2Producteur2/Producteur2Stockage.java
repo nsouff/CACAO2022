@@ -76,4 +76,13 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		this.StockHQ_BE.add(new Stock(0,0));
 		
 	}
+	public double SommeQuantite(LinkedList<Stock> L) {
+		double s = 0 ;
+		for (int i=0 ; i<L.size() ; i++) {
+			s = s + (L.get(i)).getQuantite();
+		}
+		return s;
+		
+		
+	}
 }
