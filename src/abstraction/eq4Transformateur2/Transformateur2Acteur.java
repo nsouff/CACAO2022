@@ -4,6 +4,8 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.Feve;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -13,12 +15,7 @@ public class Transformateur2Acteur implements IActeur {
 	
 	protected int cryptogramme;
 	
-	private Variable qualiteHaute;  // La qualite d'un chocolat de gamme haute 
-	private Variable qualiteMoyenne;// La qualite d'un chocolat de gamme moyenne  
-	private Variable qualiteBasse;  // La qualite d'un chocolat de gamme basse
-	private Variable gainQualiteBioEquitable;// Le gain en qualite des chocolats bio equitables
-	private Variable gainQualiteOriginal;// Le gain en qualite des chocolats originaux
-	private Variable partDeLaMarqueDansLaQualitePercu;// Le gain en qualite des chocolats originaux
+
 	
 	private Variable coutStockage;
 	private Variable prixSeuil; // au dela duquel nous n'achetons pas
@@ -29,6 +26,8 @@ public class Transformateur2Acteur implements IActeur {
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
+	private Stock<Feve> stockfeve;
+	private Stock<Chocolat> stockchocolat;
 	
 	
 
@@ -36,12 +35,7 @@ public class Transformateur2Acteur implements IActeur {
 	
 	
 	public Transformateur2Acteur() { //valeurs des min, max, et init (3 derniers parametres) à changer plus tard.
-	/*	this.qualiteHaute   = new Variable("qualite haute", "<html>Qualite du chocolat<br>de gamme haute</html>",this, 0.0, 10.0, 3.0);
-		this.qualiteMoyenne = new Variable("qualite moyenne", "<html>Qualite du chocolat<br>de gamme moyenne</html>",this, 0.0, 10.0, 2.0);
-		this.qualiteBasse   = new Variable("qualite basse", "<html>Qualite du chocolat<br>de gamme basse</html>",this, 0.0, 10.0, 1.0);
-		this.gainQualiteBioEquitable  = new Variable("gain qualite bioequitable", "<html>Gain en qualite des<br>chocolats bio equitables</html>",this, 0.0, 5.0, 0.5);
-		this.gainQualiteOriginal  = new Variable("gain qualite original", "<html>Gain en qualite des<br>chocolats originaux</html>",this, 0.0, 5.0, 0.5);
-		this.partDeLaMarqueDansLaQualitePercu  = new Variable("impact marque qualite percue", "<html>% de la qualite percue de la marque dans la qualite percue du chocolat</html>",this, 0.0, 0.5, 0.3);*/
+	
 		
 		this.coutStockage = new Variable("cout stockage", "<html>Cout de stockage</html>",this, 0.0, 10.0, 3.0);
 		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 3.0);
@@ -59,7 +53,6 @@ public class Transformateur2Acteur implements IActeur {
 
 
 	public void initialiser() {
-		double rendement =Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
 	}
 	
 	public String getNom() {
@@ -128,6 +121,20 @@ public class Transformateur2Acteur implements IActeur {
 	// Renvoie le solde actuel de l'acteur
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
+	}
+
+
+
+
+	public Stock<Feve> getStockfeve() {
+		return stockfeve;
+	}
+
+
+
+
+	public Stock<Chocolat> getStockchocolat() {
+		return stockchocolat;
 	}
 
 }
