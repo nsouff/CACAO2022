@@ -26,6 +26,7 @@ public class Producteur1Acteur extends Producteur1Stock implements IActeur {
 	
 	//Auteur : Khéo
 	public Producteur1Acteur() {
+		super();
 		NB_INSTANCES++;
 		this.numero=NB_INSTANCES;
 		this.journal = new Journal(this.getNom()+" activites", this);
@@ -38,6 +39,15 @@ public class Producteur1Acteur extends Producteur1Stock implements IActeur {
 	}
 
 	public void initialiser() {
+		
+		//Ajout Stock Fèves
+		this.addLot(Feve.FEVE_BASSE, 100000);
+		this.addLot(Feve.FEVE_MOYENNE, 100000);
+		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 10000);
+		
+		//Création de Arbres du Parc
+		
+		
 	}
 	
 	public String getNom() {

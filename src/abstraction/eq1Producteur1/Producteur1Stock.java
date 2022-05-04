@@ -7,26 +7,23 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 public class Producteur1Stock {
-	private  HashMap<Feve,List<Producteur1Feve>> Feves;
+	private  HashMap<Feve,List<FeveProducteur1>> Feves;
 	
 	//Auteur : Khéo
 	public Producteur1Stock() {
-		this.Feves = new HashMap<Feve, List<Producteur1Feve>>() ;
-		Feves.put(Feve.FEVE_BASSE, new ArrayList<Producteur1Feve>());
-		Feves.put(Feve.FEVE_HAUTE, new ArrayList<Producteur1Feve>());
-		Feves.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
-		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<Producteur1Feve>());
-		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
+		this.Feves = new HashMap<Feve, List<FeveProducteur1>>() ;
+		Feves.put(Feve.FEVE_BASSE, new ArrayList<FeveProducteur1>());
+		Feves.put(Feve.FEVE_HAUTE, new ArrayList<FeveProducteur1>());
+		Feves.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, new ArrayList<FeveProducteur1>());
+		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<FeveProducteur1>());
+		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<FeveProducteur1>());
 		
-		this.addLot(Feve.FEVE_BASSE, 100000);
-		this.addLot(Feve.FEVE_MOYENNE, 100000);
-		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 10000);
 	}
 	
 	//Auteur : Khéo
 	public double getStock(Feve f){
 		double somme = 0.0 ;
-		for(Producteur1Feve Lot : this.getFeves().get(f)) {
+		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
 			somme = somme + Lot.getPoids() ;
 		}
 		return somme ;	
@@ -34,7 +31,7 @@ public class Producteur1Stock {
 	
 	//Auteur : Khéo
 	public void addLot(Feve f, double quantite) {
-		this.getFeves().get(f).add(new Producteur1Feve(quantite));
+		this.getFeves().get(f).add(new FeveProducteur1(quantite));
 
 	}
 	
@@ -62,7 +59,7 @@ public class Producteur1Stock {
 	/**
 	 * @return the feves
 	 */
-	public HashMap<Feve, List<Producteur1Feve>> getFeves() {
+	public HashMap<Feve, List<FeveProducteur1>> getFeves() {
 		return Feves;
 	}
 
