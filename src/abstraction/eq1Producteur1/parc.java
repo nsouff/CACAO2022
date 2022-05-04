@@ -119,21 +119,21 @@ public class parc extends Producteur1Stock{
 		if ((i==1) || (i==-1)) {
 			if (a.getBioequitable()) {
 				if (a.getQualite()==2) {
-					this.setNombre_BE_moyenne(this.getNombre_BE_moyenne()+1*i);
+					this.setNombre_BE_moyenne(this.getNombre_BE_moyenne()+i);
 				}
 				if (a.getQualite()==3) {
-					this.setNombre_BE_haute(this.getNombre_BE_haute()+1*i);
+					this.setNombre_BE_haute(this.getNombre_BE_haute()+i);
 				}
 			}
 			else {
 				if (a.getQualite()==1) {
-					this.setNombre_non_BE_basse(this.getNombre_non_BE_basse()+1*i);
+					this.setNombre_non_BE_basse(this.getNombre_non_BE_basse()+i);
 				}
 				if (a.getQualite()==2) {
-					this.setNombre_non_BE_moyenne(this.getNombre_non_BE_moyenne()+1*i);
+					this.setNombre_non_BE_moyenne(this.getNombre_non_BE_moyenne()+i);
 				}
 				if (a.getQualite()==3) {
-					this.setNombre_non_BE_haute(this.getNombre_non_BE_haute()+1*i);
+					this.setNombre_non_BE_haute(this.getNombre_non_BE_haute()+i);
 				}
 			}
 		}
