@@ -1,4 +1,4 @@
-	package abstraction.eq8Romu.general;
+package abstraction.eq8Romu.general;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

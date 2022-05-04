@@ -33,6 +33,28 @@ public class Producteur1Stock {
 		this.getFeves().get(f).add(new Producteur1Feve(quantite));
 
 	}
+	
+	
+	//Auteur : Khéo
+	public void retirerQuantite(Feve f, double quantite) {
+		while (quantite>0) {
+			double poids = this.getFeves().get(f).get(0).getPoids() ;
+			
+			if (quantite >= poids) { //On regarde en fonction de la quantite qui reste dans le lot. Si il y'a plus on enlève le lot
+				quantite = quantite - poids ;
+				this.getFeves().get(f).remove(0);
+			}
+			else {
+				this.getFeves().get(f).get(0).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
+				quantite = 0 ;
+			}
+		}
+		
+		
+		
+		
+	}
+	
 	/**
 	 * @return the feves
 	 */
