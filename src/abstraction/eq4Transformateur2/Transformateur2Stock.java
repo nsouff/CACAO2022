@@ -37,11 +37,17 @@ public double getStocktotalChoco() {
 //Marie
 public double coutStockage() {
 	double cout=0;
-	for (Feve f : stockfeve.quantite_stock.keySet()) {
-		cout=cout+ stockfeve.quantite_stock.get(f)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());
+	/*for (Feve f : stockfeve.quantite_stock.keySet()) {
+		cout=cout+ stockfeve.quantite_stock.get(f)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
+	for (Feve f : stockfeve.getQuantite_stock().keySet()) {
+		cout=cout+ stockfeve.getQuantite_stock().get(f)*Transformateur2Acteur.Test.getCout();
 	}
-	for (Chocolat c : stockchocolat.quantite_stock.keySet()) {
-		cout= cout + stockchocolat.quantite_stock.get(c)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());
+
+	/*for (Chocolat c : stockchocolat.quantite_stock.keySet()) {
+		cout= cout + stockchocolat.quantite_stock.get(c)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
+
+	for (Chocolat c : stockchocolat.getQuantite_stock().keySet()) {
+		cout= cout + stockchocolat.getQuantite_stock().get(c)*Transformateur2Acteur.Test.getCout();
 	}
 	return cout;
 }

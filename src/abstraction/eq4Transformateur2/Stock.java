@@ -11,7 +11,7 @@ public class Stock<I> {
 		
 		
 	public Stock(double stocktotal) {
-		this.quantite_stock = new HashMap<I, Double>();
+		this.setQuantite_stock(new HashMap<I, Double>());
 		this.stocktotal=stocktotal;
 	}
 	//Marie
@@ -30,10 +30,10 @@ public class Stock<I> {
 	public void ajouter (I produit, double qt) {
 		if (qt>0) {	
 			
-			if (this.quantite_stock.keySet().contains(produit) ) {
-				this.quantite_stock.put(produit, this.quantite_stock.get(produit)+qt); //
+			if (this.getQuantite_stock().keySet().contains(produit) ) {
+				this.getQuantite_stock().put(produit, this.getQuantite_stock().get(produit)+qt); //
 			}else {
-				this.quantite_stock.put(produit, qt);}
+				this.getQuantite_stock().put(produit, qt);}
 	}else{
 		throw new IllegalArgumentException("impossible");
 	}
@@ -41,8 +41,8 @@ public class Stock<I> {
 	
 	public void enlever (I produit, double qt) {
 	if (qt>0) {	
-		if (this.quantite_stock.keySet().contains(produit) ) {
-			this.quantite_stock.put(produit, this.quantite_stock.get(produit)-qt);
+		if (this.getQuantite_stock().keySet().contains(produit) ) {
+			this.getQuantite_stock().put(produit, this.getQuantite_stock().get(produit)-qt);
 	}}
 	else{
 		throw new IllegalArgumentException("impossible");
@@ -50,32 +50,39 @@ public class Stock<I> {
 }
 	//Marie
 	public double getQuantite(I produit) {
-		if (this.quantite_stock.keySet().contains(produit)) {
-			return this.quantite_stock.get(produit);
+		if (this.getQuantite_stock().keySet().contains(produit)) {
+			return this.getQuantite_stock().get(produit);
 		}else {
 			return 0;
 		}
 		
 	}
 	// Marie
-	public double quantiteStockTotale(I produit) {
-		for(Double d: this.quantite_stock.values()) {
+	public double quantiteStockTotale() {
+		for(Double d: this.getQuantite_stock().values()) {
 			this.stocktotal=this.stocktotal+d;
 		}
 		return this.stocktotal;
 		
 }
 	// Marie
+
 /*	public double stockRestant(I produit) {
 		return (Filiere.LA_FILIERE.getIndicateur("stock max").getValeur())-(this.quantiteStockTotale(produit).getValeur());
 	}*/ // version 2 quand on aura une capacité de stockage limitée
 
 
 
-=======
+	/*public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
+		return (this.quantiteStockTotale(produit)*(Filiere.LA_FILIERE.getIndicateur("prix_stockage").getValeur())); // demander a Alexandre comment calculer prix 
+	}*/
 
-	public double coutStockage(Filiere.LA_FILIERE.getIndicateur("prix stockage")) { // demander comment ajouter variables
-		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix stockage")); // demander a Alexandre comment calculer prix 
+
+
+	public HashMap<I,Double> getQuantite_stock() {
+		return quantite_stock;
 	}
-}}
->>>>>>> branch 'main' of https://github.com/Gabeaugosse/CACAO2022.git
+	public void setQuantite_stock(HashMap<I,Double> quantite_stock) {
+		this.quantite_stock = quantite_stock;
+	}}
+
