@@ -16,7 +16,6 @@ public class Transformation extends AcheteurBourse {
 	public void transformationClassique (Feve f, double quantité, boolean B) {
 		if (stockFeves.getProduitsEnStock().contains(f) && stockFeves.getStockDico().get(f)-quantité >=0) {
 			stockFeves.utiliser(f, quantité);
-			stockChocolat.ajouter(Chocolat(f.getGamme(), f.isBioEquitable(), B),  quantité);
 		}
 	}
 }
