@@ -7,16 +7,15 @@ import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 
-public class Distributeur2ChocolatDeMarque extends Distributeur2Acteur implements IDistributeurChocolatDeMarque  {
+public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements IDistributeurChocolatDeMarque  {
 	
 
 	private double capaciteDeVente;
 	private double[] prix;
 
-	public Distributeur2ChocolatDeMarque(double[] prix, double capaciteDeVente) {
+	public Distributeur2ChocolatDeMarque() {
 		super();
-		this.prix=prix;
-		this.capaciteDeVente=capaciteDeVente;
+		//TODO
 	}
 	
 	
