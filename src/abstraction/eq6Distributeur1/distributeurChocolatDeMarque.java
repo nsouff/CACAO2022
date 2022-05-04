@@ -1,10 +1,32 @@
 package abstraction.eq6Distributeur1;
 
+import java.util.HashMap;
+import java.util.random.*;
+import java.util.Map;
+
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements IDistributeurChocolatDeMarque{
+
+	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole), Emma Humeau 
+
+	
+	
+	/**
+	 * @return the teteGondole
+	 */
+	public Map<ChocolatDeMarque, Double> getTeteGondole() {
+		return teteGondole;
+	}
+
+	/**
+	 * @param teteGondole the teteGondole to set
+	 */
+	public void setTeteGondole(Map<ChocolatDeMarque, Double> teteGondole) {
+		this.teteGondole = teteGondole;
+	}
 
 	@Override
 	public double prix(ChocolatDeMarque choco) {
@@ -14,12 +36,15 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau
-		return NotreStock.getStockageQte().get(choco);
+		if (NotreStock.getqteStockageTotale() <= 200) {
+			return NotreStock.getStockageQte(choco); }
+		else {
+			return NotreStock.getStockageQte(choco)*0.9;
+		}
 	}
 
 	@Override
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) {
-		if NotreStock.
 		return 0;
 	}
 

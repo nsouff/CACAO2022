@@ -21,9 +21,6 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 	private Map<ChocolatDeMarque,Double> StockageQte = new HashMap<ChocolatDeMarque, Double>();
 	
-	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole) 
-
-	
 	
 	/**
 	 * @return the coûtStockageTotale
