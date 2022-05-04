@@ -21,14 +21,14 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
 	protected SuperviseurVentesContratCadre supCCadre;
-	protected Stock NotreStock = new Stock();
-	Random ran = new Random();
+	protected Stock NotreStock;
+	Random ran;
 	protected List<ExemplaireContratCadre> mesContrats;
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
-	protected Journal journal1 = new Journal("journal1",this);
+	protected Journal journal1;
 	
-	protected List<Variable> stock = new ArrayList<Variable>(); 
-	protected List<Variable> prix = new ArrayList<Variable>(); 
+	protected List<Variable> stock;
+	protected List<Variable> prix; 
 	
 			
 			
@@ -49,6 +49,11 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
+		stock = new ArrayList<Variable>(); 
+		prix = new ArrayList<Variable>();
+		ran = new Random();
+		NotreStock = new Stock();
+		journal1 = new Journal("journal1",this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
 			stock.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
