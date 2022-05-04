@@ -19,7 +19,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-	private Stock NotreStock = new Stock();
+	protected Stock NotreStock = new Stock();
 
 	/**
 	 * @return the notreStock
@@ -117,7 +117,9 @@ public class Distributeur1Acteur implements IActeur {
 	//Variables : 
 	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
+	
 	//Fonction : 
+	
 	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, (prixAchat.get(key))*2);	
