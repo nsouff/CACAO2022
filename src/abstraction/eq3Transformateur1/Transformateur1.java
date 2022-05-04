@@ -34,7 +34,7 @@ public class Transformateur1 extends Transformateur1Bourse {
 	}
 	/** getter dernierPrixVenteChoco*/
 	public dernierPrixVenteChoco getDernierPrixVenteChoco() {
-		return this.getDernierPrixVenteChoco();
+		return this.dernierPrixVenteChoco;
 	}
 
 	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  */
