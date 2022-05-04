@@ -10,17 +10,12 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 	private Map<ChocolatDeMarque,Double> stockageQte;
 
-<<<<<<< HEAD
-	private Map<ChocolatDeMarque,Double> StockageQte = new HashMap<ChocolatDeMarque, Double>();
-	
-=======
 	/**
 	 * @author Nathan Souffan
 	 */
 	public Stock() {
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
 	}
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	
 	/**
 	 * @author Nathan Souffan
