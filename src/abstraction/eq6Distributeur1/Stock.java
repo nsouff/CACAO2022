@@ -14,6 +14,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	 * @author Nathan Souffan
 	 */
 	public Stock() {
+		System.out.println("Création stock");
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
 	}
 	

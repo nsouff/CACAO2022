@@ -29,6 +29,9 @@ public class Distributeur1Acteur implements IActeur {
 	
 	protected List<Variable> stock;
 	protected List<Variable> prix; 
+
+	protected Map<ChocolatDeMarque, Double> prixVente;
+	// private static final ArrayList<Double> NULL = null;
 	
 			
 			
@@ -51,8 +54,9 @@ public class Distributeur1Acteur implements IActeur {
 	public Distributeur1Acteur() {
 		stock = new ArrayList<Variable>(); 
 		prix = new ArrayList<Variable>();
+		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		// ran = new Random();
-		System.out.println("Creation Distributeur1");
+		System.out.println("Creation Distributeur1Acteur");
 		NotreStock = new Stock();
 		journal1 = new Journal("journal1",this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
@@ -167,8 +171,7 @@ public class Distributeur1Acteur implements IActeur {
 		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
 	}
  
-	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
-	private static final ArrayList<Double> NULL = null;
+
 	
 	
 	/**

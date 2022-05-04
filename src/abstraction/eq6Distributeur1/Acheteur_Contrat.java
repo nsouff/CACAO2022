@@ -10,6 +10,7 @@ public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurCo
 
 	public Acheteur_Contrat() {
 		super();
+		System.out.println("Création Acheteur_Contrat");
 	}
 	
 @Override

@@ -14,6 +14,7 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
     
     public AcheteurAO() {
         super();
+        System.out.println("Création acheteurAO");
     }
     
     /** 
