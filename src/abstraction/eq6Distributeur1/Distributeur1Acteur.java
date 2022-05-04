@@ -44,11 +44,36 @@ public class Distributeur1Acteur implements IActeur {
 	public void initialiser() {
 	}
 
+<<<<<<< HEAD
 	public void next() {//leorouppert
+=======
+	public void suppAnciensContrats() {//leorouppert
+		for (ExemplaireContratCadre contrat : this.mesContrats) {
+			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
+				mesContrats.remove(contrat);
+			}
+		}
+	}
+	
+	public void next() {
+		//leorouppert
+		this.suppAnciensContrats();
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 50) {
+<<<<<<< HEAD
 				IVendeurContratCadre Vendeur = supCCadre.getVendeurs(key).get(0);
+=======
+				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
+				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
+				IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
+				journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
+				if (CC == null) {
+					journal1.ajouter("-->aboutit au contrat "+ CC);
+				}
+				else {journal1.ajouter("échec des négociations");}
 			}
 		});
 	}
