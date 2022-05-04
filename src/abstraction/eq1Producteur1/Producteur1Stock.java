@@ -3,11 +3,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
+import abstraction.eq8Romu.filiere.Banque;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
 
 public class Producteur1Stock {
 	private  HashMap<Feve,List<FeveProducteur1>> Feves;
+	protected Integer cryptogramme;
+
 	
 	//Auteur : Khéo
 	public Producteur1Stock() {
@@ -30,7 +35,7 @@ public class Producteur1Stock {
 	
 	//Auteur : Khéo
 	public void next(){
-		
+	
 	}
 	
 	//Auteur : Khéo

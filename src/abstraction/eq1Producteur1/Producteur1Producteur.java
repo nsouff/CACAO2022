@@ -31,7 +31,8 @@ public class Producteur1Producteur extends Producteur1Stock{
 			}
 		}
 	}
-	public void next(Parc parc) { //Écrit par Antoine
+	public void next(Parc parc) {//Écrit par Antoine
+		super.next();
 		parc.MAJAleas();
 		HashMap<Feve, Double> recolte = parc.Recolte();
 		this.addLot(Feve.FEVE_BASSE, recolte.get(Feve.FEVE_BASSE));
