@@ -18,12 +18,9 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
-<<<<<<< HEAD
-	protected Stock NotreStock = new Stock();
-=======
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 	private Stock NotreStock = new Stock();
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
+
 	/**
 	 * @return the notreStock
 	 */
@@ -49,7 +46,7 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	public void next() {//leorouppert
-		this.getNotreStock().getStockageQte().forEach((key,value)->{
+		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 1) {
 				IVendeurContratCadre Vendeur = supCCadre.getVendeurs(key).get(0);
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
