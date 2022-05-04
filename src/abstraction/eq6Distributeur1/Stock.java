@@ -1,11 +1,8 @@
 package abstraction.eq6Distributeur1;
-
 import java.util.ArrayList;
 import java.util.List; 
 import java.util.Map;
-
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
-
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -60,6 +57,39 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 	
 
+	
+
+
+	/**
+	 * @return the stockagePrix
+	 */
+	public Map<ChocolatDeMarque, Double> getStockagePrix() {
+		return StockagePrix;
+	}
+
+
+
+	/**
+	 * @param stockagePrix the stockagePrix to set
+	 */
+	public void setStockagePrix(ChocolatDeMarque choco, double prix) {
+		StockagePrix.put(choco,prix);
+	}
+
+
+
+	/**
+	 * @return the stockageQte
+	 */
+	public Map<ChocolatDeMarque, Double> getStockageQte() {
+		return StockageQte;
+	}
+
+	public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
+    return this.StockageQte.get(chocolat);//Retourne le stock du chocolat demandé
+	}
+	
+
 	/**
 	 * @param stockageQte the stockageQte to set
 	 */
@@ -74,6 +104,21 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 
 //Emma Humeau tout ce qui est au dessus
+
+
+	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
+        return this.Stockage;//Retourne toute la hashmap de notre stock
+    }
+    
+    public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
+        return this.Stockage.get(chocolat);//Retourne le stock du chocolat demandé
+    }
+    
+    public void setStockage(ChocolatDeMarque chocolat, Double quantite, Double prix) {//leorouppert
+        this.Stockage.put(chocolat, ArrayList<Double>[prix][quantite]);//Modifie la valeur du stock du chocolat associé
+    }
+		
+
 
 
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
