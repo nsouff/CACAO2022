@@ -1,13 +1,16 @@
 package abstraction.eq2Producteur2;
 
+import java.util.ArrayList;
+
 //auteure : Fiona Martin 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Plantation {
 	
-	private HashMap<Parcelle, Double> NbParcelles;
+	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
 	public Plantation () {
 		/*
@@ -27,12 +30,22 @@ public class Plantation {
 		
 		 */
 		
-		NbParcelles = new HashMap<Parcelle, Double>(); 
-		NbParcelles.put(new Parcelle(Arbre.ARBRE_HGB), 20.0);	
-		NbParcelles.put(new Parcelle(Arbre.ARBRE_HG), 80.0);
-		NbParcelles.put(new Parcelle(Arbre.ARBRE_MGB), 40.0);
-		NbParcelles.put(new Parcelle(Arbre.ARBRE_MG), 160.0);
-		NbParcelles.put(new Parcelle(Arbre.ARBRE_BG), 200.0);
+		NbParcelles = new HashMap<Arbre, List<Parcelle>>();
+		
+		NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
+		NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
+		NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
+		NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
+		NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
+		
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		int[] qt = {20, 80, 40,160,200};
+		
+		for (int i=0; i<arbres.length; i++) {
+			for (int j=0; j<qt[i]; j++) {
+			NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i]));
+			}
+		}
 
 	}
 	
@@ -40,15 +53,38 @@ public class Plantation {
 		/* 
 		 * Pour le moment on replante automatiquement les arbres qui sont arrivés au bout de leur durée de vie en conservant le type d'arbre.  
 		 */	
-		for (Map.Entry m :NbParcelles.entrySet()) {
-			if ( ((Parcelle) m.getKey()).getAge() == ((Parcelle) m.getKey()).getTypeArbre().getDureeVie() ) {
-				NbParcelles.replace((Parcelle) m.getKey(), (double)m.getValue() - 1);
-				NbParcelles.put(new Parcelle(((Parcelle) m.getKey()).getTypeArbre()), 1.0);
-				// on supprime l'ancienne parcelle et on en crée une nouvelle qui repart de 0 UT (âge)
-				
-								
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		for (Arbre a: arbres) {
+			
+			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			List<Parcelle> ParcellesASupprimer = new ArrayList<Parcelle>();
+			
+			for (Parcelle p : ListeParcelles) {
+				if (p.getAge() == a.getDureeVie()) {
+					ParcellesASupprimer.add(p);	
+				}
 			}
+			for (int i=0; i < ParcellesASupprimer.size(); i++) {
+				NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
+				NbParcelles.get(a).add(new Parcelle(a));
+			}						
+	}
+	
+	public int production(Arbre typearbre) {
+		
+		/*
+		 * Fonction retournant la quantité produite, en kg, pour un type d'arbre donné.
+		 */
+		
+		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
+		
+		for (Parcelle p : ListeParcelles) {
+			
 		}
+		
+		
+	}
+	
 	}
 	
 	
