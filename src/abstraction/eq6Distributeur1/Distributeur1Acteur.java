@@ -56,7 +56,7 @@ public class Distributeur1Acteur implements IActeur {
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
-		// ran = new Random();
+		ran = new Random();
 		System.out.println("Creation Distributeur1Acteur");
 		NotreStock = new Stock();
 		journal1 = new Journal("journal1",this);
@@ -104,8 +104,7 @@ public class Distributeur1Acteur implements IActeur {
 			if (value <= 50) {
 				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
 				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
-				// IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
-				IVendeurContratCadre Vendeur = ListeVendeurs.get(0);
+				IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
 				journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
 				if (CC == null) {
