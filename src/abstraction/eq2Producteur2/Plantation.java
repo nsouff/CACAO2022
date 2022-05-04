@@ -73,7 +73,7 @@ public class Plantation {
 	}	
 	
 		
-	public int production(Arbre typearbre) {
+	public void production(Arbre typearbre) {
 		
 		/*
 		 * Fonction retournant la quantité produite, en kg, pour un type d'arbre donné.
@@ -95,5 +95,4 @@ public class Plantation {
 	
 	
 	
-		
-}
+
