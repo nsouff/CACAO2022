@@ -14,7 +14,7 @@ import abstraction.eq8Romu.produits.Feve;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
-	protected Double seuilMaxAchat; // par tonne en dollars
+	protected Double seuilMaxAchat; // par kg en dollars
 	
 	protected Variable seuilTransformation;
 	protected Variable rendement;
