@@ -71,20 +71,29 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
 	@Override
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 0.95*cours;
 	}
 
-	@Override
-	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+	double cours = 0.1; // cours de la bourse à préciser 
+	
+	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {	
+		if (contrat.getQuantiteTotale()>12){
+			if (contrat.getPrix()>0.8 ) {
+				return contrat.getPrix();}
+			else {
+				return 0.85*cours ; }
+		}
+		else { if(!(contrat.getListePrix().size()>4)) {
+			return 0.90*cours ;}
+		}
+		return -1.0;
 	}
 
 	@Override
