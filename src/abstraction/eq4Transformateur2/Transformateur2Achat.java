@@ -13,8 +13,8 @@ public class Transformateur2Achat extends Transformateur2Transfo{
 		return super.getCapaciteStockageFixe().getValeur()-super.getStockfeve().quantiteStockTotale();
 	}
 	
-	public boolean deficit(int quantite, double capital, double prix_vente) { //True si l'achat nous mettrait en deficit
-		return capital-quantite*prix_vente>0;
+	public boolean deficit(double quantite, double capital, double prix_vente) { //False si l'achat nous mettrait en deficit
+		return true;
 	}
 	
 	public boolean Achat(double prix_vente,int stock,double capital) {//on achete ou pas
