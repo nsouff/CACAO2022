@@ -13,6 +13,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse implements IVendeurContratCadre{
 	
@@ -39,10 +40,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		return null;
 	}
 
-	@Override
+	/** Prix initial = 1.4 x prixVenteMin 
+	 *  Alexandre*/
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())*1.4;
 	}
 
 	@Override
