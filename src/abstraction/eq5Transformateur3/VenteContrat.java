@@ -1,4 +1,6 @@
 package abstraction.eq5Transformateur3;
+import java.util.List;
+
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
@@ -17,9 +19,11 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		}
 	}
 
-	@Override
+	//Yves
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-				return null;
+		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
+		int l = listeEcheanciers.size();
+		return listeEcheanciers.get(l-1);
 	}
 
 	@Override
