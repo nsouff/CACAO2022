@@ -31,9 +31,7 @@ public class Maladie {
 		if (i>0.03) {
 			this.IsMalade=false;
 		}
-			
 		
-
-	
+			
 	}
 }
