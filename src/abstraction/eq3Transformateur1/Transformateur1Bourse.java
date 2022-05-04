@@ -14,6 +14,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected HashMap<Feve, Double> prixAchatFeve;
 	protected HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
 	protected HashMap<Chocolat,Double> stockChoco;           /** Integer --> Double*/
+	protected HashMap<Chocolat, Double> prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
 	
 	/** renvoie la quantité de fève voulue; auteur Julien 
 	 * Pas de prise en compte pour l'instant des contrats */
