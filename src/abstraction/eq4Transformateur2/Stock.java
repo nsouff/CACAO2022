@@ -71,15 +71,17 @@ public class Stock<I> {
 }
 	// Marie
 
-/*	public double stockRestant(I produit) {
-		return (Filiere.LA_FILIERE.getIndicateur("stock max").getValeur())-(this.quantiteStockTotale(produit).getValeur());
-	}*/ // version 2 quand on aura une capacité de stockage limitée
+	public double stockRestant(I produit) {
+		return (Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()-this.quantiteStockTotale());
+	}
+
 
 
 
 	/*public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
 		return (this.quantiteStockTotale(produit)*(Filiere.LA_FILIERE.getIndicateur("prix_stockage").getValeur())); // demander a Alexandre comment calculer prix 
 	}*/
+
 
 
 
