@@ -18,7 +18,7 @@ public class Arbre {
 		this.ut_esperance_vie= this.Esperance_vie();
 		this.stade_maladie=0;
 		this.ut_debut_maladie = 0;
-		this.qualite=0;
+		this.qualite=1;
 		this.bioequitable=false;
 		this.transition_bio=false;
 		this.date_transition=0;
