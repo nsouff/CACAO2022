@@ -10,9 +10,9 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
-/**
-public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAcheteur implements IVendeurAO {
 
+public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAcheteur //implements IVendeurAO*/ {
+{/**
 	
 
 	protected String marque;
@@ -68,3 +68,4 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 		}
 
 */
+}
