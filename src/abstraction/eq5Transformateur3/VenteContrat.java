@@ -19,20 +19,26 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return null;
+				return null;
 	}
 
 	@Override
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
+			return contrat.getPrix();
+		}
+		else {
+			double Nprix = 1.1*this.seuilMaxAchat+this.coutTransformation.getValeur();
+			if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
+				return Nprix;
+			}
+			return 0.0;
+		}
 	}
 
 	@Override
