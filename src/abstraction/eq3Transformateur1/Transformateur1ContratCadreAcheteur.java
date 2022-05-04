@@ -58,7 +58,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		stockFeve.put(((Feve)produit), stockFeve.get(contrat.getProduit())+quantite);
 		
 	}
 
