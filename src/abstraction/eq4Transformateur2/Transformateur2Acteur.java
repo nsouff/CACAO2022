@@ -14,6 +14,7 @@ import java.util.List;
 public class Transformateur2Acteur implements IActeur {
 	
 	protected int cryptogramme;
+	public static Transformateur2Acteur Test;
 	
 
 	
@@ -26,9 +27,11 @@ public class Transformateur2Acteur implements IActeur {
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
+
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat> stockchocolat;
 	
+
 	
 
 	
@@ -105,6 +108,9 @@ public class Transformateur2Acteur implements IActeur {
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		return res;
+	}
+	public double getCout() {
+		return this.coutStockage.getValeur();
 	}
 
 	public void notificationFaillite(IActeur acteur) {

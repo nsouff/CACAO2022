@@ -5,13 +5,12 @@ import abstraction.eq8Romu.filiere.Filiere;
 public class Transformateur2Vente extends Transformateur2Achat {
  private double marge;
  private int prix_transfo;
- private int cout_stockage;
  private int prix_ori;
  
  
  // Gabriel
  public double prixVoulu(double prix_achat) { 
-	 return (prix_achat + prix_transfo + cout_stockage+ prix_ori)*marge; 
+	 return (prix_achat + prix_transfo + Transformateur2Acteur.Test.getCout()*+ prix_ori)*marge; 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
 	 // du cout de stockage, de l'origininalité et de la marge voulue
  }
