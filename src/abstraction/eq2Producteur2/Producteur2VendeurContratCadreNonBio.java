@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.produits.Feve;
 
 /**
  * @author Jules DORE
@@ -16,12 +18,14 @@ import abstraction.eq8Romu.filiere.Filiere;
 
 public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre{
 	
-	public Producteur2VendeurContratCadreNonBio() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
+	
+	public Producteur2VendeurContratCadreNonBio() {
+		super();
+		this.mesContratEnTantQueVendeurNonBio = new LinkedList<ExemplaireContratCadre>();
+		// TODO Auto-generated constructor stub
+	}
 	
 	/**
 	 * @param transformateur
@@ -87,12 +91,12 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
-			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (qt + stock/contrat.getEcheancier().getNbEcheances())) { 
+			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < qt) { 
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), qt + stock/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				e.set(e.getStepDebut(), qt );// on souhaite livrer toute la quatité qu'on a
 				return e;
 			}
 		}	
@@ -102,20 +106,21 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	}
 
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		return 0.95*cours;
+		return 0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 	}
-	double production = 15 ; // production de fève (à preciser selon gamme)
-	double cours = 0.1; // cours de la bourse à préciser 
+	double production = 15 ; // production de fève (à preciser selon gamme) 
+	BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+	
 	
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {	
 		if (contrat.getQuantiteTotale()>12*production){ // Grosse commande, proposition de prix plus bas
 			if (contrat.getPrix()>0.8 ) {
 				return contrat.getPrix();}
 			else {
-				return 0.85*cours ; }
+				return 0.85*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ; }
 		}
 		else { if(!(contrat.getListePrix().size()>4)) { // plus petite commande, pris plus élévée (4 negociations maximum)
-			return 0.90*cours ;}
+			return 0.90*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ;}
 		}
 		return -1.0;
 	}
