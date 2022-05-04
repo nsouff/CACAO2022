@@ -69,21 +69,25 @@ public class Plantation {
 				NbParcelles.get(a).add(new Parcelle(a));
 			}						
 	}
+		
+	}	
 	
+		
 	public int production(Arbre typearbre) {
 		
 		/*
 		 * Fonction retournant la quantité produite, en kg, pour un type d'arbre donné.
 		 */
-		
 		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
 		
 		for (Parcelle p : ListeParcelles) {
 			
+	
 		}
 		
-		
 	}
+	
+	
 	
 	}
 	
