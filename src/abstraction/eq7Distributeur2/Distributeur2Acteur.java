@@ -33,15 +33,8 @@ public class Distributeur2Acteur implements IActeur, IVendeurContratCadre, IAche
 	protected List<ChocolatDeMarque> chocolats;
 	protected Journal journal;
 
-	public Distributeur2Acteur(List<ChocolatDeMarque> chocos) {
-		if (chocos==null || chocos.size()<1) {
-			throw new IllegalArgumentException("Arguments non valides");
-		}
+	public Distributeur2Acteur() {
 		this.stock = new Stock(this);
-		this.chocolats = new LinkedList<ChocolatDeMarque>();
-		for (int i=0; i<chocos.size(); i++) {
-			this.chocolats.add(chocos.get(i));
-		}
 		this.journal = new Journal(this.getNom()+" activites", this);
 	}
 
