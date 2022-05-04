@@ -6,8 +6,8 @@ import java.util.List;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Parc extends Producteur1Stock{
-	private ArrayList<Producteur1Arbre> cacaoyers;
+public class Parc extends Producteur1Stock{
+	private ArrayList<Arbre> cacaoyers;
 	private String nom;
 	private int nombre_BE_moyenne;
 	private int nombre_BE_haute;
@@ -19,8 +19,8 @@ public class Producteur1Parc extends Producteur1Stock{
 	private int ut_fin_guerre;
 	private int fin_aleas;
 	
-	public Producteur1Parc(String nom) { //Écrit par Antoine
-		this.cacaoyers = new ArrayList<Producteur1Arbre>();
+	public Parc(String nom) { //Écrit par Antoine
+		this.cacaoyers = new ArrayList<Arbre>();
 		this.nom = nom;
 		this.nombre_BE_moyenne = 0;
 		this.nombre_BE_haute = 0;
@@ -31,9 +31,11 @@ public class Producteur1Parc extends Producteur1Stock{
 		this.ut_debut_guerre = 0;
 		this.ut_fin_guerre = 0;
 		fin_aleas = 0;
+		
+		
 	}
 	
-	public List<Producteur1Arbre> getCacaoyers() { //Écrit par Antoine
+	public List<Arbre> getCacaoyers() { //Écrit par Antoine
 		return this.cacaoyers;
 	}
 	
@@ -116,16 +118,16 @@ public class Producteur1Parc extends Producteur1Stock{
 	public void setfin_aleas(int i) { //Écrit par Antoine
 		this.fin_aleas = i;
 	}
-	public Producteur1Arbre getArbre(int i) { //Écrit par Antoine
+	public Arbre getArbre(int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(i);
 	}
 	
-	public void Planter(Producteur1Arbre a) { //Écrit par Antoine
+	public void Planter(Arbre a) { //Écrit par Antoine
 			this.getCacaoyers().add(a);
 			MAJCompteur(a,1);
 	}
 	
-	public void MAJCompteur(Producteur1Arbre a, int i) { //Écrit par Antoine
+	public void MAJCompteur(Arbre a, int i) { //Écrit par Antoine
 		if ((i==1) || (i==-1)) {
 			if (a.getBioequitable()) {
 				if (a.getQualite()==2) {
@@ -180,7 +182,7 @@ public class Producteur1Parc extends Producteur1Stock{
 	
 	public void MAJParc() { //Écrit par Antoine
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
-			Producteur1Arbre arbre_i = this.getArbre(i);
+			Arbre arbre_i = this.getArbre(i);
 			arbre_i.MAJMaladie();
 			if ((arbre_i.getStade_maladie() == 5)
 					|| (arbre_i.Age() == arbre_i.getUt_esperance_vie())) {
@@ -240,7 +242,7 @@ public class Producteur1Parc extends Producteur1Stock{
 		double non_BE_haute = 0;
 		if (Filiere.LA_FILIERE.getEtape()>=this.fin_aleas) {
 			for (int i=0; i<this.getCacaoyers().size(); i++) {
-				Producteur1Arbre arbre_i = this.getArbre(i);
+				Arbre arbre_i = this.getArbre(i);
 				boolean isBE = arbre_i.getBioequitable();
 				int qualite = arbre_i.getQualite();
 				double recolte = arbre_i.Recolte();
