@@ -57,5 +57,14 @@ public class Stock<I> {
 	public double stockRestant(I produit) {
 		return (Filiere.LA_FILIERE.getIndicateur("stock max")-this.stocktotal);
 	}
+	// Gabriel
+	public void setStock(double newst) {
+		this.stocktotal = this.stocktotal - newst;
+	
+	//Gabriel
+		}
+	public double getStock() {
+		return this.stocktotal;
+	}
 
 }
