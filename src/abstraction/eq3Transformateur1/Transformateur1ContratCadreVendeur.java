@@ -12,6 +12,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.Chocolat;
 
 public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse implements IVendeurContratCadre{
 	
@@ -21,16 +22,20 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		super();
 		this.mesContratEnTantQueVendeur=new LinkedList<ExemplaireContratCadre>();
 	}
-
-	@Override
+	
+	// fonction qui détermine quel type de chocolat on vend en contrat cadre; auteur Julien */
 	public boolean vend(Object produit) {
-		// TODO Auto-generated method stub
+		if ((produit==Chocolat.MQ)||(produit==Chocolat.MQ_BE)||(produit==Chocolat.MQ_O)) {
+			return true;
+		}
 		return false;
 	}
 
-	@Override
+	
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		if (contrat.getEcheancier().getNbEcheances()<6) {
+			return contrat.getEcheancier();
+		}
 		return null;
 	}
 
@@ -42,7 +47,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 
 	@Override
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
