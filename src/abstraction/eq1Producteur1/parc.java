@@ -125,7 +125,7 @@ public class parc extends Producteur1Stock{
 			MAJCompteur(a,1);
 	}
 	
-	public void MAJCompteur(arbre a, int i) { //Fait par Antoine
+	public void MAJCompteur(arbre a, int i) { //Écrit par Antoine
 		if ((i==1) || (i==-1)) {
 			if (a.getBioequitable()) {
 				if (a.getQualite()==2) {
@@ -168,7 +168,7 @@ public class parc extends Producteur1Stock{
 		}
 	}
 	
-	public void MAJAleas() { //Fait par Antoine
+	public void MAJAleas() { //Écrit par Antoine
 		if (Filiere.LA_FILIERE.getEtape()%24==20) {
 			double d = Math.random();
 			while (d==0) {
@@ -190,7 +190,7 @@ public class parc extends Producteur1Stock{
 		}
 	}
 	
-	public double ParasitesBE() { //Fait par Antoine
+	public double ParasitesBE() { //Écrit par Antoine
 		double d = Math.random();
 		if (d<=0.2) {
 			double dd = Math.random();
@@ -210,7 +210,7 @@ public class parc extends Producteur1Stock{
 		}
 	}
 	
-	public double Parasites_non_BE() { //Fait par Antoine
+	public double Parasites_non_BE() { //Écrit par Antoine
 		double d = Math.random();
 		if (d<=0.04) {
 			double dd = Math.random();
@@ -232,7 +232,7 @@ public class parc extends Producteur1Stock{
 		}
 	}
 	
-	public void Recolte() { //Fait par Antoine
+	public void Recolte() { //Écrit par Antoine
 		double BE_moyenne = 0;
 		double BE_haute = 0;
 		double non_BE_basse = 0;
@@ -277,7 +277,7 @@ public class parc extends Producteur1Stock{
 		addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE,BE_haute);
 	}
 	
-	public void next() { //Fait par Antoine
+	public void next() { //Écrit par Antoine
 		this.MAJAleas();
 		this.Recolte();
 		this.MAJParc();
