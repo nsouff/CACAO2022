@@ -2,6 +2,7 @@ package abstraction.eq1Producteur1;
 
 import abstraction.eq8Romu.filiere.Filiere;
 
+// Une instance de "MilleArbre" équivaut à 1000 arbres réels
 public class MilleArbre {
 	private int ut_plantation;
 	private int ut_esperance_vie;

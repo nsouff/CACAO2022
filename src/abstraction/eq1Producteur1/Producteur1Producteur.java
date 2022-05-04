@@ -16,30 +16,32 @@ public class Producteur1Producteur extends Producteur1Stock{
 	public void initialiser() {//Écrit par Antoine
 		super.initialiser();
 		int nombre_arbre_debut = 500000;
+		int ut_debut = -115;
 		for (int i=0;i<nombre_arbre_debut;i++) {
+			int d = (int)Math.random()*40;
 			if (i<nombre_arbre_debut*0.63) {
-				this.getAfrique().Planter(new MilleArbre(1,false,0));
+				this.getAfrique().Planter(new MilleArbre(1,false,ut_debut-d));
 			}
 			if ((i>=nombre_arbre_debut*0.63) && (i<nombre_arbre_debut*0.9)) {
-				this.getAfrique().Planter(new MilleArbre(2,false,0));
+				this.getAfrique().Planter(new MilleArbre(2,false,ut_debut-d));
 			}
 			if ((i>=nombre_arbre_debut*0.9) && (i<nombre_arbre_debut*0.95)) {
-				this.getAfrique().Planter(new MilleArbre(2,true,0));
+				this.getAfrique().Planter(new MilleArbre(2,true,ut_debut-d));
 			}
 			if ((i>=nombre_arbre_debut*0.95)) {
-				this.getAfrique().Planter(new MilleArbre(3,true,0));
+				this.getAfrique().Planter(new MilleArbre(3,true,ut_debut-d));
 			}
 		}
 	}
 
 	public void next() { //Écrit par Antoine
 		this.getAfrique().MAJAleas();
-		HashMap<Feve, Double> recolte1 = this.getAfrique().Recolte();
-		this.addLot(Feve.FEVE_BASSE, recolte1.get(Feve.FEVE_BASSE));
-		this.addLot(Feve.FEVE_MOYENNE, recolte1.get(Feve.FEVE_MOYENNE));
-		this.addLot(Feve.FEVE_HAUTE, recolte1.get(Feve.FEVE_HAUTE));
-		this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, recolte1.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
-		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, recolte1.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		HashMap<Feve, Double> recolteAfrique = this.getAfrique().Recolte();
+		this.addLot(Feve.FEVE_BASSE, recolteAfrique.get(Feve.FEVE_BASSE));
+		this.addLot(Feve.FEVE_MOYENNE, recolteAfrique.get(Feve.FEVE_MOYENNE));
+		this.addLot(Feve.FEVE_HAUTE, recolteAfrique.get(Feve.FEVE_HAUTE));
+		this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, recolteAfrique.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, recolteAfrique.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.getAfrique().MAJParc();
 		this.getAfrique().MAJGuerre();
 	}
