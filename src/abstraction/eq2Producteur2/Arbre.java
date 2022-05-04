@@ -6,11 +6,11 @@ import abstraction.eq8Romu.produits.Feve;
 
 public enum Arbre {
 	
-	ARBRE_HGB(60, 1/60, 960,  0.2 + Math.random()*0.5, 3, Feve.FEVE_HAUTE_BIO_EQUITABLE, 0, false, true, 0),
-	ARBRE_HG(75, 1/75, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_HAUTE, 0, false, true, 0),
-	ARBRE_MGB(60, 1/60, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0, false, true, 0),
-	ARBRE_MG(75, 1/75, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_MOYENNE, 0, false, true, 0),
-	ARBRE_BG(75, 1/75, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_BASSE, 0, false, true, 0);
+	ARBRE_HGB(60, 1/60, 960,  0.2 + Math.random()*0.5, 3, Feve.FEVE_HAUTE_BIO_EQUITABLE),
+	ARBRE_HG(75, 1/75, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_HAUTE),
+	ARBRE_MGB(60, 1/60, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_MOYENNE_BIO_EQUITABLE),
+	ARBRE_MG(75, 1/75, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_MOYENNE),
+	ARBRE_BG(75, 1/75, 960, 0.2 + Math.random()*0.5, 3, Feve.FEVE_BASSE);
 	
 	private double DureeCroissance;
 	private double RendementProgressif;
@@ -18,23 +18,15 @@ public enum Arbre {
 	private double RendementFinal;
 	private double DureeAffinage;
 	private Feve FeveArbre; 
-	private int StadeTransition;
-	private boolean Cooperative;
-	private boolean Vivant; 
-	private int Age; 
 
 	
-	Arbre (double DC, double RP, double DV, double RF, double DA, Feve FA, int ST, boolean B1, boolean B2, int A) {
+	Arbre (double DC, double RP, double DV, double RF, double DA, Feve FA) {
 		this.setDureeCroissance(DC);
 		this.setRendementProgressif(RP); 
 		this.setDureeVie(DV); 
 		this.setRendementFinal(RF);
 		this.setDureeAffinage(DA);
 		this.setFeveArbre(FA);
-		this.setStadeTransition(ST);
-		this.setCooperative(B1);
-		this.setVivant(B2);
-		this.setAge(A);
 	}
 
 
@@ -91,46 +83,10 @@ public enum Arbre {
 		FeveArbre = FA ;
 	}
 	
-	public void setStadeTransition(int ST) {
-		StadeTransition = ST;
+	public Feve getFeveArbre() {
+		return FeveArbre;
 	}
-
-
-
-	public boolean isCooperative() {
-		return Cooperative;
-	}
-
-
-
-	public void setCooperative(boolean cooperative) {
-		Cooperative = cooperative;
-	}
-
-
-
-	public boolean isVivant() {
-		return Vivant;
-	}
-
-
-
-	public void setVivant(boolean vivant) {
-		Vivant = vivant;
-	}
-
-
-
-	public int getAge() {
-		return Age;
-	}
-
-
-
-	public void setAge(int age) {
-		Age = age;
-	}
-
+	
 	
 	
 	
