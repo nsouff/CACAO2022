@@ -36,12 +36,12 @@ public class Transformateur2Acteur implements IActeur {
 	
 	
 	public Transformateur2Acteur() { //valeurs des min, max, et init (3 derniers parametres) à changer plus tard.
-		this.qualiteHaute   = new Variable("qualite haute", "<html>Qualite du chocolat<br>de gamme haute</html>",this, 0.0, 10.0, 3.0);
+	/*	this.qualiteHaute   = new Variable("qualite haute", "<html>Qualite du chocolat<br>de gamme haute</html>",this, 0.0, 10.0, 3.0);
 		this.qualiteMoyenne = new Variable("qualite moyenne", "<html>Qualite du chocolat<br>de gamme moyenne</html>",this, 0.0, 10.0, 2.0);
 		this.qualiteBasse   = new Variable("qualite basse", "<html>Qualite du chocolat<br>de gamme basse</html>",this, 0.0, 10.0, 1.0);
 		this.gainQualiteBioEquitable  = new Variable("gain qualite bioequitable", "<html>Gain en qualite des<br>chocolats bio equitables</html>",this, 0.0, 5.0, 0.5);
 		this.gainQualiteOriginal  = new Variable("gain qualite original", "<html>Gain en qualite des<br>chocolats originaux</html>",this, 0.0, 5.0, 0.5);
-		this.partDeLaMarqueDansLaQualitePercu  = new Variable("impact marque qualite percue", "<html>% de la qualite percue de la marque dans la qualite percue du chocolat</html>",this, 0.0, 0.5, 0.3);
+		this.partDeLaMarqueDansLaQualitePercu  = new Variable("impact marque qualite percue", "<html>% de la qualite percue de la marque dans la qualite percue du chocolat</html>",this, 0.0, 0.5, 0.3);*/
 		
 		this.coutStockage = new Variable("cout stockage", "<html>Cout de stockage</html>",this, 0.0, 10.0, 3.0);
 		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 3.0);
@@ -59,6 +59,7 @@ public class Transformateur2Acteur implements IActeur {
 
 
 	public void initialiser() {
+		double rendement =Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
 	}
 	
 	public String getNom() {
@@ -98,12 +99,12 @@ public class Transformateur2Acteur implements IActeur {
 	
 	public List<Variable> getParametres() { // A completer avec tous les autres variables d'instances
 		List<Variable> p= new ArrayList<Variable>();
-		p.add(this.qualiteHaute);
-		p.add(this.qualiteMoyenne);
-		p.add(this.qualiteBasse);
-		p.add(this.gainQualiteBioEquitable);
-		p.add(this.gainQualiteOriginal); 
-		p.add(this.partDeLaMarqueDansLaQualitePercu);
+//		p.add(this.qualiteHaute);
+//		p.add(this.qualiteMoyenne);
+//		p.add(this.qualiteBasse);
+//		p.add(this.gainQualiteBioEquitable);
+//		p.add(this.gainQualiteOriginal); 
+//		p.add(this.partDeLaMarqueDansLaQualitePercu);
 		return p;
 	} 
 	
