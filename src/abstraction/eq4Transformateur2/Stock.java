@@ -6,7 +6,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 //auteur Marie
 
 public class Stock<I> {
-		private HashMap<I,Double> quantite_stock;
+		public HashMap<I,Double> quantite_stock;
 		private double stocktotal;
 		
 		
@@ -14,6 +14,15 @@ public class Stock<I> {
 		this.quantite_stock = new HashMap<I, Double>();
 		this.stocktotal=stocktotal;
 	}
+	//Marie
+	public double getStocktotal() {
+		return this.stocktotal;
+	}
+	public HashMap<I,Double> getQuantiteStock(){
+		return this.quantite_stock;
+	}
+	
+	
 	//Marie
 	public void ajouter (I produit, double qt) {
 		if (qt>0) {	
@@ -60,4 +69,5 @@ public class Stock<I> {
 	public double coutStockage(Filiere.LA_FILIERE.getIndicateur("prix stockage")) { // demander comment ajouter variables
 		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix stockage")) // demander a Alexandre comment calculer prix 
 	}
+	
 }
