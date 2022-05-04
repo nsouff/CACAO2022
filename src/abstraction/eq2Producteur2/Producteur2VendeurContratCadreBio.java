@@ -17,15 +17,12 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	
 	private double a = 1500; //cout de production/kg
 	private double qt = 10000; // qtité produite/kg
+	private double stock = 18;
 	
-	public Producteur2VendeurContratCadreBio(Object produit) {
-		super(produit);
-		this.mesContratEnTantQueVendeurBio=new LinkedList<ExemplaireContratCadre>();
-	}
 	
 	@Override
 	public boolean vend(Object produit) {
-		return produit==produit;
+		return true;
 	}
 
 	public double qtiteTotaleContratEnCours() {
@@ -38,13 +35,13 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		if (contrat.getProduit().equals(produit)) {
-			if (qtiteTotaleContratEnCours() + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (qt + stock.getValeur()/contrat.getEcheancier().getNbEcheances())) { 
+		if (vend(contrat.getProduit())) {
+			if (qtiteTotaleContratEnCours() + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (qt + stock/contrat.getEcheancier().getNbEcheances())) { 
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), qt + stock.getValeur()/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				e.set(e.getStepDebut(), qt + stock/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
 				return e;
 			}
 		}	
@@ -73,17 +70,15 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		double livre = Math.min(stock.getValeur(), quantite);
-		if (livre>0.0) {
-			stock.retirer(this,  livre);
-		}
-		return livre;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	public boolean peutVendre(Object produit) {
-		return super.produit.equals(produit);
-
+		// TODO Auto-generated method stub
+		return false;
 	}
+
 	
 	public void next() {
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();

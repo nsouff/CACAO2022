@@ -16,11 +16,6 @@ import abstraction.eq8Romu.filiere.Filiere;
 
 public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre{
 	
-	public Producteur2VendeurContratCadreNonBio(Object produit) {
-		super(produit);
-		// TODO Auto-generated constructor stub
-	}
-
 
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
 	
@@ -72,12 +67,34 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	private double a = 1500; //cout de production/kg
+	private double qt = 10000; // qtité produite/kg
+	private double stock = 1;
+	
+			public double quantiteTotaleContratEnCours(Object produit) {
+		double quantiteTotaleContratEnCours = 0;
+		for ( int i=0; i<mesContratEnTantQueVendeurNonBio.size();i++) {
+			if (mesContratEnTantQueVendeurNonBio.get(i).getProduit()==produit) {
+			quantiteTotaleContratEnCours=mesContratEnTantQueVendeurNonBio.get(i).getQuantiteTotale()/mesContratEnTantQueVendeurNonBio.get(i).getEcheancier().getNbEcheances();
+			}
+		}
+		return quantiteTotaleContratEnCours;
+	}
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		
-		
-		return null;
+		if (vend(contrat.getProduit())) {
+			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (qt + stock/contrat.getEcheancier().getNbEcheances())) { 
+				return contrat.getEcheancier();
+				}
+			else {
+				Echeancier e = contrat.getEcheancier();
+				e.set(e.getStepDebut(), qt + stock/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				return e;
+			}
+		}	
+		 else {
+			 	return null;// on ne vend pas de ce produit
+		 }
 	}
 
 	public double propositionPrix(ExemplaireContratCadre contrat) {
