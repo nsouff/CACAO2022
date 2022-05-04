@@ -50,7 +50,7 @@ public class Distributeur2Acteur implements IActeur{
 
 	public void initialiser() {
 		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
-		//System.out.println(chocolats);
+		System.out.println(chocolats);
 		this.stock = new Stock(this,this.chocolats);
 		this.journal = new Journal(this.getNom()+" activites", this);
 	}
