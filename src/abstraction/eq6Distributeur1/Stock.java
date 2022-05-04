@@ -5,7 +5,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import java.util.HashMap;
 
-public class Stock extends Distributeur1{ //Emma Humeau
+public class Stock { //Emma Humeau
 	
 
 	private Map<ChocolatDeMarque,Double> stockageQte;
