@@ -31,7 +31,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		return false;
 	}
 
-	
+	// négocie un échancier inférieur à 6 échéances; auteur Julien */
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (contrat.getEcheancier().getNbEcheances()<6) {
 			return contrat.getEcheancier();
@@ -45,10 +45,14 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		return 0;
 	}
 
-	@Override
+	// négocie une contreproposition du prix; auteur Julien */
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		if (contrat.getPrix()>2) {
+			return contrat.getPrix();
+		} else {
+			return ((contrat.getPrix()+)/2.0);
+		}
 		
-		return 0;
 	}
 
 	@Override
