@@ -46,7 +46,7 @@ public class Transformateur1 extends Transformateur1ContratCadreVendeur {
 	
 	/** détermine la quantité de fèves à acheter; auteur Julien */
 	public void determinationQuantiteAchat() {		
-		quantiteAchatFeve.put(Feve.FEVE_BASSE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));	
+		quantiteAchatFeve.put(Feve.FEVE_BASSE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2)); 	
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,(quantiteDemandeeChoco.get(Chocolat.MQ_BE)-stockChoco.get(Chocolat.MQ_BE)));
 	}
@@ -98,11 +98,15 @@ public class Transformateur1 extends Transformateur1ContratCadreVendeur {
 		}
 		ArrayList<Double> coutQuantiteTransfo = this.coutQuantiteTransfo(this.choixTypeTransfo(feve.getGamme()), quantiteFeveTransformee, original);
 		for (Chocolat c : stockChoco.keySet()) {
-			if (c.getGamme()==Gamme.MOYENNE && c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original) {
-				stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
+			if (c.getGamme()==Gamme.MOYENNE) {
+				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
+					stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
+				}
 			}
 		}
 	}
+	
+	
 	
 	/** _________________________________________________GESTION DES STOCKS______________________________________________________
 	 *  pas de péremption en V1 */
@@ -122,5 +126,25 @@ public class Transformateur1 extends Transformateur1ContratCadreVendeur {
 	
 	/** _________________________________________________VENTE DE CHOCOLAT_______________________________________________________*/
 	
+	/** Détermine le prix de vente minimum
+	 *  Alexandre*/
+	public HashMap<Chocolat, Double> prixVenteMin() {
+		HashMap<Chocolat, Double> prixVenteMin = new HashMap<Chocolat, Double>();
+		double prixFeve = Math.max(prixAchatFeve.get(Feve.FEVE_BASSE), prixAchatFeve.get(Feve.FEVE_MOYENNE));
+		double prixFeveBio = prixAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		for (Chocolat c : Chocolat.values()) {
+			prixVenteMin.put(c, null);
+			if (c.getGamme() == Gamme.MOYENNE) {
+				if (c.isBioEquitable()) {
+					prixVenteMin.put(c, prixFeveBio+coutTransfo);
+				} else if (c.isOriginal()) {
+					prixVenteMin.put(c, prixFeve+coutTransfoOriginal);
+				} else {
+					prixVenteMin.put(c, prixFeve+coutTransfo);
+				}
+			}
+		}
+		return prixVenteMin;
+	}
 
 }
