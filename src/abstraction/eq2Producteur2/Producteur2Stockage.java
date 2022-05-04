@@ -20,6 +20,7 @@ public class Producteur2Stockage extends Producteur2Acteur {
 	private LinkedList<Stock> ChocoHQ;
 	private LinkedList<Stock> ChocoHQ_BE;
 	private HashMap<LinkedList<Stock>,Stock> Stocks;
+//	private HashMap<LinkedList<Stock>,double> StockTot;
 	
 	
 
@@ -81,8 +82,23 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		for (int i=0 ; i<L.size() ; i++) {
 			s = s + (L.get(i)).getQuantite();
 		}
-		return s;
+		return s;	
+	}
+	public void removeQuantite(double q, LinkedList<Stock> L) {
+		while (q>0) {
+			int m=0;
+			for (int i=0 ; i<L.size() ; i++) {
+				if ((L.get(i)).getDuree()>L.get(m).getDuree()) {
+					m=i;
+				}			
+			}
+			if ((L.get(m)).getQuantite()>q) {
+				(L.get(m)).removequantite(q);
+			}else {
+				(L.get(m)).removequantite((L.get(m)).getQuantite());
+				q=q-(L.get(m)).getQuantite();				
+			}
 		
-		
+		}
 	}
 }
