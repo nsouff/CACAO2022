@@ -14,6 +14,7 @@ import java.util.LinkedList;
 
 public class Stock extends Distributeur1{ //Emma Humeau
 	
+
 	private double CoûtStockageTotale;
 	
 	private double qteStockageTotale; 
@@ -65,14 +66,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 
 
-	/**
-	 * @return the stockageQte
-	 */
-	public Map<ChocolatDeMarque, Double> getStockageQte() {
-		return StockageQte;
-	}
-
-
+	
 
 	/**
 	 * @param stockageQte the stockageQte to set
@@ -94,7 +88,7 @@ public class Stock extends Distributeur1{ //Emma Humeau
         return this.StockageQte;//Retourne toute la hashmap de notre stock
     }
     
-    public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
+    public Double getStockageQte(ChocolatDeMarque chocolat) {//leorouppert
         return this.StockageQte.get(chocolat);//Retourne le stock du chocolat demandé
     }
     
