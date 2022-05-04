@@ -21,9 +21,11 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		return false;
 	}
 
-	@Override
+	// négocie un échancier inférieur à 6 échéances; auteur Julien */
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		if (contrat.getEcheancier().getNbEcheances()<6) {
+			return contrat.getEcheancier();
+		}
 		return null;
 	}
 
