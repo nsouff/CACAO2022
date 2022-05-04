@@ -52,10 +52,12 @@ public class Distributeur1Acteur implements IActeur {
 		stock = new ArrayList<Variable>(); 
 		prix = new ArrayList<Variable>();
 		// ran = new Random();
+		System.out.println("Creation Distributeur1");
 		NotreStock = new Stock();
 		journal1 = new Journal("journal1",this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
+			System.out.println("boucle");
 			stock.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
 			prix.add(new Variable(c+"",this,0));
 		}	
