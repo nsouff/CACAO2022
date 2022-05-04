@@ -21,9 +21,14 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+<<<<<<< HEAD
+	protected Stock NotreStock = new Stock();
+
+=======
 	private Stock NotreStock = new Stock();
 	Random ran = new Random();
 	protected List<ExemplaireContratCadre> mesContrats;
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	/**
 	 * @return the notreStock
 	 */
@@ -137,7 +142,9 @@ public class Distributeur1Acteur implements IActeur {
 	//Variables : 
 	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
+	
 	//Fonction : 
+	
 	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, (prixAchat.get(key))*2);	
