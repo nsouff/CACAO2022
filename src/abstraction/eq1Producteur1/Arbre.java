@@ -132,6 +132,7 @@ public class Arbre {
 			this.setMaladie(0);
 		}
 	}
+	
 	public int Esperance_vie() { //Écrit par Antoine
 		double d = Math.random();
 		if (d<0.5) {

@@ -31,17 +31,17 @@ public class Producteur1Producteur extends Producteur1Stock{
 			}
 		}
 	}
-	public void next(Parc parc) {//Écrit par Antoine
-		super.next();
-		parc.MAJAleas();
-		HashMap<Feve, Double> recolte = parc.Recolte();
-		this.addLot(Feve.FEVE_BASSE, recolte.get(Feve.FEVE_BASSE));
-		this.addLot(Feve.FEVE_MOYENNE, recolte.get(Feve.FEVE_MOYENNE));
-		this.addLot(Feve.FEVE_HAUTE, recolte.get(Feve.FEVE_HAUTE));
-		this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
-		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
-		parc.MAJParc();
-		parc.MAJGuerre();
+
+	public void next() { //Écrit par Antoine
+		this.getAfrique().MAJAleas();
+		HashMap<Feve, Double> recolte1 = this.getAfrique().Recolte();
+		this.addLot(Feve.FEVE_BASSE, recolte1.get(Feve.FEVE_BASSE));
+		this.addLot(Feve.FEVE_MOYENNE, recolte1.get(Feve.FEVE_MOYENNE));
+		this.addLot(Feve.FEVE_HAUTE, recolte1.get(Feve.FEVE_HAUTE));
+		this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, recolte1.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, recolte1.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		this.getAfrique().MAJParc();
+		this.getAfrique().MAJGuerre();
 	}
 	
 	/**
