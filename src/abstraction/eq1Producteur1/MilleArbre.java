@@ -2,7 +2,7 @@ package abstraction.eq1Producteur1;
 
 import abstraction.eq8Romu.filiere.Filiere;
 
-public class Arbre {
+public class MilleArbre {
 	private int ut_plantation;
 	private int ut_esperance_vie;
 	private int stade_maladie;
@@ -13,7 +13,7 @@ public class Arbre {
 	private int date_transition;
 	private double productivite_max;
 	
-	public Arbre() { //Écrit par Maxime
+	public MilleArbre() { //Écrit par Maxime
 		this.ut_plantation=0;
 		this.ut_esperance_vie= this.Esperance_vie();
 		this.stade_maladie=0;
@@ -25,7 +25,7 @@ public class Arbre {
 		this.productivite_max=this.Production_max();
 	}
 	
-	public Arbre(int qualite, boolean BE,int ut_plantation) { //Écrit par Antoine
+	public MilleArbre(int qualite, boolean BE,int ut_plantation) { //Écrit par Antoine
 		this.ut_plantation = ut_plantation;
 		this.ut_esperance_vie = Esperance_vie();
 		this.stade_maladie = 0;

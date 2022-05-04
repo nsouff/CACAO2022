@@ -8,7 +8,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Parc {
-	private ArrayList<Arbre> cacaoyers;
+	private ArrayList<MilleArbre> cacaoyers;
 	private String nom;
 	private int nombre_BE_moyenne;
 	private int nombre_BE_haute;
@@ -21,7 +21,7 @@ public class Parc {
 	private int fin_aleas;
 	
 	public Parc(String nom) { //Écrit par Antoine
-		this.cacaoyers = new ArrayList<Arbre>();
+		this.cacaoyers = new ArrayList<MilleArbre>();
 		this.nom = nom;
 		this.nombre_BE_moyenne = 0;
 		this.nombre_BE_haute = 0;
@@ -36,7 +36,7 @@ public class Parc {
 		
 	}
 	
-	public List<Arbre> getCacaoyers() { //Écrit par Antoine
+	public List<MilleArbre> getCacaoyers() { //Écrit par Antoine
 		return this.cacaoyers;
 	}
 	
@@ -119,16 +119,16 @@ public class Parc {
 	public void setfin_aleas(int i) { //Écrit par Antoine
 		this.fin_aleas = i;
 	}
-	public Arbre getArbre(int i) { //Écrit par Antoine
+	public MilleArbre getArbre(int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(i);
 	}
 	
-	public void Planter(Arbre a) { //Écrit par Antoine
+	public void Planter(MilleArbre a) { //Écrit par Antoine
 			this.getCacaoyers().add(a);
 			MAJCompteur(a,1);
 	}
 	
-	public void MAJCompteur(Arbre a, int i) { //Écrit par Antoine
+	public void MAJCompteur(MilleArbre a, int i) { //Écrit par Antoine
 		if ((i==1) || (i==-1)) {
 			if (a.getBioequitable()) {
 				if (a.getQualite()==2) {
@@ -183,7 +183,7 @@ public class Parc {
 	
 	public void MAJParc() { //Écrit par Antoine
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
-			Arbre arbre_i = this.getArbre(i);
+			MilleArbre arbre_i = this.getArbre(i);
 			arbre_i.MAJMaladie();
 			if ((arbre_i.getStade_maladie() == 5)
 					|| (arbre_i.Age() == arbre_i.getUt_esperance_vie())) {
@@ -244,7 +244,7 @@ public class Parc {
 		HashMap<Feve, Double> dicorecolte = new HashMap<Feve, Double>();
 		if (Filiere.LA_FILIERE.getEtape()>=this.fin_aleas) {
 			for (int i=0; i<this.getCacaoyers().size(); i++) {
-				Arbre arbre_i = this.getArbre(i);
+				MilleArbre arbre_i = this.getArbre(i);
 				boolean isBE = arbre_i.getBioequitable();
 				int qualite = arbre_i.getQualite();
 				double recolte = arbre_i.Recolte();
@@ -269,11 +269,11 @@ public class Parc {
 		}
 		double parasitesBE = ParasitesBE();
 		double parasites_non_BE = Parasites_non_BE();
-		BE_moyenne = BE_moyenne*parasitesBE;
-		BE_haute = BE_haute*parasitesBE;
-		non_BE_basse = non_BE_basse*parasites_non_BE;
-		non_BE_moyenne = non_BE_moyenne*parasites_non_BE;
-		non_BE_haute = non_BE_haute*parasites_non_BE;
+		BE_moyenne = BE_moyenne*parasitesBE*1000;
+		BE_haute = BE_haute*parasitesBE*1000;
+		non_BE_basse = non_BE_basse*parasites_non_BE*1000;
+		non_BE_moyenne = non_BE_moyenne*parasites_non_BE*1000;
+		non_BE_haute = non_BE_haute*parasites_non_BE*1000;
 		dicorecolte.put(Feve.FEVE_BASSE,non_BE_basse);
 		dicorecolte.put(Feve.FEVE_MOYENNE,non_BE_moyenne);
 		dicorecolte.put(Feve.FEVE_HAUTE,non_BE_haute);
