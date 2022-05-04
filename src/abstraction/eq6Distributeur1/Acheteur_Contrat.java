@@ -6,11 +6,11 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Gamme;
-//leorouppert toute la classe
-public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{
+
+public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{//leorouppert
 
 @Override
-public boolean achete(Object produit) {//a modifier avec considération de stockage
+public boolean achete(Object produit) {
 	if (produit instanceof ChocolatDeMarque && this.getNotreStock().getStockage((ChocolatDeMarque) produit) <= 1) {
 		if (((ChocolatDeMarque) produit).getGamme() == Gamme.BASSE && !((ChocolatDeMarque) produit).isBioEquitable() && !((ChocolatDeMarque) produit).isOriginal()) {
 			return true; }//BQ

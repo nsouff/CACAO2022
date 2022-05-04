@@ -1,6 +1,6 @@
 package abstraction.eq6Distributeur1;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List; 
 import java.util.Map;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import java.util.Dictionary;
@@ -11,34 +11,45 @@ import java.util.LinkedList;
 
 public class Stock extends Distributeur1{ //Emma Humeau
 	
-	private Map<ChocolatDeMarque,Double> StockagePrix = new HashMap<ChocolatDeMarque, Double>();
-	private double prixStockageTotal;
+
+	private double CoûtStockageTotale;
+	
+	private double qteStockageTotale; 
 
 	private Map<ChocolatDeMarque,Double> StockageQte = new HashMap<ChocolatDeMarque, Double>();
-	private double qteStockageTotal; 
-	
-	//abandon map3
-	//private ArrayList<Double> CouplePrixQte = new ArrayList();//[prixInstantanneChoco.size()][prixInstantanneChoco.size()];
-	//private Map<ChocolatDeMarque,  ArrayList<Double> > Stockage = new HashMap<ChocolatDeMarque, ArrayList<Double> >(); //(choco, table 2 entrées prix et qté)
 	
 	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole) 
 
 	
+	
+	/**
+	 * @return the coûtStockageTotale
+	 */
+	public double getCoûtStockageTotale() {
+		return CoûtStockageTotale;
+	}
 
-	public void Distributeur() { //Emma Humeau
+	/**
+	 * @param coûtStockageTotale the coûtStockageTotale to set
+	 */
+	public void setCoûtStockageTotale(double coûtStockageTotale) {
+		CoûtStockageTotale = coûtStockageTotale;
+	}
 
-		double sumprix=0;
+	/**
+	 * @return the qteStockageTotale
+	 */
+	public double getqteStockageTotale() {
+		return qteStockageTotale;
+	}
+	
+	/**
+	 * @param qteStockageTotale the qteStockageTotale to set
+	 */
+	public void setQteStockageTotale(double qteStockageTotale) {
+		
 		double sumqte=0;
 	
-		//calcule le prix du stockage total 
-		for (Map.Entry<ChocolatDeMarque, Double > entry : StockagePrix.entrySet()) {
-            ChocolatDeMarque KeyPrix = entry.getKey();
-            Double ValuePrix = entry.getValue();
-            sumprix += ValuePrix;
-           }
-	
-		this.prixStockageTotale = sumprix;
-		
 		//calcule la qte du stockage total
 		for (Map.Entry<ChocolatDeMarque, Double > entry : StockageQte.entrySet()) {
             ChocolatDeMarque KeyQte = entry.getKey();
@@ -48,11 +59,12 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 		
 		this.qteStockageTotale = sumqte;
-
-
 	}
 
+
+
 	
+
 	
 
 
@@ -84,35 +96,22 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
     return this.StockageQte.get(chocolat);//Retourne le stock du chocolat demandé
 	}
+	
 
 	/**
 	 * @param stockageQte the stockageQte to set
 	 */
-	public void setStockageQte(ChocolatDeMarque choco, double qte) {
-		StockageQte.put(choco, qte);
+	public void addStockageQte(ChocolatDeMarque choco, double qte) {
+		StockageQte.put(choco, StockageQte.get(choco)+qte);
+	}
+	
+	public void removeStockageQte(ChocolatDeMarque choco, double qte) {
+		StockageQte.replace(choco,StockageQte.get(choco),StockageQte.get(choco)-qte);
 	}
 
-
-
-	/**
-	 * @return the prixStockageTotale
-	 */
-	public double getPrixStockageTotale() {
-		return prixStockageTotale;
-	}
-
-
-
-	/**
-	 * @return the qteStockageTotale
-	 */
-	public double getQteStockageTotale() {
-		return qteStockageTotale;
-	}
 
 
 //Emma Humeau tout ce qui est au dessus
-<<<<<<< HEAD
 
 
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
@@ -127,8 +126,18 @@ public class Stock extends Distributeur1{ //Emma Humeau
         this.Stockage.put(chocolat, ArrayList<Double>[prix][quantite]);//Modifie la valeur du stock du chocolat associé
     }
 		
-=======
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
+
+
+
+	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
+        return this.StockageQte;//Retourne toute la hashmap de notre stock
+    }
+    
+    public Double getStockageQte(ChocolatDeMarque chocolat) {//leorouppert
+        return this.StockageQte.get(chocolat);//Retourne le stock du chocolat demandé
+    }
+    
+    
 }	
 	
 
