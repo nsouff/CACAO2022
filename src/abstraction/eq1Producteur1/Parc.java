@@ -1,12 +1,13 @@
 package abstraction.eq1Producteur1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Parc extends Producteur1Stock{
+public class Parc {
 	private ArrayList<Arbre> cacaoyers;
 	private String nom;
 	private int nombre_BE_moyenne;
@@ -234,12 +235,13 @@ public class Parc extends Producteur1Stock{
 		}
 	}
 	
-	public void Recolte() { //Écrit par Antoine
+	public HashMap<Feve, Double> Recolte() { //Écrit par Antoine
 		double BE_moyenne = 0;
 		double BE_haute = 0;
 		double non_BE_basse = 0;
 		double non_BE_moyenne = 0;
 		double non_BE_haute = 0;
+		HashMap<Feve, Double> dicorecolte = new HashMap<Feve, Double>();
 		if (Filiere.LA_FILIERE.getEtape()>=this.fin_aleas) {
 			for (int i=0; i<this.getCacaoyers().size(); i++) {
 				Arbre arbre_i = this.getArbre(i);
@@ -272,17 +274,11 @@ public class Parc extends Producteur1Stock{
 		non_BE_basse = non_BE_basse*parasites_non_BE;
 		non_BE_moyenne = non_BE_moyenne*parasites_non_BE;
 		non_BE_haute = non_BE_haute*parasites_non_BE;
-		addLot(Feve.FEVE_BASSE,non_BE_basse);
-		addLot(Feve.FEVE_MOYENNE,non_BE_moyenne);
-		addLot(Feve.FEVE_HAUTE,non_BE_haute);
-		addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE,BE_moyenne);
-		addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE,BE_haute);
-	}
-	
-	public void next() { //Écrit par Antoine
-		this.MAJAleas();
-		this.Recolte();
-		this.MAJParc();
-		this.MAJGuerre();
+		dicorecolte.put(Feve.FEVE_BASSE,non_BE_basse);
+		dicorecolte.put(Feve.FEVE_MOYENNE,non_BE_moyenne);
+		dicorecolte.put(Feve.FEVE_HAUTE,non_BE_haute);
+		dicorecolte.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,BE_moyenne);
+		dicorecolte.put(Feve.FEVE_HAUTE_BIO_EQUITABLE,BE_haute);
+		return dicorecolte;
 	}
 }
