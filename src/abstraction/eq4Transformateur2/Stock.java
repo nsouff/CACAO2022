@@ -57,7 +57,18 @@ public class Stock<I> {
 	public double stockRestant(I produit) {
 		return (Filiere.LA_FILIERE.getIndicateur("stock max")-this.quantiteStockTotale(produit));
 	}
-	public double coutStockage(Filiere.LA_FILIERE.getIndicateur("prix stockage")) { // demander comment ajouter variables
-		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix stockage")) // demander a Alexandre comment calculer prix 
+
+	// Gabriel
+	public void setStock(double newst) {
+		this.stocktotal = this.stocktotal - newst;
+	
+	//Gabriel
+		}
+	public double getStock() {
+		return this.stocktotal;
 	}
-}
+
+	public double coutStockage(Filiere.LA_FILIERE.getIndicateur("prix stockage")) { // demander comment ajouter variables
+		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix stockage")); // demander a Alexandre comment calculer prix 
+	}
+}}
