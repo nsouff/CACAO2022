@@ -50,10 +50,6 @@ public class Producteur1Stock {
 				quantite = 0 ;
 			}
 		}
-		
-		
-		
-		
 	}
 	
 	/**
