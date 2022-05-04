@@ -13,7 +13,7 @@ public class Transformateur2Stock extends Transformateur2 {
 	private double stocktotalfeve;
 	private double stocktotalchoco;
 	
-	
+// Marie	
 public Transformateur2Stock(double stocktotalfeve, double stocktotalchoco) {
 	this.stockchocolat = stockchocolat;
 	this.stockfeve=stockfeve;
@@ -34,14 +34,14 @@ public double getStocktotalChoco() {
 	return this.stocktotalchoco;
 }
 
-
+//Marie
 public double coutStockage() {
 	double cout=0;
 	for (Feve f : stockfeve.quantite_stock.keySet()) {
-		cout=cout+ stockfeve.quantite_stock.get(f)*Filiere.LA_FILIERE.getIndicateur("PrixStockage");
+		cout=cout+ stockfeve.quantite_stock.get(f)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());
 	}
 	for (Chocolat c : stockchocolat.quantite_stock.keySet()) {
-		cout= cout + stockchocolat.quantite_stock.get(c)*Filiere.LA_FILIERE.getIndicateur("PrixStockage");
+		cout= cout + stockchocolat.quantite_stock.get(c)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());
 	}
 	return cout;
 }

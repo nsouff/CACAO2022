@@ -1,6 +1,6 @@
 package abstraction.eq4Transformateur2;
 
-
+import abstraction.eq8Romu.filiere.Filiere;
 
 public class Transformateur2Vente extends Transformateur2Achat {
  private double marge;
@@ -11,7 +11,7 @@ public class Transformateur2Vente extends Transformateur2Achat {
  
  // Gabriel
  public double prixVoulu(double prix_achat) { 
-	 return (prix_achat + prix_transfo + cout_stockage + prix_ori)*marge; 
+	 return (prix_achat + prix_transfo + cout_stockage+ prix_ori)*marge; 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
 	 // du cout de stockage, de l'origininalité et de la marge voulue
  }
@@ -28,15 +28,16 @@ public class Transformateur2Vente extends Transformateur2Achat {
  public boolean vente() {
 	 return this.StockDispo() & this.prixAcceptable(prix_ori, prix_ori);
  }
-<<<<<<< HEAD
+
  // Gabriel
- public void enlever() {
-	 if (this.vente()){
-		 this.setStock(this.getStock()-qt);
+ //public void enlever() {
+	 //if (this.vente()){
+		 //this.quantite.replace("Fèves", this.quantite("Fèves")-qt);///
 		 
-	 }
- } 
+	 //}
+ //} 
+private double test(Transformateur2Achat izi) {
+	return this.prix_seuil;
 }
-=======
-}//BLA
->>>>>>> branch 'main' of https://github.com/Gabeaugosse/CACAO2022.git
+}
+

@@ -21,7 +21,10 @@ public class Stock<I> {
 	public HashMap<I,Double> getQuantiteStock(){
 		return this.quantite_stock;
 	}
-	
+	// Gabriel
+	public void setStock(double newst) {
+		this.stocktotal = this.stocktotal - newst;
+	}
 	
 	//Marie
 	public void ajouter (I produit, double qt) {
@@ -61,13 +64,18 @@ public class Stock<I> {
 		}
 		return this.stocktotal;
 		
-	}
-	// Marie
-	public double stockRestant(I produit) {
-		return (Filiere.LA_FILIERE.getIndicateur("stock max")-this.quantiteStockTotale(produit));
-	}
-	public double coutStockage(Filiere.LA_FILIERE.getIndicateur("prix stockage")) { // demander comment ajouter variables
-		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix stockage")) // demander a Alexandre comment calculer prix 
-	}
-	
 }
+	// Marie
+/*	public double stockRestant(I produit) {
+		return (Filiere.LA_FILIERE.getIndicateur("stock max").getValeur())-(this.quantiteStockTotale(produit).getValeur());
+	}*/ // version 2 quand on aura une capacité de stockage limitée
+
+
+
+=======
+
+	public double coutStockage(Filiere.LA_FILIERE.getIndicateur("prix stockage")) { // demander comment ajouter variables
+		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix stockage")); // demander a Alexandre comment calculer prix 
+	}
+}}
+>>>>>>> branch 'main' of https://github.com/Gabeaugosse/CACAO2022.git
