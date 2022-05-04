@@ -20,7 +20,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 	private Stock NotreStock = new Stock();
-
 	/**
 	 * @return the notreStock
 	 */
@@ -107,12 +106,12 @@ public class Distributeur1Acteur implements IActeur {
 		 * SORTIES : prix 
 	>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 		 * 
-		 * V1.0 : 
+		 * V1 : 
 		 * - prix fixe = prix achat*2
 		 * - marge fixe (différente pour chaque produit)
 		 * - raisonner en marge du prix d'achat
 		*/
-	//V1 : 
+	//V2 : 
 	//NOLANN
 	//Variables : 
 	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
@@ -126,7 +125,36 @@ public class Distributeur1Acteur implements IActeur {
 		
 		return prixVente;
 	}
+	/**
+	 * @author Nolann
+	 *
+	 */
+	//creation d'un journal "journal":
 	
+	public Journal journal1 = new Journal("journal", this);
+	
+	
+	/**
+	 * @author Nolann
+	 *  ajout des indicateurs + fonction actualiser indicateurs :
+	 */
+		
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
