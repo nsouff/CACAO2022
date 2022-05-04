@@ -21,6 +21,22 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	
 	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole) 
 
+	
+	
+	/**
+	 * @return the coûtStockageTotale
+	 */
+	public double getCoûtStockageTotale() {
+		return CoûtStockageTotale;
+	}
+
+	/**
+	 * @param coûtStockageTotale the coûtStockageTotale to set
+	 */
+	public void setCoûtStockageTotale(double coûtStockageTotale) {
+		CoûtStockageTotale = coûtStockageTotale;
+	}
+
 	/**
 	 * @return the qteStockageTotale
 	 */
