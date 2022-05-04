@@ -50,7 +50,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		if (contrat.getPrix()>prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())) {
 			return contrat.getPrix();
 		} else {
-			return ((contrat.getPrix()+prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()))/2.0);
+			return Math.max(contrat.getPrix()+prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())/2.0,0.0);
 		}
 		
 	}
