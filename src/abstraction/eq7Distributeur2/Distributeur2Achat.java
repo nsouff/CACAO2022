@@ -73,12 +73,9 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		//edgard
 		public boolean achete(Object produit) {
 			// TODO Auto-generated method stub
-			System.out.println(produit + "");
 			if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
-				System.out.println("true");
 				return true;
 			}else {
-				System.out.println("false");
 				return false;
 			}
 			//return (produit!=null && (produit instanceof ChocolatDeMarque) && this.chocolats.contains(produit));
