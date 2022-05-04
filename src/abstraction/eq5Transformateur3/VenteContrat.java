@@ -11,7 +11,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 
-public class VenteContrat extends Transformateur3Acteur implements IVendeurContratCadre {
+public class VenteContrat extends Transformation implements IVendeurContratCadre {
 
 	@Override
 	public boolean vend(Object produit) {
