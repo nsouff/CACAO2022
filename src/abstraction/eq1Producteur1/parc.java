@@ -8,6 +8,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class parc extends Producteur1Stock{
 	private ArrayList<arbre> cacaoyers;
+	private String nom;
 	private int nombre_BE_moyenne;
 	private int nombre_BE_haute;
 	private int nombre_non_BE_basse;
@@ -18,8 +19,9 @@ public class parc extends Producteur1Stock{
 	private int ut_fin_guerre;
 	private int fin_aleas;
 	
-	public parc() { //Écrit par Antoine
+	public parc(String nom) { //Écrit par Antoine
 		this.cacaoyers = new ArrayList<arbre>();
+		this.nom = nom;
 		this.nombre_BE_moyenne = 0;
 		this.nombre_BE_haute = 0;
 		this.nombre_non_BE_basse = 0;
@@ -33,6 +35,10 @@ public class parc extends Producteur1Stock{
 	
 	public List<arbre> getCacaoyers() { //Écrit par Antoine
 		return this.cacaoyers;
+	}
+	
+	public String getNom() {
+		return this.nom;
 	}
 	
 	public int getNombre_BE_moyenne() { //Écrit par Antoine
@@ -69,6 +75,10 @@ public class parc extends Producteur1Stock{
 	
 	public int getfin_aleas() { //Écrit par Antoine
 		return this.fin_aleas;
+	}
+	
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 	
 	public void setNombre_BE_moyenne(int i) { //Écrit par Antoine
