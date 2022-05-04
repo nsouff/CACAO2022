@@ -1,19 +1,15 @@
-package abstraction.eq5Transformateur3;
+package abstraction.eq2Producteur2;
+
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 
-
-public class VenteContrat extends Transformation implements IVendeurContratCadre {
+public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre {
 
 	@Override
 	public boolean vend(Object produit) {
-		if (stockChocolat.getProduitsEnStock().contains(produit) == true) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -45,4 +41,5 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	}
+
+}

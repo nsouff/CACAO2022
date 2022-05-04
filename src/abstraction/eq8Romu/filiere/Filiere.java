@@ -42,7 +42,7 @@ public class Filiere implements IAssermente {
 	private HashMap<String, Journal> journaux;      // La liste des journaux
 	private HashMap<IActeur, List<Journal>> journauxParActeur; // Table associant a chaque acteur sa liste de journaux
 	private PropertyChangeSupport pcs;        // Pour notifier les observers des changements de step 
-	private Journal journalFiliere;
+	protected Journal journalFiliere;
 	private HashMap<String, IActeur> marquesDeposees; // Associe a chaque marque de chocolat deposee l'acteur qui la possede
 	//private List<IFabricantChocolatDeMarque> fabricantsDeChocolatDeMarque; // Tous
 	private List<ChocolatDeMarque> chocolatsProduits; // La liste de tous les types de chocolat de marque produits.
