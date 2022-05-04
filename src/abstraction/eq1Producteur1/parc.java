@@ -115,7 +115,7 @@ public class parc extends Producteur1Stock{
 			MAJCompteur(a,1);
 	}
 	
-	public void MAJCompteur(arbre a, int i) {
+	public void MAJCompteur(arbre a, int i) { //Fait par Antoine
 		if ((i==1) || (i==-1)) {
 			if (a.getBioequitable()) {
 				if (a.getQualite()==2) {
@@ -267,7 +267,7 @@ public class parc extends Producteur1Stock{
 		addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE,BE_haute);
 	}
 	
-	public void next() {
+	public void next() { //Fait par Antoine
 		this.MAJAleas();
 		this.Recolte();
 		this.MAJParc();
