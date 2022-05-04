@@ -56,9 +56,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		
 	}
 
-	@Override
+	/** Ajout du contrat dans la liste de contrats à honorer
+	 *  Alexandre*/
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		mesContratEnTantQueVendeur.add(contrat);
 		
 	}
 
