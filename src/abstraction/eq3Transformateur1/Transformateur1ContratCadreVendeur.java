@@ -13,7 +13,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
-
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse implements IVendeurContratCadre{
 	
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeur;
@@ -25,7 +25,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	
 	// fonction qui détermine quel type de chocolat on vend en contrat cadre; auteur Julien */
 	public boolean vend(Object produit) {
-		if ((produit==Chocolat.MQ)||(produit==Chocolat.MQ_BE)||(produit==Chocolat.MQ_O)) {
+		if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
 			return true;
 		}
 		return false;
@@ -47,10 +47,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 
 	// négocie une contreproposition du prix; auteur Julien */
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		if (contrat.getPrix()>2) {
+		if (contrat.getPrix()>prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())) {
 			return contrat.getPrix();
 		} else {
-			return ((contrat.getPrix()+)/2.0);
+			return ((contrat.getPrix()+prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()))/2.0);
 		}
 		
 	}
