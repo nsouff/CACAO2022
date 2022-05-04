@@ -6,6 +6,7 @@ import java.util.List;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratCadreVendeur implements IAcheteurContratCadre {
 	
@@ -29,10 +30,13 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		return null;
 	}
 
-	@Override
+	// négociation du prix; auteur Julien */
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit())) {
+			return contrat.getPrix();
+		} else {
+			return prixAchatFeve.get(contrat.getProduit());
+		}
 	}
 
 	@Override
