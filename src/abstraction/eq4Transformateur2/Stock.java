@@ -6,7 +6,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 //auteur Marie
 
 public class Stock<I> {
-		private HashMap<I,Double> quantite_stock;
+		public HashMap<I,Double> quantite_stock;
 		private double stocktotal;
 		
 		
@@ -14,6 +14,18 @@ public class Stock<I> {
 		this.setQuantite_stock(new HashMap<I, Double>());
 		this.stocktotal=stocktotal;
 	}
+	//Marie
+	public double getStocktotal() {
+		return this.stocktotal;
+	}
+	public HashMap<I,Double> getQuantiteStock(){
+		return this.quantite_stock;
+	}
+	// Gabriel
+	public void setStock(double newst) {
+		this.stocktotal = this.stocktotal - newst;
+	}
+	
 	//Marie
 	public void ajouter (I produit, double qt) {
 		if (qt>0) {	
@@ -46,31 +58,28 @@ public class Stock<I> {
 		
 	}
 	// Marie
-	public double quantiteStockTotale(I produit) {
+	public double quantiteStockTotale() {
 		for(Double d: this.getQuantite_stock().values()) {
 			this.stocktotal=this.stocktotal+d;
 		}
 		return this.stocktotal;
 		
-	}
+}
 	// Marie
+
 	public double stockRestant(I produit) {
-		return (Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()-this.quantiteStockTotale(produit));
+		return (Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()-this.quantiteStockTotale());
 	}
 
-	// Gabriel
-	public void setStock(double newst) {
-		this.stocktotal = this.stocktotal - newst;
-	
-	//Gabriel
-		}
-	public double getStock() {
-		return this.stocktotal;
-	}
 
-	public double coutStockage( Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) { // demander comment ajouter variables
-		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix_stockage")); // demander a Alexandre comment calculer prix 
-	}
+
+
+	/*public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
+		return (this.quantiteStockTotale(produit)*(Filiere.LA_FILIERE.getIndicateur("prix_stockage").getValeur())); // demander a Alexandre comment calculer prix 
+	}*/
+
+
+
 
 	public HashMap<I,Double> getQuantite_stock() {
 		return quantite_stock;
@@ -78,3 +87,4 @@ public class Stock<I> {
 	public void setQuantite_stock(HashMap<I,Double> quantite_stock) {
 		this.quantite_stock = quantite_stock;
 	}}
+

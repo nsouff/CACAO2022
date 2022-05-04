@@ -3,15 +3,21 @@ package abstraction.eq4Transformateur2;
 import abstraction.eq8Romu.filiere.Filiere;
 
 public class Transformateur2Vente extends Transformateur2Achat {
- private double marge;
- private int prix_transfo;
- private int prix_ori;
+
  
  
  // Gabriel
  public double prixVoulu(double prix_achat) { 
-	 return (prix_achat + prix_transfo + Transformateur2Acteur.Test.getCout()*
-			 (Transformateur2Acteur.Test.getStockchocolat().quantiteStockTotale(null)+ Transformateur2Acteur.Test.getStockfeve().quantiteStockTotale(null))+ prix_ori)*marge; 
+	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + this.getCout()*
+			 (this.getStockchocolat().quantiteStockTotale()+ this.getStockfeve().quantiteStockTotale()))
+			 *this.getMarge(); 
+	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
+	 // du cout de stockage, de l'origininalité et de la marge voulue
+ }
+ public double prixVouluOri(double prix_achat) { 
+	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + this.getCout()*
+			 (this.getStockchocolat().quantiteStockTotale()+ this.getStockfeve().quantiteStockTotale())+ Filiere.LA_FILIERE.getParametre("coutOriginal").getValeur())
+			 *this.getMarge(); 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
 	 // du cout de stockage, de l'origininalité et de la marge voulue
  }
@@ -26,7 +32,7 @@ public class Transformateur2Vente extends Transformateur2Achat {
  }
  // Gabriel
  public boolean vente() {
-	 return this.StockDispo() & this.prixAcceptable(prix_ori, prix_ori);
+	 return false;//this.StockDispo() & this.prixAcceptable(prix_ori, prix_ori);
  }
 
  // Gabriel

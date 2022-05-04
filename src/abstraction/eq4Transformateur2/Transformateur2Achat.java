@@ -9,7 +9,7 @@ public class Transformateur2Achat extends Transformateur2Transfo{
 	
 	public boolean comparer_prix(double prix_vente) {
 		return prix_vente<prix_seuil; //On achete pas au dessus du prix seuil
-		super.cou
+		
 	}
 	
 	public int quantite(int stock) { //Quantite a acheter pour garder le stock theorique
