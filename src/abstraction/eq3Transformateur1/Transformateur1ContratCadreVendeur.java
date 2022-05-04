@@ -26,13 +26,13 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	
 	// fonction qui détermine quel type de chocolat on vend en contrat cadre; auteur Julien */
 	public boolean vend(Object produit) {
-		if ((produit==Chocolat.MQ)||(produit==Chocolat.MQ_BE)||(produit==Chocolat.MQ_O)) {
+		if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
 			return true;
 		}
 		return false;
 	}
 
-	
+	// négocie un échancier inférieur à 6 échéances; auteur Julien */
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (contrat.getEcheancier().getNbEcheances()<6) {
 			return contrat.getEcheancier();
@@ -46,10 +46,14 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		return this.prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())*1.4;
 	}
 
-	@Override
+	// négocie une contreproposition du prix; auteur Julien */
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		if (contrat.getPrix()>prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())) {
+			return contrat.getPrix();
+		} else {
+			return Math.max(contrat.getPrix()+prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())/2.0,0.0);
+		}
 		
-		return 0;
 	}
 
 	@Override
