@@ -17,6 +17,15 @@ public class Stock<Produit> {
 			}
 		}
 	}
+	
+	public void vendre(Produit p, double qtt) {
+	if (qtt > 0 && this.stock.get(p)-qtt >=0 ) {
+		if (this.stock.keySet().contains(p)) {
+			this.stock.put(p, this.stock.get(p)-qtt);	
+
+			}
+		}
+	}
 
 	//Récupérer les stocks pour un type de produit
 	public Double getstock(Produit p) {
