@@ -159,11 +159,13 @@ public class parc extends Producteur1Stock{
 	}
 	
 	public void MAJAleas() { //Fait par Antoine
-		double d = Math.random();
-		while (d==0) {
-			d = Math.random();
-		}
+		if (Filiere.LA_FILIERE.getEtape()%24==20) {
+			double d = Math.random();
+			while (d==0) {
+				d = Math.random();
+			}
 		this.setfin_aleas((int)(Filiere.LA_FILIERE.getEtape()+Math.ceil((d+1)*2)));
+		}
 	}
 	
 	public void MAJParc() { //Écrit par Antoine
@@ -226,9 +228,6 @@ public class parc extends Producteur1Stock{
 		double non_BE_basse = 0;
 		double non_BE_moyenne = 0;
 		double non_BE_haute = 0;
-		if (Filiere.LA_FILIERE.getEtape()%24==20) {
-			this.MAJAleas();
-		}
 		if (Filiere.LA_FILIERE.getEtape()>=this.fin_aleas) {
 			for (int i=0; i<this.getCacaoyers().size(); i++) {
 				arbre arbre_i = this.getArbre(i);
@@ -266,5 +265,12 @@ public class parc extends Producteur1Stock{
 		addLot(Feve.FEVE_HAUTE,non_BE_haute);
 		addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE,BE_moyenne);
 		addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE,BE_haute);
+	}
+	
+	public void next() {
+		this.MAJAleas();
+		this.Recolte();
+		this.MAJParc();
+		this.MAJGuerre();
 	}
 }
