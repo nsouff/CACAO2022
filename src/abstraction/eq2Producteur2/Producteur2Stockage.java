@@ -8,23 +8,7 @@ import abstraction.eq2Producteur2.Stock;
 // auteur Clément //
 
 public class Producteur2Stockage extends Producteur2Acteur {
-	public Producteur2Stockage(LinkedList<Stock> stockBQ, LinkedList<Stock> stockMQ, LinkedList<Stock> stockMQ_BE,
-			LinkedList<Stock> stockHQ, LinkedList<Stock> stockHQ_BE, LinkedList<Stock> chocoBQ,
-			LinkedList<Stock> chocoMQ, LinkedList<Stock> chocoMQ_BE, LinkedList<Stock> chocoHQ,
-			LinkedList<Stock> chocoHQ_BE, HashMap<LinkedList<Stock>, Stock> stocks) {
-		super();
-		StockBQ = stockBQ;
-		StockMQ = stockMQ;
-		StockMQ_BE = stockMQ_BE;
-		StockHQ = stockHQ;
-		StockHQ_BE = stockHQ_BE;
-		ChocoBQ = chocoBQ;
-		ChocoMQ = chocoMQ;
-		ChocoMQ_BE = chocoMQ_BE;
-		ChocoHQ = chocoHQ;
-		ChocoHQ_BE = chocoHQ_BE;
-		Stocks = stocks;
-	}
+	
 	private LinkedList<Stock> StockBQ;
 	private LinkedList<Stock> StockMQ;
 	private LinkedList<Stock> StockMQ_BE;
@@ -35,8 +19,7 @@ public class Producteur2Stockage extends Producteur2Acteur {
 	private LinkedList<Stock> ChocoMQ_BE;
 	private LinkedList<Stock> ChocoHQ;
 	private LinkedList<Stock> ChocoHQ_BE;
-	private HashMap<LinkedList<Stock>, Stock> Stocks;
-	
+	private HashMap<LinkedList<Stock>,Stock> Stocks;
 	
 	
 
@@ -80,12 +63,17 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		return ChocoHQ_BE;
 	}
 	public Producteur2Stockage () {
-		Stocks = new HashMap<LinkedList<Stock>,Stock>();
-//		Stocks.put(StockBQ, Stock(0.0,0));
+		super();
+		this.StockBQ = new LinkedList<Stock>();
+		this.StockBQ.add(new Stock(0,0));
+		this.StockMQ = new LinkedList<Stock>();
+		this.StockMQ.add(new Stock(0,0));
+		this.StockMQ_BE = new LinkedList<Stock>();
+		this.StockMQ_BE.add(new Stock(0,0));
+		this.StockHQ = new LinkedList<Stock>();
+		this.StockHQ.add(new Stock(0,0));
+		this.StockHQ_BE = new LinkedList<Stock>();
+		this.StockHQ_BE.add(new Stock(0,0));
+		
 	}
-
-
-
-
-
 }
