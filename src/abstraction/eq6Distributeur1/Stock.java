@@ -104,21 +104,6 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 
 	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
-        return this.Stockage;//Retourne toute la hashmap de notre stock
-    }
-    
-    public Double getStockage(ChocolatDeMarque chocolat) {//leorouppert
-        return this.Stockage.get(chocolat);//Retourne le stock du chocolat demandé
-    }
-    
-    public void setStockage(ChocolatDeMarque chocolat, Double quantite, Double prix) {//leorouppert
-        this.Stockage.put(chocolat, ArrayList<Double>[prix][quantite]);//Modifie la valeur du stock du chocolat associé
-    }
-		
-
-
-
-	public Map<ChocolatDeMarque, Double> getMapStock() {//leorouppert
         return this.StockageQte;//Retourne toute la hashmap de notre stock
     }
     

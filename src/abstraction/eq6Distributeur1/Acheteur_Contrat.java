@@ -1,5 +1,8 @@
 package abstraction.eq6Distributeur1;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
@@ -9,6 +12,9 @@ import abstraction.eq8Romu.produits.Gamme;
 
 public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{//leorouppert
 
+	private List<ExemplaireContratCadre> mesContrats;
+
+	
 @Override
 public boolean achete(Object produit) {
 	if (produit instanceof ChocolatDeMarque && this.getNotreStock().getStockageQte((ChocolatDeMarque) produit) <= 1) {
@@ -40,7 +46,16 @@ public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 }
 @Override
 public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+	this.mesContrats.add(contrat);
 }
+public void suppAnciensContrats() {
+	for (ExemplaireContratCadre contrat : this.mesContrats) {
+		if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
+			mesContrats.remove(contrat);
+		}
+	}
+}
+
 @Override
 public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 	this.getNotreStock().addStockageQte((ChocolatDeMarque) produit, quantite);
