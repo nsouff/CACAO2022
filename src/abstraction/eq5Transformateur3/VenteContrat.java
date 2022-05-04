@@ -28,6 +28,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	}
 
 	@Override
+	//Yves
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
 			return contrat.getPrix();
