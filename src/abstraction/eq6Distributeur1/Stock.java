@@ -49,9 +49,14 @@ public class Stock extends Distributeur1{ //Emma Humeau
 
 	/**
 	 * @author Nathan Souffan
-	 * @param stockageQte the stockageQte to add
+	 * @param choco le chocolat dont on veut modifier la quantité.
+	 * @param qte la quantité qu'on veut ajouter
 	 */
 	public void addQte(ChocolatDeMarque choco, double qte) {
 		stockageQte.put(choco, stockageQte.get(choco)+qte);
+	}
+
+	public Map<ChocolatDeMarque, Double> getMapStock() {
+		return stockageQte;
 	}
 }

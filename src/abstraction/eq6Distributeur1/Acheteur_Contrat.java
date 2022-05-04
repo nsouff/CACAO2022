@@ -1,18 +1,14 @@
 package abstraction.eq6Distributeur1;
 
-import java.util.LinkedList;
 import java.util.List;
-
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
-import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Gamme;
 
 public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{//leorouppert
 
-	private List<ExemplaireContratCadre> mesContrats;
 
 	
 @Override
@@ -36,25 +32,29 @@ public boolean achete(Object produit) {
 	return false;
 }
 @Override
-public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {//pas de négociation
-	return contrat.getEcheancier();
-	//return new Echeancier(1,12,100);
+public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
+	Echeancier ech = contrat.getEcheancier();
+	if ((ech.getQuantite(ech.getStepDebut()) < 400)) {
+		ech.set(ech.getStepDebut(), ech.getQuantite(ech.getStepDebut())*2);
+		ech.set(ech.getStepDebut()+1, ech.getQuantite(ech.getStepDebut())*2);
+		ech.set(ech.getStepDebut()+2, ech.getQuantite(ech.getStepDebut())*2);
+	}
+	return ech;
 }
+
 @Override
 public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-	return 0.9*contrat.getPrix();
+	if (Math.random() < 0.5) {
+		return 0.9*contrat.getPrix();
+	}
+	return 0.95*contrat.getPrix();
 }
+
 @Override
 public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 	this.mesContrats.add(contrat);
 }
-public void suppAnciensContrats() {
-	for (ExemplaireContratCadre contrat : this.mesContrats) {
-		if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
-			mesContrats.remove(contrat);
-		}
-	}
-}
+
 
 @Override
 public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
