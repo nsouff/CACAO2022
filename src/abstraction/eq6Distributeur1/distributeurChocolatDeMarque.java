@@ -36,10 +36,10 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau
-		if (NotreStock.getqteStockageTotale() <= 200) {
-			return NotreStock.getStockageQte(choco); }
+		if (NotreStock.qteStockageTotale() <= 200) {
+			return NotreStock.getStock(choco); }
 		else {
-			return NotreStock.getStockageQte(choco)*0.9;
+			return NotreStock.getStock(choco)*0.9;
 		}
 	}
 
@@ -50,7 +50,6 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 				double sumqteTG = 0;
 						
 				for (Map.Entry<ChocolatDeMarque, Double > entry : teteGondole.entrySet()) {
-		           ChocolatDeMarque KeyQte = entry.getKey();
 		           Double ValueQte = entry.getValue();
 		           sumqteTG += ValueQte;
 				}
@@ -60,9 +59,10 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 		return qteEnVenteTG;
 	}
 
+	//il faudra rajouter ensuite une liste qui mémorise les ventes
 	@Override
-	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
-		// TODO Auto-generated method stub
+	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) { //emma Humeau
+		NotreStock.addQte(choco, -quantite);
 		
 	}
 
@@ -71,9 +71,9 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 		if  (teteGondole.isEmpty() == true ) {
 			System.out.println("Rayon vide pour la tête de gondole");
 		}
-		else {
-			System.out.println("Rayon pas vide");
-		}
+		//else {
+			//System.out.println("Rayon pas vide");
+		//}
 	}
 
 }
