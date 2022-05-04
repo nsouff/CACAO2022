@@ -8,9 +8,18 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 
 public class Distributeur2ChocolatDeMarque extends Distributeur2Acteur implements IDistributeurChocolatDeMarque  {
+	
+
 	private double capaciteDeVente;
 	private double[] prix;
 
+	public Distributeur2ChocolatDeMarque(List<ChocolatDeMarque> chocos, double[] prix, double capaciteDeVente) {
+		super(chocos);
+		this.prix=prix;
+		this.capaciteDeVente=capaciteDeVente;
+	}
+	
+	
 	public double prix(ChocolatDeMarque choco) {
 		// TODO Auto-generated method stub
 		int pos= (chocolats.indexOf(choco));

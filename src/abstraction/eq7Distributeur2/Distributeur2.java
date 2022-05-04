@@ -13,7 +13,6 @@ public class Distributeur2 extends Distributeur2Acteur implements IFabricantChoc
 
 	@Override
 	public List<ChocolatDeMarque> getChocolatsProduits() {
-		// TODO Auto-generated method stub
-		return null;
+		return super.chocolats;
 	}
 }

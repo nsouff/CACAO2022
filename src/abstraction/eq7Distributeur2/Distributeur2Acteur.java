@@ -157,7 +157,7 @@ public class Distributeur2Acteur implements IActeur, IVendeurContratCadre{
 	@Override
 	public boolean vend(Object produit) {
 		// TODO Auto-generated method stub
-		return false;
+		return (produit!=null && (produit instanceof ChocolatDeMarque) && this.chocolats.contains(produit));
 	}
 
 	@Override
