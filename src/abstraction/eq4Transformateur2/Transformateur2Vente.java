@@ -46,8 +46,6 @@ public class Transformateur2Vente extends Transformateur2Achat {
 		 
 	 //}
  //} 
-private double test(Transformateur2Achat izi) {
-	return this.prix_seuil;
-}
+
 }
 

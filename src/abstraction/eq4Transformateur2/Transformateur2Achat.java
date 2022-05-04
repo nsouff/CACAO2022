@@ -10,23 +10,30 @@ public class Transformateur2Achat extends Transformateur2Transfo{
 		// TODO Auto-generated constructor stub
 	}
 
-	public double prix_seuil; // Prix d'achat maximum
-	private int stock_theorique; //On souhaite garder ce nombre de feves en stock constamment (opportunisme)
+
+	
+
 
 	
 	public boolean comparer_prix(double prix_vente) {
 
-		return prix_vente<prix_seuil; //On achete pas au dessus du prix seuil
+
+
 		
 
+
 		return prix_vente<super.getPrixSeuil().getValeur(); //On achete pas au dessus du prix seuil
+
+		
+
+
 	}
 	public double quantite(int stock) { 
 		return super.getCapaciteStockageFixe().getValeur()-super.getStockfeve().quantiteStockTotale();
 	}
 	
-	public boolean deficit(int quantite, double capital, double prix_vente) { //True si l'achat nous mettrait en deficit
-		return capital-quantite*prix_vente>0;
+	public boolean deficit(double quantite, double capital, double prix_vente) { //False si l'achat nous mettrait en deficit
+		return true;
 	}
 	
 	public boolean Achat(double prix_vente,int stock,double capital) {//on achete ou pas
