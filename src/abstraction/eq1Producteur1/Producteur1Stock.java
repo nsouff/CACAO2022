@@ -1,13 +1,72 @@
 package abstraction.eq1Producteur1;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Stock extends Producteur1Acteur {
-	private List<Producteur1Feve> liste_feves;
+
+public class Producteur1Stock {
+	private  HashMap<Feve,List<Producteur1Feve>> Feves;
+	
+	//Auteur : Khéo
+	public Producteur1Stock() {
+		this.Feves = new HashMap<Feve, List<Producteur1Feve>>() ;
+		Feves.put(Feve.FEVE_BASSE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_HAUTE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<Producteur1Feve>());
+		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
+	}
+	
+	//Auteur : Khéo
+	public double getStock(Feve f){
+		double somme = 0.0 ;
+		for(Producteur1Feve Lot : this.getFeves().get(f)) {
+			somme = somme + Lot.getPoids() ;
+		}
+		return somme ;	
+	}
+	
+	//Auteur : Khéo
+	public void addLot(Feve f, double quantite) {
+		this.getFeves().get(f).add(new Producteur1Feve(quantite));
+
+	}
 	
 	
+	//Auteur : Khéo
+	public void retirerQuantite(Feve f, double quantite) {
+		while (quantite>0) {
+			double poids = this.getFeves().get(f).get(0).getPoids() ;
+			
+			if (quantite >= poids) { //On regarde en fonction de la quantite qui reste dans le lot. Si il y'a plus on enlève le lot
+				quantite = quantite - poids ;
+				this.getFeves().get(f).remove(0);
+			}
+			else {
+				this.getFeves().get(f).get(0).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
+				quantite = 0 ;
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	/**
+	 * @return the feves
+	 */
+	public HashMap<Feve, List<Producteur1Feve>> getFeves() {
+		return Feves;
+	}
+
 	// Auteur : Laure //
-	public void EvolutionStockPostMalade() {
+	// Si une maladie se lance dans le stock, un pourcentage est perdu. //
+	// A faire tourner à chaque UT //
+	// Renvoie le stock mis à jour //
+	public void EvolutionStockPostMaladie() {
 		int probaMalade;
 		int StockMalade;
 		int min_val = 1;
@@ -30,8 +89,15 @@ public class Producteur1Stock extends Producteur1Acteur {
 		} else {
 			StockMalade = 0;
 		}
-		for (int i=0; i<(liste_feves.size()*StockMalade/100); i=i+1) {
-			liste_feves.remove(i);
+		for (int i=0; i<(this.Feves.size()*StockMalade/100); i=i+1) {
+			this.Feves.remove(i);
 		}
+		
+		// Auteur : Laure //
+		// Simule l'évolution globale du stock
+		// A faire tourner à chaque UT
+		// Renvoie le stock mis à jour //
+		
+		
 	}
 }

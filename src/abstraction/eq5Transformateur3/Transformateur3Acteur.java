@@ -1,24 +1,46 @@
 package abstraction.eq5Transformateur3;
 
 import java.awt.Color;
-import abstraction.eq8Romu.produits.Feve;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariableReadOnly;
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.Feve;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
+	
+	//Karla
+	protected Double seuilMaxAchat; // par kg en dollars
+	protected Variable seuilTransformation;
+	protected Variable rendement;
+	protected Variable coutTransformation;
+	protected Variable coutOrginial;
+	protected Stock<Feve> stockFeves;
+	protected Stock<Chocolat> stockChocolat;
+
+	//Karla
 	public Transformateur3Acteur() {
+		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
+		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
+		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 5);
+		this.coutOrginial = new VariableReadOnly ("coutOrginial", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
+		this.stockFeves = new Stock<Feve> ();
+		this.stockChocolat = new Stock<Chocolat> ();
+		this.seuilMaxAchat = 2900.00;
 	}
+
+	//julien
 	public String getNom() {
 		return "EQ5";
 	}
 
+	//julien
 	public String getDescription() {
 		return "Nous sommes BIO'riginal. Venez goûter notre bon chocolat";
 	}
@@ -49,12 +71,17 @@ public class Transformateur3Acteur implements IActeur {
 	// Renvoie les indicateurs
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
+		res.add(rendement);
+		res.add(seuilTransformation);
+		res.add(coutOrginial);
+		res.add(coutTransformation);
 		return res;
 	}
 
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
+		res.add(this.seuilTransformation);
 		return res;
 	}
 

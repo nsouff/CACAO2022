@@ -1,3 +1,5 @@
+// julien 27/04
+
 package abstraction.eq5Transformateur3;
 
 import java.awt.Color;
@@ -10,115 +12,69 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
-public class AcheteurContrat implements IAcheteurContratCadre {
+public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurContratCadre {
 
-	@Override
-	public String getNom() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Color getColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void initialiser() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+	
+/* on regarde l etat de nos stocks et on lance la procédure demande 
+	acheteur + get vendeur de la classe supperviseur vente cadre */
 	public void next() {
 		// TODO Auto-generated method stub
-		
+		super.next();
 	}
 
-	@Override
-	public List<String> getNomsFilieresProposees() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Filiere getFiliere(String nom) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Variable> getIndicateurs() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Variable> getParametres() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Journal> getJournaux() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setCryptogramme(Integer crypto) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificationFaillite(IActeur acteur) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notificationOperationBancaire(double montant) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+	// Julien & Karla
 	public boolean achete(Object produit) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub.
+		if  (!( produit instanceof Feve) ) {
+			return false;
+		}
+		if (( (Feve) produit).isBioEquitable() && 
+				(( (Feve) produit).getGamme()==Gamme.MOYENNE ||
+						( (Feve) produit).getGamme()==Gamme.HAUTE)) {
+			return true;
+		}
 		return false;
 	}
 
-	@Override
+	// Julien & Karla
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
+		int l = listeEcheanciers.size();
+		return listeEcheanciers.get(l-1);
 	}
 
-	@Override
+	// Julien & Karla
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		return 0;
+		double prixT = contrat.getPrix();
+		if (prixT < this.seuilMaxAchat) {
+			return prixT;
+		}
+		else {
+			double nouveauprix = 0.7*prixT;
+			if (nouveauprix< this.seuilMaxAchat) {
+				return nouveauprix;
+			}
+			return 0.0;
+		}
 	}
 
-	@Override
+// on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
+	// Julien & Karla
+	// si la quantité reçue est inférieure à celle prévue : en acheter à la bourse ?
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		
+		Feve f= ((Feve) produit);
+		this.stockFeves.ajouter(f, quantite);
 	}
-
+	
 }
+	
