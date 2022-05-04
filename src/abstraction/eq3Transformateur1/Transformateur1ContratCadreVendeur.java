@@ -63,10 +63,26 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		
 	}
 
-	@Override
+	// modification du stock ; auteur Julien */
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		double livre = Math.min(stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()), quantite);
+		if (livre==quantite) {
+			stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())-quantite);
+			return quantite;
+		}
+		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),0.0);
+		return livre;
+	}
+	
+	// Supprime les contrats obsolètes et honorés */
+	public void next() {
+		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
+		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
+			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				contratsObsoletes.add(contrat);
+			}
+		}
+		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
 	}
 
 	

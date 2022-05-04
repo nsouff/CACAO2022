@@ -8,6 +8,7 @@ import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratCadreVendeur implements IAcheteurContratCadre {
 	
@@ -38,16 +39,21 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		return false;
 	}
 
-	@Override
+	// négocie un échancier inférieur à 6 échéances; auteur Julien */
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		if (contrat.getEcheancier().getNbEcheances()<6) {
+			return contrat.getEcheancier();
+		}
 		return null;
 	}
 
-	@Override
+	// négociation du prix; auteur Julien */
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit())) {
+			return contrat.getPrix();
+		} else {
+			return prixAchatFeve.get(contrat.getProduit());
+		}
 	}
 
 	@Override
