@@ -24,15 +24,42 @@ public class Distributeur1Acteur implements IActeur {
 	protected Stock NotreStock = new Stock();
 	Random ran = new Random();
 	protected List<ExemplaireContratCadre> mesContrats;
-
+	protected Map<ChocolatDeMarque,Variable> stockageQte;
+	protected Journal journal1 = new Journal("journal1",this);
+	
+	protected List<Variable> stock = new ArrayList<Variable>(); 
+	protected List<Variable> prix = new ArrayList<Variable>(); 
+	
+			
+			
+			
+			
+			
+	
+	
 	/**
 	 * @return the notreStock
 	 */
+	
 	public Stock getNotreStock() {
 		return NotreStock;
 	}
+	
+	/**
+	 * @author Nolann
+	 */
 	public Distributeur1Acteur() {
+		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
+		{
+			stock.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
+			prix.add(new Variable(c+"",this,0));
+		}	
+		journal1.ajouter("liste de variable prix créée");
+		journal1.ajouter("liste de variable stock créée");
+
 	}
+	
+	
 	public String getNom() {
 		return "EQ6";
 	}
@@ -86,10 +113,23 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	// Renvoie les indicateurs
+	/**
+	 * @author Nolann
+	 */
 	public List<Variable> getIndicateurs() {
+		
 		List<Variable> res = new ArrayList<Variable>();
+		this.getNotreStock().getMapStock().forEach((key,value)->{
+			for( Variable v : stock) {
+				res.add(v);
+			}
+			for(Variable v : prix) {
+				res.add(v);
+			}
+		});
 		return res;
 	}
+	
 
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
@@ -120,7 +160,13 @@ public class Distributeur1Acteur implements IActeur {
  
 	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
-	//Fonction : 
+	
+	
+	/**
+	 * 
+	 * @author Nolann
+	 * @return prixVente
+	 */
 	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, (prixAchat.get(key))*2);	
@@ -129,20 +175,22 @@ public class Distributeur1Acteur implements IActeur {
 		
 		return prixVente;
 	}
-	/**
-	 * @author Nolann
-	 *
-	 */
-	//creation d'un journal "journal":
-	
-	public Journal journal1 = new Journal("journal", this);
-	
 	
 	/**
 	 * @author Nolann
 	 *  ajout des indicateurs + fonction actualiser indicateurs :
 	 */
+	/*public void actualiserIndicateurs(){
+		for(Variable v : prix) {
+			v = 
+		};
 		
+		
+		
+		journal1.ajouter("l'indicateur prix à été actualisé");
+		journal1.ajouter("l'indicateur prix à été actualisé");
+		journal1.ajouter("l'indicateur prix à été actualisé");
+	}*/
 	
 	
 }
