@@ -4,19 +4,30 @@ import abstraction.eq8Romu.filiere.Filiere;
 
 public class Transformateur2Achat extends Transformateur2Transfo{
 	
+
 	public Transformateur2Achat(double stocktotalfeve, double stocktotalchoco) {
 		super(stocktotalfeve, stocktotalchoco);
 		// TODO Auto-generated constructor stub
 	}
 
+
+	
+
+
 	
 	public boolean comparer_prix(double prix_vente) {
 
-		return prix_vente<super.getPrixSeuil().getValeur(); //On achete pas au dessus du prix seuil
+
+
 		
 
+
+		return prix_vente<super.getPrixSeuil().getValeur(); //On achete pas au dessus du prix seuil
+
+		
+
+
 	}
-	
 	public double quantite(int stock) { 
 		return super.getCapaciteStockageFixe().getValeur()-super.getStockfeve().quantiteStockTotale();
 	}
