@@ -21,7 +21,7 @@ public class Transformation extends AcheteurBourse {
 				stockChocolat.ajouter(Chocolat.get(f.getGamme(),f.isBioEquitable(), B), quantité);
 				double montant = quantité * this.coutTransformation.getValeur() ;
 				if (B = true) {
-					montant += quantité * this.coutOrignial.getValeur();
+					montant += quantité * this.coutOriginal.getValeur();
 				}
 			payer(montant);
 			}
@@ -31,7 +31,7 @@ public class Transformation extends AcheteurBourse {
 				stockChocolat.ajouter(Chocolat.get(f.getGamme(),f.isBioEquitable(), B), newquantite);
 				double montant = newquantite * this.coutTransformation.getValeur() ;
 				if (B = true) {
-					montant += newquantite * this.coutOrignial.getValeur();
+					montant += newquantite * this.coutOriginal.getValeur();
 				}
 			payer(montant);
 			}
@@ -47,7 +47,7 @@ public class Transformation extends AcheteurBourse {
 				stockChocolat.ajouter(Chocolat.get(f.getGamme(),f.isBioEquitable(), B), r*quantité);
 				double montant = quantité * this.coutTransformation.getValeur() ;
 				if (B = true) {
-					montant += quantité * this.coutOrignial.getValeur();
+					montant += quantité * this.coutOriginal.getValeur();
 				}
 			payer(montant);
 			}
@@ -64,7 +64,7 @@ public class Transformation extends AcheteurBourse {
 				
 				double montant = newquantite * this.coutTransformation.getValeur() ;
 				if (B = true) {
-					montant += newquantite * this.coutOrignial.getValeur();
+					montant += newquantite * this.coutOriginal.getValeur();
 				}
 			payer(montant);
 			}

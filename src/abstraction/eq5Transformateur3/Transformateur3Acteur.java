@@ -20,7 +20,7 @@ public class Transformateur3Acteur implements IActeur {
 	protected Variable seuilTransformation;
 	protected Variable rendement;
 	protected Variable coutTransformation;
-	protected Variable coutOrignial;
+	protected Variable coutOriginal;
 	protected Stock<Feve> stockFeves;
 	protected Stock<Chocolat> stockChocolat;
 
@@ -29,7 +29,7 @@ public class Transformateur3Acteur implements IActeur {
 		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
 		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 5);
-		this.coutOrignial = new VariableReadOnly ("coutOrignial", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
+		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2900.00;
@@ -73,7 +73,7 @@ public class Transformateur3Acteur implements IActeur {
 		List<Variable> res = new ArrayList<Variable>();
 		res.add(rendement);
 		res.add(seuilTransformation);
-		res.add(coutOrginial);
+		res.add(coutOriginal);
 		res.add(coutTransformation);
 		return res;
 	}
