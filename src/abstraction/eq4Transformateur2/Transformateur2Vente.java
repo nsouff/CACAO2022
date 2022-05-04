@@ -11,7 +11,7 @@ public class Transformateur2Vente extends Transformateur2Achat {
  
  // Gabriel
  public double prixVoulu(double prix_achat) { 
-	 return (prix_achat + prix_transfo + Filiere.LA_FILIERE.getIndicateur(prixstockage) + prix_ori)*marge; 
+	 return (prix_achat + prix_transfo + cout_stockage+ prix_ori)*marge; 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
 	 // du cout de stockage, de l'origininalité et de la marge voulue
  }
