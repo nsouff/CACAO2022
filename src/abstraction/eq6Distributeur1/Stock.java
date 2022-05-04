@@ -40,28 +40,20 @@ public class Stock extends Distributeur1{ //Emma Humeau
 	 * @return the qteStockageTotale
 	 */
 	public double getqteStockageTotale() {
+		double sumqte=0;
+		
+		//calcule la qte du stockage total
+		for (Map.Entry<ChocolatDeMarque, Double > entry : StockageQte.entrySet()) {
+           ChocolatDeMarque KeyQte = entry.getKey();
+           Double ValueQte = entry.getValue();
+           sumqte += ValueQte;
+		}
+		
+		this.qteStockageTotale = sumqte;
+		
 		return qteStockageTotale;
 	}
 	
-	/**
-	 * @param qteStockageTotale the qteStockageTotale to set
-	 */
-	public void setQteStockageTotale(double qteStockageTotale) {
-		
-		double sumqte=0;
-	
-		//calcule la qte du stockage total
-		for (Map.Entry<ChocolatDeMarque, Double > entry : StockageQte.entrySet()) {
-            ChocolatDeMarque KeyQte = entry.getKey();
-            Double ValueQte = entry.getValue();
-            sumqte += ValueQte;
-		}
-
-		
-		this.qteStockageTotale = sumqte;
-	}
-
-
 
 	
 
