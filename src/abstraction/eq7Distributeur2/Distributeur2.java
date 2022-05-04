@@ -5,14 +5,10 @@ import java.util.List;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class Distributeur2 extends Distributeur2Acteur implements IFabricantChocolatDeMarque {
+public class Distributeur2 extends Distributeur2Acteur{
 	
 	public Distributeur2() {
 		super();
 	}
 
-	@Override
-	public List<ChocolatDeMarque> getChocolatsProduits() {
-		return super.chocolats;
-	}
 }
