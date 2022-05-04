@@ -17,6 +17,10 @@ public class Producteur1Stock {
 		Feves.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
 		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<Producteur1Feve>());
 		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<Producteur1Feve>());
+		
+		this.addLot(Feve.FEVE_BASSE, 100000);
+		this.addLot(Feve.FEVE_MOYENNE, 100000);
+		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 10000);
 	}
 	
 	//Auteur : Khéo
