@@ -18,12 +18,9 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
-<<<<<<< HEAD
-	protected Stock NotreStock = new Stock();
-=======
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 	private Stock NotreStock = new Stock();
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
+
 	/**
 	 * @return the notreStock
 	 */
@@ -49,7 +46,7 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	public void next() {//leorouppert
-		this.getNotreStock().getStockageQte().forEach((key,value)->{
+		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 1) {
 				IVendeurContratCadre Vendeur = supCCadre.getVendeurs(key).get(0);
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
@@ -105,7 +102,7 @@ public class Distributeur1Acteur implements IActeur {
 		 * 
 		 * ENTREES : prixAchat, quantiteAchetee, variable prixVente
 	<<<<<<< HEAD
-		 * SORTIES : HashMap(ChocolatDeMarque,(prix,quantité)) 
+		 * SORTIES : HashMap(ChocolatDeMarque,prix de vente) 
 	=======
 		 * SORTIES : prix 
 	>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
@@ -117,12 +114,13 @@ public class Distributeur1Acteur implements IActeur {
 		*/
 	//V1 : 
 	//NOLANN
+	//Variables : 
 	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
+	//Fonction : 
 	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
-			prixVente.put(key, (prixAchat.get(key))*2);
-			
+			prixVente.put(key, (prixAchat.get(key))*2);	
 				
 		});
 		
