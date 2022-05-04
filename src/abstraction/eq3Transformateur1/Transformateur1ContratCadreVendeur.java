@@ -62,10 +62,15 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		
 	}
 
-	@Override
+	
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		double livre = Math.min(stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()), quantite);
+		if (livre==quantite) {
+			stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())-quantite);
+			return quantite;
+		}
+		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),0.0);
+		return livre;
 	}
 
 	
