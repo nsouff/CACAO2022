@@ -9,11 +9,11 @@ public class Transformateur2ContratCadre extends Transformateur2Acteur implement
 
 
 	public boolean vend(Object produit) {
-		if (this.getQuantite_stock().keySet().contains(produit)) {
+		/*if (this.getQuantite_stock().keySet().contains(produit)) {
 			return true
-		}else {
+		}else {*/
 			return false;
-	}
+	} 
 
 
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
