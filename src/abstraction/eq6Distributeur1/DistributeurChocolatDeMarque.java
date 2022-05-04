@@ -2,7 +2,6 @@ package abstraction.eq6Distributeur1;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -25,8 +24,7 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	 * @param teteGondole the teteGondole to set
 	 */
 	public void setTeteGondole(Map<ChocolatDeMarque, Double> teteGondole, ChocolatDeMarque choco) { //Emma Humeau
-		teteGondole.put(choco, Math.random());
-		this.teteGondole = teteGondole;
+		teteGondole.put(choco, Math.random()*100);
 	}
 
 	@Override
@@ -45,7 +43,7 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) { //Emma humeau
-		//calcule la qte en vente en tete de gondole
+		//calcule la qte en vente en tete de gondole de tous les chocolats
 	
 				double sumqteTG = 0;
 						
@@ -67,12 +65,8 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) { //Emma Humeau
-		if  (teteGondole.isEmpty() == true ) {
-			System.out.println("Rayon vide pour la tête de gondole");
-		}
-		//else {
-			//System.out.println("Rayon pas vide");
-		//}
+			journal1.ajouter("Rayon vide pour la tête de gondole");
+		
 	}
 
 }
