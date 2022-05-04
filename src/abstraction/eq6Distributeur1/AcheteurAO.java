@@ -11,6 +11,11 @@ import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
  */
 public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
 
+    
+    public AcheteurAO() {
+        super();
+    }
+    
     /** 
      * @author Nathan
      */
