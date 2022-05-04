@@ -16,7 +16,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre{
 	
 	public Producteur2VendeurContratCadreNonBio(Object produit) {
-		super(produit);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
