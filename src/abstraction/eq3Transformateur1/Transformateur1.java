@@ -136,11 +136,11 @@ public class Transformateur1 extends Transformateur1Bourse {
 			prixVenteMin.put(c, null);
 			if (c.getGamme() == Gamme.MOYENNE) {
 				if (c.isBioEquitable()) {
-					prixVenteMin.put(c, prixFeveBio*coutTransfo);
+					prixVenteMin.put(c, prixFeveBio+coutTransfo);
 				} else if (c.isOriginal()) {
-					prixVenteMin.put(c, prixFeve*coutTransfoOriginal);
+					prixVenteMin.put(c, prixFeve+coutTransfoOriginal);
 				} else {
-					prixVenteMin.put(c, prixFeve*coutTransfo);
+					prixVenteMin.put(c, prixFeve+coutTransfo);
 				}
 			}
 		}
