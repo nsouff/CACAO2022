@@ -14,7 +14,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 
-public class Transformateur1 extends Transformateur1ContratCadreAcheteur {
+public class Transformateur1 extends Transformateur1AppelsOffres {
 	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
 	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
 	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
