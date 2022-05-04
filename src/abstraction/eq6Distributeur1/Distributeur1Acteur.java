@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
@@ -19,13 +21,10 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-<<<<<<< HEAD
-	private Stock NotreStock = new Stock();
-=======
 	protected Stock NotreStock = new Stock();
 	Random ran = new Random();
 	protected List<ExemplaireContratCadre> mesContrats;
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
+
 	/**
 	 * @return the notreStock
 	 */
@@ -49,10 +48,7 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 	}
-
-<<<<<<< HEAD
-	public void next() {//leorouppert
-=======
+	
 	public void suppAnciensContrats() {//leorouppert
 		for (ExemplaireContratCadre contrat : this.mesContrats) {
 			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
@@ -64,17 +60,12 @@ public class Distributeur1Acteur implements IActeur {
 	public void next() {
 		//leorouppert
 		this.suppAnciensContrats();
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 50) {
-<<<<<<< HEAD
-				IVendeurContratCadre Vendeur = supCCadre.getVendeurs(key).get(0);
-=======
 				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
 				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
 				IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
 				journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
->>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
 				if (CC == null) {
 					journal1.ajouter("-->aboutit au contrat "+ CC);
@@ -126,25 +117,7 @@ public class Distributeur1Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
 	}
-
-	/**@author Nolann
-		/* FONCTION POUR FIXER LES PRIX DE VENTE :
-		 * 
-		 * ENTREES : prixAchat, quantiteAchetee, variable prixVente
-	<<<<<<< HEAD
-		 * SORTIES : HashMap(ChocolatDeMarque,prix de vente) 
-	=======
-		 * SORTIES : prix 
-	>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
-		 * 
-		 * V1 : 
-		 * - prix fixe = prix achat*2
-		 * - marge fixe (différente pour chaque produit)
-		 * - raisonner en marge du prix d'achat
-		*/
-	//V2 : 
-	//NOLANN
-	//Variables : 
+ 
 	protected Map<ChocolatDeMarque, Double> prixVente = new HashMap<ChocolatDeMarque, Double>();
 	private static final ArrayList<Double> NULL = null;
 	//Fonction : 
