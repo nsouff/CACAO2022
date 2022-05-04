@@ -4,6 +4,7 @@ import java.util.List;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.produits.Chocolat;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
@@ -26,9 +27,19 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		return listeEcheanciers.get(l-1);
 	}
 
-	@Override
+	//Yves
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		return 0;
+		if (contrat.getProduit() instanceof Chocolat) {
+			if (((Chocolat)(contrat.getProduit())).isOriginal() == true ) {
+			return 2*(this.seuilMaxAchat+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
+			}
+			else {
+				return 2*(this.seuilMaxAchat+this.coutTransformation.getValeur());
+			}
+		}
+		else {
+			return 0.0;
+		}
 	}
 
 	@Override
@@ -38,7 +49,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 			return contrat.getPrix();
 		}
 		else {
-			double Nprix = 1.1*this.seuilMaxAchat+this.coutTransformation.getValeur();
+			double Nprix = 1.4*(this.seuilMaxAchat+this.coutTransformation.getValeur());
 			if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
 				return Nprix;
 			}
