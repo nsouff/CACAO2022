@@ -19,7 +19,7 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) {
-		if NotreStock
+		if NotreStock.
 		return 0;
 	}
 
