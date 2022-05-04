@@ -13,7 +13,7 @@ public class AcheteurBourse  extends AcheteurContrat implements IAcheteurBourse{
 	@Override
 	public double demande(Feve f, double cours) {
 		// TODO Auto-generated method stub
-		for (ContratCadre cc : this.contratsEnCours) {
+	return 0;
 				
 	};
 
