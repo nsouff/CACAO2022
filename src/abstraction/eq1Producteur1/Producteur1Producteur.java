@@ -5,25 +5,29 @@ import java.util.HashMap;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Producteur extends Producteur1Stock{
+	private Parc ParcAfrique;
 	
 	public Producteur1Producteur() {
 		Parc afrique = new Parc("Afrique");
+		this.ParcAfrique = afrique;
 	}
 	
-	public void initialiser(Parc parc) { //Écrit par Antoine
+
+	public void initialiser() {//Écrit par Antoine
+		super.initialiser();
 		int nombre_arbre_debut = 500000000;
 		for (int i=0;i<nombre_arbre_debut;i++) {
 			if (i<nombre_arbre_debut*0.63) {
-				parc.Planter(new Arbre(1,false,0));
+				this.getAfrique().Planter(new Arbre(1,false,0));
 			}
 			if ((i>=nombre_arbre_debut*0.63) && (i<nombre_arbre_debut*0.9)) {
-				parc.Planter(new Arbre(2,false,0));
+				this.getAfrique().Planter(new Arbre(2,false,0));
 			}
 			if ((i>=nombre_arbre_debut*0.9) && (i<nombre_arbre_debut*0.95)) {
-				parc.Planter(new Arbre(2,true,0));
+				this.getAfrique().Planter(new Arbre(2,true,0));
 			}
 			if ((i>=nombre_arbre_debut*0.95)) {
-				parc.Planter(new Arbre(3,true,0));
+				this.getAfrique().Planter(new Arbre(3,true,0));
 			}
 		}
 	}
@@ -38,4 +42,12 @@ public class Producteur1Producteur extends Producteur1Stock{
 		parc.MAJParc();
 		parc.MAJGuerre();
 	}
+	
+	/**
+	 * @return the afrique
+	 */
+	public Parc getAfrique() {
+		return this.ParcAfrique;
+	}
+
 }

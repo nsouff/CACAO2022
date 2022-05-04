@@ -12,7 +12,7 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Acteur extends Producteur1Stock implements IActeur {
+public class Producteur1Acteur extends Producteur1Producteur implements IActeur {
 	private static int NB_INSTANCES = 0; // Afin d'attribuer un nom different a toutes les instances
 	protected int numero;
 	protected Integer cryptogramme;
@@ -26,6 +26,7 @@ public class Producteur1Acteur extends Producteur1Stock implements IActeur {
 	
 	//Auteur : Khéo
 	public Producteur1Acteur() {
+		super();
 		NB_INSTANCES++;
 		this.numero=NB_INSTANCES;
 		this.journal = new Journal(this.getNom()+" activites", this);
@@ -38,6 +39,7 @@ public class Producteur1Acteur extends Producteur1Stock implements IActeur {
 	}
 
 	public void initialiser() {
+		super.initialiser();
 	}
 	
 	public String getNom() {
