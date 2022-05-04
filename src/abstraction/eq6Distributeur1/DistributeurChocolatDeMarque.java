@@ -20,8 +20,7 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	//EMMA
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (Stock.StockageQte).get(choco);
 	}
 
 	@Override
