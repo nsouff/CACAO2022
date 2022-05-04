@@ -55,7 +55,7 @@ public class Stock<I> {
 	}
 	// Marie
 	public double stockRestant(I produit) {
-		return (Filiere.LA_FILIERE.getParametres("Prix Stockage")-this.quantiteStockTotale(produit));
+		return (Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()-this.quantiteStockTotale(produit));
 	}
 
 	// Gabriel
@@ -68,7 +68,7 @@ public class Stock<I> {
 		return this.stocktotal;
 	}
 
-	public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
+	public double coutStockage( Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) { // demander comment ajouter variables
 		return (this.quantiteStockTotale(produit)*Filiere.LA_FILIERE.getIndicateur("prix_stockage")); // demander a Alexandre comment calculer prix 
 	}
 

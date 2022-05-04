@@ -27,13 +27,11 @@ public class Transformateur2Acteur implements IActeur {
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
-<<<<<<< HEAD
 
-=======
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat> stockchocolat;
 	
->>>>>>> branch 'main' of https://github.com/Gabeaugosse/CACAO2022.git
+
 	
 
 	
@@ -135,14 +133,14 @@ public class Transformateur2Acteur implements IActeur {
 
 
 	public Stock<Feve> getStockfeve() {
-		return stockfeve;
+		return this.stockfeve;
 	}
 
 
 
 
 	public Stock<Chocolat> getStockchocolat() {
-		return stockchocolat;
+		return this.stockchocolat;
 	}
 
 }

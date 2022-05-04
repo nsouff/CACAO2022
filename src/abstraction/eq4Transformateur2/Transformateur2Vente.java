@@ -10,7 +10,8 @@ public class Transformateur2Vente extends Transformateur2Achat {
  
  // Gabriel
  public double prixVoulu(double prix_achat) { 
-	 return (prix_achat + prix_transfo + Transformateur2Acteur.Test.getCout()*+ prix_ori)*marge; 
+	 return (prix_achat + prix_transfo + Transformateur2Acteur.Test.getCout()*
+			 (Transformateur2Acteur.Test.getStockchocolat().quantiteStockTotale(null)+ Transformateur2Acteur.Test.getStockfeve().quantiteStockTotale(null))+ prix_ori)*marge; 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
 	 // du cout de stockage, de l'origininalité et de la marge voulue
  }
