@@ -6,7 +6,11 @@ public class Transformateur2Vente extends Transformateur2Achat {
 
  
  
- // Gabriel
+ public Transformateur2Vente(double stocktotalfeve, double stocktotalchoco) {
+		super(stocktotalfeve, stocktotalchoco);
+		// TODO Auto-generated constructor stub
+	}
+// Gabriel
  public double prixVoulu(double prix_achat) { 
 	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + this.getCout()*
 			 (this.getStockchocolat().quantiteStockTotale()+ this.getStockfeve().quantiteStockTotale()))

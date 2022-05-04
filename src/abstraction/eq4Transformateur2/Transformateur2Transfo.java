@@ -9,6 +9,11 @@ public class Transformateur2Transfo extends Transformateur2Stock {
 	
 	
 	
+	public Transformateur2Transfo(double stocktotalfeve, double stocktotalchoco) {
+		super(stocktotalfeve, stocktotalchoco);
+		// TODO Auto-generated constructor stub
+	}
+
 	public void GetStock(String s) {
 		if(s.equals("Chocolat")) {
 			//return(stock.getChoco())

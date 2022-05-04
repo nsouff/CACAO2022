@@ -4,6 +4,11 @@ import abstraction.eq8Romu.filiere.Filiere;
 
 public class Transformateur2Achat extends Transformateur2Transfo{
 	
+	public Transformateur2Achat(double stocktotalfeve, double stocktotalchoco) {
+		super(stocktotalfeve, stocktotalchoco);
+		// TODO Auto-generated constructor stub
+	}
+
 	public double prix_seuil; // Prix d'achat maximum
 	private int stock_theorique; //On souhaite garder ce nombre de feves en stock constamment (opportunisme)
 	
