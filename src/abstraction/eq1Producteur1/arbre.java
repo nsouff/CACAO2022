@@ -176,7 +176,7 @@ public class arbre {
 				}
 				else {
 					if(this.getStade_maladie()==3) {
-						if(this.Age()-this.getUt_debut_maladie()<=2) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=2) {
 							return 0;
 						}
 						else {
@@ -184,7 +184,7 @@ public class arbre {
 						}
 					}
 					else {
-						if(this.Age()-this.getUt_debut_maladie()<=4) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=4) {
 							return 0;
 						}
 						else {
@@ -215,7 +215,7 @@ public class arbre {
 				}
 				else {
 					if(this.getStade_maladie()==3) {
-						if(this.Age()-this.getUt_debut_maladie()<=2) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=2) {
 							return 0;
 						}
 						else {
@@ -223,7 +223,7 @@ public class arbre {
 						}
 					}
 					else {
-						if(this.Age()-this.getUt_debut_maladie()<=4) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=4) {
 							return 0;
 						}
 						else {
