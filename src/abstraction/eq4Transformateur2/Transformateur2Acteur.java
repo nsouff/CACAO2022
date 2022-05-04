@@ -143,4 +143,74 @@ public class Transformateur2Acteur implements IActeur {
 		return stockchocolat;
 	}
 
+
+
+
+	public int getCryptogramme() {
+		return cryptogramme;
+	}
+
+
+
+
+	public Variable getCoutStockage() {
+		return coutStockage;
+	}
+
+
+
+
+	public Variable getPrixSeuil() {
+		return prixSeuil;
+	}
+
+
+
+
+	public Variable getRendementTransfoLongue() {
+		return rendementTransfoLongue;
+	}
+
+
+
+
+	public Variable getPrixTransformation() {
+		return prixTransformation;
+	}
+
+
+
+
+	public Variable getPrixChocoOriginal() {
+		return prixChocoOriginal;
+	}
+
+
+
+
+	public Variable getCapaciteStockage() {
+		return capaciteStockage;
+	}
+
+
+
+
+	public Variable getCapaciteStockageFixe() {
+		return capaciteStockageFixe;
+	}
+
+
+
+
+	public Variable getExpirationFeve() {
+		return expirationFeve;
+	}
+
+
+
+
+	public Variable getExpirationChoco() {
+		return expirationChoco;
+	}
+
 }
