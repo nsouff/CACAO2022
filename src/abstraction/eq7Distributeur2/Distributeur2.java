@@ -7,8 +7,8 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2 extends Distributeur2Acteur implements IFabricantChocolatDeMarque {
 	
-	public Distributeur2(List<ChocolatDeMarque> chocos, IStock stock) {
-		super(chocos);
+	public Distributeur2() {
+		super();
 	}
 
 	@Override

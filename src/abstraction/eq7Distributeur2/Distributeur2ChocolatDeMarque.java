@@ -13,8 +13,8 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Acteur implement
 	private double capaciteDeVente;
 	private double[] prix;
 
-	public Distributeur2ChocolatDeMarque(List<ChocolatDeMarque> chocos, double[] prix, double capaciteDeVente) {
-		super(chocos);
+	public Distributeur2ChocolatDeMarque(double[] prix, double capaciteDeVente) {
+		super();
 		this.prix=prix;
 		this.capaciteDeVente=capaciteDeVente;
 	}
