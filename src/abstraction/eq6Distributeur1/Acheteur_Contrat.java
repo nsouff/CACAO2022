@@ -6,7 +6,7 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Gamme;
-//leorouppert
+//leorouppert toute la classe
 public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{
 
 @Override
@@ -43,7 +43,7 @@ public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 }
 @Override
 public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-	this.getNotreStock().setStockage((ChocolatDeMarque) produit, this.getNotreStock().getStockage((ChocolatDeMarque) produit) + quantite);
+	this.getNotreStock().setStockageQte((ChocolatDeMarque) produit, this.getNotreStock().getStockage((ChocolatDeMarque) produit) + quantite);
 }
 }
 
