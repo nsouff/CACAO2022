@@ -71,6 +71,10 @@ public class Transformateur3Acteur implements IActeur {
 	// Renvoie les indicateurs
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
+		res.add(rendement);
+		res.add(seuilTransformation);
+		res.add(coutOrginial);
+		res.add(coutTransformation);
 		return res;
 	}
 
