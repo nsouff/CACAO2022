@@ -44,5 +44,14 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		// TODO Auto-generated method stub
 		
 	}
-
+	// supprime les contrats d'achats obsolètes; auteur Julien */
+	public void next() {
+		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
+		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueAcheteur) {
+			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				contratsObsoletes.add(contrat);
+			}
+		}
+		this.mesContratEnTantQueAcheteur.removeAll(contratsObsoletes);
+	}
 }
