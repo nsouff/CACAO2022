@@ -16,6 +16,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
@@ -151,9 +152,12 @@ public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
 	//edgard
 	public boolean achete(Object produit) {
 		// TODO Auto-generated method stub
-		if (stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
+		System.out.println(produit + "");
+		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
+			System.out.println("true");
 			return true;
 		}else {
+			System.out.println("false");
 			return false;
 		}
 	}
@@ -213,7 +217,12 @@ public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
-		
+		IVendeurContratCadre v = contrat.getVendeur();
+		IAcheteurContratCadre a = contrat.getAcheteur();
+		Echeancier e = contrat.getEcheancier();
+		ChocolatDeMarque c = (ChocolatDeMarque) contrat.getProduit();
+		Double q = contrat.getQuantiteTotale();
+		System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + c + "étalé sur " + e);
 	}
 
 }

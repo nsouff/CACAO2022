@@ -8,6 +8,7 @@ import abstraction.eq8Romu.contratsCadres.ExempleTransformateurContratCadreVende
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 public class FiliereTestCCBiofour extends Filiere {
@@ -41,9 +42,9 @@ public class FiliereTestCCBiofour extends Filiere {
 		ClientFinal  cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 
 		this.ajouterActeur(cf);
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
 		this.ajouterActeur(new Romu());
 		this.superviseurCC=new SuperviseurVentesContratCadre();
 		this.ajouterActeur(new Distributeur2());
