@@ -29,6 +29,11 @@ public class Producteur1Stock {
 	}
 	
 	//Auteur : Khéo
+	public void next(){
+		
+	}
+	
+	//Auteur : Khéo
 	public double getStock(Feve f){
 		double somme = 0.0 ;
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {

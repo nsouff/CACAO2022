@@ -61,6 +61,7 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 	
 	//Auteur : Khéo
 	public void next() {
+		super.next();
 		//Mis à jour Variable
 		this.getStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE));
 		this.getStockHaut_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
