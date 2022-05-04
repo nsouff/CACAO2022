@@ -1,6 +1,10 @@
 package abstraction.eq6Distributeur1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.random.*;
 import java.util.Map;
 
@@ -12,8 +16,9 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole), Emma Humeau 
 
-	protected double qteEnVenteTG; //Emma Humeau
+	private double qteEnVenteTG; //Emma Humeau
 	
+	//private List<HashMap<ChocolatDeMarque, Double>> HistoriqueVentes = new LinkedList<HashMap<ChocolatDeMarque, Double>>();
 	/**
 	 * @return the teteGondole
 	 */
