@@ -77,7 +77,7 @@ public class Distributeur1Acteur implements IActeur {
 	}
 	
 	public void suppAnciensContrats() {//leorouppert
-		for (ExemplaireContratCadre contrat : this.mesContrats) {
+		for (ExemplaireContratCadre contrat : mesContrats) {
 			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
 				mesContrats.remove(contrat);
 			}

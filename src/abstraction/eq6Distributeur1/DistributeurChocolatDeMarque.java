@@ -1,9 +1,7 @@
 package abstraction.eq6Distributeur1;
 
 import java.util.HashMap;
-import java.util.random.*;
 import java.util.Map;
-
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -12,8 +10,9 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole), Emma Humeau 
 
-	protected double qteEnVenteTG; //Emma Humeau
+	private double qteEnVenteTG; //Emma Humeau
 	
+	//private List<HashMap<ChocolatDeMarque, Double>> HistoriqueVentes = new LinkedList<HashMap<ChocolatDeMarque, Double>>();
 	/**
 	 * @return the teteGondole
 	 */
@@ -25,8 +24,9 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	 * @param teteGondole the teteGondole to set
 	 */
 	public void setTeteGondole(Map<ChocolatDeMarque, Double> teteGondole, ChocolatDeMarque choco) { //Emma Humeau
-		teteGondole.put(choco, Math.random());
-		this.teteGondole = teteGondole;
+		double qteEnTg = Math.random()*100;
+		if (qteEnTg <= NotreStock.qteStockageTotale()*0.1) {  //la quantité en de choco en TG doit etre inférieure à 10% du stock
+			teteGondole.put(choco, qteEnTg );}
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) { //Emma humeau
-		//calcule la qte en vente en tete de gondole
+		//calcule la qte en vente en tete de gondole de tous les chocolats
 	
 				double sumqteTG = 0;
 						
@@ -63,17 +63,12 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	@Override
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) { //emma Humeau
 		NotreStock.addQte(choco, -quantite);
-		
 	}
 
 	@Override
 	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) { //Emma Humeau
-		if  (teteGondole.isEmpty() == true ) {
-			System.out.println("Rayon vide pour la tête de gondole");
-		}
-		//else {
-			//System.out.println("Rayon pas vide");
-		//}
+			journal1.ajouter("Rayon vide pour la tête de gondole");
+		
 	}
 
 }
