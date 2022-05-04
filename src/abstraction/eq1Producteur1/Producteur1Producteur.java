@@ -31,11 +31,7 @@ public class Producteur1Producteur extends Producteur1Stock{
 			}
 		}
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> branch 'main' of https://github.com/Keracles/CACAO2022
 	public void next() { //Écrit par Antoine
 		this.getAfrique().MAJAleas();
 		HashMap<Feve, Double> recolte1 = this.getAfrique().Recolte();
