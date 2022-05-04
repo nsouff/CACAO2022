@@ -34,8 +34,6 @@ public class Distributeur2Acteur implements IActeur{
 	protected Journal journal;
 
 	public Distributeur2Acteur() {
-		this.stock = new Stock(this);
-		this.journal = new Journal(this.getNom()+" activites", this);
 	}
 
 	public String getNom() {
@@ -51,7 +49,8 @@ public class Distributeur2Acteur implements IActeur{
 	}
 
 	public void initialiser() {
-		
+		this.stock = new Stock(this);
+		this.journal = new Journal(this.getNom()+" activites", this);
 	}
 	
 	public void next() {

@@ -18,7 +18,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	}
 	
 	
-	//edgard 
+		//edgard 
 		//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
 		//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
 		//On compare ces prixs et on réalise finalement le contrat avec le meilleur vendeur.
