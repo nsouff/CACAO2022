@@ -19,20 +19,20 @@ import abstraction.eq8Romu.general.Variable;
 
 public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContratCadreNonBio implements IVendeurContratCadre {
 
+	public Producteur2VendeurContratCadreBio() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 	protected double coutProduction;
 	private double a = 1500; //cout de production/kg
 	private double qt = 10000; // qtité produite/kg
-	private double stock;
-	
-	public Producteur2VendeurContratCadreBio(Object produit) {
-		super(produit);
-		this.mesContratEnTantQueVendeurBio=new LinkedList<ExemplaireContratCadre>();
-	}
-	
-	@Override
+	private double stock = 18;
+
 	public boolean vend(Object produit) {
-		return produit==produit;
+		return true;
 	}
 
 	public double qtiteTotaleContratEnCours(Object produit) {
@@ -49,6 +49,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
 			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (qt + stock/contrat.getEcheancier().getNbEcheances())) { 
+
 				return contrat.getEcheancier();
 				}
 			else {
@@ -116,13 +117,15 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	public boolean peutVendre(Object produit) {
+		// TODO Auto-generated method stub
 		return false;
-
 	}
+
 	
 	public void next() {
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
