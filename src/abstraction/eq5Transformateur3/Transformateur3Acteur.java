@@ -14,8 +14,9 @@ import abstraction.eq8Romu.produits.Feve;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
-	protected Double seuilMaxAchat; // par kg en dollars
 	
+	//Karla
+	protected Double seuilMaxAchat; // par kg en dollars
 	protected Variable seuilTransformation;
 	protected Variable rendement;
 	protected Variable coutTransformation;
@@ -23,7 +24,7 @@ public class Transformateur3Acteur implements IActeur {
 	protected Stock<Feve> stockFeves;
 	protected Stock<Chocolat> stockChocolat;
 
-	
+	//Karla
 	public Transformateur3Acteur() {
 		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
@@ -33,11 +34,13 @@ public class Transformateur3Acteur implements IActeur {
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2900.00;
 	}
-	
+
+	//julien
 	public String getNom() {
 		return "EQ5";
 	}
 
+	//julien
 	public String getDescription() {
 		return "Nous sommes BIO'riginal. Venez goûter notre bon chocolat";
 	}
