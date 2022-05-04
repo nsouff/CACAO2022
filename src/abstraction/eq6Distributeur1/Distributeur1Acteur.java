@@ -72,9 +72,9 @@ public class Distributeur1Acteur implements IActeur {
 				journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
 				if (CC == null) {
-					journal.ajouter("-->aboutit au contrat "+ CC);
+					journal1.ajouter("-->aboutit au contrat "+ CC);
 				}
-				else {journal.ajouter("échec des négociations");}
+				else {journal1.ajouter("échec des négociations");}
 			}
 		});
 	}
