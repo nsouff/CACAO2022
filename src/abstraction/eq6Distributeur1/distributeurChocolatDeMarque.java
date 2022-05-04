@@ -19,7 +19,7 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) {
-		// TODO Auto-generated method stub
+		if NotreStock
 		return 0;
 	}
 

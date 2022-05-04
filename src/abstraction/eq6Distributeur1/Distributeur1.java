@@ -1,6 +1,5 @@
 package abstraction.eq6Distributeur1;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
