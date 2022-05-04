@@ -44,7 +44,7 @@ public class Transformateur1 extends Transformateur1ContratCadreAcheteur {
 			prixAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ_BE), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ_BE)) - coutTransfo);
 	}
 	
-	/** détermine la quantité de fèves à acheter; auteur Julien */
+	/** détermine la quantité de fèves totale qu'on souhaite avoir cette étape ; auteur Julien */
 	public void determinationQuantiteAchat() {		
 		quantiteAchatFeve.put(Feve.FEVE_BASSE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2)); 	
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
