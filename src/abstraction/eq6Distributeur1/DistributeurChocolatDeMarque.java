@@ -1,11 +1,6 @@
 package abstraction.eq6Distributeur1;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.random.*;
 import java.util.Map;
 
 import abstraction.eq8Romu.clients.ClientFinal;
@@ -68,7 +63,6 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	@Override
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) { //emma Humeau
 		NotreStock.addQte(choco, -quantite);
-		
 	}
 
 	@Override
