@@ -20,7 +20,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
-	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+	protected SuperviseurVentesContratCadre supCCadre;
 	protected Stock NotreStock = new Stock();
 	Random ran = new Random();
 	protected List<ExemplaireContratCadre> mesContrats;
@@ -74,6 +74,7 @@ public class Distributeur1Acteur implements IActeur {
 
 
 	public void initialiser() {
+		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 	}
 	
 	public void suppAnciensContrats() {//leorouppert
