@@ -19,7 +19,13 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
 	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+<<<<<<< HEAD
 	private Stock NotreStock = new Stock();
+=======
+	protected Stock NotreStock = new Stock();
+	Random ran = new Random();
+	protected List<ExemplaireContratCadre> mesContrats;
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
 	/**
 	 * @return the notreStock
 	 */
