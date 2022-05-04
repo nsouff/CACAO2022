@@ -9,8 +9,8 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class AchatContratCadre extends Distributeur2Acteur implements IAcheteurContratCadre{
 
-	public AchatContratCadre(List<ChocolatDeMarque> chocos) {
-		super(chocos);
+	public AchatContratCadre() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
