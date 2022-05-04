@@ -63,7 +63,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		
 	}
 
-	
+	// modification du stock ; auteur Julien */
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		double livre = Math.min(stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()), quantite);
 		if (livre==quantite) {
