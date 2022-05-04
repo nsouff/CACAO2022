@@ -15,6 +15,12 @@ import abstraction.eq8Romu.filiere.Filiere;
 
 public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre{
 	
+	public Producteur2VendeurContratCadreNonBio(Object produit) {
+		super(produit);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
 	
 	/**
@@ -91,6 +97,13 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public boolean peutVendre(Object produit) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
