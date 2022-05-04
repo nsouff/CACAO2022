@@ -18,7 +18,7 @@ public class Stock<Produit> {
 		}
 	}
 	
-	public void vendre(Produit p, double qtt) {
+	public void utiliser(Produit p, double qtt) {
 	if (qtt > 0 && this.stock.get(p)-qtt >=0 ) {
 		if (this.stock.keySet().contains(p)) {
 			this.stock.put(p, this.stock.get(p)-qtt);	
