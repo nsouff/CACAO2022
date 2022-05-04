@@ -55,6 +55,7 @@ public class Distributeur1Acteur implements IActeur {
 		stock = new ArrayList<Variable>(); 
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
+		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		// ran = new Random();
 		System.out.println("Creation Distributeur1Acteur");
 		NotreStock = new Stock();
