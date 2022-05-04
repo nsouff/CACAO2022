@@ -81,7 +81,7 @@ public class Producteur2Stockage extends Producteur2Acteur {
 	}
 	public Producteur2Stockage () {
 		Stocks = new HashMap<LinkedList<Stock>,Stock>();
-		Stocks.put(StockBQ, Stock(0.0,0));
+//		Stocks.put(StockBQ, Stock(0.0,0));
 	}
 
 
