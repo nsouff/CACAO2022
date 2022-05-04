@@ -1,6 +1,5 @@
 package abstraction.eq6Distributeur1;
 
-import java.util.List;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
@@ -8,12 +7,10 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Gamme;
 
 public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{//leorouppert
-
-
 	
 @Override
 public boolean achete(Object produit) {
-	if (produit instanceof ChocolatDeMarque && this.getNotreStock().getStockageQte((ChocolatDeMarque) produit) <= 1) {
+	if (produit instanceof ChocolatDeMarque && this.getNotreStock().getStock((ChocolatDeMarque) produit) <= 1) {
 		if (((ChocolatDeMarque) produit).getGamme() == Gamme.BASSE && !((ChocolatDeMarque) produit).isBioEquitable() && !((ChocolatDeMarque) produit).isOriginal()) {
 			return true; }//BQ
 		if (((ChocolatDeMarque) produit).getGamme() == Gamme.BASSE && !((ChocolatDeMarque) produit).isBioEquitable() && ((ChocolatDeMarque) produit).isOriginal()) {
@@ -55,10 +52,9 @@ public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 	this.mesContrats.add(contrat);
 }
 
-
 @Override
 public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-	this.getNotreStock().addStockageQte((ChocolatDeMarque) produit, quantite);
+	this.getNotreStock().addQte((ChocolatDeMarque) produit, quantite);
 }
 }
 

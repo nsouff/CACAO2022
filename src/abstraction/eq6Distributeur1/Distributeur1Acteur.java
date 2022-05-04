@@ -56,15 +56,20 @@ public class Distributeur1Acteur implements IActeur {
 		}
 	}
 	
-	public void next() {//leorouppert
+	public void next() {
+		//leorouppert
 		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 50) {
-				journal.ajouter("Recherche d'un vendeur aupres de qui acheter");
+				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
 				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
 				IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
-				journal.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
+				journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
+				if (CC == null) {
+					journal.ajouter("-->aboutit au contrat "+ CC);
+				}
+				else {journal.ajouter("échec des négociations");}
 			}
 		});
 	}
