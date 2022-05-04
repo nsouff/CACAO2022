@@ -8,8 +8,8 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1Bourse extends Transformateur1Acteur implements IAcheteurBourse{
 	
-	protected HashMap<Feve, Double> quantiteAchatFeve;           /** quantité de fève qu'on souhaite acheter */
-	protected HashMap<Chocolat, Integer> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
+	protected HashMap<Feve, Double> quantiteAchatFeve;            /** quantité de fève qu'on souhaite acheter */
+	protected HashMap<Chocolat, Double> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
 	protected dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
 	protected HashMap<Feve, Double> prixAchatFeve;
 	protected HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
