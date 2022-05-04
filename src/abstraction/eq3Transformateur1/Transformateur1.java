@@ -128,8 +128,7 @@ public class Transformateur1 extends Transformateur1ContratCadreAcheteur {
 	
 	/** Détermine le prix de vente minimum
 	 *  Alexandre*/
-	public HashMap<Chocolat, Double> prixVenteMin() {
-		HashMap<Chocolat, Double> prixVenteMin = new HashMap<Chocolat, Double>();
+	public void prixVenteMin() {
 		double prixFeve = Math.max(prixAchatFeve.get(Feve.FEVE_BASSE), prixAchatFeve.get(Feve.FEVE_MOYENNE));
 		double prixFeveBio = prixAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		for (Chocolat c : Chocolat.values()) {
@@ -144,7 +143,6 @@ public class Transformateur1 extends Transformateur1ContratCadreAcheteur {
 				}
 			}
 		}
-		return prixVenteMin;
 	}
 
 }
