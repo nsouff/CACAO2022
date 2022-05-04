@@ -3,6 +3,8 @@ package abstraction.eq7Distributeur2;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
 import abstraction.eq8Romu.clients.FiliereTestClientFinal;
@@ -19,13 +21,21 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2Acteur implements IActeur, IVendeurContratCadre{
-	
+
 	protected int cryptogramme;
 	protected IStock stock;
 	protected List<ChocolatDeMarque> chocolats;
 	protected Journal journal;
 
-	public Distributeur2Acteur() {
+	public Distributeur2Acteur(List<ChocolatDeMarque> chocos) {
+		if (chocos==null || chocos.size()<1 || stock!=null) {
+			throw new IllegalArgumentException("Arguments non valides");
+		}
+		initialiser();
+		this.chocolats = new LinkedList<ChocolatDeMarque>();
+		for (int i=0; i<chocos.size(); i++) {
+			this.chocolats.add(chocos.get(i));
+		}
 	}
 
 	public String getNom() {
