@@ -73,6 +73,17 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),0.0);
 		return livre;
 	}
+	
+	// Supprime les contrats obsolètes et honorés */
+	public void next() {
+		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
+		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
+			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				contratsObsoletes.add(contrat);
+			}
+		}
+		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
+	}
 
 	
 }
