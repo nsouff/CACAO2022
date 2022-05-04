@@ -254,7 +254,7 @@ public class Parc {
 				if ((isBE) && (qualite==3)) {
 					BE_haute+=recolte;
 				}
-				else {
+				if (isBE==false) {
 					if (qualite==1) {
 						non_BE_basse+=recolte;
 					}
