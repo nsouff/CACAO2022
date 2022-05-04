@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.contratsCadres.Echeancier;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.IActeur;
@@ -15,6 +18,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
+	private SuperviseurVentesContratCadre supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 	private Stock NotreStock = new Stock();
 	/**
 	 * @return the notreStock
@@ -43,8 +47,8 @@ public class Distributeur1Acteur implements IActeur {
 	public void next() {//leorouppert
 		this.getNotreStock().getStockageQte().forEach((key,value)->{
 			if (value <= 1) {
-				IVendeurContratCadre Vendeur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getVendeurs(key).get(0);
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(null, Vendeur, value, null, cryptogramme, false);
+				IVendeurContratCadre Vendeur = supCCadre.getVendeurs(key).get(0);
+				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
 			}
 		});
 	}
