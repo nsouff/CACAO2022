@@ -2,8 +2,10 @@ package abstraction.eq5Transformateur3;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import abstraction.eq8Romu.contratsCadres.ContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -23,7 +25,11 @@ public class Transformateur3Acteur implements IActeur {
 	protected Variable coutOrginial;
 	protected Stock<Feve> stockFeves;
 	protected Stock<Chocolat> stockChocolat;
-
+	
+	//julien 04/05 : 
+	
+	protected HashMap<Double ,ContratCadre> contratsEnCours;
+	
 	//Karla
 	public Transformateur3Acteur() {
 		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
