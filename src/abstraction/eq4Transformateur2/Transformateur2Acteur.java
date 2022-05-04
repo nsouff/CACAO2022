@@ -27,10 +27,9 @@ public class Transformateur2Acteur implements IActeur {
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
-
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat> stockchocolat;
-	
+	private double marge;
 
 	
 
@@ -49,7 +48,7 @@ public class Transformateur2Acteur implements IActeur {
 		this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 10.0, 3.0);
 		this.expirationFeve=new Variable("expiration feve", "<html>Duree avant expiration d'une feve</html>",this, 0.0, 10.0, 3.0);
 		this.expirationChoco=new Variable("expiration choco", "<html>Duree avant expiration du chocolat</html>",this, 0.0, 10.0, 3.0);
-		
+		this.marge = 1.1;
 	}
 	
 	
@@ -133,14 +132,17 @@ public class Transformateur2Acteur implements IActeur {
 
 
 	public Stock<Feve> getStockfeve() {
-		return stockfeve;
+		return this.stockfeve;
 	}
 
 
 
 
 	public Stock<Chocolat> getStockchocolat() {
-		return stockchocolat;
+		return this.stockchocolat;
+	}
+	public double getMarge() {
+		return this.marge;
 	}
 
 
