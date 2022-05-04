@@ -3,6 +3,8 @@ package abstraction.eq7Distributeur2;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
 import abstraction.eq8Romu.clients.FiliereTestClientFinal;
@@ -19,18 +21,28 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
-	
-	protected int cryptogramme;
-	private IStock stock;
+public class Distributeur2Acteur implements IActeur, IVendeurContratCadre, IAcheteurContratCadre{
+
 	public static final int EPS_ECH_OK=2;
 	public static final int ECH_MAX=5;
 	public static final Double PRIX_MAX=100.0;
 	public static final Double PRIX_OK=50.0;
 	public static final Double EPSILON_PRIX=5.0;
-	
+	protected int cryptogramme;
+	protected IStock stock;
+	protected List<ChocolatDeMarque> chocolats;
+	protected Journal journal;
 
-	public Distributeur2Acteur() {
+	public Distributeur2Acteur(List<ChocolatDeMarque> chocos) {
+		if (chocos==null || chocos.size()<1) {
+			throw new IllegalArgumentException("Arguments non valides");
+		}
+		this.stock = new Stock(this);
+		this.chocolats = new LinkedList<ChocolatDeMarque>();
+		for (int i=0; i<chocos.size(); i++) {
+			this.chocolats.add(chocos.get(i));
+		}
+		this.journal = new Journal(this.getNom()+" activites", this);
 	}
 
 	public String getNom() {
@@ -46,7 +58,7 @@ public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
 	}
 
 	public void initialiser() {
-		this.stock = new Stock(this);
+		
 	}
 	
 	//edgard 
@@ -160,6 +172,7 @@ public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
 			System.out.println("false");
 			return false;
 		}
+		//return (produit!=null && (produit instanceof ChocolatDeMarque) && this.chocolats.contains(produit));
 	}
 
 	@Override
@@ -225,4 +238,33 @@ public class Distributeur2Acteur implements IActeur, IAcheteurContratCadre{
 		System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + c + "étalé sur " + e);
 	}
 
+	@Override
+	public boolean vend(Object produit) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double propositionPrix(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
