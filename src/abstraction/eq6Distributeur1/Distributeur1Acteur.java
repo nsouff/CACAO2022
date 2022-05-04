@@ -47,7 +47,7 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void next() {//leorouppert
 		this.getNotreStock().getMapStock().forEach((key,value)->{
-			if (value <= 1) {
+			if (value <= 50) {
 				IVendeurContratCadre Vendeur = supCCadre.getVendeurs(key).get(0);
 				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
 			}
