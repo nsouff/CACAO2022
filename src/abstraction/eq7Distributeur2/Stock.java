@@ -23,8 +23,7 @@ public class Stock implements IStock{
 	/**Méthode constructeur, initialise le stock vide
 	 * @param acteur
 	 */
-	public Stock(IActeur acteur) {
-		List<ChocolatDeMarque> listeChocolatsProduits = Filiere.LA_FILIERE.getChocolatsProduits();
+	public Stock(IActeur acteur,List<ChocolatDeMarque> listeChocolatsProduits) {
 		
 		//Initialisation des stocks physique
 		reserve = new HashMap<ChocolatDeMarque,Variable>();
@@ -40,7 +39,7 @@ public class Stock implements IStock{
 		this.acteur = acteur;
 	}
 	public Stock() {
-		this(null);
+		this(null,Filiere.LA_FILIERE.getChocolatsProduits());
 	}
 	
 	public IActeur getActeur() {

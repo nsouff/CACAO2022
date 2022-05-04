@@ -49,7 +49,8 @@ public class Distributeur2Acteur implements IActeur{
 	}
 
 	public void initialiser() {
-		this.stock = new Stock(this);
+		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();;
+		this.stock = new Stock(this,this.chocolats);
 		this.journal = new Journal(this.getNom()+" activites", this);
 	}
 	
