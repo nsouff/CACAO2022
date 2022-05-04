@@ -59,12 +59,7 @@ public class Stock<I> {
 	}
 	// Marie
 	public double quantiteStockTotale() {
-<<<<<<< HEAD
-=======
 
-		
-
->>>>>>> branch 'main' of https://github.com/Gabeaugosse/CACAO2022.git
 		for(Double d: this.getQuantite_stock().values()) {
 
 			this.stocktotal=this.stocktotal+d;
