@@ -19,8 +19,8 @@ public class Transformateur3Acteur implements IActeur {
 	protected int cryptogramme;
 	
 	//Karla
-	protected Double seuilMaxAchat; // par kg en dollars
-	protected Double SeuilMinFeves; // En dessous de ce seuil, on achète des fèves
+	protected Double seuilMaxAchat; // par kg en dollars, au dessus de ce prix, on n'achète pas de fèves
+	protected Double SeuilMinFeves; // en kg : En dessous de ce seuil, on achète des fèves car stock trop "bas"
 	protected Variable seuilTransformation;
 	protected Variable rendement;
 	protected Variable coutTransformation;

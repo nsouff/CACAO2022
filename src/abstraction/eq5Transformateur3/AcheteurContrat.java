@@ -16,15 +16,25 @@ import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurContratCadre {
 
-	/* Lancer un contrat */
+	//Karla
+	/* Initier un contrat */
 	public void lanceruncontrat(Feve f) {
 		List<IVendeurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getVendeurs(f);
-		Random randomizer = new Random();
-		IVendeurContratCadre random = L.get(randomizer.nextInt(L.size()));
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de feves sur 10 steps
-		((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
+		if (L.size()!=0) {
+			if (L.size()== 1) {
+				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
+			}
+			else {
+				// On choisit aléatoirement un des producteurs
+				Random randomizer = new Random();
+				IVendeurContratCadre random = L.get(randomizer.nextInt(L.size()));
+				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
+			}
+		}
 	}
 	
+	//Karla
 	/* on regarde l etat de nos stocks et on lance la procédure demande 
 	acheteur + get vendeur de la classe supperviseur vente cadre */
 	public void next() {
@@ -52,6 +62,7 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 	}
 
 	// Julien & Karla
+	// On accepte tout le temps l'echeancier
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();

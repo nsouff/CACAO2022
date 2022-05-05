@@ -71,4 +71,15 @@ public class Transformation extends AcheteurBourse {
 		}
 	}
 	
+	
+	public void next() {
+		super.next();
+		for (Feve f : this.stockFeves.getProduitsEnStock()) {
+			if (this.stockFeves.getstock(f) <= this.seuilTransformation.getValeur()) {
+				transformationClassique(f, 0.6*this.stockFeves.getstock(f), false); //60% du stock --> non Original
+				transformationClassique(f, 0.3*this.stockFeves.getstock(f), true); // 30% du stock --> Original
+			}
+		}
+	}
+	
 }
