@@ -64,10 +64,12 @@ public class Distributeur1Acteur implements IActeur {
 		{
 			System.out.println("boucle");
 			stock.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
+			journal1.ajouter("ajout d'une variable stock pour le chocolat" + c + "effectué" );
 			prix.add(new Variable(c+"",this,0));
+			journal1.ajouter("ajout d'une variable prix pour le chocolat " + c + "effectué");
 		}	
-		journal1.ajouter("liste de variable prix créée");
-		journal1.ajouter("liste de variable stock créée");
+		journal1.ajouter("création de la liste de variable des prix terminée");
+		journal1.ajouter("création de la liste de variable stock terminée");
 
 	}
 	
