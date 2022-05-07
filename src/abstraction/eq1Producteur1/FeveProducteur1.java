@@ -13,13 +13,14 @@ public class FeveProducteur1 {
 	public FeveProducteur1(double poids) {
 		this.ut_debut = Filiere.LA_FILIERE.getEtape();
 		this.perime = false;
+		this.poids = poids;
 	}
 
 	/**
 	 * @param age
 	 * @param perime
 	 */
-	public FeveProducteur1(int ut_debut, boolean perime,double poids) {
+	public FeveProducteur1(int ut_debut, boolean perime,double poids) { 
 		this.ut_debut = ut_debut;
 		this.perime = perime;
 		this.poids = poids;
