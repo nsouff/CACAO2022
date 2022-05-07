@@ -22,6 +22,7 @@ public class FeveProducteur1 {
 	public FeveProducteur1(int ut_debut, boolean perime,double poids) {
 		this.ut_debut = ut_debut;
 		this.perime = perime;
+		this.poids = poids;
 	}
 
 	public int getAge() {
