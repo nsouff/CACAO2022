@@ -269,11 +269,11 @@ public class Parc {
 		}
 		double parasitesBE = ParasitesBE();
 		double parasites_non_BE = Parasites_non_BE();
-		BE_moyenne = BE_moyenne*parasitesBE*1000;
-		BE_haute = BE_haute*parasitesBE*1000;
-		non_BE_basse = non_BE_basse*parasites_non_BE*1000;
-		non_BE_moyenne = non_BE_moyenne*parasites_non_BE*1000;
-		non_BE_haute = non_BE_haute*parasites_non_BE*1000;
+		BE_moyenne = BE_moyenne*parasitesBE;
+		BE_haute = BE_haute*parasitesBE;
+		non_BE_basse = non_BE_basse*parasites_non_BE;
+		non_BE_moyenne = non_BE_moyenne*parasites_non_BE;
+		non_BE_haute = non_BE_haute*parasites_non_BE;
 		dicorecolte.put(Feve.FEVE_BASSE,non_BE_basse);
 		dicorecolte.put(Feve.FEVE_MOYENNE,non_BE_moyenne);
 		dicorecolte.put(Feve.FEVE_HAUTE,non_BE_haute);

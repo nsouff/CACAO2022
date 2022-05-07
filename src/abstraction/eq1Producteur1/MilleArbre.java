@@ -146,7 +146,7 @@ public class MilleArbre {
 		}
 	}
 	public double Production_max() { //Écrit par Maxime
-		double d = 0.2 + Math.random()/20;
+		double d = 200 + Math.random()*50; //La production de 1000 arbres
 		if (this.bioequitable) {
 			d = 0.8*d;
 		}
