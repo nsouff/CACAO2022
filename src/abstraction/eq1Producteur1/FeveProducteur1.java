@@ -28,7 +28,7 @@ public class FeveProducteur1 {
 		return Filiere.LA_FILIERE.getEtape()-this.getUt_debut();
 	}
 	
-	public void setAge(int ut_debut) {
+	public void setUt_debut(int ut_debut) {
 		this.ut_debut=ut_debut;
 	}
 	
