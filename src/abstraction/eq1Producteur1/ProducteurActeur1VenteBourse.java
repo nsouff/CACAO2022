@@ -37,7 +37,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 		
 		//On vends en fonction du prix
 		if (Filiere.LA_FILIERE.getEtape()>=1) {
-			if ((this.getPrixmoyenFeve().get(f)/Filiere.LA_FILIERE.getEtape()) < cours) {
+			if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1)) <= cours) {
 				return this.getStock(f);
 			}
 		}
