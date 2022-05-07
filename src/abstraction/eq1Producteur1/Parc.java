@@ -119,6 +119,7 @@ public class Parc {
 	public void setfin_aleas(int i) { //Écrit par Antoine
 		this.fin_aleas = i;
 	}
+	
 	public MilleArbre getArbre(int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(i);
 	}
