@@ -70,8 +70,12 @@ public class FeveProducteur1 {
 		this.perime = perime;
 	}
 	
-	public void Peremption() {
-		if (this.getAge()>24) {
+	
+	//Auteur : 
+	//Modifié par : Antoine 
+	//La durée de péremption des fèves est de 2ans de mémoire
+	public void Peremption() {  
+		if (this.getAge()>48) {
 			this.setPerime(true);
 		}
 	}
