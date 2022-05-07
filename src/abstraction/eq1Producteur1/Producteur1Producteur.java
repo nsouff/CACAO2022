@@ -12,8 +12,11 @@ public class Producteur1Producteur extends Producteur1Stock{
 		this.ParcAfrique = afrique;
 	}
 	
-
-	public void initialiser() {//Écrit par Antoine
+	//Écrit par Antoine
+	//Répartition de nos 500 000 000 arbre parmi nos parcs (un unique parc représentant toute l'Afrique pour la V1)
+	//Arbres: 63% de nonBE_basse,27% de  nonBE_moyenne, 5% de BE_moyenne, 5% de BE_haute
+	//Les arbres sont créés de manière à avoir un âge aléatoire compris entre 95 et 135 ut, ceci afin d'avoir une production non-nulle à l'ut initiale et de ne pas avoir tous les arbres initiaux mourant au même moment
+	public void initialiser() {
 		super.initialiser();
 		int nombre_arbre_debut = 500000;
 		int ut_debut = -115;
