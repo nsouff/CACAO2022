@@ -65,7 +65,7 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 		//Calcul du Prix Total de Stockage
 		double prixTotal = 0 ;
 		for (Feve f : this.getFeves().keySet()) {
-			prixTotal = prixTotal + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("prixstockage").getValeur()) ;
+			prixTotal = prixTotal + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) ;
 		}
 		
 		//Calcul Prix Entretien Arbre 
