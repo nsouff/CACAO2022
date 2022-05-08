@@ -18,7 +18,7 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 
 	//Karla
 	/* Initier un contrat */
-	public void lanceruncontrat(Feve f) {
+	public void lanceruncontratAcheteur(Feve f) {
 		List<IVendeurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getVendeurs(f);
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de feves sur 10 steps
 		if (L.size()!=0) {
@@ -41,7 +41,7 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 		super.next();
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
-				lanceruncontrat(f);
+				lanceruncontratAcheteur(f);
 			}
 		}
 	}
