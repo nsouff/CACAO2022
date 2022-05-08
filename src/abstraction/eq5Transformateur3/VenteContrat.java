@@ -1,15 +1,19 @@
 package abstraction.eq5Transformateur3;
 import java.util.List;
+import java.util.Random;
 
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.Feve;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
-
-	@Override
+	
 	//Yves
 	public boolean vend(Object produit) {
 		if (stockChocolat.getProduitsEnStock().contains(produit) == true) {
@@ -31,7 +35,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		if (contrat.getProduit() instanceof Chocolat) {
 			if (((Chocolat)(contrat.getProduit())).isOriginal() == true ) {
-			return 2*(this.seuilMaxAchat+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
+				return 2*(this.seuilMaxAchat+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
 			}
 			else {
 				return 2*(this.seuilMaxAchat+this.coutTransformation.getValeur());

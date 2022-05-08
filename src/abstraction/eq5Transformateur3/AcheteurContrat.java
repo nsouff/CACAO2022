@@ -38,7 +38,6 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 	/* on regarde l etat de nos stocks et on lance la procédure demande 
 	acheteur + get vendeur de la classe supperviseur vente cadre */
 	public void next() {
-		// TODO Auto-generated method stub
 		super.next();
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
@@ -49,7 +48,6 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 
 	// Julien & Karla
 	public boolean achete(Object produit) {
-		// TODO Auto-generated method stub.
 		if  (!( produit instanceof Feve) ) {
 			return false;
 		}
@@ -64,7 +62,6 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 	// Julien & Karla
 	// On accepte tout le temps l'echeancier
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
 		return listeEcheanciers.get(l-1);
@@ -72,7 +69,6 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 
 	// Julien & Karla
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		double prixT = contrat.getPrix();
 		if (prixT < this.seuilMaxAchat) {
 			return prixT;
@@ -89,13 +85,11 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 	// Julien & Karla
 	// on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 	}
 
 	// Julien & Karla
 	// si la quantité reçue est inférieure à celle prévue : en acheter à la bourse ?
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		Feve f= ((Feve) produit);
 		this.stockFeves.ajouter(f, quantite);
 	}

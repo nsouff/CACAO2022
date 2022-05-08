@@ -21,6 +21,7 @@ public class Transformateur3Acteur implements IActeur {
 	//Karla
 	protected Double seuilMaxAchat; // par kg en dollars, au dessus de ce prix, on n'achète pas de fèves
 	protected Double SeuilMinFeves; // en kg : En dessous de ce seuil, on achète des fèves car stock trop "bas"
+	protected Double achatMaxFeves; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 	protected Variable seuilTransformation;
 	protected Variable rendement;
 	protected Variable coutTransformation;
@@ -41,6 +42,9 @@ public class Transformateur3Acteur implements IActeur {
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2900.00;
+		this.SeuilMinFeves = 10000.00;
+		this.achatMaxFeves = 5000.00;
+
 	}
 
 	//julien
