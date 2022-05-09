@@ -9,10 +9,41 @@ import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
+	
+	//Karla
+	/* Initier un contrat */
+	public void lanceruncontratVendeur(ChocolatDeMarque c) {
+		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de chocolat sur 10 steps
+		if (L.size()!=0) {
+			if (L.size()== 1) {
+				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
+				}
+			else {
+				// On choisit aléatoirement un des distributeurs
+				Random randomizer = new Random();
+				IAcheteurContratCadre random = L.get(randomizer.nextInt(L.size()));
+				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(random, (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
+			}
+		}
+	}
+	
+	//Karla
+	/* on regarde l etat de nos stocks et on lance la procédure */
+	public void next() {
+		super.next();
+		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
+			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat) {
+				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'RIGINAL");
+				lanceruncontratVendeur(choco);
+			}
+		}
+	}
 	
 	//Yves
 	public boolean vend(Object produit) {
@@ -67,9 +98,14 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		
 	}
 
-	@Override
+	//Karla
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		Chocolat c = (Chocolat)produit;
+		double peutlivrer = Math.min(this.stockChocolat.getstock(c), quantite);
+		if (peutlivrer>0.0) {
+			this.stockChocolat.utiliser(c, peutlivrer);
+		}
+		return peutlivrer;
 	}
-	}
+	
+}
