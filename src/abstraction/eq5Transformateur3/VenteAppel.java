@@ -39,8 +39,5 @@ public class VenteAppel extends AcheteurContrat implements IVendeurAO {
 			
 		;}
 		
-		
-		;
-		
-	}
+		}
 }
