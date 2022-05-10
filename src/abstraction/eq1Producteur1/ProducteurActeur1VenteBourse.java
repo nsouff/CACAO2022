@@ -20,10 +20,6 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 	public ProducteurActeur1VenteBourse() {
 		super();
 		this.prixmoyenFeve = new HashMap<Feve, Double>() ;
-		for (Feve f : Feve.values()){
-			this.getPrixmoyenFeve().put(f, 0.0); //On initialise la HashMap avec des prix à 0 
-		}
-
 	}
 
 
@@ -32,13 +28,21 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 	//Auteur : Khéo
 	public double offre(Feve f, double cours) {
 		//On met à jour les prix de la HashMap
-		this.getPrixmoyenFeve().put(f, this.getPrixmoyenFeve().get(f)+cours);
+		
+		if (Filiere.LA_FILIERE.getEtape()>1) { //Petite dijonction de cas pour le premier tour afin d'éviter d'aller chercher dans une hashmap vide
+			this.getPrixmoyenFeve().put(f, this.getPrixmoyenFeve().get(f)+cours);
+			
+		} else {
+			this.getPrixmoyenFeve().put(f, cours);
+			
+		}
+		
 		
 		
 		//On vends en fonction du prix
 		if (Filiere.LA_FILIERE.getEtape()>=1) {
 
-			if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1)) <= cours) {
+			if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape())) <= cours) {
 				return this.getStock(f);
 			}
 		}
