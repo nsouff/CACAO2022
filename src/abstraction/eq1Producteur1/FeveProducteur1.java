@@ -20,16 +20,17 @@ public class FeveProducteur1 {
 	 * @param age
 	 * @param perime
 	 */
-	public FeveProducteur1(int ut_debut, boolean perime,double poids) {
+	public FeveProducteur1(int ut_debut, boolean perime,double poids) { 
 		this.ut_debut = ut_debut;
 		this.perime = perime;
+		this.poids = poids;
 	}
 
 	public int getAge() {
 		return Filiere.LA_FILIERE.getEtape()-this.getUt_debut();
 	}
 	
-	public void setAge(int ut_debut) {
+	public void setUt_debut(int ut_debut) {
 		this.ut_debut=ut_debut;
 	}
 	
@@ -69,8 +70,12 @@ public class FeveProducteur1 {
 		this.perime = perime;
 	}
 	
-	public void Peremption() {
-		if (this.getAge()>24) {
+	
+	//Auteur : 
+	//Modifié par : Antoine 
+	//La durée de péremption des fèves est de 2ans de mémoire
+	public void Peremption() {  
+		if (this.getAge()>48) {
 			this.setPerime(true);
 		}
 	}

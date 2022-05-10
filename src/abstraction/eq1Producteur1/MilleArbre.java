@@ -2,6 +2,7 @@ package abstraction.eq1Producteur1;
 
 import abstraction.eq8Romu.filiere.Filiere;
 
+// Une instance de "MilleArbre" équivaut à 1000 arbres réels
 public class MilleArbre {
 	private int ut_plantation;
 	private int ut_esperance_vie;
@@ -145,7 +146,7 @@ public class MilleArbre {
 		}
 	}
 	public double Production_max() { //Écrit par Maxime
-		double d = 0.2 + Math.random()/20;
+		double d = 200 + Math.random()*50; //La production de 1000 arbres
 		if (this.bioequitable) {
 			d = 0.8*d;
 		}
