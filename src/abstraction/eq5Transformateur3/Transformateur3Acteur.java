@@ -17,7 +17,8 @@ import abstraction.eq8Romu.produits.Feve;
 public class Transformateur3Acteur implements IActeur {
 	
 	protected int cryptogramme;
-	
+	protected Journal journal;
+
 	//Karla
 	protected Double seuilMaxAchat; // par kg en dollars, au dessus de ce prix, on n'achète pas de fèves
 	protected Double SeuilMinFeves; // en kg : En dessous de ce seuil, on achète des fèves car stock trop "bas"
@@ -68,6 +69,7 @@ public class Transformateur3Acteur implements IActeur {
 	}
 
 	public void next() {
+		this.journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
 	}
 
 	

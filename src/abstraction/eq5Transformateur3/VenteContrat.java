@@ -10,7 +10,6 @@ import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
-import abstraction.eq8Romu.produits.Feve;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
