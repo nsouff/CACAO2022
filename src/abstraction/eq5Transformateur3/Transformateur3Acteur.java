@@ -38,7 +38,7 @@ public class Transformateur3Acteur implements IActeur {
 	
 	//Karla
 	public Transformateur3Acteur() {
-		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
+		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en kg", this,  0, 100000, 100000);
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
 		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 5);
 		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
@@ -96,13 +96,17 @@ public class Transformateur3Acteur implements IActeur {
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
-		res.add(this.seuilTransformation);
+		res.add(rendement);
+		res.add(seuilTransformation);
+		res.add(coutOriginal);
+		res.add(coutTransformation);
 		return res;
 	}
 
 	// Renvoie les journaux
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
+		res.add(journal);
 		return res;
 	}
 

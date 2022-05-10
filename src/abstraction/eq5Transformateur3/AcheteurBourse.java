@@ -14,7 +14,7 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 			double pourcentage = (bourse.getCours(f).getMax()-cours)/(bourse.getCours(f).getMax()-bourse.getCours(f).getMin());
 			// on en achete selon le prix actuel de la bourse d'où *pourcentage
-			return achatMaxFeves*pourcentage;
+			return this.achatMaxFeves*pourcentage;
 		} else {
 			return 0.0;
 		}
@@ -22,7 +22,8 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 
 	// Karla
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
-		this.stockFeves.ajouter(f, quantiteEnKg);		
+		this.stockFeves.ajouter(f, quantiteEnKg);
+		this.journal.ajouter("Achat a la bourse de "+ quantiteEnKg +"kg  de " + f + " a "+ coursEnEuroParKg+ " euro par Kg");
 	}
 
 	// Karla

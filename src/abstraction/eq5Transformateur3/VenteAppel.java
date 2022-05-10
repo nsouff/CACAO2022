@@ -10,7 +10,7 @@ import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class VenteAppel extends VenteContrat implements IVendeurAO {
-	public SuperviseurVentesAO superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
+	private SuperviseurVentesAO superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
 
 	// Julien 10/05
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
@@ -44,16 +44,16 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, true);
 					if (retenueenTG!=null) {
 						this.stockChocolat.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
-						journal.ajouter("vente de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c +"  a "+retenueenTG.getAcheteur().getNom());
+						this.journal.ajouter("vente de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c +"  a "+retenueenTG.getAcheteur().getNom()+" en TG");
 					} else {
 						// on essaye sans mettre en TG
 						PropositionAchatAO retenuepasenTG = 
 								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, false);
 						if (retenuepasenTG!=null) {
 							this.stockChocolat.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
-							journal.ajouter("vente de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c +" a "+retenuepasenTG.getAcheteur().getNom());
+							this.journal.ajouter("vente de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c +" a "+retenuepasenTG.getAcheteur().getNom());
 						} else {
-							journal.ajouter("pas d'offre retenue");
+							this.journal.ajouter("pas d'offre retenue");
 						}
 					}
 				}

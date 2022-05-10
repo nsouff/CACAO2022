@@ -81,8 +81,12 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	}
 
 	// Julien & Karla
-	// on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
+	/* On met à jour le journal
+	 * et on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
+	 */
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+		this.journal.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+
 	}
 
 	// Julien & Karla

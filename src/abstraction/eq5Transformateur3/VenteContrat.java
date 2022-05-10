@@ -83,7 +83,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		this.journal.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
 		
 	}
 
