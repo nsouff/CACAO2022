@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Feve;
 public class Producteur1Stock {
 	private  HashMap<Feve,List<FeveProducteur1>> Feves;
 	protected Integer cryptogramme;
-
+	
 	
 	//Auteur : Khéo
 	public Producteur1Stock() {
@@ -40,6 +40,7 @@ public class Producteur1Stock {
 	
 	//Auteur : Khéo
 	public double getStock(Feve f){
+		
 		double somme = 0.0 ;
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
 			somme = somme + Lot.getPoids() ;

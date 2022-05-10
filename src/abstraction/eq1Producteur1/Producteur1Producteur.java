@@ -33,6 +33,7 @@ public class Producteur1Producteur extends Producteur1Stock{
 	}
 
 	public void next() { //Écrit par Antoine
+		super.next();
 		this.getAfrique().MAJAleas();
 		HashMap<Feve, Double> recolte1 = this.getAfrique().Recolte();
 		this.addLot(Feve.FEVE_BASSE, recolte1.get(Feve.FEVE_BASSE));

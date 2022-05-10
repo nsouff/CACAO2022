@@ -62,10 +62,15 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 	public void next() {
 		super.next();
 		
+		//Mis à jour Variable
+		this.getStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE));
+		this.getStockHaut_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		this.getStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
+		
 		//Calcul du Prix Total de Stockage
 		double prixTotal = 0 ;
 		for (Feve f : this.getFeves().keySet()) {
-			prixTotal = prixTotal + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("prixstockage").getValeur()) ;
+			prixTotal = prixTotal + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) ;
 		}
 		
 		//Calcul Prix Entretien Arbre 
@@ -75,11 +80,7 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 		//Retirer l'argent 
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotal);
 		
-		
-		//Mis à jour Variable
-		this.getStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE));
-		this.getStockHaut_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
-		this.getStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
+
 	}
 	
 

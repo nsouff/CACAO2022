@@ -13,6 +13,7 @@ public class FeveProducteur1 {
 	public FeveProducteur1(double poids) {
 		this.ut_debut = Filiere.LA_FILIERE.getEtape();
 		this.perime = false;
+		this.poids = poids;
 	}
 
 	/**
