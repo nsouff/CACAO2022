@@ -14,37 +14,35 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
-public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurContratCadre {
+public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
-	//Karla
+	public SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+	
+	//Karla / Julien
 	/* Initier un contrat */
 	public void lanceruncontratAcheteur(Feve f) {
-		List<IVendeurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getVendeurs(f);
-		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de feves sur 10 steps
+		List<IVendeurContratCadre> L = superviseur.getVendeurs(f);
+		int qtt = 100; // qtt de feve par step, à modifier en fonction des ventes 
+		
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, qtt); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
 			if (L.size()== 1) {
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
+				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
 			}
 			else {
 				// On choisit aléatoirement un des producteurs
 				Random randomizer = new Random();
 				IVendeurContratCadre random = L.get(randomizer.nextInt(L.size()));
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
+				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
 			}
 		}
+		else {
+			
+		}
+		//Julien else on achete des feve par le biais de la bourse si besoin ( bourse.getCours(f).getValeur() )
 	}
 	
-	//Karla
-	/* on regarde l etat de nos stocks et on lance la procédure demande 
-	acheteur + get vendeur de la classe supperviseur vente cadre */
-	public void next() {
-		super.next();
-		for (Feve f : this.stockFeves.getProduitsEnStock()) {
-			if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
-				lanceruncontratAcheteur(f);
-			}
-		}
-	}
+
 
 	// Julien & Karla
 	public boolean achete(Object produit) {
@@ -64,7 +62,7 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
-		return listeEcheanciers.get(l-1);
+		return listeEcheanciers.get(l); // le dernier proposé est celui des vendeurs
 	}
 
 	// Julien & Karla
@@ -93,6 +91,17 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 		Feve f= ((Feve) produit);
 		this.stockFeves.ajouter(f, quantite);
 	}
-	
+
+	//Karla
+	/* on regarde l etat de nos stocks et on lance la procédure demande 
+	acheteur + get vendeur de la classe supperviseur vente cadre */
+	public void next() {
+		super.next();
+		for (Feve f : this.stockFeves.getProduitsEnStock()) {
+			if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
+				lanceruncontratAcheteur(f);
+			}
+		}
+	}
 }
 	

@@ -5,14 +5,14 @@ import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
-public class AcheteurBourse  extends AcheteurContrat implements IAcheteurBourse{
+public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurBourse{
 
-	// Karla
+	// Karla 
 	public double demande(Feve f, double cours) {
 		// Si on a moins d'un certain seuil de fèves, on cherche à en acheter via la bourse
 		if (this.stockFeves.getstock(f)<this.SeuilMinFeves) {
 			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-			double pourcentage = (bourse.getCours(f).getMax()-bourse.getCours(f).getValeur())/(bourse.getCours(f).getMax()-bourse.getCours(f).getMin());
+			double pourcentage = (bourse.getCours(f).getMax()-cours)/(bourse.getCours(f).getMax()-bourse.getCours(f).getMin());
 			// on en achete selon le prix actuel de la bourse d'où *pourcentage
 			return achatMaxFeves*pourcentage;
 		} else {
@@ -29,4 +29,8 @@ public class AcheteurBourse  extends AcheteurContrat implements IAcheteurBourse{
 	public void notificationBlackList(int dureeEnStep) {	
 	}
 
+	public void next () {
+		super.next();
+		
+	}
 }

@@ -6,7 +6,7 @@ import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
 //Karla
-public class Transformation extends AcheteurBourse {
+public class Transformation extends AcheteurContrat {
 
 	// Payer à la banque
 	public boolean payer(double montant) {

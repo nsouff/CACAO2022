@@ -9,30 +9,31 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class VenteAppel extends AcheteurContrat implements IVendeurAO {
+public class VenteAppel extends VenteContrat implements IVendeurAO {
 	public SuperviseurVentesAO superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
 
-	//Karla et Julien
+	// Julien 10/05
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 		/* on pourrait comparer les acheteurs en fonction de la fidélité par ex 
 		 * on initie original à 0 de façon à pouvoir calculer le prix qui permet de ne pas vendre à perte
-		 * et lameilleure (proposition) à null 
+		 * les propositions sont triées par ordre décroissant de prix -> on ne considère que la première pour l'instant
 		 */
 		int original = 0;
 		PropositionAchatAO lameilleure = null;
 
-		for (PropositionAchatAO proposition: propositions) { 
-			if (proposition.getOffre().getChocolat().isOriginal()) { 
-				original = 1;
+		PropositionAchatAO proposition1=propositions.get(1);
+		
+		if (proposition1.getOffre().getChocolat().isOriginal()) { 
+			original = 1;
 				}
-			if (proposition.getPrixKg()>= this.seuilMaxAchat + this.coutOriginal.getValeur()*original + this.coutTransformation.getValeur()) {
-				lameilleure = proposition ;	
+		if (proposition1.getPrixKg()>= this.seuilMaxAchat + this.coutOriginal.getValeur()*original + this.coutTransformation.getValeur()) {
+				lameilleure = proposition1 ;	
 				}
-			}
-		return lameilleure;
+			
+		return lameilleure; // si le prix est trop faible, on prefère garder notre chocolat
 		}
 	
-	//Karla 
+	//Karla julien
 	public void next() {
 		super.next();
 		
@@ -43,13 +44,14 @@ public class VenteAppel extends AcheteurContrat implements IVendeurAO {
 					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, true);
 					if (retenueenTG!=null) {
 						this.stockChocolat.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
-						journal.ajouter("vente de "+retenueenTG.getOffre().getQuantiteKG()+" de " + c +" kg a "+retenueenTG.getAcheteur().getNom());
+						journal.ajouter("vente de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c +"  a "+retenueenTG.getAcheteur().getNom());
 					} else {
+						// on essaye sans mettre en TG
 						PropositionAchatAO retenuepasenTG = 
 								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, false);
 						if (retenuepasenTG!=null) {
 							this.stockChocolat.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
-							journal.ajouter("vente de "+retenuepasenTG.getOffre().getQuantiteKG()+" de " + c +" kg a "+retenuepasenTG.getAcheteur().getNom());
+							journal.ajouter("vente de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c +" a "+retenuepasenTG.getAcheteur().getNom());
 						} else {
 							journal.ajouter("pas d'offre retenue");
 						}

@@ -35,6 +35,7 @@ public class Transformateur3Acteur implements IActeur {
 	
 	protected HashMap<Double ,ContratCadre> contratsEnCours;
 	
+	
 	//Karla
 	public Transformateur3Acteur() {
 		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en tonne", this,  0, 100000, 100000);
@@ -68,9 +69,7 @@ public class Transformateur3Acteur implements IActeur {
 	public void initialiser() {
 	}
 
-	public void next() {
-		this.journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
-	}
+	
 
 	
 	// Renvoie la liste des filières proposées par l'acteur
@@ -121,6 +120,8 @@ public class Transformateur3Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
 	}
-
+	public void next() {
+		this.journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
+	}
 }
 
