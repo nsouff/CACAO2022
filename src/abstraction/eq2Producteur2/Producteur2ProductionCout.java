@@ -25,4 +25,7 @@ public class Producteur2ProductionCout extends Plantation {
 		this.coutParKg.put(Feve.FEVE_MOYENNE, 0.0);
 		this.coutParKg.put(Feve.FEVE_BASSE, 0.0);
 	}
+
+
+
 }

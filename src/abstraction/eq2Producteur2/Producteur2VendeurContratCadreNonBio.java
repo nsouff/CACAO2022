@@ -91,12 +91,12 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
-			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < qt) { 
+			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < this.StockTot.get((Feve)(contrat.getProduit()))) { 
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), qt );// on souhaite livrer toute la quatité qu'on a
+				e.set(e.getStepDebut(), this.StockTot.get((Feve)(contrat.getProduit())) );// on souhaite livrer toute la quatité qu'on a
 				return e;
 			}
 		}	
@@ -149,7 +149,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	@Override
 	public boolean peutVendre(Object produit) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }
