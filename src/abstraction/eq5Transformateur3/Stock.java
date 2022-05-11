@@ -7,6 +7,10 @@ import java.util.Set;
 public class Stock<Produit> {
 	private HashMap <Produit, Double> stock;
 
+	public Stock() {
+		this.stock = new HashMap <Produit, Double>();
+	}
+
 	public HashMap<Produit, Double> getStockDico() {
 		return stock;
 	}
