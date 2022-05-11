@@ -31,8 +31,8 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double prix(ChocolatDeMarque choco) { //Emma humeau
-		return prixVente.get(choco);
-		
+		Double res = prixVente.get(choco);
+		return (res == null) ? 0.0 : res;
 	}
 
 	@Override
