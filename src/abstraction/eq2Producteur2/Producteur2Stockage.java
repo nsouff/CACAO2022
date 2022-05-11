@@ -53,5 +53,8 @@ public class Producteur2Stockage extends Plantation {
 		
 		}
 	}
+//	public void initialiser() {
+//		this.add
+//	}
 	
 }
