@@ -74,10 +74,11 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	public void next() {
 		// il faut appeler nextPlantation() de la classe plantation
 		super.next();
-		double coutProduction = 0.1;
 		
+		// Cout de production, Jules DORE
+		double coutProduction = 0.1;
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
-
+		
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));
