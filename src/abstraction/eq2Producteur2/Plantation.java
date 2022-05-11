@@ -33,6 +33,8 @@ public class Plantation {
 		
 		NbParcelles = new HashMap<Arbre, List<Parcelle>>();
 		
+		// 1 parcelle = 1 million d'arbres 
+		
 		NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
 		NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
 		NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
@@ -73,7 +75,12 @@ public class Plantation {
 		
 	}	
 	
+
+	
 	public Arbre conversion(Feve typefeve) {
+		
+		// permet de connnaître le type d'arbre en connaissant le type de fève 
+		
 		if (typefeve == Feve.FEVE_BASSE ) {
 			return Arbre.ARBRE_BG;
 		}
@@ -94,6 +101,7 @@ public class Plantation {
 	
 		
 	public int production(Feve typefeve) {
+		// permet de connaître la production, en kg, pour un type de fève donné 
 		
 		Arbre typearbre = conversion(typefeve);
 		
@@ -110,6 +118,7 @@ public class Plantation {
 		}
 		return ProductionFinale;
 	}
+	
 	
 	
 	
