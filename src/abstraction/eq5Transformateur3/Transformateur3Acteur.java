@@ -150,7 +150,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 			return marques;
 		}
 
-	
+	//juju
 	public List<ChocolatDeMarque> getChocolatsProduits() {
 		List<ChocolatDeMarque> cm=new ArrayList<ChocolatDeMarque>();
 		cm.add( new ChocolatDeMarque(Chocolat.HQ_BE_O,"BIO'riginal"));
