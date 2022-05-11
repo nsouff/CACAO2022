@@ -1,8 +1,11 @@
 package abstraction.eq3Transformateur1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -15,7 +18,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected DicoFeve stockFeve;               /** Integer --> Double*/
 	protected DicoChoco stockChoco;           /** Integer --> Double*/
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
-	
+	protected Journal journal;
 	// Alexandre
 	public Transformateur1Bourse() {
 		quantiteAchatFeve = new DicoFeve();
@@ -45,5 +48,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	public void notificationBlackList(int dureeEnStep) {
 	
 	}
+	
+
 
 }
