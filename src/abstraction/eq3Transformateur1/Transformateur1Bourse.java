@@ -16,6 +16,17 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected HashMap<Chocolat,Double> stockChoco;           /** Integer --> Double*/
 	protected HashMap<Chocolat, Double> prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
 	
+	// Alexandre
+	public Transformateur1Bourse() {
+		quantiteAchatFeve = new HashMap<Feve, Double>();
+		quantiteDemandeeChoco = new HashMap<Chocolat, Double>();
+		dernierPrixVenteChoco = new dernierPrixVenteChoco();
+		prixAchatFeve = new HashMap<Feve, Double>();
+		stockFeve = new HashMap<Feve, Double>();
+		stockChoco = new HashMap<Chocolat, Double>();
+		prixVenteMin = new HashMap<Chocolat, Double>();
+	}
+	
 	/** renvoie la quantité de fève voulue; auteur Julien 
 	 * Pas de prise en compte pour l'instant des contrats */
 	public double demande(Feve f, double cours) {
