@@ -6,15 +6,19 @@ import java.util.List;
 
 
 import abstraction.eq8Romu.produits.Gamme;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.filiere.IMarqueChocolat;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+
 import abstraction.eq8Romu.produits.Feve;
 
 
 
-public class Transformateur1 extends Transformateur1AppelsOffres {
+public class Transformateur1 extends Transformateur1AppelsOffres implements IMarqueChocolat{
 	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
 	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
 	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
@@ -143,6 +147,13 @@ public class Transformateur1 extends Transformateur1AppelsOffres {
 				}
 			}
 		}
+	}
+
+	// donne nos marques de chocolat, auteur Julien */
+	public List<String> getMarquesChocolat() {
+		LinkedList<String> result = new LinkedList<String>();
+		result.add("cote d'or");
+		return result;
 	}
 
 }
