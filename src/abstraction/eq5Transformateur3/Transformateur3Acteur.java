@@ -34,6 +34,12 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Stock<Feve> stockFeves;
 	protected Stock<Chocolat> stockChocolat;
 	
+	// Stock Moyenne et haut de Gamme en variables
+	protected Variable stockFevesVariableM;
+	protected Variable stockFevesVariableH;
+	protected Variable stockChocolatVariableM;
+	protected Variable stockChocolatVariableH;
+	
 	//julien 04/05 : 
 	
 	protected HashMap<Double ,ContratCadre> contratsEnCours;
@@ -46,6 +52,11 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 5);
 		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
 		
+		this.stockFevesVariableM = new Variable(this.getNom()+"stockFevesMoyennesBio", "stock de feves moyenne qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)  );
+		this.stockFevesVariableH = new Variable(this.getNom()+"stockFevesHautesBio", "stock de feves haute qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)  );
+		this.stockChocolatVariableM = new Variable(this.getNom()+"stockChocolatMoyen", "stock de chocolat moyenne qualite",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.MQ)+this.stockChocolat.getstock(Chocolat.MQ_O)  );
+		this.stockChocolatVariableH = new Variable(this.getNom()+"stockChocolatHaut", "stock de chocolat huate qualite ",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.HQ)+this.stockChocolat.getstock(Chocolat.HQ_O)  );
+
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2900.00;
@@ -140,7 +151,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		double montant= prixStockage();
 		if (montant >0) {
 		 Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
-		 }
+		}
 	}
 
 	//juju

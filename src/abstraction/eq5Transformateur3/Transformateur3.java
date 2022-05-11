@@ -1,6 +1,9 @@
 package abstraction.eq5Transformateur3;
 
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur3 extends VenteAppel {
 	
@@ -11,6 +14,12 @@ public class Transformateur3 extends VenteAppel {
 
 	public void next() {
 		super.next();
+		
+		//mise à jour des variables indicateurs des stocks
+		this.stockFevesVariableM.setValeur(this, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		this.stockFevesVariableH.setValeur(this, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		this.stockChocolatVariableM.setValeur(this, this.stockChocolat.getstock(Chocolat.MQ)+this.stockChocolat.getstock(Chocolat.MQ_O));
+		this.stockChocolatVariableH.setValeur(this, this.stockChocolat.getstock(Chocolat.HQ)+this.stockChocolat.getstock(Chocolat.HQ_O));
 	}
 	
 }
