@@ -8,13 +8,14 @@ import java.util.List;
 import abstraction.eq8Romu.contratsCadres.ContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.filiere.IMarqueChocolat;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Transformateur3Acteur implements IActeur {
+public class Transformateur3Acteur implements IActeur, IMarqueChocolat{
 	
 	protected int cryptogramme;
 	protected Journal journal;
@@ -129,5 +130,13 @@ public class Transformateur3Acteur implements IActeur {
 	public void next() {
 		this.journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
 	}
+
+	//juju
+	public List<String> getMarquesChocolat() {
+			List<String> marques=new ArrayList<String>();
+			marques.add("BIO'riginal");
+			return marques;
+		}
+	
 }
 
