@@ -32,7 +32,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	 * @return Un nombre de point qui représente la quantité de fèves non Bio achetée par ce transformateur
 	 */
 	public double getPointTransformateur(IAcheteurContratCadre transformateur) {
-		double point=0.00;
+		double point=0.000;
 		for (int i=0 ; i<this.mesContratEnTantQueVendeurNonBio.size() ; i++) {
 			if(this.mesContratEnTantQueVendeurNonBio.get(i).getAcheteur().equals(transformateur)) //Selectionne les contrats cadres non bio équitable du transformateurs
 				{ point+=this.mesContratEnTantQueVendeurNonBio.get(i).getQuantiteTotale(); // Point ajoute en fonction de la quantité
