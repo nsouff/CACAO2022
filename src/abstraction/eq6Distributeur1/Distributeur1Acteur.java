@@ -180,7 +180,8 @@ public class Distributeur1Acteur implements IActeur {
 	 */
 	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
-			prixVente.put(key, (prixAchat.get(key))*2);	
+			prixVente.put(key, (prixAchat.get(key))*2);
+			
 				
 		});
 		
