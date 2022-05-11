@@ -2,18 +2,24 @@ package abstraction.eq6Distributeur1;
 import java.util.Map;
 
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import java.util.HashMap;
+import java.util.List;
 
 public class Stock { //Emma Humeau
 	
 
 	private Map<ChocolatDeMarque,Double> stockageQte;
+	protected List<Variable> stockVar;
+	protected IActeur acteur;
 
 	/**
 	 * @author Nathan Souffan
 	 */
-	public Stock() {
+	public Stock(IActeur acteur) {
+		this.acteur = acteur;
 		System.out.println("Création stock");
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
 	}
@@ -55,6 +61,22 @@ public class Stock { //Emma Humeau
 	 */
 	public void addQte(ChocolatDeMarque choco, double qte) { //emma humeau
 		stockageQte.put(choco, stockageQte.get(choco)+qte);
+		
+		/**
+		 * @author Nolann
+		 * actualisation des indicateurs
+		 */
+		
+		for(int i = 0 ; i < stockVar.size(); i++) {				
+			if(((stockVar.get(i)).getNom()).equals(choco+"")) {					
+				stockVar.get(i).setValeur(this.acteur,stockageQte.get(choco)+qte);
+				
+			}
+		}
+		
+		
+			
+	
 	}
 
 	public Map<ChocolatDeMarque, Double> getMapStock() { //emma humeau

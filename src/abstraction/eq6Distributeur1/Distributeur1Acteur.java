@@ -26,8 +26,7 @@ public class Distributeur1Acteur implements IActeur {
 	protected List<ExemplaireContratCadre> mesContrats;
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
 	protected Journal journal1;
-	
-	protected List<Variable> stock;
+	protected static IActeur notreActeur;
 	protected List<Variable> prix; 
 
 	protected Map<ChocolatDeMarque, Double> prixVente;
@@ -53,20 +52,20 @@ public class Distributeur1Acteur implements IActeur {
 	 */
 	public Distributeur1Acteur() {
 		
-		stock = new ArrayList<Variable>(); 
+		NotreStock.stockVar = new ArrayList<Variable>(); 
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		System.out.println("Creation Distributeur1Acteur");
-		NotreStock = new Stock();
+		NotreStock = new Stock(this);
 		journal1 = new Journal("journal1",this);
 		
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
 			System.out.println("boucle");
 			
-			stock.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
+			NotreStock.stockVar.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
 			journal1.ajouter("ajout d'une variable stock pour le chocolat" + c + "effectué" );
 			
 			prix.add(new Variable(c+"",this,0));
@@ -106,6 +105,7 @@ public class Distributeur1Acteur implements IActeur {
 	
 	public void next() {
 		//leorouppert
+		
 		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 50) {
@@ -119,7 +119,10 @@ public class Distributeur1Acteur implements IActeur {
 				}
 				else {journal1.ajouter("échec des négociations");}
 			}
+			
 		});
+		
+		
 	}
 	// Renvoie la liste des filières proposées par l'acteur
 	public List<String> getNomsFilieresProposees() {
@@ -140,7 +143,7 @@ public class Distributeur1Acteur implements IActeur {
 		
 		List<Variable> res = new ArrayList<Variable>();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
-			for( Variable v : stock) {
+			for( Variable v : NotreStock.stockVar) {
 				res.add(v);
 			}
 			for(Variable v : prix) {
@@ -195,33 +198,8 @@ public class Distributeur1Acteur implements IActeur {
 		return prixVente;
 	}
 	
-	/**
-	 * @author Nolann
-	 *  ajout des indicateurs + fonction actualiser indicateurs :
-	 */
-	/*
-	public void actualiserIndicateurs(){
-		
-		List<Variable> res=new ArrayList<Variable>();
-		
-		for (Variable s : stock) {
-			res.add(s);
-		}
-		
-		for(Variable v : prix) {
-			res.add(v);
-			
-		}
-		return res;
-
-		;
-		
-		
-		
-		journal1.ajouter("l'indicateur prix à été actualisé");
-		journal1.ajouter("l'indicateur stock à été actualisé");
-		journal1.ajouter("l'indicateur prix à été actualisé");
-	}*/
+	
+	
 	
 	
 }
