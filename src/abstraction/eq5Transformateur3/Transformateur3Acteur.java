@@ -109,6 +109,10 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	// Renvoie les indicateurs
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
+		res.add(stockFevesVariableM);
+		res.add(stockFevesVariableH);
+		res.add(stockChocolatVariableM);
+		res.add(stockChocolatVariableH);
 		return res;
 	}
 
