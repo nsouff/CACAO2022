@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Plantation {
 	
@@ -73,18 +72,20 @@ public class Plantation {
 	}	
 	
 		
-	public void production(Arbre typearbre) {
+	public int production(Arbre typearbre) {
 		
-		/*
-		 * Fonction retournant la quantité produite, en kg, pour un type d'arbre donné.
-		 */
+		int ProductionFinale = 0 ;
 		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
 		
 		for (Parcelle p : ListeParcelles) {
-			
-	
+			if (p.getAge() > typearbre.getDureeCroissance()) {
+				ProductionFinale = (int) (ProductionFinale + typearbre.getRendementFinal())*p.getNbArbres();
+			}
+			else {
+				ProductionFinale = (int) (ProductionFinale + p.getRendementProgressif()*p.getAge()) * p.getNbArbres();
+			}
 		}
-		
+		return ProductionFinale;
 	}
 	
 	
