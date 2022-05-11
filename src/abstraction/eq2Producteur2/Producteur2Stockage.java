@@ -53,8 +53,8 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		
 		}
 	}
-	public void initialiser() {
-		this.add
-	}
+//	public void initialiser() {
+//		this.add
+//	}
 	
 }
