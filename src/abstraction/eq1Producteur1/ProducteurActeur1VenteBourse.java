@@ -25,26 +25,27 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 
 
 
-	//Auteur : Khéo
+	//Auteur : Khéo, modification : Laure
 	public double offre(Feve f, double cours) {
 		//On met à jour les prix de la HashMap
 		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE
 			
-		if (Filiere.LA_FILIERE.getEtape()>=1) { //Petite dijonction de cas pour le premier tour afin d'éviter d'aller chercher dans une hashmap vide
-			this.getPrixmoyenFeve().put(f, this.getPrixmoyenFeve().get(f)+cours);
+			if (Filiere.LA_FILIERE.getEtape()>=1) { //Petite dijonction de cas pour le premier tour afin d'éviter d'aller chercher dans une hashmap vide
+				this.getPrixmoyenFeve().put(f, this.getPrixmoyenFeve().get(f)+cours);
 			
-		} else {
-			this.getPrixmoyenFeve().put(f, cours);
+			} else {
+				this.getPrixmoyenFeve().put(f, cours);
 			
-		}
-		
-		//On vends en fonction du prix
-		if (Filiere.LA_FILIERE.getEtape()>=1) {
-
-			if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape())) <= cours) {
-				return this.getStock(f);
 			}
-		}
+		
+			//On vends en fonction du prix
+			if (Filiere.LA_FILIERE.getEtape()>=1) {
+				// Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
+				if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1)) <= cours) {
+					return this.getStock(f);
+					
+				}
+			}
 		}
 		
 		return 0.0 ;
