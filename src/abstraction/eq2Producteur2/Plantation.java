@@ -7,7 +7,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteure : Fiona Martin 
 
-public class Plantation extends Producteur2Acteur {
+public class Plantation  {
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	

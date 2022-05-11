@@ -3,6 +3,7 @@ package abstraction.eq2Producteur2;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
@@ -11,17 +12,21 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Feve;
-import abstraction.eq2Producteur2.Producteur2Stockage;
 
-public class Producteur2Acteur implements IActeur {
+public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	
+	private static final LinkedList<Stock> FEVE_BASSE = null;
+	private static final LinkedList<Stock> FEVE_MOYENNE = null;
+	private static final LinkedList<Stock> FEVE_MOYENNE_BE = null;
+	private static final LinkedList<Stock> FEVE_HAUTE = null;
+	private static final LinkedList<Stock> FEVE_HAUTE_BE = null;
 	protected int cryptogramme;
 	protected Journal journal;
 	private Variable StockFeveBasse;
 	private Variable StockFeveMoyenne;
 	private Variable StockFeveMoyenne_BE;
 	private Variable StockFeveHaute;
-	private Variable StockFeveHaute_BE;
+	private Variable StockFeveHaute_BE; 
 
 
 	private Variable prixstockage ;
@@ -36,7 +41,11 @@ public class Producteur2Acteur implements IActeur {
 		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
 		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;
 		this.journal = new Journal(this.getNom()+" activites", this);
-//		this.StockFeveBasse= new Variable("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000,);
+		this.StockFeveBasse= new Variable("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, this.SommeQuantite(FEVE_BASSE));
+		this.StockFeveBasse= new Variable("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE));
+		this.StockFeveBasse= new Variable("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE_BE));
+		this.StockFeveBasse= new Variable("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE));
+		this.StockFeveBasse= new Variable("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE_BE));
 	
 	}
 
@@ -76,6 +85,11 @@ public class Producteur2Acteur implements IActeur {
 	
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
+		res.add(StockFeveBasse);
+		res.add(StockFeveMoyenne);
+		res.add(StockFeveMoyenne_BE);
+		res.add(StockFeveHaute);
+		res.add(StockFeveHaute_BE);
 		return res;
 	}
 	
