@@ -16,6 +16,7 @@ public class Parcelle {
 	private boolean Cooperative;
 	private int StadeTransition;
 	private int DebutMaladie;
+	private int StadeTensionGeopolitique;
 	
 	
 	
@@ -30,6 +31,12 @@ public class Parcelle {
 		this.setStadeMaladie(0);
 		this.setNbArbres(100_000);
 		
+		
+	}
+	
+	public void next() {
+		this.MAJMaladie();
+		this.MAJTensionGeopo();
 	}
 
 	public Arbre getTypeArbre() {
@@ -135,6 +142,33 @@ public class Parcelle {
 
 	public void setDebutMaladie(int debutMaladie) {
 		DebutMaladie = debutMaladie;
+	}
+
+	public int getStadeTensionGeopolitique() {
+		return StadeTensionGeopolitique;
+	}
+
+	public void setStadeTensionGeopolitique(int STG) {
+		StadeTensionGeopolitique = STG;
+	}
+	
+	public void MAJTensionGeopo() {
+		if (StadeTensionGeopolitique != 0) {
+			StadeTensionGeopolitique = StadeTensionGeopolitique - 1;
+		}
+		
+		else {
+			double d = Math.random();
+			if (d < 0.05) {
+				
+				double d2 = Math.random();
+				while (d2 == 0) {
+					d2 = Math.random();
+				}
+				int dureeTG = (int) Math.ceil(d2*6);
+				StadeTensionGeopolitique = dureeTG;
+			}
+		}
 	}
 
 	

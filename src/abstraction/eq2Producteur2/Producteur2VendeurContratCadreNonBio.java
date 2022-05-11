@@ -16,7 +16,7 @@ import abstraction.eq8Romu.produits.Feve;
  * @author Jules DORE
  */
 
-public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre{
+public class Producteur2VendeurContratCadreNonBio extends Producteur2Vendeur implements IVendeurContratCadre{
 	
 
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;

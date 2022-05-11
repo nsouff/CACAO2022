@@ -8,7 +8,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 // auteur Clément //
 
-public class Producteur2Stockage extends Producteur2ProductionCout {
+public class Producteur2Stockage extends Producteur2Couts {
 	
 	protected HashMap<Feve,LinkedList<Stock>> Stocks;
 	protected HashMap<Feve,Double> StockTot;

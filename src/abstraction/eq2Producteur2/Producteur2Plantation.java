@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
-//auteure : Fiona Martin 
+//auteure : Fiona 
 
-public class Plantation  {
+public class Producteur2Plantation {
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
-	public Plantation () {
+	public Producteur2Plantation () {
 		//auteure : Fiona
 		
 		/*
@@ -80,7 +81,9 @@ public class Plantation  {
 	
 	
 	public void next() {
+	
 		this.nextPlantation();
+		
 	}
 	
 	
@@ -194,6 +197,10 @@ public class Plantation  {
 		
 		else if (p.getStadeMaladie() == 5 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=2) {
 			return 0; 		
+		}
+		
+		else if (p.getStadeTensionGeopolitique() != 0) {
+			return 0;
 		}
 		
 		else {

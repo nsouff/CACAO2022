@@ -81,6 +81,8 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
+		
+		
 
 	}
 	

@@ -9,7 +9,7 @@ import java.util.HashMap;
  *
  */
 
-public class Producteur2ProductionCout extends Plantation {
+public class Producteur2Couts extends Producteur2Plantation {
 
 	public double coutHQ_BE=0.001;//cout par arbre
 	public double coutMQ_BE=0.001;
@@ -18,7 +18,7 @@ public class Producteur2ProductionCout extends Plantation {
 	public double coutBQ=0.001;
 	public HashMap<Feve,Double> coutParKg;
 
-	public Producteur2ProductionCout() {
+	public Producteur2Couts() {
 		super();
 	}
 
