@@ -34,6 +34,7 @@ public class Distributeur2Acteur implements IActeur{
 	protected Journal journal;
 
 	public Distributeur2Acteur() {
+		this.journal = new Journal(this.getNom()+" activites", this);
 	}
 
 	public String getNom() {
@@ -50,9 +51,9 @@ public class Distributeur2Acteur implements IActeur{
 
 	public void initialiser() {
 		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
-		//System.out.println(chocolats);
+		System.out.println(chocolats);
 		this.stock = new Stock(this,this.chocolats);
-		this.journal = new Journal(this.getNom()+" activites", this);
+		
 	}
 	
 	public void next() {
@@ -89,8 +90,9 @@ public class Distributeur2Acteur implements IActeur{
 
 	// Renvoie les journaux
 	public List<Journal> getJournaux() {
-		List<Journal> res=new ArrayList<Journal>();
-		return res;
+		List<Journal> j= new ArrayList<Journal>();
+		j.add(this.journal);
+		return j;
 	}
 
 	public void setCryptogramme(Integer crypto) {

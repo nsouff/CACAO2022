@@ -7,6 +7,7 @@ import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
 //auteur Marie
+
 public class Transformateur2Stock extends Transformateur2 {
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat> stockchocolat;
@@ -33,6 +34,10 @@ public double getStocktotalfeve() {
 public double getStocktotalChoco() {
 	return this.stocktotalchoco;
 }
+// Gabriel 
+public void setStock(double newst) {
+	this.stocktotalchoco = this.stocktotalchoco - newst;
+}
 
 //Marie
 public double coutStockage() {
@@ -40,14 +45,14 @@ public double coutStockage() {
 	/*for (Feve f : stockfeve.quantite_stock.keySet()) {
 		cout=cout+ stockfeve.quantite_stock.get(f)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
 	for (Feve f : stockfeve.getQuantite_stock().keySet()) {
-		cout=cout+ stockfeve.getQuantite_stock().get(f)*Transformateur2Acteur.Test.getCout();
+		cout=cout+ stockfeve.getQuantite_stock().get(f)*this.getCout();
 	}
 
 	/*for (Chocolat c : stockchocolat.quantite_stock.keySet()) {
 		cout= cout + stockchocolat.quantite_stock.get(c)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
 
 	for (Chocolat c : stockchocolat.getQuantite_stock().keySet()) {
-		cout= cout + stockchocolat.getQuantite_stock().get(c)*Transformateur2Acteur.Test.getCout();
+		cout= cout + stockchocolat.getQuantite_stock().get(c)*this.getCout();
 	}
 	return cout;
 }
