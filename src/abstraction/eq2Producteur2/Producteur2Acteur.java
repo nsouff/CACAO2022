@@ -75,12 +75,22 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	public void next() {
 		// il faut appeler nextPlantation() de la classe plantation
 		super.next();
+		
+		// Cout de production, Jules DORE
+		this.setCoutParKg();
+		double coutProduction = 0.0;
+		for(Feve f : this.coutParKg.keySet()) {
+			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
+		}
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
+		
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
+
 
 	}
 	

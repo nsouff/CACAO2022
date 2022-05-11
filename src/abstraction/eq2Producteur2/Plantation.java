@@ -233,10 +233,11 @@ public class Plantation  {
 		//auteure : Fiona
 		
 		Arbre arbre = conversion(feve);
-		return this.NbParcelles.get(arbre).size()*1000000 ;
+		return this.NbParcelles.get(arbre).size()*100000 ;
 	}
 	
-	
+	public void initialiser() {
+	}
 	}
 	
 	
