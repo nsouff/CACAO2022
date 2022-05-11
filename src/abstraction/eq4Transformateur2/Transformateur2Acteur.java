@@ -5,6 +5,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 import java.awt.Color;
@@ -14,7 +15,7 @@ import java.util.List;
 public class Transformateur2Acteur implements IActeur {
 	
 	protected int cryptogramme;
-	public static Transformateur2Acteur Test;
+	public static ChocolatDeMarque Test;
 	
 
 	
