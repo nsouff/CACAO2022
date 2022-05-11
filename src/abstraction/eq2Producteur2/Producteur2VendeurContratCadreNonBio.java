@@ -75,9 +75,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 		// TODO Auto-generated method stub
 		return false;
 	}
-	private double a = 1500; //cout de production/kg
-	private double qt = 10000; // qtité produite/kg
-	private double stock = 1;
+
 	
 			public double quantiteTotaleContratEnCours(Object produit) {
 		double quantiteTotaleContratEnCours = 0;
@@ -91,12 +89,12 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
-			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < qt) { 
+			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < this.production((Feve)(contrat.getProduit()))) { 
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), qt );// on souhaite livrer toute la quatité qu'on a
+				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) );// on souhaite livrer toute la quatité qu'on a
 				return e;
 			}
 		}	
