@@ -43,7 +43,10 @@ public class Stock<Produit> {
 	}
 	//Récupérer les stocks pour un type de produit
 	public Double getstock(Produit p) {
-		return this.stock.get(p);
+		if (this.stock.keySet().contains(p)) {
+			return this.stock.get(p);
+		}
+		return 0.0;
 	}
 
 	//julien
