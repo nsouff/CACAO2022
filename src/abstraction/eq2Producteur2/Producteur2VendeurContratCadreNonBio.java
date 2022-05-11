@@ -32,7 +32,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	 * @return Un nombre de point qui représente la quantité de fèves non Bio achetée par ce transformateur
 	 */
 	public double getPointTransformateur(IAcheteurContratCadre transformateur) {
-		double point=0.0;
+		double point=0.000;
 		for (int i=0 ; i<this.mesContratEnTantQueVendeurNonBio.size() ; i++) {
 			if(this.mesContratEnTantQueVendeurNonBio.get(i).getAcheteur().equals(transformateur)) //Selectionne les contrats cadres non bio équitable du transformateurs
 				{ point+=this.mesContratEnTantQueVendeurNonBio.get(i).getQuantiteTotale(); // Point ajoute en fonction de la quantité
@@ -73,11 +73,9 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	@Override
 	public boolean vend(Object produit) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
-	private double a = 1500; //cout de production/kg
-	private double qt = 10000; // qtité produite/kg
-	private double stock = 1;
+
 	
 			public double quantiteTotaleContratEnCours(Object produit) {
 		double quantiteTotaleContratEnCours = 0;
@@ -91,12 +89,12 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
-			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < this.StockTot.get((Feve)(contrat.getProduit()))) { 
+			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < this.production((Feve)(contrat.getProduit()))) { 
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), this.StockTot.get((Feve)(contrat.getProduit())) );// on souhaite livrer toute la quatité qu'on a
+				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) );// on souhaite livrer toute la quatité qu'on a
 				return e;
 			}
 		}	
