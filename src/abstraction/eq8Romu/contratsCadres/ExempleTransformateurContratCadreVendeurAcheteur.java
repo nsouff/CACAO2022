@@ -1,12 +1,9 @@
 package abstraction.eq8Romu.contratsCadres;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.*;
-import abstraction.eq8Romu.produits.Chocolat;
-import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class ExempleTransformateurContratCadreVendeurAcheteur extends ExempleTransformateurContratCadreVendeur implements IAcheteurContratCadre{
 	protected List<ExemplaireContratCadre> mesContratEnTantQuAcheteur;
@@ -93,7 +90,6 @@ public class ExempleTransformateurContratCadreVendeurAcheteur extends ExempleTra
 	public boolean achete(Object produit) {
 		return true;
 	}
-
 
 
 }

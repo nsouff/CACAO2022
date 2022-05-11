@@ -40,7 +40,7 @@ public final class ExemplaireContratCadre {
 	}
 	
 	/**
-	 * @return Retourne true si le produit est du chocolat de marque que le vendeur s'engage a vendre en tete de gondole
+	 * @return Retourne true si le produit est du chocolat de marque pque le vendeur s'engage a vendre en tete de gondole
 	 */
 	public boolean getTeteGondole() {
 		return this.contratCadre.getTeteGondole();

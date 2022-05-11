@@ -1,6 +1,5 @@
 package abstraction.eq8Romu.filiere;
 
-import java.awt.Color;
 import java.util.HashMap;
 
 import abstraction.eq1Producteur1.Producteur1;
@@ -11,11 +10,9 @@ import abstraction.eq5Transformateur3.Transformateur3;
 import abstraction.eq6Distributeur1.Distributeur1;
 import abstraction.eq7Distributeur2.Distributeur2;
 import abstraction.eq8Romu.Romu;
-import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
-import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 
 
@@ -33,53 +30,22 @@ public class FiliereParDefaut extends Filiere {
 	private ClientFinal cf ;
 	private SuperviseurVentesContratCadre superviseurCC;
 	private BourseCacao bourse;
-	private SuperviseurVentesAO superviseurAO;
 
-
+	
 	public FiliereParDefaut() {
 		super();
 		HashMap<Chocolat, Double> repartitionInitiale = new HashMap<Chocolat, Double>();
-		// Tirage au sort de la repartition
-		int hasard = (int)(Math.random()*3); // tirage au hasard d'un nombre dans {0, 1, 2}
-		this.journalFiliere.ajouter("Repartition initiale des  achats des clients finaux : "+hasard);
+		repartitionInitiale.put(Chocolat.HQ_BE_O, 2.5); // Haute Qualite  ,  Bio-Equitable  , Original
+		repartitionInitiale.put(Chocolat.HQ_BE,   2.5); // Haute Qualite  ,  Bio-Equitable  , pas Original 
+		repartitionInitiale.put(Chocolat.HQ_O,   10.0); // Haute Qualite  ,pas Bio-Equitable, Original
+		repartitionInitiale.put(Chocolat.HQ,     15.0); // Haute Qualite  ,pas Bio-Equitable, pas Original 
+		repartitionInitiale.put(Chocolat.MQ_BE_O, 2.5); // Moyenne Qualite,  Bio-Equitable  , Original
+		repartitionInitiale.put(Chocolat.MQ_BE,   2.5); // Moyenne Qualite,  Bio-Equitable  , pas Original 
+		repartitionInitiale.put(Chocolat.MQ_O,   10.0); // Moyenne Qualite,pas Bio-Equitable, Original
+		repartitionInitiale.put(Chocolat.MQ,     15.0); // Moyenne Qualite,pas Bio-Equitable, pas Original 
+		repartitionInitiale.put(Chocolat.BQ_O,   15.0); // Basse Qualite  ,pas Bio-Equitable, Original
+		repartitionInitiale.put(Chocolat.BQ,     25.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
 
-		switch (hasard) {
-		case 0 :
-			repartitionInitiale.put(Chocolat.HQ_BE_O, 5.0); // Haute Qualite  ,  Bio-Equitable  , Original
-			repartitionInitiale.put(Chocolat.HQ_BE,   5.0); // Haute Qualite  ,  Bio-Equitable  , pas Original 
-			repartitionInitiale.put(Chocolat.HQ_O,   15.0); // Haute Qualite  ,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.HQ,     20.0); // Haute Qualite  ,pas Bio-Equitable, pas Original 
-			repartitionInitiale.put(Chocolat.MQ_BE_O, 5.0); // Moyenne Qualite,  Bio-Equitable  , Original
-			repartitionInitiale.put(Chocolat.MQ_BE,   5.0); // Moyenne Qualite,  Bio-Equitable  , pas Original 
-			repartitionInitiale.put(Chocolat.MQ_O,    5.0); // Moyenne Qualite,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.MQ,     10.0); // Moyenne Qualite,pas Bio-Equitable, pas Original 
-			repartitionInitiale.put(Chocolat.BQ_O,   10.0); // Basse Qualite  ,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.BQ,     20.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
-			break;
-		case 1 : 
-			repartitionInitiale.put(Chocolat.HQ_BE_O, 2.5); // Haute Qualite  ,  Bio-Equitable  , Original
-			repartitionInitiale.put(Chocolat.HQ_BE,   2.5); // Haute Qualite  ,  Bio-Equitable  , pas Original 
-			repartitionInitiale.put(Chocolat.HQ_O,   10.0); // Haute Qualite  ,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.HQ,     15.0); // Haute Qualite  ,pas Bio-Equitable, pas Original 
-			repartitionInitiale.put(Chocolat.MQ_BE_O, 2.5); // Moyenne Qualite,  Bio-Equitable  , Original
-			repartitionInitiale.put(Chocolat.MQ_BE,   2.5); // Moyenne Qualite,  Bio-Equitable  , pas Original 
-			repartitionInitiale.put(Chocolat.MQ_O,   10.0); // Moyenne Qualite,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.MQ,     15.0); // Moyenne Qualite,pas Bio-Equitable, pas Original 
-			repartitionInitiale.put(Chocolat.BQ_O,   15.0); // Basse Qualite  ,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.BQ,     25.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
-			break;
-		default : 
-			repartitionInitiale.put(Chocolat.HQ_BE_O, 1.5); // Haute Qualite  ,  Bio-Equitable  , Original
-			repartitionInitiale.put(Chocolat.HQ_BE,   1.5); // Haute Qualite  ,  Bio-Equitable  , pas Original 
-			repartitionInitiale.put(Chocolat.HQ_O,    5.0); // Haute Qualite  ,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.HQ,     8.0); // Haute Qualite  ,pas Bio-Equitable, pas Original 
-			repartitionInitiale.put(Chocolat.MQ_BE_O, 2.0); // Moyenne Qualite,  Bio-Equitable  , Original
-			repartitionInitiale.put(Chocolat.MQ_BE,   2.0); // Moyenne Qualite,  Bio-Equitable  , pas Original 
-			repartitionInitiale.put(Chocolat.MQ_O,   10.0); // Moyenne Qualite,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.MQ,     15.0); // Moyenne Qualite,pas Bio-Equitable, pas Original 
-			repartitionInitiale.put(Chocolat.BQ_O,   20.0); // Basse Qualite  ,pas Bio-Equitable, Original
-			repartitionInitiale.put(Chocolat.BQ,     35.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
-		}
 		this.cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 		this.ajouterActeur(cf);
 		this.ajouterActeur(new Producteur1());
@@ -94,9 +60,8 @@ public class FiliereParDefaut extends Filiere {
 		this.ajouterActeur(this.superviseurCC);
 		this.bourse=new BourseCacao();
 		this.ajouterActeur(this.bourse);
-		this.superviseurAO=new SuperviseurVentesAO();
-		this.ajouterActeur(this.superviseurAO);
-
+		// A venir : bourse du cacao
+		// A venir : superviseurs d'appels d'offre
 	}
 	/**
 	 * Redefinition afin d'interdire l'acces direct a certains superviseurs/acteurs.
