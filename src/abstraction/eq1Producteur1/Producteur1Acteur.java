@@ -24,6 +24,8 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 	private Variable StockBasse;
 	private Variable StockMoyenne;
 	private Variable StockHaut_BE;
+	private Variable StockMoyenne_BE;
+	private Variable PrixEntretienArbre;
 	
 	
 	
@@ -39,6 +41,10 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 				this, 0, 1000000000, this.getStock(Feve.FEVE_MOYENNE));
 		this.StockHaut_BE= new Variable(this.getNom()+"StockHautBE", "Stock de Fèves Haut Bio équitable", 
 				this, 0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		this.PrixEntretienArbre= new Variable(this.getNom()+"StockHautBE", "Stock de Fèves Haut Bio équitable", 
+				this, 0, 1000000000, 0.001);
+		this.StockHaut_BE= new Variable(this.getNom()+"StockHautBE", "Stock de Fèves Haut Bio équitable", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 	}
 
 	public void initialiser() {
@@ -70,15 +76,18 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 		this.getStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE));
 		this.getStockHaut_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.getStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
+		this.getPrixEntretienArbre().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		
-		//Calcul du Prix Total de Stockage
+		
 		double prixTotal = 0 ;
+		//Calcul du Prix Total de Stockage
 		for (Feve f : this.getFeves().keySet()) {
 			prixTotal = prixTotal + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) ;
 		}
 		
 		//Calcul Prix Entretien Arbre 
-		
+		prixTotal = prixTotal 
+				+ this.getAfrique().getNombre_BE_haute()*0.1 ;
 		
 		
 		//Retirer l'argent 
@@ -101,20 +110,25 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 		}
 	}
 	
+
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
-		res.add(StockBasse);
-		res.add(StockHaut_BE);
-		res.add(StockMoyenne);
+		res.add(this.getStockBasse());
+		res.add(this.getStockHaut_BE());
+		res.add(this.getStockMoyenne());
+		res.add(this.getStockMoyenne_BE());
 		
 		return res;
 	}
 	
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
+		res.add(this.getPrixEntretienArbre());
 	
 		return res; 
 	}
+
+
 
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
@@ -158,5 +172,19 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 	 */
 	public Variable getStockHaut_BE() {
 		return StockHaut_BE;
+	}
+	
+	/**
+	 * @return the stockMoyenne_BE
+	 */
+	public Variable getStockMoyenne_BE() {
+		return StockMoyenne_BE;
+	}
+	
+	/**
+	 * @return the prixEntretienArbre
+	 */
+	public Variable getPrixEntretienArbre() {
+		return PrixEntretienArbre;
 	}
 }
