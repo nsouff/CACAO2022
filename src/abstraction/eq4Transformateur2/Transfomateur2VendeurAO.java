@@ -5,6 +5,8 @@ import java.util.List;
 import abstraction.eq8Romu.appelsOffres.IVendeurAO;
 import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 
+
+//S'INSPIRER DE EXEMPLEVENDEURAO
 public class Transfomateur2VendeurAO extends Transformateur2 implements IVendeurAO {
 
 	@Override

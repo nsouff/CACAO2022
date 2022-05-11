@@ -297,7 +297,7 @@ public class Banque implements IActeur, IAssermente {
 			erreur(" Appel de virer de Banque avec un montant egal a "+montant+" au lieu d'un montant strictement positif");
 		} else if (this.cryptogramme.get(acteurADebiter)!=cryptogrammeActeurADebiter) {
 			erreur(" Appel de virer de Banque avec un cryptogramme qui n'est pas celui du compte a debiter");
-		} else if (getSolde(acteurADebiter,cryptogrammeActeurADebiter)-montant<this.getSeuilOperationsRefusees()) {
+		} else if (acteurACrediter!=this && getSolde(acteurADebiter,cryptogrammeActeurADebiter)-montant<this.getSeuilOperationsRefusees()) {
 			this.journalBanque.ajouter(Color.RED, Color.WHITE," Virement d'un montant "+Journal.doubleSur(montant, 15,3)+" impossible car cela amenerait le solde du compte de "+Journal.texteColore(acteurADebiter.getColor(), Color.BLACK, acteurADebiter.getNom())+Journal.texteColore(Color.red, Color.white, " en dessous du decouvert autorise"));
 			return false;
 		} else if (this.aFaitFaillite(acteurADebiter)) {

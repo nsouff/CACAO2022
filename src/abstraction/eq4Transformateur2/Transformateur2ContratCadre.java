@@ -6,6 +6,19 @@ import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 
 //Marie
 public class Transformateur2ContratCadre extends Transformateur2Acteur implements IVendeurContratCadre{
+	
+	
+	public void next() {
+		super.next();
+	}
+	public void initialiser() {
+		super.initialiser();
+	}
+	
+	
+	public Transformateur2ContratCadre() {
+		super();
+	}
 
 
 	public boolean vend(Object produit) {

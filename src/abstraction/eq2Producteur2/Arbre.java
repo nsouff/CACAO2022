@@ -1,20 +1,32 @@
 package abstraction.eq2Producteur2;
 
-public class Arbre {
+//auteure : Fiona Martin
+
+import abstraction.eq8Romu.produits.Feve;
+
+public enum Arbre {
+	
+	ARBRE_HGB(60, 1/60, 960, 3, Feve.FEVE_HAUTE_BIO_EQUITABLE),
+	ARBRE_HG(75, 1/75, 960, 3, Feve.FEVE_HAUTE),
+	ARBRE_MGB(60, 1/60, 960, 3, Feve.FEVE_MOYENNE_BIO_EQUITABLE),
+	ARBRE_MG(75, 1/75, 960, 3, Feve.FEVE_MOYENNE),
+	ARBRE_BG(75, 1/75, 960, 3, Feve.FEVE_BASSE);
+	
 	private double DureeCroissance;
-	private double RendementProgressif;
 	private double DureeVie;
 	private double RendementFinal;
 	private double DureeAffinage;
+	private Feve FeveArbre; 
 
 	
-	public Arbre (double DC, double RP, double DV, double RF, double DA) {
+	Arbre (double DC, double DV, double RF, double DA, Feve FA) {
 		this.setDureeCroissance(DC);
-		this.setRendementProgressif(RP); 
 		this.setDureeVie(DV); 
 		this.setRendementFinal(RF);
 		this.setDureeAffinage(DA);
+		this.setFeveArbre(FA);
 	}
+
 
 
 	public double getDureeCroissance() {
@@ -24,16 +36,6 @@ public class Arbre {
 
 	public void setDureeCroissance(double dureeCroissance) {
 		DureeCroissance = dureeCroissance;
-	}
-
-
-	public double getRendementProgressif() {
-		return RendementProgressif;
-	}
-
-
-	public void setRendementProgressif(double rendementProgressif) {
-		RendementProgressif = rendementProgressif;
 	}
 
 
@@ -64,7 +66,15 @@ public class Arbre {
 	public void setDureeAffinage(double dureeAffinage) {
 		DureeAffinage = dureeAffinage;
 	}
-
+	
+	public void setFeveArbre(Feve FA) {
+		FeveArbre = FA ;
+	}
+	
+	public Feve getFeveArbre() {
+		return FeveArbre;
+	}
+	
 	
 	
 	

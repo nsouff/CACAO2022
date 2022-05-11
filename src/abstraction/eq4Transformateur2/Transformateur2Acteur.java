@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Transformateur2Acteur implements IActeur {
 	
-	
+	//pas sur de celles ci, mais je les laisse au cas ou...
 	private Variable coutStockage;
 	private Variable prixSeuil; // au dela duquel nous n'achetons pas
 	private Variable rendementTransfoLongue;
@@ -30,66 +30,32 @@ public class Transformateur2Acteur implements IActeur {
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
-	private Stock<Feve> stockfeve;
-	private Stock<Chocolat> stockchocolat;
+
 	private double marge;
+
 	
 	// variables pour l'achatAO
-	protected HashMap<ChocolatDeMarque, Double> stock;
-	protected Chocolat choco;
-	protected String marque;
-	protected double prixInit;
+	private Stock<Feve> stockfeve;
+	private Stock<ChocolatDeMarque> stockchocolat;
+	protected double prixInit;// Lorsque l'on est acheteur d'une Appel d'Offre
 	protected Journal journal;
 	
 	
-	
-	
-	
-	public Transformateur2Acteur(int cryptogramme, Variable coutStockage, Variable prixSeuil,
-			Variable rendementTransfoLongue, Variable prixTransformation, Variable prixChocoOriginal,
-			Variable capaciteStockage, Variable capaciteStockageFixe, Variable expirationFeve, Variable expirationChoco,
-			Stock<Feve> stockfeve, Stock<Chocolat> stockchocolat, double marge, HashMap<ChocolatDeMarque, Double> stock,
-			Chocolat choco, String marque, double prixInit) {
-		super();
-		this.cryptogramme = cryptogramme;
-		this.coutStockage = coutStockage;
-		this.prixSeuil = prixSeuil;
-		this.rendementTransfoLongue = rendementTransfoLongue;
-		this.prixTransformation = prixTransformation;
-		this.prixChocoOriginal = prixChocoOriginal;
-		this.capaciteStockage = capaciteStockage;
-		this.capaciteStockageFixe = capaciteStockageFixe;
-		this.expirationFeve = expirationFeve;
-		this.expirationChoco = expirationChoco;
-		this.stockfeve = stockfeve;
-		this.stockchocolat = stockchocolat;
-		this.marge = marge;
-		this.stock = stock;
-		this.choco = choco;
-		this.marque = marque;
-		this.prixInit = prixInit;
-		this.journal=new Journal(this.getNom()+" activites", this);
-		
-	}
-
-
-
-
 	protected int cryptogramme;
-	public static ChocolatDeMarque Test;
+	public static ChocolatDeMarque Test; //Gabriel? Supprimes?
+	
+
+	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
+
+
 	
 
 	
 	
-
-	
-
-	
-	
-	
+	//Nawfel
 	public Transformateur2Acteur() { //valeurs des min, max, et init (3 derniers parametres) à changer plus tard.
 	
-		
+		//pas sur de celles ci, mais je les laisse au cas ou...
 		this.coutStockage = new Variable("cout stockage", "<html>Cout de stockage</html>",this, 0.0, 10.0, 3.0);
 		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 3.0);
 		this.rendementTransfoLongue=new Variable("rendement transfo longue", "<html>Rendement d'une transformation longue</html>",this, 0.0, 10.0, 3.0);
@@ -100,6 +66,17 @@ public class Transformateur2Acteur implements IActeur {
 		this.expirationFeve=new Variable("expiration feve", "<html>Duree avant expiration d'une feve</html>",this, 0.0, 10.0, 3.0);
 		this.expirationChoco=new Variable("expiration choco", "<html>Duree avant expiration du chocolat</html>",this, 0.0, 10.0, 3.0);
 		this.marge = 1.1;
+		
+		
+		
+		this.prixInit=100; //arbitraire
+		this.journal=new Journal(this.getNom()+" activites", this);
+		
+		ChocolatDeMarque chocomax=new ChocolatDeMarque(Chocolat.MQ,"Omax");
+		HashMap<ChocolatDeMarque,Double> h1=new HashMap<ChocolatDeMarque,Double>();
+		h1.put(chocomax, (double) 1000000);
+		this.stockchocolat=new Stock(h1,1000000);
+		
 	}
 	
 	
@@ -127,22 +104,22 @@ public class Transformateur2Acteur implements IActeur {
 	
 	public void next() {
 		this.journal.ajouter("== ETAPE "+Filiere.LA_FILIERE.getEtape()+" ==");
-		if (this.stock.keySet().size()>0) {
-			for (ChocolatDeMarque c : this.stock.keySet()) {
-				this.journal.ajouter("stock de "+c+" : "+this.stock.get(c));
+		if (this.stockchocolat.getQuantiteStock().keySet().size()>0) {
+			for (ChocolatDeMarque c : this.stockchocolat.getQuantiteStock().keySet()) {
+				this.journal.ajouter("stock de "+c+" : "+this.stockchocolat.getQuantiteStock().get(c));
 			}
 		}
 	}
 	
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filiere = new ArrayList<String>();
-		filiere.add("OPTI'CACAO");  
+		filiere.add("TESTAO");  
 		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
-		case "OPTI'CACAO" : return new CopieFiliereTestAO();
+		case "TESTAO" : return new CopieFiliereTestAO();
 	    default : return null;
 		}
 	}
@@ -165,8 +142,9 @@ public class Transformateur2Acteur implements IActeur {
 	
 
 	public List<Journal> getJournaux() {
-		List<Journal> res=new ArrayList<Journal>();
-		return res;
+		List<Journal> j= new ArrayList<Journal>();
+		j.add(this.journal);
+		return j;
 	}
 	public double getCout() {
 		return this.coutStockage.getValeur();
@@ -198,7 +176,7 @@ public class Transformateur2Acteur implements IActeur {
 
 
 
-	public Stock<Chocolat> getStockchocolat() {
+	public Stock<ChocolatDeMarque> getStockchocolat() {
 		return this.stockchocolat;
 	}
 	public double getMarge() {

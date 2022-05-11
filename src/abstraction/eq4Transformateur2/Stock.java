@@ -6,8 +6,16 @@ import abstraction.eq8Romu.filiere.Filiere;
 //auteur Marie
 
 public class Stock<I> {
-		public HashMap<I,Double> quantite_stock;
-		private double stocktotal;
+	
+	public HashMap<I,Double> quantite_stock;
+	private double stocktotal; //Nawfel : pas utile, on peut la trouver avec la HashMap quantite_stock(somme des values). Mais je la laisse pour pas qu'il y est des erreurs après. Je la changerais un jour
+	
+		//Nawfel
+		public Stock(HashMap<I, Double> quantite_stock, double stocktotal) {
+		this.quantite_stock = quantite_stock;
+		this.stocktotal = stocktotal;
+	}
+		
 		
 		
 	public Stock(double stocktotal) {
