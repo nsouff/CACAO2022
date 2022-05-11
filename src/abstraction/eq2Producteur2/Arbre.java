@@ -30,8 +30,6 @@ public enum Arbre {
 		this.setFeveArbre(FA);
 	}
 
-
-
 	public double getDureeCroissance() {
 		return DureeCroissance;
 	}

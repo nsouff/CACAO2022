@@ -18,6 +18,7 @@ public class Parcelle {
 	private int DebutMaladie;
 	
 	
+	
 	public Parcelle(Arbre typearbre, int age) {
 		
 		//auteure : Fiona	
