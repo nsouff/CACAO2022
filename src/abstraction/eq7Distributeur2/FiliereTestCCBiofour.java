@@ -42,12 +42,12 @@ public class FiliereTestCCBiofour extends Filiere {
 		ClientFinal  cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 
 		this.ajouterActeur(cf);
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
+		this.ajouterActeur(new Distributeur2());
+		this.ajouterActeur(new ExempleTransfo(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
+		this.ajouterActeur(new ExempleTransfo(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
+		this.ajouterActeur(new ExempleTransfo(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
 		this.ajouterActeur(new Romu());
 		this.superviseurCC=new SuperviseurVentesContratCadre();
-		this.ajouterActeur(new Distributeur2());
 		this.ajouterActeur(this.superviseurCC);
 
 	}
