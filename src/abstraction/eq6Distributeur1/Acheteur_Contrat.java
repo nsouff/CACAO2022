@@ -7,6 +7,11 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Gamme;
 
 public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{//leorouppert
+
+	public Acheteur_Contrat() {
+		super();
+		System.out.println("Création Acheteur_Contrat");
+	}
 	
 @Override
 public boolean achete(Object produit) {
