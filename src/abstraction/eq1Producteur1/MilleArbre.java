@@ -135,22 +135,22 @@ public class MilleArbre {
 	}
 	
 	public int Esperance_vie() { //Écrit par Antoine
-		double d = Math.random();
-		if (d<0.5) {
-			int esp = 960-(int)Math.floor(d*240);
+		double différence = Math.random();
+		if (différence<0.5) {
+			int esp = 960-(int)Math.floor(différence*240);
 			return esp;
 		}
 		else {
-			int esp = 960+(int)Math.floor((d-0.5)*240);
+			int esp = 960+(int)Math.floor((différence-0.5)*240);
 			return esp;
 		}
 	}
 	public double Production_max() { //Écrit par Maxime
-		double d = 200 + Math.random()*50; //La production de 1000 arbres
+		double production = 200 + Math.random()*50; //La production de 1000 arbres
 		if (this.bioequitable) {
-			d = 0.8*d;
+			production = 0.8*production;
 		}
-		return d;
+		return production;
 	}
 	public int Age() { //Écrit par Maxime
 		return Filiere.LA_FILIERE.getEtape()-this.getUt_plantation();
