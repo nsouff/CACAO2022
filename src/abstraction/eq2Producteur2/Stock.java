@@ -10,9 +10,15 @@ public class Stock {
 	private int step_arrivee;
 	private boolean perime;
 	
-	public Stock(double quantite, int duree) {
+	public Stock(double quantite, int duree, boolean perime) {
 		this.quantite = quantite;
 		this.step_arrivee = duree;
+		this.perime = perime;
+	}
+	public Stock(double quantite) {
+		this.quantite = quantite;
+		this.step_arrivee = Filiere.LA_FILIERE.getEtape();
+		this.perime = false;
 	}
 
 	public double getQuantite() {

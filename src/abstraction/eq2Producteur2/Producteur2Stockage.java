@@ -35,7 +35,7 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		}
 		return s;	
 	}
-	public void removeQuantite(double q, Feve f ) {
+	public void removeQuantite(double q, Feve f) {
 		LinkedList<Stock> L=Stocks.get(f);
 		while (q>0) {
 			int m=0;
@@ -54,5 +54,9 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		}
 	}
 	public void initialiser() {
+		
+	}
+	public void next() {
+		
 	}
 }
