@@ -80,7 +80,7 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "Bla bla bla";
+		return "Rendre toutes les gammes de produit accessibles à tous !";
 	}
 
 	public Color getColor() {
