@@ -6,6 +6,8 @@ import java.util.List;
 
 
 import abstraction.eq8Romu.produits.Gamme;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.IMarqueChocolat;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -148,6 +150,23 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			}
 		}
 	}
+	
+	/**  _________________________________________________TOUR ET INITIALISATION_________________________________________________*/
+	
+	public void initialiser() {
+		super.initialiser();
+	}
+	
+	public void next() {
+		super.next();
+		// Choix quantite et prix Feve
+		// Contrat cadre Feve eventuel
+		// Transformation
+		// Choix prix de Chocolat
+		// Appels d'offres
+		// Stocks
+	}
+	
 
 	// donne nos marques de chocolat, auteur Julien */
 	public List<String> getMarquesChocolat() {
