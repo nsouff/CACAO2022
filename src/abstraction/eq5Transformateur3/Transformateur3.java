@@ -18,7 +18,8 @@ public class Transformateur3 extends VenteAppel {
 	public void next() {
 		super.next();
 		double montant= prixStockage();
-		 Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
+		if (montant >0) {
+		 Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);}
 		
 	}
 	
