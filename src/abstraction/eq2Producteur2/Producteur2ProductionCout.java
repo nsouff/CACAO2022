@@ -19,11 +19,11 @@ public class Producteur2ProductionCout extends Plantation {
 	private HashMap<Feve,Double> coutParKg;
 
 	public Producteur2ProductionCout() {
-		this.coutParKg.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0.0);
-		this.coutParKg.put(Feve.FEVE_HAUTE, 0.0);
-		this.coutParKg.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0.0);
-		this.coutParKg.put(Feve.FEVE_MOYENNE, 0.0);
-		this.coutParKg.put(Feve.FEVE_BASSE, 0.0);
+		this.coutParKg.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, (this.coutHQ_BE*this.getNbArbre(Feve.FEVE_HAUTE_BIO_EQUITABLE))/this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		this.coutParKg.put(Feve.FEVE_HAUTE, (this.coutHQ*this.getNbArbre(Feve.FEVE_HAUTE))/this.production(Feve.FEVE_HAUTE));
+		this.coutParKg.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, (this.coutMQ_BE*this.getNbArbre(Feve.FEVE_MOYENNE_BIO_EQUITABLE))/this.production(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		this.coutParKg.put(Feve.FEVE_MOYENNE, (this.coutMQ*this.getNbArbre(Feve.FEVE_MOYENNE))/this.production(Feve.FEVE_MOYENNE));
+		this.coutParKg.put(Feve.FEVE_BASSE, (this.coutBQ*this.getNbArbre(Feve.FEVE_BASSE))/this.production(Feve.FEVE_BASSE));
 	}
 
 
