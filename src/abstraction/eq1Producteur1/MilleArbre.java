@@ -2,7 +2,8 @@ package abstraction.eq1Producteur1;
 
 import abstraction.eq8Romu.filiere.Filiere;
 
-public class arbre {
+// Une instance de "MilleArbre" équivaut à 1000 arbres réels
+public class MilleArbre {
 	private int ut_plantation;
 	private int ut_esperance_vie;
 	private int stade_maladie;
@@ -13,19 +14,20 @@ public class arbre {
 	private int date_transition;
 	private double productivite_max;
 	
-	public arbre() { //Écrit par Maxime
+	public MilleArbre() { //Écrit par Maxime
 		this.ut_plantation=0;
 		this.ut_esperance_vie= this.Esperance_vie();
 		this.stade_maladie=0;
 		this.ut_debut_maladie = 0;
-		this.qualite=0;
+		this.qualite=1;
 		this.bioequitable=false;
 		this.transition_bio=false;
 		this.date_transition=0;
 		this.productivite_max=this.Production_max();
 	}
-	public arbre(int qualite, boolean BE) { //Écrit par Antoine
-		this.ut_plantation = Filiere.LA_FILIERE.getEtape();
+	
+	public MilleArbre(int qualite, boolean BE,int ut_plantation) { //Écrit par Antoine
+		this.ut_plantation = ut_plantation;
 		this.ut_esperance_vie = Esperance_vie();
 		this.stade_maladie = 0;
 		this.ut_debut_maladie = 0;
@@ -131,6 +133,7 @@ public class arbre {
 			this.setMaladie(0);
 		}
 	}
+	
 	public int Esperance_vie() { //Écrit par Antoine
 		double d = Math.random();
 		if (d<0.5) {
@@ -143,7 +146,7 @@ public class arbre {
 		}
 	}
 	public double Production_max() { //Écrit par Maxime
-		double d = 0.2 + Math.random()/20;
+		double d = 200 + Math.random()*50; //La production de 1000 arbres
 		if (this.bioequitable) {
 			d = 0.8*d;
 		}
@@ -176,7 +179,7 @@ public class arbre {
 				}
 				else {
 					if(this.getStade_maladie()==3) {
-						if(this.Age()-this.getUt_debut_maladie()<=2) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=2) {
 							return 0;
 						}
 						else {
@@ -184,7 +187,7 @@ public class arbre {
 						}
 					}
 					else {
-						if(this.Age()-this.getUt_debut_maladie()<=4) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=4) {
 							return 0;
 						}
 						else {
@@ -215,7 +218,7 @@ public class arbre {
 				}
 				else {
 					if(this.getStade_maladie()==3) {
-						if(this.Age()-this.getUt_debut_maladie()<=2) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=2) {
 							return 0;
 						}
 						else {
@@ -223,7 +226,7 @@ public class arbre {
 						}
 					}
 					else {
-						if(this.Age()-this.getUt_debut_maladie()<=4) {
+						if(Filiere.LA_FILIERE.getEtape()-this.getUt_debut_maladie()<=4) {
 							return 0;
 						}
 						else {
