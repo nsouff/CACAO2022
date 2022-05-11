@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
@@ -57,7 +59,17 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void next() {
 		super.next();
+		journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
+		if (Filiere.LA_FILIERE.getEtape()>=1) {
+			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+			journal.ajouter("le cours de "+Feve.FEVE_MOYENNE+" est : "+Journal.doubleSur(bourse.getCours(Feve.FEVE_MOYENNE).getValeur(), 2));
+		}
 	}
-
+	
+	public List<Journal> getJournaux() {
+		List<Journal> j= new ArrayList<Journal>();
+		j.add(this.journal);
+		return j;
+	}
 
 }
