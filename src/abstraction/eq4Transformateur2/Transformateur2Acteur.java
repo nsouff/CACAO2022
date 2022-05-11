@@ -32,7 +32,7 @@ public class Transformateur2Acteur implements IActeur {
 	private Stock<Chocolat> stockchocolat;
 	private double marge;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
-
+	protected Journal journal;
 	
 
 	
@@ -51,9 +51,21 @@ public class Transformateur2Acteur implements IActeur {
 		this.expirationFeve=new Variable("expiration feve", "<html>Duree avant expiration d'une feve</html>",this, 0.0, 10.0, 3.0);
 		this.expirationChoco=new Variable("expiration choco", "<html>Duree avant expiration du chocolat</html>",this, 0.0, 10.0, 3.0);
 		this.marge = 1.1;
+		this.NewCap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
 	}
 	
 	
+
+
+
+
+
+
+
+
+
+
+
 
 
 	public void initialiser() {
