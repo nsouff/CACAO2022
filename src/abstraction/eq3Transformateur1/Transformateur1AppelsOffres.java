@@ -66,5 +66,8 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 		}
 	}
 		}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'main' of https://github.com/AnnaCharles/CACAO2022
