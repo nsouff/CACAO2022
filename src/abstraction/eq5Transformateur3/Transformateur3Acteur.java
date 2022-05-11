@@ -63,6 +63,19 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.SeuilMinChocolat = 100.00;
 		this.achatMaxFeves = 5000.00;
 		this.journal = new Journal (this.getNom()+" activites", this);
+		
+		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 10000000.00);
+		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 10000000.00);
+		
+		this.stockChocolat.ajouter(Chocolat.MQ_BE, 10000000.00);
+		this.stockChocolat.ajouter(Chocolat.MQ_BE_O, 10000000.00);
+		this.stockChocolat.ajouter(Chocolat.HQ_BE, 10000000.00);
+		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, 10000000.00);
+		
+		this.stockFevesVariableM = new Variable(this.getNom()+"stockFevesMoyennesBio", "stock de feves moyenne qualite bio", this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)  );
+		this.stockFevesVariableH = new Variable(this.getNom()+"stockFevesHautesBio", "stock de feves haute qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)  );
+		this.stockChocolatVariableM = new Variable(this.getNom()+"stockChocolatMoyen", "stock de chocolat moyenne qualite",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.MQ_BE)+this.stockChocolat.getstock(Chocolat.MQ_BE_O)  );
+		this.stockChocolatVariableH = new Variable(this.getNom()+"stockChocolatHaut", "stock de chocolat huate qualite ",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.HQ_BE)+this.stockChocolat.getstock(Chocolat.HQ_BE_O)  );
 
 	}
 
@@ -82,18 +95,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 
 
 	public void initialiser() {
-		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 10000000.00);
-		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 10000000.00);
 		
-		this.stockChocolat.ajouter(Chocolat.MQ_BE, 10000000.00);
-		this.stockChocolat.ajouter(Chocolat.MQ_BE_O, 10000000.00);
-		this.stockChocolat.ajouter(Chocolat.HQ_BE, 10000000.00);
-		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, 10000000.00);
-		
-		this.stockFevesVariableM = new Variable(this.getNom()+"stockFevesMoyennesBio", "stock de feves moyenne qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)  );
-		this.stockFevesVariableH = new Variable(this.getNom()+"stockFevesHautesBio", "stock de feves haute qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)  );
-		this.stockChocolatVariableM = new Variable(this.getNom()+"stockChocolatMoyen", "stock de chocolat moyenne qualite",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.MQ_BE)+this.stockChocolat.getstock(Chocolat.MQ_BE_O)  );
-		this.stockChocolatVariableH = new Variable(this.getNom()+"stockChocolatHaut", "stock de chocolat huate qualite ",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.HQ_BE)+this.stockChocolat.getstock(Chocolat.HQ_BE_O)  );
 	}
 
 	
