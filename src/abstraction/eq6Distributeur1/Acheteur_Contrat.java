@@ -6,7 +6,7 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Gamme;
 
-public class Acheteur_Contrat extends Distributeur1Acteur implements IAcheteurContratCadre{//leorouppert
+public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
 
 	public Acheteur_Contrat() {
 		super();
