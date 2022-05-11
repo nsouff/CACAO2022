@@ -35,7 +35,7 @@ public class Producteur1Stock {
 	
 	//Auteur : Khéo
 	public void next(){
-	
+		this.MAJStock();
 	}
 	
 	//Auteur : Khéo
@@ -68,6 +68,21 @@ public class Producteur1Stock {
 				this.getFeves().get(f).get(0).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
 				quantite = 0 ;
 			}
+		}
+	}
+	
+	//Auteur : Khéo
+	public void MAJStock() {
+		
+		for(Feve Feve : this.getFeves().keySet()) {
+			for (int i=0; i< this.getFeves().get(Feve).size(); i++) {
+				this.getFeves().get(Feve).get(i).MajPeremption();
+				
+				if (this.getFeves().get(Feve).get(i).isPerime()) { //On retire du stock si c'est périmée
+					this.getFeves().get(Feve).remove(i);
+				}
+			}
+			
 		}
 	}
 	
