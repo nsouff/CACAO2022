@@ -15,8 +15,6 @@ public class Producteur2Acteur implements IActeur {
 	protected int cryptogramme;
 
 
-	public double prixstockageVariable = 0.01 ;
-	public double prixstockageFixe = 100;
 	private Variable prixstockage ;
 	private Variable dureeaffinageBQ ;
 	private Variable dureeaffinageMQ ;
@@ -24,7 +22,7 @@ public class Producteur2Acteur implements IActeur {
 	
 	
 	public Producteur2Acteur() {
-		this.prixstockage= new VariableReadOnly("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
+		this.prixstockage= new Variable("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
 		this.dureeaffinageBQ= new VariableReadOnly("Durée affinage BQ","", this,  0.0, 1000000000, 1) ;
 		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
 		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;
