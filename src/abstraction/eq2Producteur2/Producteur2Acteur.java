@@ -35,6 +35,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	private Variable dureeaffinageMQ ;
 	private Variable dureeaffinageHQ ;
 	
+	// Auteur : Clément
 	
 	public Producteur2Acteur() {
 		this.prixstockage= new Variable("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
@@ -83,7 +84,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
 		}
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
-		
+//Auteur Clément	
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));

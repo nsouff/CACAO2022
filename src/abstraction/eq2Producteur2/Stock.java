@@ -37,7 +37,7 @@ public class Stock {
 	}
 	
 	public void addquantite(double q) {
-		this.quantite += q;		
+		this.quantite = this.quantite + q;		
 	}
 	public void removequantite(double q) {
 		this.quantite = this.quantite - q;
