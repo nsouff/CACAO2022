@@ -53,6 +53,10 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		
 		}
 	}
+	public void addQuantite(double q, Feve f) {
+		this.Stocks.get(f).add(new Stock(q));
+	}
+	
 	public void initialiser() {
 		
 	}
