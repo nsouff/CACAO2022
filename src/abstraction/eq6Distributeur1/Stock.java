@@ -30,16 +30,16 @@ public class Stock { //Emma Humeau
 	}
 
 	private void initStockVar() {
-		stockVar.put(Chocolat.HQ_BE_O, new VariablePrivee("HQ_BE_O", acteur, 0));
-		stockVar.put(Chocolat.HQ_BE, new VariablePrivee("HQ_BE", acteur, 0));
-		stockVar.put(Chocolat.HQ_O, new VariablePrivee("HQ_O", acteur, 0));
-		stockVar.put(Chocolat.HQ, new VariablePrivee("HQ", acteur, 0));
-		stockVar.put(Chocolat.MQ_BE_O, new VariablePrivee("MQ_BE_O", acteur, 0));
-		stockVar.put(Chocolat.MQ_BE, new VariablePrivee("MQ_BE", acteur, 0));
-		stockVar.put(Chocolat.MQ_O, new VariablePrivee("MQ_O", acteur, 0));
-		stockVar.put(Chocolat.MQ, new VariablePrivee("MQ", acteur, 0));
-		stockVar.put(Chocolat.BQ_O, new VariablePrivee("BQ_O", acteur, 0));
-		stockVar.put(Chocolat.BQ, new VariablePrivee("BQ", acteur, 0));
+		stockVar.put(Chocolat.HQ_BE_O, new VariablePrivee("HQ_BE_O", acteur, 200));
+		stockVar.put(Chocolat.HQ_BE, new VariablePrivee("HQ_BE", acteur, 300));
+		stockVar.put(Chocolat.HQ_O, new VariablePrivee("HQ_O", acteur, 400));
+		stockVar.put(Chocolat.HQ, new VariablePrivee("HQ", acteur, 500));
+		stockVar.put(Chocolat.MQ_BE_O, new VariablePrivee("MQ_BE_O", acteur, 600));
+		stockVar.put(Chocolat.MQ_BE, new VariablePrivee("MQ_BE", acteur, 100));
+		stockVar.put(Chocolat.MQ_O, new VariablePrivee("MQ_O", acteur, 200));
+		stockVar.put(Chocolat.MQ, new VariablePrivee("MQ", acteur, 300));
+		stockVar.put(Chocolat.BQ_O, new VariablePrivee("BQ_O", acteur, 400));
+		stockVar.put(Chocolat.BQ, new VariablePrivee("BQ", acteur, 500));
 	}
 	
 	/**
