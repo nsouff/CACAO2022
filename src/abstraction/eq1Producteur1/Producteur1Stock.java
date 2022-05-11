@@ -36,14 +36,22 @@ public class Producteur1Stock {
 	//Auteur : Khéo
 	public void next(){
 		this.MAJStock();
+		
+		for (Feve f : this.getFeves().keySet()) {
+			for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+				Lot.MAJAffinage(f);
+			}
+		}
 	}
 	
 	//Auteur : Khéo
-	public double getStock(Feve f){
+	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+			if (Lot.isAffine() || affinage) {
 			somme = somme + Lot.getPoids() ;
+			}
 		}
 		return somme ;	
 	}

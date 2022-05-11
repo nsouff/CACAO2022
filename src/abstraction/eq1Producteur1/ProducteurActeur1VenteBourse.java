@@ -42,7 +42,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 			if (Filiere.LA_FILIERE.getEtape()>=1) {
 				// Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
 				if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1)) <= cours) {
-					return this.getStock(f);
+					return this.getStock(f, false);
 					
 				}
 			}
@@ -58,7 +58,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements I
 	 */
 	//Auteur : Khéo
 	public HashMap<Feve, Double> getPrixmoyenFeve() {
-		return prixmoyenFeve;
+		return this.prixmoyenFeve;
 	}
 
 
