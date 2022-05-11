@@ -16,11 +16,11 @@ import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
-	public SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 	
 	//Karla / Julien
 	/* Initier un contrat */
 	public void lanceruncontratAcheteur(Feve f) {
+		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		List<IVendeurContratCadre> L = superviseur.getVendeurs(f);
 		int qtt = 100; // qtt de feve par step, à modifier en fonction des ventes 
 		
