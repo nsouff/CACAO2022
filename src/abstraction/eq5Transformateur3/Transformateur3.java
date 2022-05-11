@@ -8,7 +8,7 @@ public class Transformateur3 extends VenteAppel {
 	public double prixStockage() {
 		double qttTotale = 0;    // on gère le chocolat et les fèves de la même manière pour les prix de stockage -> poids
 		qttTotale+= this.stockChocolat.getstocktotal()+this.stockFeves.getstocktotal() ;
-		return qttTotale*4*(Filiere.LA_FILIERE.getParametre("prixstockageVariable").getValeur()) ; 
+		return qttTotale*4*(Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) ; 
 		}
 
 	public Transformateur3() {
