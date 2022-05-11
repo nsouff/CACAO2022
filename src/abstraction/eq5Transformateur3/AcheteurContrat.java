@@ -72,7 +72,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			return prixT;
 		}
 		else {
-			double nouveauprix = 0.7*prixT;
+			double nouveauprix = 0.4*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
 				return nouveauprix;
 			}
