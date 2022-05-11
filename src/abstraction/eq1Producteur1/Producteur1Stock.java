@@ -45,11 +45,11 @@ public class Producteur1Stock {
 	}
 	
 	//Auteur : Khéo
-	public double getStock(Feve f){
+	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
-			if (Lot.isAffine()) {
+			if (Lot.isAffine() || affinage) {
 			somme = somme + Lot.getPoids() ;
 			}
 		}
