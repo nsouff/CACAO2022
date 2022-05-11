@@ -114,7 +114,7 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 
 	public void notificationFaillite(IActeur acteur) {
 		if (this==acteur) {
-		System.out.println("I'll be back... or not... "+this.getNom());
+		System.out.println("Le Stonks n'était qu'un rêve "+this.getNom());
 		} else {
 			System.out.println("Poor "+acteur.getNom()+"... Why so serious ? "+this.getNom());
 		}

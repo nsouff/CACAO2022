@@ -103,9 +103,9 @@ public class ExempleDistributeurContratCadreVendeurAcheteur extends ExempleTrans
 	@Override
 	public List<ChocolatDeMarque> getChocolatsProduits() {
 		// TODO Auto-generated method stub
-		List<ChocolatDeMarque> marques = new ArrayList<ChocolatDeMarque>();
-		marques.add(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour"));
-		return marques;
+		List<ChocolatDeMarque> marque = new ArrayList<ChocolatDeMarque>();
+		marque.add(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour"));
+		return marque;
 	}
 
 
