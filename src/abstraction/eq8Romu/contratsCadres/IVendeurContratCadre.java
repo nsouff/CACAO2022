@@ -10,7 +10,7 @@ public interface IVendeurContratCadre extends IActeur {
 	 * vendre le type de produit precise en parametre (retourne false si il s'agit d'un produit que
 	 * l'acteur ne vendra pas durant la simulation.
 	 */
-	public boolean peutVendre(Object produit);
+//	public boolean peutVendre(Object produit);
 
 	/**
 	 * Methode appelee par le superviseur afin de savoir si l'acheteur

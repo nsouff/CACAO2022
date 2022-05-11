@@ -8,10 +8,10 @@ import abstraction.eq8Romu.produits.Feve;
 
 // auteur Clément //
 
-public class Producteur2Stockage extends Producteur2Acteur {
+public class Producteur2Stockage extends Producteur2ProductionCout {
 	
-	private HashMap<Feve,LinkedList<Stock>> Stocks;
-	private HashMap<Feve,Double> StockTot;
+	protected HashMap<Feve,LinkedList<Stock>> Stocks;
+	protected HashMap<Feve,Double> StockTot;
 	
 	public Producteur2Stockage () {
 		super();
@@ -53,5 +53,8 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		
 		}
 	}
+//	public void initialiser() {
+//		this.add
+//	}
 	
 }
