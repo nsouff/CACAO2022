@@ -86,7 +86,7 @@ public class MilleArbre {
 	public boolean getTransition_bio() { //Écrit par Antoine
 		return this.transition_bio;
 	}
-	public int getDate_transition() {
+	public int getDate_transition() { //Écrit par Antoine
 		return this.date_transition;
 	}
 	public double getProductivite_max() { //Écrit par Antoine
@@ -94,9 +94,9 @@ public class MilleArbre {
 	}
 	
 	public void MAJMaladie() { //Écrit par Antoine
-		if (stade_maladie == 0) {
-			double d = Math.random();
-			if (d<=0.03) {
+		if (this.getStade_maladie() == 0) {
+			double chance_maladie = Math.random();
+			if (chance_maladie<=0.03) {
 				double stade_maladie = Math.random();
 				if (stade_maladie<=0.45) {
 					this.setMaladie(1);
@@ -120,16 +120,16 @@ public class MilleArbre {
 				}
 			}
 		}
-		if ((stade_maladie == 1) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 2)) {
+		if ((this.getStade_maladie() == 1) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 2)) {
 			this.setMaladie(0);
 		}
-		if ((stade_maladie == 2) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 5)) {
+		if ((this.getStade_maladie() == 2) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 5)) {
 			this.setMaladie(0);
 		}
-		if ((stade_maladie == 3) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 6)) {
+		if ((this.getStade_maladie() == 3) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 6)) {
 			this.setMaladie(0);
 		}
-		if ((stade_maladie == 4) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 8)) {
+		if ((this.getStade_maladie() == 4) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 8)) {
 			this.setMaladie(0);
 		}
 	}
