@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import abstraction.eq8Romu.appelsOffres.FiliereTestAO;
+import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
+import abstraction.eq8Romu.clients.FiliereTestClientFinal;
 import abstraction.eq8Romu.contratsCadres.ContratCadre;
+import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
@@ -98,12 +102,19 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	// Renvoie la liste des filières proposées par l'acteur
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
+		filieres.add("AO");
+		
 		return(filieres);
 	}
 
 	// Renvoie une instance d'une filière d'après son nom
 	public Filiere getFiliere(String nom) {
-		return Filiere.LA_FILIERE;
+		
+		switch (nom) { 
+		case "AO" : return new FiliereParDefaut_5();
+		
+	    default : return null;
+		}
 	}
 
 	// Renvoie les indicateurs

@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
+
 
 public class Parc {
 	private ArrayList<MilleArbre> cacaoyers;
@@ -15,6 +17,7 @@ public class Parc {
 	private int nombre_non_BE_basse;
 	private int nombre_non_BE_moyenne;
 	private int nombre_non_BE_haute;
+	private int Arbres_Mourant_5ans;
 	private boolean guerre;
 	private int ut_debut_guerre;
 	private int ut_fin_guerre;
@@ -31,9 +34,8 @@ public class Parc {
 		this.guerre = false;
 		this.ut_debut_guerre = 0;
 		this.ut_fin_guerre = 0;
-		fin_aleas = 0;
-		
-		
+		this.fin_aleas = 0;
+		this.Arbres_Mourant_5ans = 0;
 	}
 	
 	public List<MilleArbre> getCacaoyers() { //Écrit par Antoine
@@ -190,6 +192,12 @@ public class Parc {
 					|| (arbre_i.Age() == arbre_i.getUt_esperance_vie())) {
 				this.getCacaoyers().remove(arbre_i);
 				this.MAJCompteur(arbre_i,-1);
+			}
+			if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) {
+				int qualite = arbre_i.getQualite();
+				boolean BE = arbre_i.getBioequitable();
+				this.Planter(new MilleArbre(qualite,BE,Filiere.LA_FILIERE.getEtape()));
+				this.MAJCompteur(arbre_i,1);
 			}
 		}
 	}
