@@ -73,7 +73,7 @@ public class Distributeur1Acteur implements IActeur {
 	
 	
 	public String getNom() {
-		return "EQ6";
+		return "FourAll";
 	}
 
 	public String getDescription() {
