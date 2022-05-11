@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
-import abstraction.eq8Romu.filiere.IMarqueChocolat;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
