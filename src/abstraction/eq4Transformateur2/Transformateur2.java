@@ -14,7 +14,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //Nawfel
 
-public class Transformateur2 extends Transformateur2Acteur{
+public class Transformateur2 extends Transformateur2ContratCadre{
 
 	public Transformateur2 () {
 		super();

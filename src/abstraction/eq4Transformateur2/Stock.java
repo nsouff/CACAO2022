@@ -60,8 +60,6 @@ public class Stock<I> {
 	// Marie
 	public double quantiteStockTotale() {
 
-		
-
 		for(Double d: this.getQuantite_stock().values()) {
 
 			this.stocktotal=this.stocktotal+d;
