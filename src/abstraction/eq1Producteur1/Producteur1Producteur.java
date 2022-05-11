@@ -37,7 +37,6 @@ public class Producteur1Producteur extends Producteur1Stock{
 		int nombre_arbre_nBE_moyenne = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne)*nombre_arbre_debut);
 		int nombre_arbre_nBE_haute = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne+pourcentage_nBE_haute)*nombre_arbre_debut);
 		int nombre_arbre_BE_moyenne = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne+pourcentage_nBE_haute+pourcentage_BE_moyenne)*nombre_arbre_debut);
-		int nombre_arbre_BE_haute= nombre_arbre_debut-(nombre_arbre_nBE_basse+nombre_arbre_nBE_moyenne+nombre_arbre_nBE_haute+nombre_arbre_BE_moyenne);
 		int ut_debut = -115;
 		for (int i=0;i<nombre_arbre_debut;i++) {
 			int d = (int)Math.random()*40;
@@ -53,7 +52,7 @@ public class Producteur1Producteur extends Producteur1Stock{
 			if ((i>=nombre_arbre_nBE_haute) && (i<nombre_arbre_BE_moyenne)) {
 				this.getAfrique().Planter(new MilleArbre(2,true,ut_debut-d));
 			}
-			if ((i>=nombre_arbre_BE_haute)) {
+			if ((i>=nombre_arbre_BE_moyenne)) {
 				this.getAfrique().Planter(new MilleArbre(3,true,ut_debut-d));
 			}
 		}
