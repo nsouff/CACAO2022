@@ -10,9 +10,18 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
+import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq2Producteur2.Producteur2Stockage;
 
 public class Producteur2Acteur implements IActeur {
+	
 	protected int cryptogramme;
+	protected Journal journal;
+	private Variable StockFeveBasse;
+	private Variable StockFeveMoyenne;
+	private Variable StockFeveMoyenne_BE;
+	private Variable StockFeveHaute;
+	private Variable StockFeveHaute_BE;
 
 
 	private Variable prixstockage ;
@@ -26,7 +35,9 @@ public class Producteur2Acteur implements IActeur {
 		this.dureeaffinageBQ= new VariableReadOnly("Durée affinage BQ","", this,  0.0, 1000000000, 1) ;
 		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
 		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;
-		
+		this.journal = new Journal(this.getNom()+" activites", this);
+//		this.StockFeveBasse= new Variable("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000,);
+	
 	}
 
 	public void initialiser() {
@@ -51,6 +62,8 @@ public class Producteur2Acteur implements IActeur {
 	
 
 	public void next() {
+		
+		
 	}
 	
 	public List<String> getNomsFilieresProposees() {
