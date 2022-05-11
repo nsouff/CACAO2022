@@ -125,12 +125,26 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 
 	public void notificationOperationBancaire(double montant) {
 	}
+	
 	// Renvoie le solde actuel de l'acteur
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
 	}
+	
+	// julien 10/05
+	public double prixStockage() {
+		double qttTotale = 0;    // on gère le chocolat et les fèves de la même manière pour les prix de stockage -> poids
+		qttTotale+= this.stockChocolat.getstocktotal()+this.stockFeves.getstocktotal() ;
+		return qttTotale*4*(Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) ; 
+	}
+	
+	//Karla
 	public void next() {
 		this.journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
+		double montant= prixStockage();
+		if (montant >0) {
+		 Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
+		 }
 	}
 
 	//juju
