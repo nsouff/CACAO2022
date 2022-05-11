@@ -62,7 +62,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
-		return listeEcheanciers.get(l); // le dernier proposé est celui des vendeurs
+		return listeEcheanciers.get(l-1); // le dernier proposé est celui des vendeurs
 	}
 
 	// Julien & Karla
