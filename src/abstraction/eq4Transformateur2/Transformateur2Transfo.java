@@ -14,7 +14,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	protected double prix_ori=Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
 	protected double cap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
 	
-	protected abstract HashMap getCommande();
+	protected abstract HashMap getCommande();//POUR LA V2
 	
 	public Transformateur2Transfo(double stocktotalfeve, double stocktotalchoco) {
 		super(stocktotalfeve, stocktotalchoco);
@@ -22,7 +22,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	}
 
 	
-	public void GetCommandes() {
+	public void GetCommandes() {///POUR LA V2
 		int current =Filiere.LA_FILIERE.getEtape();
 		int previous =Filiere.LA_FILIERE.getEtape()-1;
 		int comming =Filiere.LA_FILIERE.getEtape()+1;
@@ -39,18 +39,18 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		
 	}
 	
-	public void bestCombi() {
+	public void bestCombi() {//POUR LA V2
 	//trouve la meilleur combinaison (qui minimise les coûts et si possible a une stratégie)
 	//de transformation (types de fèves et de tranfos)
 	//pour honorer les commandes
 	//Commence par remplir less commandes les plus anciennes
-	//
+	//honnore les commande par date croissante jusqu'à que ce ne soit plus possible (stock ou capacité de production)
 		
 		
 	}
 	
 	
-	public void transfo(int qt,boolean ori, String trans,Feve f){//qt est la quantité de CHOCOLAT voulue
+	public void transfo(double qt,boolean ori, String trans,Feve f){//qt est la quantité de CHOCOLAT voulue
 		//Vérifie quel type de transformation
 		//Vérifie la capacité bancaire
 		//Vérifie le stock de fèves
@@ -98,7 +98,13 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		
 	
 	
-
+	public void next() {
+		this.transfo(0.6*cap, false, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.4*cap,false,"courte",Feve.FEVE_MOYENNE);
+		
+		
+		
+	}
 		
 		
 }
