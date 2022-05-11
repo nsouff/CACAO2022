@@ -20,7 +20,6 @@ public class Stock { //Emma Humeau
 	 */
 	public Stock(IActeur acteur) {
 		this.acteur = acteur;
-		System.out.println("Création stock");
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
 	}
 	
@@ -51,7 +50,11 @@ public class Stock { //Emma Humeau
 	 * @return la quantité demandé
 	 */
 	public double getStock(ChocolatDeMarque c) { //emma humeau
-		return stockageQte.get(c);
+		Double res = stockageQte.get(c);
+		if (res == null) {
+			return 0;
+		}
+		return res;
 	}
 
 	/**

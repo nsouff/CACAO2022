@@ -26,7 +26,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected List<ExemplaireContratCadre> mesContrats;
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
 	protected Journal journal1;
-	protected static IActeur notreActeur;
 	protected List<Variable> prix; 
 
 	protected Map<ChocolatDeMarque, Double> prixVente;
@@ -57,13 +56,11 @@ public class Distributeur1Acteur implements IActeur {
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
-		System.out.println("Creation Distributeur1Acteur");
 		NotreStock = new Stock(this);
 		journal1 = new Journal("journal1",this);
 		
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
-			System.out.println("boucle");
 			
 			NotreStock.stockVar.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
 			journal1.ajouter("ajout d'une variable stock pour le chocolat" + c + "effectué" );

@@ -53,10 +53,10 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 					for (int i=0; i<vendeurs.size(); i++) {
 						ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeurs.get(i), choc, ech, this.cryptogramme, tg);
 						prix.set(i, contrat.getPrix());
-						double pMax = prix.get(0);
+						double pMin = prix.get(0);
 						for (double p : prix) {
-							if(p>pMax) {
-								pMax=p;
+							if(p>pMin) {
+								pMin=p;
 								index+=1;
 							}
 						}
