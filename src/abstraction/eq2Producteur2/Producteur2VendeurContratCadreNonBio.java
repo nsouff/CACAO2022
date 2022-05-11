@@ -73,7 +73,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	@Override
 	public boolean vend(Object produit) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	
