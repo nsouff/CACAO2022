@@ -15,11 +15,11 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	
-	private static final LinkedList<Stock> FEVE_BASSE = null;
-	private static final LinkedList<Stock> FEVE_MOYENNE = null;
-	private static final LinkedList<Stock> FEVE_MOYENNE_BE = null;
-	private static final LinkedList<Stock> FEVE_HAUTE = null;
-	private static final LinkedList<Stock> FEVE_HAUTE_BE = null;
+	private static final LinkedList<Stock> FEVE_BASSE = new LinkedList<Stock>();
+	private static final LinkedList<Stock> FEVE_MOYENNE = new LinkedList<Stock>();
+	private static final LinkedList<Stock> FEVE_MOYENNE_BE = new LinkedList<Stock>();
+	private static final LinkedList<Stock> FEVE_HAUTE = new LinkedList<Stock>();
+	private static final LinkedList<Stock> FEVE_HAUTE_BE = new LinkedList<Stock>();
 	protected int cryptogramme;
 	protected Journal journal;
 	private Variable StockFeveBasse;
