@@ -135,13 +135,13 @@ public class MilleArbre {
 	}
 	
 	public int Esperance_vie() { //Écrit par Antoine
-		double différence = Math.random();
-		if (différence<0.5) {
-			int esp = 960-(int)Math.floor(différence*240);
+		double écart_moyenne = Math.random();
+		if (écart_moyenne<0.5) {
+			int esp = 960-(int)Math.floor(écart_moyenne*240);
 			return esp;
 		}
 		else {
-			int esp = 960+(int)Math.floor((différence-0.5)*240);
+			int esp = 960+(int)Math.floor((écart_moyenne-0.5)*240);
 			return esp;
 		}
 	}
