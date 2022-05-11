@@ -14,7 +14,6 @@ public class Stock { //Emma Humeau
 	 * @author Nathan Souffan
 	 */
 	public Stock() {
-		System.out.println("Création stock");
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
 	}
 	
@@ -30,7 +29,7 @@ public class Stock { //Emma Humeau
 	 * @author Nathan Souffan
 	 * @return the qteStockageTotale
 	 */
-	public double qteStockageTotale() {
+	public double qteStockageTotale() { //emma humeau
 		double sumqte=0;
 		//calcule la qte du stockage total
 		for (Double qte : stockageQte.values()) {
@@ -44,20 +43,24 @@ public class Stock { //Emma Humeau
 	 * @param c le chocolat dont on veut avoir la quantité stocké
 	 * @return la quantité demandé
 	 */
-	public double getStock(ChocolatDeMarque c) {
-		return stockageQte.get(c);
+	public double getStock(ChocolatDeMarque c) { //emma humeau
+		Double res = stockageQte.get(c);
+		if (res == null) {
+			return 0;
+		}
+		return res;
 	}
 
 	/**
 	 * @author Nathan Souffan
 	 * @param choco le chocolat dont on veut modifier la quantité.
-	 * @param qte la quantité qu'on veut ajouter
+	 * @param qte la quantité qu'on veut ajouter ou retirer
 	 */
-	public void addQte(ChocolatDeMarque choco, double qte) {
+	public void addQte(ChocolatDeMarque choco, double qte) { //emma humeau
 		stockageQte.put(choco, stockageQte.get(choco)+qte);
 	}
 
-	public Map<ChocolatDeMarque, Double> getMapStock() {
+	public Map<ChocolatDeMarque, Double> getMapStock() { //emma humeau
 		return stockageQte;
 	}
 }
