@@ -102,7 +102,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		super.next();
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
 			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat) {
-				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'RIGINAL");
+				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
 				lanceruncontratVendeur(choco);
 			}
 		}
