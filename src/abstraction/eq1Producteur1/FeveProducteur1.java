@@ -38,7 +38,7 @@ public class FeveProducteur1 {
 	 * @return the ut_debut
 	 */
 	public int getUt_debut() {
-		return ut_debut;
+		return this.ut_debut;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class FeveProducteur1 {
 	//Auteur : 
 	//Modifié par : Antoine 
 	//La durée de péremption des fèves est de 2ans de mémoire
-	public void Peremption() {  
+	public void MajPeremption() {  
 		if (this.getAge()>48) {
 			this.setPerime(true);
 		}

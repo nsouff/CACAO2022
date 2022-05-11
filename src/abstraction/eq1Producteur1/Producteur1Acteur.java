@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import abstraction.eq8Romu.appelsOffres.FiliereTestAO;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
+import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
+import abstraction.eq8Romu.clients.FiliereTestClientFinal;
+import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -85,11 +89,16 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 	
 
 	public List<String> getNomsFilieresProposees() {
-		return new ArrayList<String>();
+		ArrayList<String> filieres = new ArrayList<String>();
+		filieres.add("TESTBOURSEEQ1"); 
+		return filieres;
 	}
 
 	public Filiere getFiliere(String nom) {
-		return null;
+		switch (nom) { 
+		case "TESTBOURSEEQ1" : return new FiliereTestBourseEq1();
+	    default : return null;
+		}
 	}
 	
 	public List<Variable> getIndicateurs() {
@@ -114,7 +123,7 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 
 	public void notificationFaillite(IActeur acteur) {
 		if (this==acteur) {
-		System.out.println("I'll be back... or not... "+this.getNom());
+		System.out.println("Le Stonks n'était qu'un rêve "+this.getNom());
 		} else {
 			System.out.println("Poor "+acteur.getNom()+"... Why so serious ? "+this.getNom());
 		}
