@@ -10,7 +10,6 @@ import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class VenteAppel extends VenteContrat implements IVendeurAO {
-	private SuperviseurVentesAO superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
 
 	// Julien 10/05
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
@@ -36,7 +35,7 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 	//Karla julien
 	public void next() {
 		super.next();
-		
+		SuperviseurVentesAO superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
 		for (Chocolat c: this.stockChocolat.getProduitsEnStock()) {
 			/* Si on a un stock suffisant, on essaie de liquider la moitie */
 			if (this.stockChocolat.getstock(c)>this.SeuilMinChocolat) {
