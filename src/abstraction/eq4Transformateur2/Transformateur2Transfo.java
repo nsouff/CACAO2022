@@ -98,12 +98,11 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		
 	
 	
-	public void next() {
+	public void supernext() {//EN V1 on ne transforme que de façon arbitraire
+		NewCap=cap;
 		this.transfo(0.6*cap, false, "courte",Feve.FEVE_BASSE);
 		this.transfo(0.4*cap,false,"courte",Feve.FEVE_MOYENNE);
-		
-		
-		
+				
 	}
 		
 		
