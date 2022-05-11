@@ -78,10 +78,18 @@ public class Plantation  {
 		return qt;
 	}
 	
+	
+	public void next() {
+		this.nextPlantation();
+	}
+	
+	
 	public void nextPlantation() {
 		//auteure : Fiona
 		
 		// faire vieillir les arbres à chaque UT 
+		
+		
 		
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {

@@ -16,7 +16,7 @@ public class Parcelle {
 	private boolean Cooperative;
 	private int StadeTransition;
 	private int DebutMaladie;
-	private boolean EstMalade;
+	
 	
 	
 	
@@ -137,18 +137,6 @@ public class Parcelle {
 		DebutMaladie = debutMaladie;
 	}
 
-	public boolean EstMalade() {
-		return EstMalade;
-	}
-
-	public void setEstMalade(boolean estMalade) {
-		if (this.getStadeMaladie() != 0) {
-			EstMalade = true;
-		}
-		else {
-			EstMalade = false;
-		}
-		
-	}
+	
 
 }
