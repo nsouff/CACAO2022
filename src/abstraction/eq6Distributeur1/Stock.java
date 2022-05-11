@@ -44,7 +44,11 @@ public class Stock { //Emma Humeau
 	 * @return la quantité demandé
 	 */
 	public double getStock(ChocolatDeMarque c) { //emma humeau
-		return stockageQte.get(c);
+		Double res = stockageQte.get(c);
+		if (res == null) {
+			return 0;
+		}
+		return res;
 	}
 
 	/**
