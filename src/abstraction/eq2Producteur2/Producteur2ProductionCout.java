@@ -23,6 +23,10 @@ public class Producteur2ProductionCout extends Plantation {
 	}
 
 	public void initialiser() {
+		super.initialiser();
+	}
+
+	public void setCoutParKg() {
 		this.coutParKg=new HashMap<Feve,Double>();
 		this.coutParKg.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, (this.coutHQ_BE*this.getNbArbre(Feve.FEVE_HAUTE_BIO_EQUITABLE))/this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.coutParKg.put(Feve.FEVE_HAUTE, (this.coutHQ*this.getNbArbre(Feve.FEVE_HAUTE))/this.production(Feve.FEVE_HAUTE));

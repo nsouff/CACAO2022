@@ -236,7 +236,8 @@ public class Plantation  {
 		return this.NbParcelles.get(arbre).size()*1000000 ;
 	}
 	
-	
+	public void initialiser() {
+	}
 	}
 	
 	
