@@ -16,7 +16,8 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 	
 	public Transformateur1ContratCadreAcheteur() {
 		super();
-		this.mesContratEnTantQueVendeur=new LinkedList<ExemplaireContratCadre>();
+		System.out.println("ok");
+		this.mesContratEnTantQueAcheteur=new LinkedList<ExemplaireContratCadre>();
 	}
 	/** On décide d'initier un nouveau contrat cadre lorsque moins de 50% de la quantité de fèves désrirées provient de contrats cadre.
 	 *  Alexandre*/
@@ -65,7 +66,10 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 	// supprime les contrats d'achats obsolètes; auteur Julien */
 	public void next() {
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
+		System.out.println("ok"+this.mesContratEnTantQueAcheteur);
+
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueAcheteur) {
+			
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
 				contratsObsoletes.add(contrat);
 			}
