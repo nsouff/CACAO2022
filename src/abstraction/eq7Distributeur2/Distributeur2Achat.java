@@ -54,8 +54,9 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 					ventes+=Filiere.LA_FILIERE.getVentes(choc, e-j);
 				}
 				double venteParStep= ventes/6;
-				double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
-				int nmbStep = (int) Math.round(chocAacheter/venteParStep);
+				//double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
+				//int nmbStep = (int) Math.round(chocAacheter/venteParStep);
+				int nmbStep = 10;
 				Echeancier ech = new Echeancier(e,nmbStep,venteParStep);
 				
 				List<IVendeurContratCadre> vendeurs =c.getVendeurs(choc);

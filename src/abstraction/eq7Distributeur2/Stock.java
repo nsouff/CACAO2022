@@ -20,6 +20,7 @@ public class Stock implements IStock{
 	private HashMap<ChocolatDeMarque,Variable> seuilRachat;
 	private IActeur acteur;
 	private boolean FONCTIONEL;
+	private int STOCK_INIT=1000000;
 	
 	/**Méthode constructeur, initialise le stock vide
 	 * @param acteur
