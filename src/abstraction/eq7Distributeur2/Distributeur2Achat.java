@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import abstraction.eq8Romu.contratsCadres.ContratCadre;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
@@ -62,7 +63,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				List<IVendeurContratCadre> vendeurs =c.getVendeurs(choc);
 				for (int i=0; i<vendeurs.size(); i++) {
 					journal.ajouter("BioFour propose un CC avec "+ vendeurs.get(i)+" avec le produit: "+choc);
-					ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeurs.get(i), choc, ech, this.cryptogramme, tg);
+					ContratCadre contrat = new ContratCadre((IAcheteurContratCadre)this, vendeurs.get(i), choc, ech, this.cryptogramme, tg);
 					prix.set(i, contrat.getPrix());
 					double pMin = prix.get(0);
 					for (double p : prix) {
@@ -73,7 +74,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 					}
 				}
 				IVendeurContratCadre vendeur= vendeurs.get(index);
-				ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choc, ech, this.cryptogramme, tg);
+				ContratCadre contrat = new ContratCadre((IAcheteurContratCadre)this, vendeur, choc, ech, this.cryptogramme, tg);
 				journal.ajouter("-->aboutit au contrat "+contrat);
 			}
 			this.actualiserIndicateurs();
