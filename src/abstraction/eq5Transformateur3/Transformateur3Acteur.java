@@ -53,8 +53,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	public Transformateur3Acteur() {
 		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en kg", this,  0, 100000, 125000000);
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
-		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 5);
-		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par tonne", this, 0, 100, 1);
+		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 1);
+		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par kg", this, 0, 100, 1);
 		
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
