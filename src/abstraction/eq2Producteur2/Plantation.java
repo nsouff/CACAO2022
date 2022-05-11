@@ -1,19 +1,19 @@
 package abstraction.eq2Producteur2;
 
 import java.util.ArrayList;
-
-//auteure : Fiona Martin 
-
 import java.util.HashMap;
 import java.util.List;
-
 import abstraction.eq8Romu.produits.Feve;
+
+//auteure : Fiona Martin 
 
 public class Plantation extends Producteur2Acteur {
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
 	public Plantation () {
+		//auteure : Fiona
+		
 		/*
 		 
 		PARC INITIAL :  
@@ -43,20 +43,46 @@ public class Plantation extends Producteur2Acteur {
 		NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
 		
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
-		int[] qt = {200, 800, 400,1600,2000};
+		ArrayList<Integer> qt = ListeQt(4);
 		
 		for (int i=0; i<arbres.length; i++) {
-			for (int j=0; j<qt[i]; j++) {
+			for (int j=0; j<qt.get(i); j++) {
 			NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
 			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
 			}
 		}
-
+	}
+	
+	public ArrayList<Integer> ListeQt(int NbTotalArbres) {
+		//auteure : Fiona
+		
+		// NbTotalArbres est en centaines de millions d'arbres 
+		
+		/*
+		 * J'avais calculé le nombre de parcelles pour chaque type d'arbre en fonction de la 
+		 * filière par défaut en considérant qu'on aurait 500 millions d'arbres. 
+		 * Finalement, nous aurons 400 millions d'arbres. Je me sers donc d'un produit en croix
+		 * à partir de mes calculs précédents pour obtenir les nouveaux nombres de parcelles. 
+		 */
+		
+		ArrayList<Integer> qt = new ArrayList<Integer>();
+		
+		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); // HGB
+		qt.add((int) (Math.ceil((800*NbTotalArbres)/5))); // HG
+		qt.add((int) (Math.ceil((400*NbTotalArbres)/5))); // MGB
+		qt.add((int) (Math.ceil((1600*NbTotalArbres)/5))); //MG 
+		qt.add((int) (Math.ceil((2000*NbTotalArbres)/5))); //BG
+		
+		return qt;
+		
+		
 	}
 	
 
 	
 	public void renouvellement() {
+		//auteure : Fiona
+		
 		/* 
 		 * Pour le moment on replante automatiquement les arbres qui sont arrivés au bout de leur durée de vie en conservant le type d'arbre.  
 		 */	
@@ -82,6 +108,7 @@ public class Plantation extends Producteur2Acteur {
 
 	
 	public Arbre conversion(Feve typefeve) {
+		//auteure : Fiona
 		
 		// permet de connnaître le type d'arbre en connaissant le type de fève 
 		
@@ -105,6 +132,9 @@ public class Plantation extends Producteur2Acteur {
 	
 		
 	public int production(Feve typefeve) {
+		//auteure : Fiona
+		
+		
 		// permet de connaître la production, en kg, pour un type de fève donné 
 		
 		Arbre typearbre = conversion(typefeve);
@@ -124,6 +154,8 @@ public class Plantation extends Producteur2Acteur {
 	}
 	
 	public int getNbArbre(Feve feve) {
+		//auteure : Fiona
+		
 		Arbre arbre = conversion(feve);
 		return this.NbParcelles.get(arbre).size()*1000000 ;
 	}

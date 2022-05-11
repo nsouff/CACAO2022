@@ -6,6 +6,8 @@ import abstraction.eq8Romu.filiere.Filiere;
 
 public class Parcelle {
 	
+	//auteure : Fiona
+	
 	private Arbre TypeArbre;
 	private int Age;
 	private int NbArbres;
@@ -17,7 +19,8 @@ public class Parcelle {
 	
 	
 	public Parcelle(Arbre typearbre, int age) {
-	
+		
+		//auteure : Fiona	
 		
 		this.setTypeArbre(typearbre);
 		this.setAge(age);
