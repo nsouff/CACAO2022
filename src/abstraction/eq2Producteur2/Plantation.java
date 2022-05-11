@@ -111,7 +111,10 @@ public class Plantation extends Producteur2Acteur {
 		return ProductionFinale;
 	}
 	
-	
+	public int getNbArbre(Feve feve) {
+		Arbre arbre = conversion(feve);
+		return this.NbParcelles.get(arbre).size()*1000000 ;
+	}
 	
 	}
 	
