@@ -2,6 +2,7 @@ package abstraction.eq6Distributeur1;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class Distributeur1Acteur implements IActeur {
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
 	protected Journal journal1;
 	protected List<Variable> prix; 
+	protected List<Journal> journaux;
 
 	protected Map<ChocolatDeMarque, Double> prixVente;
 	// private static final ArrayList<Double> NULL = null;
@@ -51,19 +53,17 @@ public class Distributeur1Acteur implements IActeur {
 	 */
 	public Distributeur1Acteur() {
 		
-		NotreStock = new Stock(this);
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
+		journaux = new ArrayList<Journal>();
 		journal1 = new Journal("journal1",this);
-		
+		journaux.add(journal1);
+		NotreStock = new Stock(this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
-			
-			NotreStock.stockVar.add(new Variable(c+"",this,this.getNotreStock().getStock(c)));
 			journal1.ajouter("ajout d'une variable stock pour le chocolat" + c + "effectué" );
-			
 			prix.add(new Variable(c+"",this,0));
 			journal1.ajouter("ajout d'une variable prix pour le chocolat " + c + "effectué");
 		}	
@@ -71,6 +71,8 @@ public class Distributeur1Acteur implements IActeur {
 		journal1.ajouter("création de la liste de variable des prix terminée");
 		journal1.ajouter("création de la liste de variable stock terminée");
 
+		
+		
 	}
 	
 	
@@ -136,16 +138,8 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public List<Variable> getIndicateurs() {
-		
 		List<Variable> res = new ArrayList<Variable>();
-		this.getNotreStock().getMapStock().forEach((key,value)->{
-			for( Variable v : NotreStock.stockVar) {
-				res.add(v);
-			}
-			for(Variable v : prix) {
-				res.add(v);
-			}
-		});
+		res.addAll((Collection<Variable>)NotreStock.stockVar.values());
 		return res;
 	}
 	
@@ -158,8 +152,7 @@ public class Distributeur1Acteur implements IActeur {
 
 	// Renvoie les journaux
 	public List<Journal> getJournaux() {
-		List<Journal> res=new ArrayList<Journal>();
-		return res;
+		return journaux;
 	}
 
 	public void setCryptogramme(Integer crypto) {

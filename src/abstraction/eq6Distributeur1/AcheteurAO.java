@@ -17,6 +17,7 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
     public AcheteurAO() {
         super();
         journalAO = new Journal("Journal pour les AO", this);
+        journaux.add(journalAO);
     }
     
     /** 

@@ -4,6 +4,8 @@ import java.util.Map;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariablePrivee;
+import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class Stock { //Emma Humeau
 	
 
 	private Map<ChocolatDeMarque,Double> stockageQte;
-	protected List<Variable> stockVar;
+	protected Map<Chocolat, Variable> stockVar;
 	protected IActeur acteur;
 
 	/**
@@ -22,9 +24,22 @@ public class Stock { //Emma Humeau
 	 */
 	public Stock(IActeur acteur) {
 		this.acteur = acteur;
-		stockVar = new ArrayList<Variable>(); 
-
+		stockVar = new HashMap<Chocolat, Variable>(); 
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
+		initStockVar();
+	}
+
+	private void initStockVar() {
+		stockVar.put(Chocolat.HQ_BE_O, new VariablePrivee("HQ_BE_O", acteur, 0));
+		stockVar.put(Chocolat.HQ_BE, new VariablePrivee("HQ_BE", acteur, 0));
+		stockVar.put(Chocolat.HQ_O, new VariablePrivee("HQ_O", acteur, 0));
+		stockVar.put(Chocolat.HQ, new VariablePrivee("HQ", acteur, 0));
+		stockVar.put(Chocolat.MQ_BE_O, new VariablePrivee("MQ_BE_O", acteur, 0));
+		stockVar.put(Chocolat.MQ_BE, new VariablePrivee("MQ_BE", acteur, 0));
+		stockVar.put(Chocolat.MQ_O, new VariablePrivee("MQ_O", acteur, 0));
+		stockVar.put(Chocolat.MQ, new VariablePrivee("MQ", acteur, 0));
+		stockVar.put(Chocolat.BQ_O, new VariablePrivee("BQ_O", acteur, 0));
+		stockVar.put(Chocolat.BQ, new VariablePrivee("BQ", acteur, 0));
 	}
 	
 	/**
@@ -67,23 +82,16 @@ public class Stock { //Emma Humeau
 	 * @param qte la quantité qu'on veut ajouter ou retirer
 	 */
 	public void addQte(ChocolatDeMarque choco, double qte) { //emma humeau
-		stockageQte.put(choco, stockageQte.get(choco)+qte);
-		
+		Double stockAct = stockageQte.get(choco);
+		if (stockAct == null) {
+			stockAct = 0.0;
+		}
+		stockageQte.put(choco, stockAct+qte);
 		/**
 		 * @author Nolann
 		 * actualisation des indicateurs
 		 */
-		
-		for(int i = 0 ; i < stockVar.size(); i++) {				
-			if(((stockVar.get(i)).getNom()).equals(choco+"")) {					
-				stockVar.get(i).setValeur(this.acteur,stockageQte.get(choco)+qte);
-				
-			}
-		}
-		
-		
-			
-	
+		stockVar.get(choco.getChocolat()).ajouter(acteur, qte);	
 	}
 
 	public Map<ChocolatDeMarque, Double> getMapStock() { //emma humeau
