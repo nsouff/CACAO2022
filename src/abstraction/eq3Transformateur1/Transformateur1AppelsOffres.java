@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAcheteur //implements IVendeurAO*/ {
-{/**
+/**{
 	
 
 	protected String marque;
@@ -43,7 +43,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 		}
 	}
 	
-	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas 
+	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas */
 	/** on veut faire par type de chocolat 
 	
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
@@ -52,7 +52,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 			return null;
 		} else {
 			Chocolat c= new  Chocolat;
-			 Chocolat = propositions.get(0).getOffre().getChocolat();
+			Chocolat = propositions.get(0).getOffre().getChocolat();
 			if 	prixVenteMin.get(c)== propositions.getOffre().getChocolat() ;
 			PropositionAchatAO retenue = propositions.get(0);
 			if (retenue.getPrixKg()>this.prixMin) {
@@ -67,5 +67,5 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
   }
 		}
 
-*/
-}
+
+} */
