@@ -16,15 +16,14 @@ public class Parcelle {
 	private int DebutMaladie;
 	
 	
-	public Parcelle(Arbre typearbre) {
-		/*		
-		 */
+	public Parcelle(Arbre typearbre, int age) {
+	
 		
 		this.setTypeArbre(typearbre);
-		this.setAge(0);
+		this.setAge(age);
 		this.setRendementProgressif(0.2 + Math.random()*0.5);
 		this.setStadeMaladie(0);
-		this.setNbArbres(1_000_000);
+		this.setNbArbres(100_000);
 		
 	}
 

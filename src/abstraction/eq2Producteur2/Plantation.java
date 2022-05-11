@@ -33,7 +33,8 @@ public class Plantation extends Producteur2Acteur {
 		
 		NbParcelles = new HashMap<Arbre, List<Parcelle>>();
 		
-		// 1 parcelle = 1 million d'arbres 
+		// 1 parcelle = 100 000 arbres 
+		
 		
 		NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
 		NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
@@ -42,15 +43,18 @@ public class Plantation extends Producteur2Acteur {
 		NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
 		
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
-		int[] qt = {20, 80, 40,160,200};
+		int[] qt = {200, 800, 400,1600,2000};
 		
 		for (int i=0; i<arbres.length; i++) {
 			for (int j=0; j<qt[i]; j++) {
-			NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i]));
+			NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
+			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
 			}
 		}
 
 	}
+	
+
 	
 	public void renouvellement() {
 		/* 
@@ -69,7 +73,7 @@ public class Plantation extends Producteur2Acteur {
 			}
 			for (int i=0; i < ParcellesASupprimer.size(); i++) {
 				NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
-				NbParcelles.get(a).add(new Parcelle(a));
+				NbParcelles.get(a).add(new Parcelle(a, 0));
 			}						
 	}
 		
