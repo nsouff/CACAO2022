@@ -7,6 +7,7 @@ public class Parcelle {
 	private Arbre TypeArbre;
 	private int Age;
 	private int NbArbres;
+	private double RendementProgressif;
 	private boolean EstMalade;
 	private boolean Cooperative;
 	private int StadeTransition;
@@ -17,8 +18,10 @@ public class Parcelle {
 		
 		this.setTypeArbre(typearbre);
 		this.setAge(0);
+		this.setRendementProgressif(0.2 + Math.random()*0.5);
 		this.setEstMalade(false);
 		this.setNbArbres(1_000_000);
+	
 		
 		
 	}
@@ -69,6 +72,14 @@ public class Parcelle {
 
 	public void setStadeTransition(int stadeTransition) {
 		StadeTransition = stadeTransition;
+	}
+
+	public double getRendementProgressif() {
+		return RendementProgressif;
+	}
+
+	public void setRendementProgressif(double rendementProgressif) {
+		RendementProgressif = rendementProgressif;
 	}
 	
 
