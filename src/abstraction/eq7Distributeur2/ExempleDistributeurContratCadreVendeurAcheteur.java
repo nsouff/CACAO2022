@@ -47,6 +47,7 @@ public class ExempleDistributeurContratCadreVendeurAcheteur extends ExempleTrans
 				contratsObsoletes.add(contrat);
 			}
 		}
+
 		this.mesContratEnTantQuAcheteur.removeAll(contratsObsoletes);
 		
 		// Proposition d'un nouveau contrat a tous les vendeurs possibles
