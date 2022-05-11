@@ -9,7 +9,7 @@ import java.util.List;
 
 import abstraction.eq8Romu.produits.Feve;
 
-public class Plantation {
+public class Plantation extends Producteur2Acteur {
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
