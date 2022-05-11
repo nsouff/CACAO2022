@@ -1,6 +1,7 @@
 package abstraction.eq2Producteur2;
 
 //auteur Clément//
+
 public class Stock {
 	
 	private double quantite;

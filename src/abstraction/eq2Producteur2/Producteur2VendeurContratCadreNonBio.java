@@ -146,7 +146,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	}
 
 
-	@Override
+//	@Override
 	public boolean peutVendre(Object produit) {
 		// TODO Auto-generated method stub
 		return false;

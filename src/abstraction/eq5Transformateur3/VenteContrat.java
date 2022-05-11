@@ -68,10 +68,4 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public boolean peutVendre(Object produit) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	}
