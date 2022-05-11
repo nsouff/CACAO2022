@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import abstraction.eq8Romu.produits.Feve;
+
 public class Plantation {
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
@@ -71,8 +73,29 @@ public class Plantation {
 		
 	}	
 	
+	public Arbre conversion(Feve typefeve) {
+		if (typefeve == Feve.FEVE_BASSE ) {
+			return Arbre.ARBRE_BG;
+		}
+		else if (typefeve == Feve.FEVE_HAUTE) {
+			return Arbre.ARBRE_HG;
+		}
+		else if (typefeve == Feve.FEVE_HAUTE_BIO_EQUITABLE) {
+			return Arbre.ARBRE_HGB;
+		}
+		else if (typefeve == Feve.FEVE_MOYENNE) {
+			return Arbre.ARBRE_MG;
+		}
+		else {
+			return Arbre.ARBRE_MGB;
+		}
+			
+	}
+	
 		
-	public int production(Arbre typearbre) {
+	public int production(Feve typefeve) {
+		
+		Arbre typearbre = conversion(typefeve);
 		
 		int ProductionFinale = 0 ;
 		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
