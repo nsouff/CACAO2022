@@ -2,6 +2,7 @@ package abstraction.eq8Romu.bourseCacao;
 
 import abstraction.eq8Romu.produits.Feve;
 
+
 public interface IAcheteurBourse {
 	
 	/**
@@ -11,6 +12,8 @@ public interface IAcheteurBourse {
 	 * @param cours le cours actuel des feves de type f
 	 * @return la quantite en kg de feves de type f desiree 
 	 */
+	
+	
 	public double demande(Feve f, double cours);
 
 	/**

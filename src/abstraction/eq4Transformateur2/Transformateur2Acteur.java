@@ -20,7 +20,7 @@ public class Transformateur2Acteur implements IActeur {
 
 	
 	private Variable coutStockage;
-	private Variable prixSeuil; // au dela duquel nous n'achetons pas
+	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
 	private Variable rendementTransfoLongue;
 	private Variable prixTransformation; // a renseigner (0? On considere juste le rendement pour le pb des transfolongue, ainsi, un seul parametre à gerer.)
 	private Variable prixChocoOriginal;
