@@ -52,7 +52,6 @@ public class Distributeur1Acteur implements IActeur {
 	public Distributeur1Acteur() {
 		
 		NotreStock = new Stock(this);
-		NotreStock.stockVar = new ArrayList<Variable>(); 
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
