@@ -2,15 +2,24 @@ package abstraction.eq1Producteur1;
 
 import java.util.HashMap;
 
+
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Producteur extends Producteur1Stock{
 	private Parc ParcAfrique;
+	protected Journal RetourMaladie;
+	protected Journal RetourRécolte;
+	protected Journal RetourGuerre;
+	protected Journal RetourAléas;
+	protected Journal RetourMAJParc;
 	
 	public Producteur1Producteur() {
+		super();
 		Parc afrique = new Parc("Afrique");
 		this.ParcAfrique = afrique;
+		//this.RetourMaladie = new Journal("Prise en compte des maladies?", this);
 	}
 	
 	//Écrit par Antoine

@@ -183,6 +183,7 @@ public class MilleArbre {
 							return 0;
 						}
 						else {
+							
 							return 0.8*quantite;
 						}
 					}
