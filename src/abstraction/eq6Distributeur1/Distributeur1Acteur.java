@@ -51,12 +51,11 @@ public class Distributeur1Acteur implements IActeur {
 	 */
 	public Distributeur1Acteur() {
 		
-		NotreStock.stockVar = new ArrayList<Variable>(); 
+		NotreStock = new Stock(this);
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
-		NotreStock = new Stock(this);
 		journal1 = new Journal("journal1",this);
 		
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 

@@ -5,6 +5,8 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class Stock { //Emma Humeau
 	 */
 	public Stock(IActeur acteur) {
 		this.acteur = acteur;
+		stockVar = new ArrayList<Variable>(); 
+
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
 	}
 	
