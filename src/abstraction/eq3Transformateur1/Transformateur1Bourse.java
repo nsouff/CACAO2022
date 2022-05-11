@@ -18,7 +18,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
 	protected DicoFeve prixAchatFeve;
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
-	protected Journal journal;
+
 	// Alexandre
 	public Transformateur1Bourse() {
 		super();
@@ -58,18 +58,8 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	/** 
 	 *  Alexandre*/
 	public void next() {
-		super.next();
-		journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
-		if (Filiere.LA_FILIERE.getEtape()>=1) {
-			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-			journal.ajouter("le cours de "+Feve.FEVE_MOYENNE+" est : "+Journal.doubleSur(bourse.getCours(Feve.FEVE_MOYENNE).getValeur(), 2));
-		}
+		super.next();		
 	}
 	
-	public List<Journal> getJournaux() {
-		List<Journal> j= new ArrayList<Journal>();
-		j.add(this.journal);
-		return j;
-	}
-
 }
+	
