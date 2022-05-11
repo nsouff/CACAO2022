@@ -69,10 +69,10 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	// Julien & Karla
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
-		if (prixT < this.seuilMaxAchat) {
+		/*if (prixT < this.seuilMaxAchat) { */
 			this.journal.ajouter("prixT");
 			return prixT;
-		}
+		/*}
 		else {
 			double nouveauprix = 0.1*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
@@ -80,7 +80,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 				return nouveauprix;
 			}
 			return 0.0;
-		}
+		} */
 	}
 
 	// Julien & Karla
