@@ -72,7 +72,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 
 	public void next() {
 		// il faut appeler nextPlantation() de la classe plantation
-		double coutProduction = 0.0;
+		double coutProduction = 0.1;
 		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
 	}
