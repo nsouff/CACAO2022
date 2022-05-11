@@ -1,13 +1,17 @@
 package abstraction.eq4Transformateur2;
 
+
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 
+import abstraction.eq8Romu.produits.Chocolat;
+
 //Marie
-public class Transformateur2ContratCadre extends Transformateur2Acteur implements IVendeurContratCadre{
-	
-	
+
+public class Transformateur2ContratCadre extends Transformateur2Acteur implements IVendeurContratCadre {
+
+
 	public void next() {
 		super.next();
 	}
@@ -19,40 +23,41 @@ public class Transformateur2ContratCadre extends Transformateur2Acteur implement
 	public Transformateur2ContratCadre() {
 		super();
 	}
+	
+	
+@Override
+public boolean vend(Object produit) {
+	// TODO Auto-generated method stub
+	return false;
+}
 
+@Override
+public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+	// TODO Auto-generated method stub
+	return null;
+}
 
-	public boolean vend(Object produit) {
-		/*if (this.getQuantite_stock().keySet().contains(produit)) {
-			return true
-		}else {*/
-			return false;
-	} 
+@Override
+public double propositionPrix(ExemplaireContratCadre contrat) {
+	// TODO Auto-generated method stub
+	return 0;
+}
 
+@Override
+public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+	// TODO Auto-generated method stub
+	return 0;
+}
 
-	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		return null;
-	}
+@Override
+public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+	// TODO Auto-generated method stub
+	
+}
 
-
-	public double propositionPrix(ExemplaireContratCadre contrat) {
-		return 0;
-	}
-
-
-	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		return 0;
-	}
-
-
-	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		
-	}
-
-
-	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-
-		return 0;
-	}
-
-
+@Override
+public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
+	// TODO Auto-generated method stub
+	return 0;
+}
 }

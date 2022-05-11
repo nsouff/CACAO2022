@@ -22,7 +22,7 @@ public class Transformateur2Acteur implements IActeur {
 	
 	//pas sur de celles ci, mais je les laisse au cas ou...
 	private Variable coutStockage;
-	private Variable prixSeuil; // au dela duquel nous n'achetons pas
+	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
 	private Variable rendementTransfoLongue;
 	private Variable prixTransformation; // a renseigner (0? On considere juste le rendement pour le pb des transfolongue, ainsi, un seul parametre à gerer.)
 	private Variable prixChocoOriginal;
@@ -48,6 +48,7 @@ public class Transformateur2Acteur implements IActeur {
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
 
 
+
 	
 
 	
@@ -66,6 +67,7 @@ public class Transformateur2Acteur implements IActeur {
 		this.expirationFeve=new Variable("expiration feve", "<html>Duree avant expiration d'une feve</html>",this, 0.0, 10.0, 3.0);
 		this.expirationChoco=new Variable("expiration choco", "<html>Duree avant expiration du chocolat</html>",this, 0.0, 10.0, 3.0);
 		this.marge = 1.1;
+
 		
 		
 		
@@ -77,9 +79,23 @@ public class Transformateur2Acteur implements IActeur {
 		h1.put(chocomax, (double) 1000000);
 		this.stockchocolat=new Stock(h1,1000000);
 		
+		
+		//this.NewCap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
+
 	}
 	
 	
+
+
+
+
+
+
+
+
+
+
+
 
 
 	public void initialiser() {

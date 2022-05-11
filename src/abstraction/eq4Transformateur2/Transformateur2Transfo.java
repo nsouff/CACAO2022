@@ -61,7 +61,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		//Débite le compte bancaire
 		Gamme g=f.getGamme();
 		double s=0;
-		if(ori) {
+		if(ori) {//indicateur d'originalité
 			s=1;
 		}
 		
