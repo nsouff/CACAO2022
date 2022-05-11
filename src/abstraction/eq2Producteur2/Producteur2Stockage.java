@@ -1,7 +1,10 @@
 package abstraction.eq2Producteur2;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.HashMap;
+
+import abstraction.eq1Producteur1.FeveProducteur1;
 import abstraction.eq2Producteur2.Stock;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -54,7 +57,7 @@ public class Producteur2Stockage extends Producteur2Couts {
 		}
 	}
 	public void addQuantite(double q, Feve f) {
-		this.Stocks.get(f).add(new Stock(q));
+		this.getStock().get(f).add(new Stock(q));
 	}
 	
 	public void initialiser() {
@@ -72,5 +75,8 @@ public class Producteur2Stockage extends Producteur2Couts {
 //			this.get
 //			
 //		}
+	}
+	public HashMap<Feve, LinkedList<Stock>> getStock() {
+		return Stocks;
 	}
 }

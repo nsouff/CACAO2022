@@ -35,6 +35,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	private Variable dureeaffinageMQ ;
 	private Variable dureeaffinageHQ ;
 	
+	// Auteur : Clément
 	
 	public Producteur2Acteur() {
 		this.prixstockage= new Variable("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
@@ -51,6 +52,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	}
 
 	public void initialiser() {
+		super.initialiser();
 	}
 	
 	public String getNom() {
@@ -73,8 +75,16 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 
 	public void next() {
 		// il faut appeler nextPlantation() de la classe plantation
-
 		super.next();
+		
+		// Cout de production, Jules DORE
+		this.setCoutParKg();
+		double coutProduction = 0.0;
+		for(Feve f : this.coutParKg.keySet()) {
+			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
+		}
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
+//Auteur Clément	
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));
@@ -83,6 +93,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		
 		
+
 
 	}
 	
