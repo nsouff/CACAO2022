@@ -24,7 +24,7 @@ To see the files, go to the Resource perspective of Eclipse. Right click on thes
 In the Resource perspective you can replace all folders and files (including hidden files). Since there is no .metadata folder in the main repository, you don't have anything to replace it with. You can simply delete it.
 
 ## Compilation error
-Your code has a compilation error (red mark in Eclipse). You can read the error message by going in the tab "Checks" of your pull request and opening the log "Build with Ant". Please fix it and commit+push again.
+Your code has a compilation error (red mark in Eclipse). You can read the error message by clicking on "Details" near to the failed test at the bottom of your pull request. Please fix it and commit+push again.
 
 ## Execution error
 Not accepting because the code does not pass the tests. You can run the same tests on your Eclipse, they are `test/abstraction/FiliereParDefaultTest.java` and `test/presentation/FenetrePrincipaleTest.java`. To run them right-click on "build.xml", Run As -> Ant Build. You will see the error message in the console.

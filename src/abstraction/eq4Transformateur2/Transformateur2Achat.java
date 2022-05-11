@@ -1,5 +1,7 @@
 package abstraction.eq4Transformateur2;
 
+import java.util.HashMap;
+
 import abstraction.eq8Romu.filiere.Filiere;
 
 public class Transformateur2Achat extends Transformateur2Transfo{
@@ -39,6 +41,17 @@ public class Transformateur2Achat extends Transformateur2Transfo{
 	public boolean Achat(double prix_vente,double quantite) {//on achete ou pas
 		return comparer_prix(prix_vente)&&deficit(quantite,prix_vente);
 		
+	}
+
+
+
+
+
+
+	@Override
+	protected HashMap getCommande() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
