@@ -75,7 +75,6 @@ public class Filiere implements IAssermente {
 		this.laBanque = new Banque();
 		this.journalFiliere = this.laBanque.getJournaux().get(0);
 		this.marquesDeposees = new HashMap<String, IActeur>();
-		System.out.println("Création choco");
 		this.chocolatsProduits = new ArrayList<ChocolatDeMarque>();
 		this.fabricantsChocolatDeMarque = new HashMap<ChocolatDeMarque, List<IFabricantChocolatDeMarque>>();
 		this.qualiteMoyenneMarque = new HashMap<String, Double>();
