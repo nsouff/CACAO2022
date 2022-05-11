@@ -58,9 +58,5 @@ public class Stock {
 		if(this.getAge()>48) {
 			this.setPerime(true);
 		}
-	}
-
-	
-	
-	
+	}	
 }
