@@ -74,7 +74,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			return prixT;
 		}
 		else {
-			double nouveauprix = 0.4*prixT;
+			double nouveauprix = 0.1*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
 				this.journal.ajouter("nouveau prix");
 				return nouveauprix;
