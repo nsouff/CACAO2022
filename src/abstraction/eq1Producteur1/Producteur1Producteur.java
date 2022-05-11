@@ -9,6 +9,7 @@ public class Producteur1Producteur extends Producteur1Stock{
 	private Parc ParcAfrique;
 	
 	public Producteur1Producteur() {
+		super();
 		Parc afrique = new Parc("Afrique");
 		this.ParcAfrique = afrique;
 	}
