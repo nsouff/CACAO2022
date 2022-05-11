@@ -22,7 +22,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public void lanceruncontratAcheteur(Feve f) {
 		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		List<IVendeurContratCadre> L = superviseur.getVendeurs(f);
-		int qtt = 100; // qtt de feve par step, à modifier en fonction des ventes 
+		int qtt = 10000; // qtt de feve par step, à modifier en fonction des ventes 
 		
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, qtt); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
