@@ -24,9 +24,9 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	 * @param teteGondole the teteGondole to set
 	 */
 	public void setTeteGondole(Map<ChocolatDeMarque, Double> teteGondole, ChocolatDeMarque choco) { //Emma Humeau
-		double qteEnTg = Math.random()*100;
-		if (qteEnTg <= NotreStock.qteStockageTotale()*0.1) {  //la quantité en de choco en TG doit etre inférieure à 10% du stock
-			teteGondole.put(choco, qteEnTg );}
+		double qteDispoEnTg = NotreStock.qteStockageTotale()*0.1 - qteEnVenteTG ; 
+		if (qteEnVenteTG <= NotreStock.qteStockageTotale()*0.1) {  //la quantité de choco en vente en TG doit etre inférieure à 10% du stock
+			teteGondole.put(choco, qteDispoEnTg );}
 	}
 
 	@Override
@@ -36,10 +36,10 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 
 	@Override
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau
-		if (NotreStock.qteStockageTotale() <= 200) {
-			return NotreStock.getStock(choco); }
+		if (NotreStock.qteStockageTotale() <= 200) {  
+			return NotreStock.getStock(choco); }  //on met tout le stock en vente
 		else {
-			return NotreStock.getStock(choco)*0.9;
+			return NotreStock.getStock(choco)*0.9;  //on met que 90% du stock en vente
 		}
 	}
 
