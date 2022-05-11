@@ -58,6 +58,11 @@ public class Producteur2Stockage extends Producteur2Acteur {
 	}
 	
 	public void initialiser() {
+		this.addQuantite(1000001,Feve.FEVE_BASSE);
+		this.addQuantite(1000001,Feve.FEVE_MOYENNE);
+		this.addQuantite(1000001,Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.addQuantite(1000001,Feve.FEVE_HAUTE);
+		this.addQuantite(1000001,Feve.FEVE_HAUTE_BIO_EQUITABLE);
 		
 	}
 	public void next() {
