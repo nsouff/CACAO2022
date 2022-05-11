@@ -6,6 +6,8 @@ import java.util.List;
 
 
 import abstraction.eq8Romu.produits.Gamme;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
@@ -144,5 +146,22 @@ public class Transformateur1 extends Transformateur1AppelsOffres {
 			}
 		}
 	}
+	
+	/**  _________________________________________________TOUR ET INITIALISATION_________________________________________________*/
+	
+	public void initialiser() {
+		super.initialiser();
+	}
+	
+	public void next() {
+		super.next();
+		// Choix quantite et prix Feve
+		// Contrat cadre Feve eventuel
+		// Transformation
+		// Choix prix de Chocolat
+		// Appels d'offres
+		// Stocks
+	}
+	
 
 }

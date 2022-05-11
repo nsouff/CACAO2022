@@ -12,18 +12,15 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected DicoChoco quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
 	protected dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
 	protected DicoFeve prixAchatFeve;
-	protected DicoFeve stockFeve;               /** Integer --> Double*/
-	protected DicoChoco stockChoco;           /** Integer --> Double*/
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
 	
 	// Alexandre
 	public Transformateur1Bourse() {
+		super();
 		quantiteAchatFeve = new DicoFeve();
 		quantiteDemandeeChoco = new DicoChoco();
 		dernierPrixVenteChoco = new dernierPrixVenteChoco();
 		prixAchatFeve = new DicoFeve();
-		stockFeve = new DicoFeve();
-		stockChoco = new DicoChoco();
 		prixVenteMin = new DicoChoco();
 	}
 	
@@ -44,6 +41,18 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	/** */
 	public void notificationBlackList(int dureeEnStep) {
 	
+	}
+	
+	/** 
+	 *  Alexandre*/
+	public void initialiser( ) {
+		super.initialiser();
+	}
+	
+	/** 
+	 *  Alexandre*/
+	public void next() {
+		super.next();
 	}
 
 }
