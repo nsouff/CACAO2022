@@ -62,6 +62,8 @@ public class Producteur2Acteur implements IActeur {
 	
 
 	public void next() {
+		
+		
 	}
 	
 	public List<String> getNomsFilieresProposees() {
