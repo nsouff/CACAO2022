@@ -26,7 +26,8 @@ public class Transformateur1Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "Bla bla bla";
+		return "Notre entreprise, nommée “Côtes du monde”, a pour ligne de conduite : le meilleur rapport qualité/prix. Nous avons pour but de produire des tablettes de chocolats accessibles à tous, tout en assurant une bonne qualité pour le consommateur.";
+				
 	}
 
 	public Color getColor() {
