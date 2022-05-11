@@ -68,7 +68,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 			prix = 1.25*this.coutParKg.get(((Feve)contrat.getProduit()));
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==2){
-			prix = 1.3*this.coutParKg.get(((Feve)contrat.getProduit()));
+			prix = 1.35*this.coutParKg.get(((Feve)contrat.getProduit()));
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==3){
 			prix = 1.35*this.coutParKg.get(((Feve)contrat.getProduit()));
