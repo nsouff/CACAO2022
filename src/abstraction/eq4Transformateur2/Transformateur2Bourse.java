@@ -6,41 +6,52 @@ import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
-// Marie
+// Marie et JAd
 
-public class Transformateur2Bourse extends ExempleAbsAcheteurBourseCacao implements IAcheteurBourse{
+public class Transformateur2Bourse extends Transformateur2Acteur implements IAcheteurBourse{
 	
 	private double quantiteEnKg;
-	protected Variable prixSeuil;
+	
 
 	public Transformateur2Bourse(Feve feve, double stock, double quantiteEnKg) {
-		super(feve, stock);
+		super();
 		this.quantiteEnKg=quantiteEnKg;
 
 
 	}
-//Marie
+//Marie et Jad
 	public double demande(Feve f, double cours) {
-		/*if (cours < prixSeuil) {
-			return ;
+		if (cours < this.getPrixSeuil().getValeur()) {
+			if(f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()) {
+				return this.getCapaciteStockageFixe().getValeur()*0.4-this.getStockfeve().getQuantite(f);
+			}
+			else if (f.getGamme().equals(Gamme.BASSE) && !f.isBioEquitable()) {
+				return this.getCapaciteStockageFixe().getValeur()*0.6-this.getStockfeve().getQuantite(f);	
+			}
 			
-		} else {*/
+		
+		} 
+		else {
 			return 0.0;
+		}
+		return 0.0;
 		}
 
 
-//Marie
+//Marie et Jad
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
-		this.stockFeve.setValeur(this, this.stockFeve.getValeur()+quantiteEnKg);
+		this.getStockfeve().ajouter(f,quantiteEnKg);
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coursEnEuroParKg*quantiteEnKg);
 		
 	}
 
-//Marie
+//Marie et Jad
 	public void notificationBlackList(int dureeEnStep) {
-		this.journal.ajouter("Aie... je suis blackliste... Nous sommes pauvres... :(");
+		//this.journal.ajouter("Aie... je suis blackliste... Nous sommes pauvres... :(");
 		
 	}
-
+	public void supernext() {
+	}
 }
