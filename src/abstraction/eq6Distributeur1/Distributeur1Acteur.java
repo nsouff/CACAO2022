@@ -91,6 +91,7 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		System.out.print(Filiere.LA_FILIERE.getChocolatsProduits());
 	}
 	
 	public void suppAnciensContrats() {//leorouppert
