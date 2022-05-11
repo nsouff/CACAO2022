@@ -8,14 +8,16 @@ import java.util.List;
 import abstraction.eq8Romu.contratsCadres.ContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.filiere.IMarqueChocolat;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Transformateur3Acteur implements IActeur, IMarqueChocolat{
+public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabricantChocolatDeMarque{
 	
 	protected int cryptogramme;
 	protected Journal journal;
@@ -137,6 +139,16 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat{
 			marques.add("BIO'riginal");
 			return marques;
 		}
+
+	
+	public List<ChocolatDeMarque> getChocolatsProduits() {
+		List<ChocolatDeMarque> cm=new ArrayList<ChocolatDeMarque>();
+		cm.add( new ChocolatDeMarque(Chocolat.HQ_BE_O,"BIO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.HQ_BE,"BIO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.MQ_BE_O,"BIO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.MQ_BE,"BIO'riginal"));
+		return cm;
+	}
 	
 }
 
