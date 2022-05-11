@@ -34,7 +34,6 @@ public class Parc {
 		this.ut_debut_guerre = 0;
 		this.ut_fin_guerre = 0;
 		this.fin_aleas = 0;
-		this.Arbres_Mourant_5ans = 0;
 	}
 	
 	public List<MilleArbre> getCacaoyers() { //Écrit par Antoine
