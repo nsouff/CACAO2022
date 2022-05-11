@@ -3,13 +3,17 @@ package abstraction.eq6Distributeur1;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Gamme;
 
 public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
 
+	protected Journal jounralContratCadre;
+	
 	public Acheteur_Contrat() {
 		super();
+		jounralContratCadre = new Journal("Journal pour les contrat cadre", this);
 	}
 	
 @Override
@@ -40,14 +44,17 @@ public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		ech.set(ech.getStepDebut()+1, ech.getQuantite(ech.getStepDebut())*2);
 		ech.set(ech.getStepDebut()+2, ech.getQuantite(ech.getStepDebut())*2);
 	}
+	jounralContratCadre.ajouter("Nous faisons une contre proposition pour le contrat" + contrat + ". Le nouvel écheancier est " + ech);
 	return ech;
 }
 
 @Override
 public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 	if (Math.random() < 0.5) {
+		jounralContratCadre.ajouter("Contre proposition en proposant 0.90 du prix " + contrat);
 		return 0.9*contrat.getPrix();
 	}
+	jounralContratCadre.ajouter("Contre proposition en proposant 0.95 du prix" + contrat);
 	return 0.95*contrat.getPrix();
 }
 
