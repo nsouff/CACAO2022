@@ -17,7 +17,6 @@ public class Parc {
 	private int nombre_non_BE_basse;
 	private int nombre_non_BE_moyenne;
 	private int nombre_non_BE_haute;
-	private int Arbres_Mourant_5ans;
 	private boolean guerre;
 	private int ut_debut_guerre;
 	private int ut_fin_guerre;
