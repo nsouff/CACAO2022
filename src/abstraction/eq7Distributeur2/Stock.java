@@ -19,11 +19,19 @@ public class Stock implements IStock{
 	private HashMap<ChocolatDeMarque,Variable> reserve;
 	private HashMap<ChocolatDeMarque,Variable> seuilRachat;
 	private IActeur acteur;
+	private boolean FONCTIONEL;
 	
 	/**Méthode constructeur, initialise le stock vide
 	 * @param acteur
 	 */
 	public Stock(IActeur acteur,List<ChocolatDeMarque> listeChocolatsProduits) {
+		//Si aucun chocolat n'est vendu sur le marché
+		if (listeChocolatsProduits.isEmpty()) {
+			this.FONCTIONEL= false; 
+			System.out.println("Les stocks de Biofour ne sont pas fonctionnel : Aucun chocolat n'est produit sur le marché");
+		} else {
+			this.FONCTIONEL = true;
+		}
 		
 		//Initialisation des stocks physique
 		reserve = new HashMap<ChocolatDeMarque,Variable>();
@@ -48,30 +56,37 @@ public class Stock implements IStock{
 	
 	
 	public double getQuantite(ChocolatDeMarque chocolat) {
+		if (!this.FONCTIONEL) {return 0.0;}
+		
 		Variable v = reserve.get(chocolat);
 		return v.getValeur();
 	}
 	
 	private void setQuantite(ChocolatDeMarque chocolat,double quantite) {
+		if (!this.FONCTIONEL) {return ;}
 		Variable v = reserve.get(chocolat);
 		v.setValeur(this.acteur, quantite);
 	}
 	
 	public void addProduit(ChocolatDeMarque chocolat, Double quantite) {
+		if (!this.FONCTIONEL) {return ;}
 		double quantiteActuelle = this.getQuantite(chocolat);
 		this.setQuantite(chocolat, quantiteActuelle + quantite);
 	}
 
 	public void remove(ChocolatDeMarque chocolat, Double quantite) {
+		if (!this.FONCTIONEL) {return ;}
 		//This method allow negative stock
 		this.addProduit(chocolat, -quantite);
 	}
 
 	public double getSeuilRachat(ChocolatDeMarque chocolat) {
+		if (!this.FONCTIONEL) {return 0.0;}
 		return seuilRachat.get(chocolat).getValeur();
 	}
 
 	public void setSeuilRachat(ChocolatDeMarque chocolat, Double seuil) {
+		if (!this.FONCTIONEL) {return ;}
 		seuilRachat.get(chocolat).setValeur(this.acteur, seuil);
 	}
 	

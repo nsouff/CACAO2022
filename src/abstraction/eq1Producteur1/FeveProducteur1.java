@@ -3,32 +3,34 @@ package abstraction.eq1Producteur1;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Feve {
+public class FeveProducteur1 {
 	private int ut_debut; //Plus pratique puisqu'on a pas besoin d'actualiser
 	private boolean perime;
 	private double poids;
 	
 	
 //Auteur : Laure ; Modificateur : Khéo
-	public Producteur1Feve(double poids) {
+	public FeveProducteur1(double poids) {
 		this.ut_debut = Filiere.LA_FILIERE.getEtape();
 		this.perime = false;
+		this.poids = poids;
 	}
 
 	/**
 	 * @param age
 	 * @param perime
 	 */
-	public Producteur1Feve(int ut_debut, boolean perime,double poids) {
+	public FeveProducteur1(int ut_debut, boolean perime,double poids) { 
 		this.ut_debut = ut_debut;
 		this.perime = perime;
+		this.poids = poids;
 	}
 
 	public int getAge() {
 		return Filiere.LA_FILIERE.getEtape()-this.getUt_debut();
 	}
 	
-	public void setAge(int ut_debut) {
+	public void setUt_debut(int ut_debut) {
 		this.ut_debut=ut_debut;
 	}
 	
@@ -68,8 +70,12 @@ public class Producteur1Feve {
 		this.perime = perime;
 	}
 	
-	public void Peremption() {
-		if (this.getAge()>24) {
+	
+	//Auteur : 
+	//Modifié par : Antoine 
+	//La durée de péremption des fèves est de 2ans de mémoire
+	public void Peremption() {  
+		if (this.getAge()>48) {
 			this.setPerime(true);
 		}
 	}

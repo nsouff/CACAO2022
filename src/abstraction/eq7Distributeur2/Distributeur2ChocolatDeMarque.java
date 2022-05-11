@@ -1,7 +1,5 @@
 package abstraction.eq7Distributeur2;
 
-import java.util.List;
-
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -9,9 +7,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements IDistributeurChocolatDeMarque  {
 	
-
 	private double capaciteDeVente;
-	private double[] prix;
 
 	public Distributeur2ChocolatDeMarque() {
 		super();
@@ -20,13 +16,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	
 	
 	public double prix(ChocolatDeMarque choco) {
-		// TODO Auto-generated method stub
-		int pos= (chocolats.indexOf(choco));
-		if (pos<0) {
-			return 0.0;
-		} else {
-			return prix[pos];
-		}
+		return 10.0;
 	}
 
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
@@ -35,12 +25,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
-			int pos= (chocolats.indexOf(choco));
-			if (pos<0) {
-				return 0.0;
-			} else {
-				return Math.min(capaciteDeVente, super.stock.getQuantite(choco));
-			}
+			return Math.min(capaciteDeVente, this.stock.getQuantite(choco));
 		}
 	}
 
@@ -50,21 +35,13 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
-			int pos= (chocolats.indexOf(choco));
-			if (pos<0) {
-				return 0.0;
-			} else {
-				return Math.min(capaciteDeVente, super.stock.getQuantite(choco))/10.0;
+			return Math.min(capaciteDeVente, this.stock.getQuantite(choco))/10.0;
 			}
-		}
 	}
-
+	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
 		// TODO Auto-generated method stub
-		int pos= (chocolats.indexOf(choco));
-		if (pos>=0) {
-			super.stock.remove(choco, quantite);
-		}
+		this.stock.remove(choco, quantite);
 		
 	}
 
