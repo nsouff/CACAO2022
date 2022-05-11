@@ -31,6 +31,7 @@ public class Transformateur2Acteur implements IActeur {
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat> stockchocolat;
 	private double marge;
+	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
 
 	
 
