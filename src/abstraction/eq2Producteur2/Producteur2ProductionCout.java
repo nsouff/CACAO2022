@@ -33,6 +33,7 @@ public class Producteur2ProductionCout extends Plantation {
 	
 	public void next() {
 		super.next();
+	
 	}
 
 }

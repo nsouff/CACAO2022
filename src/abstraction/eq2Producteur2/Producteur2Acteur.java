@@ -73,6 +73,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 
 	public void next() {
 		// il faut appeler nextPlantation() de la classe plantation
+
 		super.next();
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
@@ -80,6 +81,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
+
 	}
 	
 	public List<String> getNomsFilieresProposees() {
