@@ -78,7 +78,6 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
 
-		;
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));
