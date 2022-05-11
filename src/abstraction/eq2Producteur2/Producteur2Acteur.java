@@ -51,6 +51,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	}
 
 	public void initialiser() {
+		super.initialiser();
 	}
 	
 	public String getNom() {
@@ -73,7 +74,6 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 
 	public void next() {
 		// il faut appeler nextPlantation() de la classe plantation
-
 		super.next();
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
