@@ -1,5 +1,10 @@
 package abstraction.eq4Transformateur2; 
 
+import abstraction.eq8Romu.appelsOffres.FiliereTestAO;
+import abstraction.eq8Romu.appelsOffres.IVendeurAO;
+import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
+import abstraction.eq8Romu.clients.FiliereTestClientFinal;
+import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -10,14 +15,11 @@ import abstraction.eq8Romu.produits.Feve;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Transformateur2Acteur implements IActeur {
 	
-	protected int cryptogramme;
-	public static ChocolatDeMarque Test;
-	
-
 	
 	private Variable coutStockage;
 	private Variable prixSeuil; // au dela duquel nous n'achetons pas
@@ -31,6 +33,54 @@ public class Transformateur2Acteur implements IActeur {
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat> stockchocolat;
 	private double marge;
+	
+	// variables pour l'achatAO
+	protected HashMap<ChocolatDeMarque, Double> stock;
+	protected Chocolat choco;
+	protected String marque;
+	protected double prixInit;
+	protected Journal journal;
+	
+	
+	
+	
+	
+	public Transformateur2Acteur(int cryptogramme, Variable coutStockage, Variable prixSeuil,
+			Variable rendementTransfoLongue, Variable prixTransformation, Variable prixChocoOriginal,
+			Variable capaciteStockage, Variable capaciteStockageFixe, Variable expirationFeve, Variable expirationChoco,
+			Stock<Feve> stockfeve, Stock<Chocolat> stockchocolat, double marge, HashMap<ChocolatDeMarque, Double> stock,
+			Chocolat choco, String marque, double prixInit) {
+		super();
+		this.cryptogramme = cryptogramme;
+		this.coutStockage = coutStockage;
+		this.prixSeuil = prixSeuil;
+		this.rendementTransfoLongue = rendementTransfoLongue;
+		this.prixTransformation = prixTransformation;
+		this.prixChocoOriginal = prixChocoOriginal;
+		this.capaciteStockage = capaciteStockage;
+		this.capaciteStockageFixe = capaciteStockageFixe;
+		this.expirationFeve = expirationFeve;
+		this.expirationChoco = expirationChoco;
+		this.stockfeve = stockfeve;
+		this.stockchocolat = stockchocolat;
+		this.marge = marge;
+		this.stock = stock;
+		this.choco = choco;
+		this.marque = marque;
+		this.prixInit = prixInit;
+		this.journal=new Journal(this.getNom()+" activites", this);
+		
+	}
+
+
+
+
+	protected int cryptogramme;
+	public static ChocolatDeMarque Test;
+	
+
+	
+	
 
 	
 
@@ -59,7 +109,7 @@ public class Transformateur2Acteur implements IActeur {
 	}
 	
 	public String getNom() {
-		return "EQ4";
+		return "Opti'Cacao";
 	}
 
 	public String getDescription() {
@@ -76,6 +126,12 @@ public class Transformateur2Acteur implements IActeur {
 	}
 	
 	public void next() {
+		this.journal.ajouter("== ETAPE "+Filiere.LA_FILIERE.getEtape()+" ==");
+		if (this.stock.keySet().size()>0) {
+			for (ChocolatDeMarque c : this.stock.keySet()) {
+				this.journal.ajouter("stock de "+c+" : "+this.stock.get(c));
+			}
+		}
 	}
 	
 	public List<String> getNomsFilieresProposees() {
@@ -85,7 +141,10 @@ public class Transformateur2Acteur implements IActeur {
 	}
 
 	public Filiere getFiliere(String nom) {
-		return null;
+		switch (nom) { 
+		case "OPTI'CACAO" : return new CopieFiliereTestAO();
+	    default : return null;
+		}
 	}
 	
 	public List<Variable> getIndicateurs() {
