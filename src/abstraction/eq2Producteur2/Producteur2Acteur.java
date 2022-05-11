@@ -17,9 +17,10 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	
 	private static final LinkedList<Stock> FEVE_BASSE = new LinkedList<Stock>();
 	private static final LinkedList<Stock> FEVE_MOYENNE = new LinkedList<Stock>();
-	private static final LinkedList<Stock> FEVE_MOYENNE_BE = new LinkedList<Stock>();
+	private static final LinkedList<Stock> FEVE_MOYENNE_BIO_EQUITABLE = new LinkedList<Stock>();
 	private static final LinkedList<Stock> FEVE_HAUTE = new LinkedList<Stock>();
-	private static final LinkedList<Stock> FEVE_HAUTE_BE = new LinkedList<Stock>();
+	private static final LinkedList<Stock> FEVE_HAUTE_BIO_EQUITABLE = new LinkedList<Stock>();
+
 	protected int cryptogramme;
 	protected Journal journal;
 	private Variable StockFeveBasse;
@@ -41,11 +42,11 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
 		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;
 		this.journal = new Journal(this.getNom()+" activites", this);
-		this.StockFeveBasse= new Variable("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, this.SommeQuantite(FEVE_BASSE));
-		this.StockFeveMoyenne= new Variable("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE));
-		this.StockFeveMoyenne_BE= new Variable("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE_BE));
-		this.StockFeveHaute= new Variable("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE));
-		this.StockFeveHaute_BE= new Variable("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE_BE));
+		this.StockFeveBasse= new VariableReadOnly("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, 1000000);
+		this.StockFeveMoyenne= new VariableReadOnly("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE));
+		this.StockFeveMoyenne_BE= new VariableReadOnly("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));
+		this.StockFeveHaute= new VariableReadOnly("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE));
+		this.StockFeveHaute_BE= new VariableReadOnly("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE_BIO_EQUITABLE));
 	
 	}
 
@@ -72,7 +73,13 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 
 	public void next() {
 		// il faut appeler nextPlantation() de la classe plantation
-		
+		super.next();
+		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
+		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));
+		this.GetStockMoyenne_BE().setValeur(this, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));
+		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE));
+		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE_BIO_EQUITABLE));
+		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 	}
 	
 	public List<String> getNomsFilieresProposees() {
@@ -119,5 +126,19 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
-	
+	public Variable GetStockBasse() {
+		return StockFeveBasse;
+	}
+	public Variable GetStockMoyenne() {
+		return StockFeveMoyenne;
+	}
+	public Variable GetStockMoyenne_BE() {
+		return StockFeveMoyenne_BE;
+	}
+	public Variable GetStockHaute() {
+		return StockFeveHaute;
+	}
+	public Variable GetStockHausse_BE() {
+		return StockFeveHaute_BE;
+	}
 }

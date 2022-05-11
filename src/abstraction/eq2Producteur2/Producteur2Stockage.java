@@ -58,7 +58,7 @@ public class Producteur2Stockage extends Producteur2ProductionCout {
 	}
 	
 	public void initialiser() {
-//		super.initialiser();
+		super.initialiser();
 		this.addQuantite(1000001,Feve.FEVE_BASSE);
 		this.addQuantite(1000001,Feve.FEVE_MOYENNE);
 		this.addQuantite(1000001,Feve.FEVE_MOYENNE_BIO_EQUITABLE);
@@ -67,6 +67,10 @@ public class Producteur2Stockage extends Producteur2ProductionCout {
 		
 	}
 	public void next() {
-//		super.next();		
+		super.next();
+//		for (Feve f : Feve.values()) {
+//			this.get
+//			
+//		}
 	}
 }
