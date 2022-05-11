@@ -74,11 +74,26 @@ public class Plantation extends Producteur2Acteur {
 		qt.add((int) (Math.ceil((2000*NbTotalArbres)/5))); //BG
 		
 		return qt;
+	}
+	
+	public void nextPlantation() {
+		//auteure : Fiona
 		
+		// faire vieillir les arbres à chaque UT 
+		
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		for (Arbre a: arbres) {
+			
+			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			for (Parcelle p : ListeParcelles) {
+				p.setAge(p.getAge()+ 1);
+			}
+			
+		}	
 		
 	}
 	
-
+	
 	
 	public void renouvellement() {
 		//auteure : Fiona
