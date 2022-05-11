@@ -8,13 +8,24 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1Bourse extends Transformateur1Acteur implements IAcheteurBourse{
 	
-	protected HashMap<Feve, Double> quantiteAchatFeve;            /** quantité de fève qu'on souhaite acheter */
-	protected HashMap<Chocolat, Double> quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
+	protected DicoFeve quantiteAchatFeve;            /** quantité de fève qu'on souhaite acheter */
+	protected DicoChoco quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
 	protected dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
-	protected HashMap<Feve, Double> prixAchatFeve;
-	protected HashMap<Feve, Double> stockFeve;               /** Integer --> Double*/
-	protected HashMap<Chocolat,Double> stockChoco;           /** Integer --> Double*/
-	protected HashMap<Chocolat, Double> prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
+	protected DicoFeve prixAchatFeve;
+	protected DicoFeve stockFeve;               /** Integer --> Double*/
+	protected DicoChoco stockChoco;           /** Integer --> Double*/
+	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
+	
+	// Alexandre
+	public Transformateur1Bourse() {
+		quantiteAchatFeve = new DicoFeve();
+		quantiteDemandeeChoco = new DicoChoco();
+		dernierPrixVenteChoco = new dernierPrixVenteChoco();
+		prixAchatFeve = new DicoFeve();
+		stockFeve = new DicoFeve();
+		stockChoco = new DicoChoco();
+		prixVenteMin = new DicoChoco();
+	}
 	
 	/** renvoie la quantité de fève voulue; auteur Julien 
 	 * Pas de prise en compte pour l'instant des contrats */

@@ -14,7 +14,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 
-public class Transformateur1 extends Transformateur1ContratCadreAcheteur {
+public class Transformateur1 extends Transformateur1AppelsOffres {
 	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
 	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
 	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
@@ -34,7 +34,7 @@ public class Transformateur1 extends Transformateur1ContratCadreAcheteur {
 	}
 	/** getter dernierPrixVenteChoco*/
 	public dernierPrixVenteChoco getDernierPrixVenteChoco() {
-		return this.getDernierPrixVenteChoco();
+		return this.dernierPrixVenteChoco;
 	}
 
 	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  */
@@ -44,7 +44,7 @@ public class Transformateur1 extends Transformateur1ContratCadreAcheteur {
 			prixAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ_BE), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ_BE)) - coutTransfo);
 	}
 	
-	/** détermine la quantité de fèves à acheter; auteur Julien */
+	/** détermine la quantité de fèves totale qu'on souhaite avoir cette étape ; auteur Julien */
 	public void determinationQuantiteAchat() {		
 		quantiteAchatFeve.put(Feve.FEVE_BASSE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2)); 	
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));

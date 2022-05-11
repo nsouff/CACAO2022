@@ -21,6 +21,8 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	
 	public Transformateur1ContratCadreVendeur() {
 		super();
+		System.out.println("ok2");
+
 		this.mesContratEnTantQueVendeur=new LinkedList<ExemplaireContratCadre>();
 	}
 	

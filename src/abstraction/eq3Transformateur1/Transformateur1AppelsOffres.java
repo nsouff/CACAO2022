@@ -7,15 +7,17 @@ import abstraction.eq8Romu.appelsOffres.IVendeurAO;
 import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.filiere.Filiere;
-import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
+
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+
+
 
 
 public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAcheteur implements IVendeurAO {
 
-	protected Variable stock;
-	protected Chocolat choco;
+	
+
 	protected String marque;
 	protected double prixMin;
 	protected SuperviseurVentesAO superviseur;
@@ -30,6 +32,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 		
 		if (Filiere.LA_FILIERE.getEtape()>=1) {
 			for (Chocolat c : stockChoco.keySet()) {
+
 				if (stockChoco.get(c)>=0) {
 					ChocolatDeMarque coco= new ChocolatDeMarque(c, "cote d'or");
 					double stock= stockChoco.get(c);
@@ -41,15 +44,14 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 				}
 				
 			}
-			
-					
-				}
-			}
-	
-	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas */
-	
+		}
+	}
+
+	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas 
+	/** on veut faire par type de chocolat */
+
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
-	
+		
 		if (propositions==null) {
 			return null;
 		} else {
@@ -62,8 +64,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 				return null;
 			}
 		}
-
-  }
+	}
 		}
 
 
