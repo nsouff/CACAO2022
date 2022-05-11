@@ -62,6 +62,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
+		this.journal.ajouter("echeancier ok pour tout");
 		return listeEcheanciers.get(l-1); // le dernier proposé est celui des vendeurs
 	}
 
@@ -69,11 +70,13 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
 		if (prixT < this.seuilMaxAchat) {
+			this.journal.ajouter("prixT");
 			return prixT;
 		}
 		else {
 			double nouveauprix = 0.4*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
+				this.journal.ajouter("nouveau prix");
 				return nouveauprix;
 			}
 			return 0.0;
@@ -93,7 +96,8 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	// si la quantité reçue est inférieure à celle prévue : en acheter à la bourse ?
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		Feve f= ((Feve) produit);
-		this.stockFeves.ajouter(f, quantite);
+		this.stockFeves.ajouter(f, quantite);		
+		this.journal.ajouter("On receptionne");
 	}
 
 	//Karla
