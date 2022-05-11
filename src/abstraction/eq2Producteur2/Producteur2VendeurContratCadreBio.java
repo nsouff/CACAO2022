@@ -21,6 +21,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 
 	public Producteur2VendeurContratCadreBio() {
 		super();
+		this.mesContratEnTantQueVendeurBio = new LinkedList<ExemplaireContratCadre>();
 		// TODO Auto-generated constructor stub
 	}
 
