@@ -3,6 +3,8 @@ package abstraction.eq2Producteur2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
 //auteure : Fiona Martin 
@@ -145,6 +147,61 @@ public class Plantation  {
 			
 	}
 	
+	public int RendementParcelle(Parcelle p) {
+		if (p.getStadeMaladie() == 1 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=2) {
+			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
+				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+			}
+			else {
+				return (int) (p.getRendementProgressif()  * 0.85);
+			} 		
+		}
+		
+		else if (p.getStadeMaladie() == 2 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=5) {
+			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
+				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+			}
+			else {
+				return (int) (p.getRendementProgressif()  * 0.85);
+			} 		
+		}
+		
+		else if (p.getStadeMaladie() == 3 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=4) {
+			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
+				return (int) (p.getTypeArbre().getRendementFinal() * 0.8);
+			}
+			else {
+				return (int) (p.getRendementProgressif()  * 0.8);
+			} 		
+		}
+		
+		else if (p.getStadeMaladie() == 4 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=4) {
+			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
+				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+			}
+			else {
+				return (int) (p.getRendementProgressif()  * 0.85);
+			} 		
+		}
+		
+		else if (p.getStadeMaladie() == 5 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=2) {
+			return 0; 		
+		}
+		
+		else {
+				if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
+					return (int) (p.getTypeArbre().getRendementFinal());
+				}
+				else {
+					return (int) (p.getRendementProgressif());
+				} 		
+			}
+		}
+		
+		
+		
+
+	
 		
 	public int production(Feve typefeve) {
 		//auteure : Fiona
@@ -158,12 +215,8 @@ public class Plantation  {
 		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
 		
 		for (Parcelle p : ListeParcelles) {
-			if (p.getAge() > typearbre.getDureeCroissance()) {
-				ProductionFinale = (int) (ProductionFinale + typearbre.getRendementFinal())*p.getNbArbres();
-			}
-			else {
-				ProductionFinale = (int) (ProductionFinale + p.getRendementProgressif()*p.getAge()) * p.getNbArbres();
-			}
+			
+			ProductionFinale = (int) (ProductionFinale + RendementParcelle(p))*p.getNbArbres();
 		}
 		return ProductionFinale;
 	}

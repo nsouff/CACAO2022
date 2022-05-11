@@ -71,7 +71,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	
 
 	public void next() {
-		
+		// il faut appeler nextPlantation() de la classe plantation
 		
 	}
 	
