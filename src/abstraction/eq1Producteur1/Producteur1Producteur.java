@@ -19,7 +19,7 @@ public class Producteur1Producteur extends Producteur1Stock{
 	//Les arbres sont créés de manière à avoir un âge aléatoire compris entre 95 et 135 ut, ceci afin d'avoir une production non-nulle à l'ut initiale et de ne pas avoir tous les arbres initiaux mourant au même moment
 	public void initialiser() {
 		super.initialiser();
-		int nombre_arbre_debut = 500000;
+		int nombre_arbre_debut = 600000;
 		double pourcentage_nBE_basse = 0.63;
 		double pourcentage_nBE_moyenne = 0.27;
 		double pourcentage_nBE_haute = 0;
