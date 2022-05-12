@@ -52,7 +52,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
-		this.ventes.ajouter("nous proposons un échéancier");
+		this.ventes.ajouter("nous acceptons l' échéancier");
 		return listeEcheanciers.get(l-1); //////////
 	}
 
@@ -91,7 +91,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.journal.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur().toString() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit().toString());
+		this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur().toString() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit().toString());
 		
 	}
 
