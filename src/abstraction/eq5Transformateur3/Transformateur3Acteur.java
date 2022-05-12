@@ -57,7 +57,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2.500;
-		this.SeuilMinFeves = 100.00;
+		this.SeuilMinFeves = 100000.00;
 		this.SeuilMinChocolat = 500.00;
 		this.achatMaxFeves = 500.00;
 		this.achats= new Journal ("Achats", this);
