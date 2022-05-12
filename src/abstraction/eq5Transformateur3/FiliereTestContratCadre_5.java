@@ -1,17 +1,14 @@
 package abstraction.eq5Transformateur3;
 
 import abstraction.eq8Romu.produits.Chocolat;
-import abstraction.eq8Romu.produits.ChocolatDeMarque;
-import abstraction.eq8Romu.produits.Feve;
 
 import java.util.HashMap;
 
 import abstraction.eq2Producteur2.Producteur2;
-import abstraction.eq7Distributeur2.Distributeur2;
+import abstraction.eq6Distributeur1.Distributeur1;
 import abstraction.eq8Romu.Romu;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.clients.ClientFinal;
-import abstraction.eq8Romu.contratsCadres.ExempleTransformateurContratCadreVendeurAcheteur;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.*;
 
@@ -48,7 +45,7 @@ public class FiliereTestContratCadre_5 extends Filiere {
 		ClientFinal  cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 
 		this.ajouterActeur(cf);
-		this.ajouterActeur(new Distributeur2());
+		this.ajouterActeur(new Distributeur1());
 		this.ajouterActeur(new Romu());
 		this.superviseurCC=new SuperviseurVentesContratCadre();
 		this.ajouterActeur(this.superviseurCC);

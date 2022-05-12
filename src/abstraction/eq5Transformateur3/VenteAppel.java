@@ -25,9 +25,14 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 		if (proposition1.getOffre().getChocolat().isOriginal()) { 
 			original = 1;
 				}
+		journal.ajouter("Prix prop "+proposition1.getPrixKg());
+		double prixrentable = this.seuilMaxAchat + this.coutOriginal.getValeur()*original + this.coutTransformation.getValeur();
+		journal.ajouter("prix rentable "+ prixrentable);
+
 		if (proposition1.getPrixKg()>= this.seuilMaxAchat + this.coutOriginal.getValeur()*original + this.coutTransformation.getValeur()) {
 				lameilleure = proposition1 ;	
 				}
+	
 		this.ventes.ajouter(lameilleure.toString()+lameilleure.getPrixKg());
 		return lameilleure; // si le prix est trop faible, on prefère garder notre chocolat
 		}
@@ -43,14 +48,14 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, true);
 					if (retenueenTG!=null) {
 						this.stockChocolat.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
-						this.ventes.ajouter("vente de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c +"  a "+retenueenTG.getAcheteur().getNom()+" en TG");
+						this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c +"  a "+retenueenTG.getAcheteur().getNom()+" en TG");
 					} else {
 						// on essaye sans mettre en TG
 						PropositionAchatAO retenuepasenTG = 
 								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, false);
 						if (retenuepasenTG!=null) {
 							this.stockChocolat.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
-							this.journal.ajouter("vente de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c +" a "+retenuepasenTG.getAcheteur().getNom());
+							this.journal.ajouter("vente par AO de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c +" a "+retenuepasenTG.getAcheteur().getNom());
 						} else {
 							this.journal.ajouter("pas d'offre retenue");
 						}

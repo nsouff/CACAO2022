@@ -36,16 +36,14 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	
 
 	
-	//Yves
+	//Yves, Karla
 	public boolean vend(Object produit) {
 		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
 		if (stockChocolat.getProduitsEnStock().contains(c)) {
 			this.journal.ajouter("on a ce choco");
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	//Yves
@@ -105,6 +103,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		this.ventes.ajouter("nous livrons" + peutlivrer + " kd de" + c.toString()+ "à" + contrat.getAcheteur().toString());
 		return peutlivrer;
 	}
+	
 	//Karla
 	/* on regarde l etat de nos stocks et on lance la procédure */
 	public void next() {
@@ -112,7 +111,6 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
 			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat) {
 				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
-				
 				lanceruncontratVendeur(choco);
 			}
 		}

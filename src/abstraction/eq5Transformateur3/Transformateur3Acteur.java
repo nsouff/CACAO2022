@@ -56,19 +56,20 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2.500;
-		this.SeuilMinFeves = 10000.00;
-		this.SeuilMinChocolat = 100.00;
-		this.achatMaxFeves = 5000.00;
+		this.SeuilMinFeves = 100.00;
+		this.SeuilMinChocolat = 500.00;
+		this.achatMaxFeves = 500.00;
 		this.journal = new Journal (this.getNom()+" activites", this);
 		this.ventes= new Journal ("ventes", this);
 		
-		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 10000000.00);
-		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 10000000.00);
+		Double s = 1000.00;
+		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, s);
+		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
 		
-		this.stockChocolat.ajouter(Chocolat.MQ_BE, 10000000.00);
-		this.stockChocolat.ajouter(Chocolat.MQ_BE_O, 10000000.00);
-		this.stockChocolat.ajouter(Chocolat.HQ_BE, 10000000.00);
-		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, 10000000.00);
+		this.stockChocolat.ajouter(Chocolat.MQ_BE, s);
+		this.stockChocolat.ajouter(Chocolat.MQ_BE_O, s);
+		this.stockChocolat.ajouter(Chocolat.HQ_BE, s);
+		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, s);
 		
 		this.stockFevesVariableM = new Variable(this.getNom()+"stockFevesMoyennesBio", "stock de feves moyenne qualite bio", this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)  );
 		this.stockFevesVariableH = new Variable(this.getNom()+"stockFevesHautesBio", "stock de feves haute qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)  );
