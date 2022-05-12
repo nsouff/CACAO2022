@@ -129,6 +129,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Vendeur imp
 	}
 	
 	public void next() {
+		super.next();
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurNonBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -143,6 +144,9 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Vendeur imp
 		return 0;
 	}
 
+	public void initialiser() {
+		super.initialiser();
+	}
 
 //	@Override
 	public boolean peutVendre(Object produit) {

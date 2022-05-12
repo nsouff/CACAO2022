@@ -11,15 +11,16 @@ import java.util.HashMap;
 
 public class Producteur2Couts extends Producteur2Plantation {
 
-	public double coutHQ_BE=0.1;//cout par arbre
-	public double coutMQ_BE=0.1;
-	public double coutHQ=0.1;
-	public double coutMQ=0.1;
-	public double coutBQ=0.1;
+	public static double coutHQ_BE=0.5;//cout par arbre
+	public static double coutMQ_BE=0.4;
+	public static double coutHQ=0.3;
+	public static double coutMQ=0.2;
+	public static double coutBQ=0.1;
 	public HashMap<Feve,Double> coutParKg;
 
 	public Producteur2Couts() {
 		super();
+		this.coutParKg=new HashMap<Feve,Double>();;
 	}
 
 
@@ -37,5 +38,7 @@ public class Producteur2Couts extends Producteur2Plantation {
 		super.next();
 	
 	}
-
+	public void initialiser() {
+		super.initialiser();
+	}
 }

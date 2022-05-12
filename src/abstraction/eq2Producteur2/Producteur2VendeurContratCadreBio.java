@@ -135,5 +135,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 		this.mesContratEnTantQueVendeurBio.removeAll(contratsObsoletes);
 	}
 
-	
+	public void initialiser() {
+		super.initialiser();
+	}
 }

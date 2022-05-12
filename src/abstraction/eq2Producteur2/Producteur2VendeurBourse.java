@@ -33,5 +33,7 @@ public class Producteur2VendeurBourse extends Producteur2Vendeur implements IVen
 		this.removeQuantite(quantiteEnKg, f);
 
 	}
-
+	public void initialiser() {
+		super.initialiser();
+	}
 }
