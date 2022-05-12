@@ -33,7 +33,7 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
             journalAO.ajouter("Nous proposons un prix de 80 pour l'offre " + offre);
             return 80.0;
         }
-        journalAO.ajouter("Nous proposons un prux de 100 pour l'offre " + offre);
+        journalAO.ajouter("Nous proposons un prix de 100 pour l'offre " + offre);
         return 100.0;
     }
 

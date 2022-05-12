@@ -117,7 +117,11 @@ public class Distributeur1Acteur implements IActeur {
 					journal1.ajouter("-->aboutit au contrat "+ CC);
 				}
 				else {journal1.ajouter("échec des négociations");}
+				
 			}
+		//Nolann Banque retirer argent :
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), 1000000);
+
 			
 		});
 		
@@ -167,10 +171,10 @@ public class Distributeur1Acteur implements IActeur {
 	public void notificationOperationBancaire(double montant) {
 	}
 	// Renvoie le solde actuel de l'acteur
+	//Nolann
 	public double getSolde() {
-		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
+		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
- 
 
 	
 	
