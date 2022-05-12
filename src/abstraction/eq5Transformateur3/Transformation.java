@@ -19,7 +19,7 @@ public class Transformation extends AcheteurContrat {
 			if (stockFeves.getstock(f)-quantité >=0) {
 				stockFeves.utiliser(f, quantité);
 				stockChocolat.ajouter(Chocolat.get(f.getGamme(),f.isBioEquitable(), B), quantité);
-				this.journal.ajouter("Transformation classique de "+ quantité +"kg  de " + f);
+				this.transformation.ajouter("Transformation classique de "+ quantité +"kg  de " + f);
 
 				double montant = quantité * this.coutTransformation.getValeur() ;
 				if (B = true) {
@@ -31,7 +31,7 @@ public class Transformation extends AcheteurContrat {
 				double newquantite =  stockFeves.getstock(f);
 				stockFeves.utiliser(f, newquantite);
 				stockChocolat.ajouter(Chocolat.get(f.getGamme(),f.isBioEquitable(), B), newquantite);
-				this.journal.ajouter("Transformation classique de "+ newquantite +"kg  de " + f);
+				this.transformation.ajouter("Transformation classique de "+ newquantite +"kg  de " + f);
 				double montant = newquantite * this.coutTransformation.getValeur() ;
 				if (B = true) {
 					montant += newquantite * this.coutOriginal.getValeur();
@@ -79,9 +79,9 @@ public class Transformation extends AcheteurContrat {
 		super.next();
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			if (this.stockFeves.getstock(f) <= this.seuilTransformation.getValeur()) {
-				this.journal.ajouter("Transformation non originale : ");
+				this.transformation.ajouter("Transformation non originale : ");
 				transformationClassique(f, 0.6*this.stockFeves.getstock(f), false); //60% du stock --> non Original
-				this.journal.ajouter("Transformation originale : ");
+				this.transformation.ajouter("Transformation originale : ");
 				transformationClassique(f, 0.3*this.stockFeves.getstock(f), true); // 30% du stock --> Original
 			}
 		}
