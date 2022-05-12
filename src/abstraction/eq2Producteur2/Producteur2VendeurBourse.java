@@ -9,21 +9,23 @@ import java.util.LinkedList;
 import abstraction.eq8Romu.bourseCacao.IVendeurBourse;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2VendeurBourse extends Producteur2Vendeur implements IVendeurBourse {
+public class Producteur2VendeurBourse extends Producteur2Acteur implements IVendeurBourse {
 
-	@Override
+	public Producteur2VendeurBourse() {
+		super();
+	}
 	public double offre(Feve f, double cours) {
 		double quantiteAVendre = 0;
 		if (cours> 1.3*this.getCout(f)) {
-			 quantiteAVendre= this.getStock(f); // on vend 80% du stock;
+			 quantiteAVendre= 0.20*this.getStock(f); // on vend 80% du stock;
 		}
 		if (cours> 1.2*this.getCout(f)) {
-			 quantiteAVendre  = this.getStock(f); // on vend 60% du stock;
+			 quantiteAVendre  = 0.1*this.getStock(f); // on vend 60% du stock;
 		}
 		if (cours> 1.1*this.getCout(f)) {
-			  quantiteAVendre = this.getStock(f); // on vend 40% du stock ;
+			  quantiteAVendre = 0.05*this.getStock(f); // on vend 40% du stock ;
 		}
-		return quantiteAVendre;
+		return 30000;
 	}
 
 	@Override

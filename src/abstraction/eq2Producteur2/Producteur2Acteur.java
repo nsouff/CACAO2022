@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import abstraction.eq1Producteur1.FiliereTestBourseEq1;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -37,8 +38,8 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur {
 		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
 		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;*/
 		this.journal = new Journal(this.getNom()+" activites", this);
-		this.StockFeveBasse= new VariableReadOnly("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, 1000000);
-		this.StockFeveMoyenne= new VariableReadOnly("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE));
+		this.StockFeveBasse= new VariableReadOnly("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, this.getStock(Feve.FEVE_BASSE));
+		this.StockFeveMoyenne= new VariableReadOnly("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, 30000000);
 		this.StockFeveMoyenne_BE= new VariableReadOnly("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.StockFeveHaute= new VariableReadOnly("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE));
 		this.StockFeveHaute_BE= new VariableReadOnly("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
@@ -87,11 +88,16 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur {
 	}
 	
 	public List<String> getNomsFilieresProposees() {
-		return new ArrayList<String>();
+		ArrayList<String> filieres = new ArrayList<String>();
+		filieres.add("Producteur2TestBourse"); 
+		return filieres;
 	}
 
 	public Filiere getFiliere(String nom) {
-		return null;
+		switch (nom) { 
+		case "Producteur2TestBourse" : return new Producteur2TestBourse();
+	    default : return null;
+		}
 	}
 	
 	public List<Variable> getIndicateurs() {
@@ -145,4 +151,6 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur {
 	public Variable GetStockHausse_BE() {
 		return StockFeveHaute_BE;
 	}
+
+
 }
