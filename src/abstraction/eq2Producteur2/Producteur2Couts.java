@@ -23,7 +23,9 @@ public class Producteur2Couts extends Producteur2Plantation {
 		this.coutParKg=new HashMap<Feve,Double>();;
 	}
 
-
+	public double getCout(Feve feve) {
+		return this.coutParKg.get(feve);
+	}
 
 	public void setCoutParKg() {
 		this.coutParKg=new HashMap<Feve,Double>();
