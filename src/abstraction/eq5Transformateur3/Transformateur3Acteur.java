@@ -22,7 +22,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected int cryptogramme;
 	protected Journal journal;
 	protected Journal ventes;
-
+	protected Journal transformation;
+	
 	//Karla
 	protected Double seuilMaxAchat; // par kg en dollars, au dessus de ce prix, on n'achète pas de fèves
 	protected Double SeuilMinFeves; // en kg : En dessous de ce seuil, on achète des fèves car stock trop "bas"
@@ -59,8 +60,10 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.SeuilMinFeves = 100.00;
 		this.SeuilMinChocolat = 500.00;
 		this.achatMaxFeves = 500.00;
-		this.journal = new Journal (this.getNom()+" activites", this);
-		this.ventes= new Journal ("ventes", this);
+		this.journal = new Journal (this.getNom()+"Activites", this);
+		this.ventes= new Journal ("Ventes", this);
+		this.ventes= new Journal ("Transfo", this);
+
 		
 		Double s = 1000.00;
 		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, s);
@@ -144,6 +147,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		List<Journal> res=new ArrayList<Journal>();
 		res.add(journal);
 		res.add(ventes);
+		res.add(transformation);
 		return res;
 	}
 
@@ -172,7 +176,9 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	
 	//Karla
 	public void next() {
-		this.journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
+		this.journal.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
+		this.ventes.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
+		this.transformation.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
 		double montant= prixStockage();
 		if (montant >0) {
 		 Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
