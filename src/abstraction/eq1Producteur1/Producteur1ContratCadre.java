@@ -20,6 +20,7 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	}
 	
 	@Override
+	//Auteur : Khéo
 	public boolean vend(Object produit) {
 		if(this.getStock((Feve)produit, false)>100000) { //On peut initier la vente si on a les bonnes quantités
 			return true;
@@ -28,6 +29,7 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	}
 
 	@Override
+	//Auteur : Khéo
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (contrat.getEcheancier().getQuantiteTotale()<this.getStock((Feve)contrat.getProduit(), false)) {
 			if (contrat.getEcheancier().getQuantiteTotale()<100000) {
@@ -44,11 +46,13 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	}
 
 	@Override
+	//Auteur : Khéo
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		return this.getPrixmoyenFeve().get(contrat.getProduit())*1000; //On propose le prix moyen au départ
 	}
 
 	@Override
+	//Auteur : Khéo
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit());
 		if(contrat.getPrix()<prixmoyen*0.75*1000) {
@@ -64,9 +68,14 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	}
 
 	@Override
+	//Copié sur le code de l'équipe 8 on veut livrer le plus possible dans tout les cas 
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		double livre = Math.min(this.getStock((Feve)contrat.getProduit(), false), quantite);
+		if (livre>0.0) {
+			this.retirerQuantite((Feve)contrat.getProduit(), livre);;
+		}
+		return livre;
+		
 	}
 
 }
