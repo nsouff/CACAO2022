@@ -2,6 +2,7 @@ package abstraction.eq7Distributeur2;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -21,6 +22,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
+
 public class Distributeur2Acteur implements IActeur{
 
 	public static final int EPS_ECH_OK=2;
@@ -28,6 +30,7 @@ public class Distributeur2Acteur implements IActeur{
 	public static final Double PRIX_MAX=100.0;
 	public static final Double PRIX_OK=50.0;
 	public static final Double EPSILON_PRIX=5.0;
+	
 	protected int cryptogramme;
 	protected IStock stock;
 	protected List<ChocolatDeMarque> chocolats;
