@@ -69,24 +69,15 @@ public class Producteur2Stockage extends Producteur2Couts {
 		this.addQuantite(1000001,Feve.FEVE_HAUTE_BIO_EQUITABLE);
 		
 	}
+
 	public void next() {
-		super.next();
-	//for (Feve f : Feve.values()) {
-		//this.get
-			
-		//}
-	}
-	
-	/**
-	 * @author Jules DORE
-	 */
-	/*public void next() {
 		super.next();
 		for(Feve feve : Feve.values()) {
 			this.addQuantite(this.production(feve), feve);
 			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
 		}
-	}*/
+		}
+
 	public HashMap<Feve, LinkedList<Stock>> getStock() {
 		return this.Stocks;
 	}

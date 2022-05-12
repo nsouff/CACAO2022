@@ -22,14 +22,14 @@ public class Stock {
 	}
 
 	public double getQuantite() {
-		return quantite;
+		return this.quantite;
 	}
 
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
 	public int getStep_arrivee() {
-		return step_arrivee;
+		return this.step_arrivee;
 	}
 
 	public void setStep_arrivee(int date_arrivee) {
@@ -47,7 +47,7 @@ public class Stock {
 	}
 
 	public boolean isPerime() {
-		return perime;
+		return this.perime;
 	}
 
 	public void setPerime(boolean perime) {
