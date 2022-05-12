@@ -77,6 +77,8 @@ public abstract class Producteur1Acteur implements IActeur {
 	public abstract Variable getStockMoyenne_NA();
 	public abstract Variable getStockMoyenne_BE_NA();
 
+	
+	//Auteur : Khéo
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
 		res.add(this.getStockBasse());
