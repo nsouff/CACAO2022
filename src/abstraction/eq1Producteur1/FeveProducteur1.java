@@ -2,11 +2,13 @@ package abstraction.eq1Producteur1;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
 public class FeveProducteur1 {
 	private int ut_debut; //Plus pratique puisqu'on a pas besoin d'actualiser
 	private boolean perime;
 	private double poids;
+	private boolean affine;
 	
 	
 //Auteur : Laure ; Modificateur : Khéo
@@ -14,6 +16,7 @@ public class FeveProducteur1 {
 		this.ut_debut = Filiere.LA_FILIERE.getEtape();
 		this.perime = false;
 		this.poids = poids;
+		this.affine=false;
 	}
 
 	/**
@@ -70,14 +73,47 @@ public class FeveProducteur1 {
 		this.perime = perime;
 	}
 	
+	public boolean isAffine() {
+		return this.affine;
+	}
 	
-	//Auteur : 
+	//Auteur : Khéo
+
+	public void MAJAffinage(Feve f) {
+		if (f.getGamme().equals(Gamme.HAUTE)) {
+			if (this.getAge()>3) {
+				this.setAffine(true);
+			}
+		}
+		
+		if (f.getGamme().equals(Gamme.MOYENNE)) {
+			if (this.getAge()>2) {
+				this.setAffine(true);
+			}
+		}
+		
+		if (f.getGamme().equals(Gamme.BASSE)) {
+			if (this.getAge()>1) {
+				this.setAffine(true);
+			}
+		}
+	}
+	
+	
+	//Auteur : Khéo
 	//Modifié par : Antoine 
 	//La durée de péremption des fèves est de 2ans de mémoire
 	public void MajPeremption() {  
 		if (this.getAge()>48) {
 			this.setPerime(true);
 		}
+	}
+	
+	/**
+	 * @param affine the affine to set
+	 */
+	public void setAffine(boolean affine) {
+		this.affine = affine;
 	}
 	
 }

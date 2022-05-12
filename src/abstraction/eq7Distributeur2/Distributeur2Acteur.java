@@ -2,39 +2,35 @@ package abstraction.eq7Distributeur2;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
 import java.util.LinkedList;
-
-import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
-import abstraction.eq8Romu.clients.FiliereTestClientFinal;
-import abstraction.eq8Romu.contratsCadres.Echeancier;
-import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
-import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
-import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
-import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
-import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
+import java.util.List;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
-import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+
 
 public class Distributeur2Acteur implements IActeur{
 
-	public static final int EPS_ECH_OK=2;
-	public static final int ECH_MAX=5;
-	public static final Double PRIX_MAX=100.0;
-	public static final Double PRIX_OK=50.0;
-	public static final Double EPSILON_PRIX=5.0;
 	protected int cryptogramme;
+	
+	//Stock
 	protected IStock stock;
+	
+	//Liste des chocolats sur le marché
 	protected List<ChocolatDeMarque> chocolats;
+	
+	//Journaux
 	protected Journal journal;
+	
+	//Indicateurs
+	private List<Variable> listeIndicateur;
+	private Variable stockTotal;
 
 	public Distributeur2Acteur() {
 		this.journal = new Journal(this.getNom()+" activites", this);
+		this.initialiserIndicateurs();
 	}
 
 	public String getNom() {
@@ -49,15 +45,16 @@ public class Distributeur2Acteur implements IActeur{
 		return new Color(1,81,8); 
 	}
 
+
 	public void initialiser() {
+		//Initialiser stock
 		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
-		System.out.println(chocolats);
+		System.out.println("Liste des chocolats en vente sur le marché : "+chocolats);
 		this.stock = new Stock(this,this.chocolats);
 		
 	}
 	
 	public void next() {
-		
 	}
 
 	
@@ -79,8 +76,25 @@ public class Distributeur2Acteur implements IActeur{
 	// Renvoie les indicateurs
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
+		
+		res.add(stockTotal);
+		System.out.println(res);
 		return res;
 	}
+	
+	//-----------------------------INDICATEURS-------------------------------------------
+
+	public void initialiserIndicateurs() {
+		this.listeIndicateur = new LinkedList<Variable>();
+		this.stockTotal = new Variable("Stock total",this,0);
+		this.listeIndicateur.add(stockTotal);
+	}
+	
+	public void actualiserIndicateurs() {
+		this.stockTotal.setValeur(this,this.stock.getQuantiteTotale());
+	
+	}
+		
 
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
@@ -94,6 +108,7 @@ public class Distributeur2Acteur implements IActeur{
 		j.add(this.journal);
 		return j;
 	}
+
 
 	public void setCryptogramme(Integer crypto) {
 		this.cryptogramme = crypto;
