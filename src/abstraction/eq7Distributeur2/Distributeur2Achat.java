@@ -64,7 +64,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				for (int i=0; i<vendeurs.size(); i++) {
 					journal.ajouter("BioFour propose un CC avec "+ vendeurs.get(i)+" avec le produit: "+choc);
 					ContratCadre contrat = new ContratCadre((IAcheteurContratCadre)this, vendeurs.get(i), choc, ech, this.cryptogramme, tg);
-					prix.add(contrat.getPrix());
+					prix.set(i, contrat.getPrix());
 					double pMin = prix.get(0);
 					for (double p : prix) {
 						if(p>pMin) {
