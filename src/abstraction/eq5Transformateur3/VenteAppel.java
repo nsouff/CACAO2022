@@ -33,6 +33,7 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 				lameilleure = proposition1 ;	
 				}
 	
+		this.ventes.ajouter(lameilleure.toString()+lameilleure.getPrixKg());
 		return lameilleure; // si le prix est trop faible, on prefère garder notre chocolat
 		}
 	
@@ -47,7 +48,7 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, true);
 					if (retenueenTG!=null) {
 						this.stockChocolat.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
-						this.journal.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c +"  a "+retenueenTG.getAcheteur().getNom()+" en TG");
+						this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c +"  a "+retenueenTG.getAcheteur().getNom()+" en TG");
 					} else {
 						// on essaye sans mettre en TG
 						PropositionAchatAO retenuepasenTG = 

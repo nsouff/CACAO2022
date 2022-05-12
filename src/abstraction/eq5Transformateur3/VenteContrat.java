@@ -19,11 +19,10 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de chocolat sur 10 steps
+		this.journal.ajouter(L.toString());
 
 		if (L.size()!=0) {
 			if (L.size()== 1) {
-				this.journal.ajouter("alors");
-
 				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
 				}
 			else {
@@ -39,14 +38,11 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	
 	//Yves, Karla
 	public boolean vend(Object produit) {
-		if (this.getChocolatsProduits().contains(produit)) {
-			return true;
-		}
-		/*Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
+		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
 		if (stockChocolat.getProduitsEnStock().contains(c)) {
 			this.journal.ajouter("on a ce choco");
 			return true;
-		}*/
+		}
 		return false;
 	}
 
@@ -54,7 +50,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
-		return listeEcheanciers.get(l-1);
+		this.ventes.ajouter("nous acceptons l' échéancier");
+		return listeEcheanciers.get(l-1); //////////
 	}
 
 	//Yves
@@ -75,21 +72,24 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	@Override
 	//Yves
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
+		
+		if (contrat.getPrix()>this.seuilMaxAchat){       /*+this.cout.Transformation.getValeur()) { ) {*/
+			this.ventes.ajouter("nous acceptons"+contrat.getPrix().toString());
 			return contrat.getPrix();
 		}
 		else {
-			double Nprix = 1.4*(this.seuilMaxAchat+this.coutTransformation.getValeur());
-			if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
+			double Nprix = (this.seuilMaxAchat);
+			/*if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {*/
+			this.ventes.ajouter("nous contreproposons " + Nprix);
 				return Nprix;
 			}
-			return 0.0;
+			
 		}
-	}
+
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.journal.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+		this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur().toString() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit().toString());
 		
 	}
 
@@ -99,8 +99,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		double peutlivrer = Math.min(this.stockChocolat.getstock(c.getChocolat()), quantite);
 		if (peutlivrer>0.0) {
 			this.stockChocolat.utiliser(c.getChocolat(), peutlivrer);
-			journal.ajouter("CC num " + contrat.getNumero() +" avec" + contrat.getAcheteur() + " on a livre : " + peutlivrer);
 		}
+		this.ventes.ajouter("nous livrons" + peutlivrer + " kd de" + c.toString()+ "à" + contrat.getAcheteur().toString());
 		return peutlivrer;
 	}
 	
