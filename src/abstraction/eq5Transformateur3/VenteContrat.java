@@ -19,7 +19,6 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de chocolat sur 10 steps
-		this.journal.ajouter(L.toString());
 
 		if (L.size()!=0) {
 			if (L.size()== 1) {
@@ -40,7 +39,6 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public boolean vend(Object produit) {
 		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
 		if (stockChocolat.getProduitsEnStock().contains(c)) {
-			this.journal.ajouter("on a ce choco");
 			return true;
 		}
 		return false;
@@ -74,7 +72,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		
 		if (contrat.getPrix()>this.seuilMaxAchat){       /*+this.cout.Transformation.getValeur()) { ) {*/
-			this.ventes.ajouter("nous acceptons"+contrat.getPrix().toString());
+			this.ventes.ajouter("nous acceptons "+contrat.getPrix().toString());
 			return contrat.getPrix();
 		}
 		else {
