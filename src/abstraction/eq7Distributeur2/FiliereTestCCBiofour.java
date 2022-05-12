@@ -39,7 +39,6 @@ public class FiliereTestCCBiofour extends Filiere {
 		repartitionInitiale.put(Chocolat.BQ,     25.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
 
 		ClientFinal  cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
-
 		this.ajouterActeur(cf);
 		this.ajouterActeur(new Distributeur2());
 		this.ajouterActeur(new ExempleTransfo(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
