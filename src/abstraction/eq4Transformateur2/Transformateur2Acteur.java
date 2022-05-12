@@ -205,13 +205,13 @@ public class Transformateur2Acteur implements IActeur,IVendeurAO {
 	
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filiere = new ArrayList<String>();
-		filiere.add("TESTAO");  
+		filiere.add("TESTAOOPTI'CACAO");  
 		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
-		case "TESTAO" : return new CopieFiliereTestAO();
+		case "TESTAOOPTI'CACAO" : return new CopieFiliereTestAO();
 	    default : return null;
 		}
 	}
