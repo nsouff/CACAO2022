@@ -15,8 +15,8 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	private Journal contratCadre;
 
 	//Auteur : Khéo (sur toute la partie)
-	// Pour l'instant selon ma seule décision, le but d'un condrat cadre sera découler les stocks n'ont vendu. Donc on va partir sur la vente
-	//d'une quantité de 100000 tonnes à un prix pouvant aller jusuqu'a 25% inférieur du prix moyen de la bourse
+	// Pour l'instant selon ma seule décision, le but d'un condrat cadre sera d'écouler les stocks non vendu. Donc on va partir sur la vente
+	//d'une quantité de 100000 tonnes à un prix pouvant aller jusuqu'a 25% inférieur au prix moyen de la bourse
 	public Producteur1ContratCadre() {	
 		super();
 		this.mesContratEnTantQueVendeur=new LinkedList<ExemplaireContratCadre>();
