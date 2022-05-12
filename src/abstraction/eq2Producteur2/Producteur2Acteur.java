@@ -28,7 +28,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	private Variable StockFeveMoyenne_BE;
 	private Variable StockFeveHaute;
 	private Variable StockFeveHaute_BE; 
-
+	private Variable ProductionBasse;
 
 	private Variable prixstockage ;
 	private Variable dureeaffinageBQ ;
@@ -38,6 +38,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	// Auteur : Clément
 	
 	public Producteur2Acteur() {
+		super();
 		this.prixstockage= new Variable("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
 		this.dureeaffinageBQ= new VariableReadOnly("Durée affinage BQ","", this,  0.0, 1000000000, 1) ;
 		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
@@ -92,9 +93,6 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_HAUTE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		
-		
-
-
 	}
 	
 	public List<String> getNomsFilieresProposees() {
@@ -112,6 +110,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		res.add(StockFeveMoyenne_BE);
 		res.add(StockFeveHaute);
 		res.add(StockFeveHaute_BE);
+		res.add(ProductionBasse);
 		return res;
 	}
 	

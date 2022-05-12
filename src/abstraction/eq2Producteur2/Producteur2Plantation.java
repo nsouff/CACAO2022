@@ -81,9 +81,8 @@ public class Producteur2Plantation {
 	
 	
 	public void next() {
-	
 		this.nextPlantation();
-		
+		this.nextPlantation();
 	}
 	
 	

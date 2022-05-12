@@ -21,12 +21,12 @@ public class Producteur2Stockage extends Producteur2Couts {
 		
 		this.Stocks = new HashMap<Feve,LinkedList<Stock>>();
 		for (Feve f : Feve.values()) {
-			Stocks.put(f,new LinkedList<Stock>());
+			this.Stocks.put(f,new LinkedList<Stock>());
 		}
 		
 		this.StockTot = new HashMap<Feve, Double>();
 		for (Feve f : Feve.values()) {
-			StockTot.put(f, SommeQuantite(new LinkedList<Stock>()));
+			this.StockTot.put(f, SommeQuantite(new LinkedList<Stock>()));
 		}
 
 		
@@ -71,15 +71,27 @@ public class Producteur2Stockage extends Producteur2Couts {
 	}
 	public void next() {
 		super.next();
-//		for (Feve f : Feve.values()) {
-//			this.get
-//			
-//		}
+	//for (Feve f : Feve.values()) {
+		//this.get
+			
+		//}
 	}
+	
+	/**
+	 * @author Jules DORE
+	 */
+	/*public void next() {
+		super.next();
+		for(Feve feve : Feve.values()) {
+			this.addQuantite(this.production(feve), feve);
+			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
+		}
+	}*/
 	public HashMap<Feve, LinkedList<Stock>> getStock() {
-		return Stocks;
+		return this.Stocks;
 	}
 	public  HashMap<Feve,Double> getStockTot(){
 		return this.StockTot;
 	}
+	
 }

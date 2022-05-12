@@ -23,7 +23,6 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	public Producteur2VendeurContratCadreBio() {
 		super();
 		this.mesContratEnTantQueVendeurBio = new LinkedList<ExemplaireContratCadre>();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -68,7 +67,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 			prix = 1.25*this.getCout((Feve)contrat.getProduit());
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==2){
-			prix = 1.35*this.getCout((Feve)contrat.getProduit());
+			prix = 1.30*this.getCout((Feve)contrat.getProduit());
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==3){
 			prix = 1.35*this.getCout((Feve)contrat.getProduit());
