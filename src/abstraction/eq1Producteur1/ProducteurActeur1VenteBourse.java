@@ -9,7 +9,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
-public class ProducteurActeur1VenteBourse extends Producteur1Acteur implements IVendeurBourse{
+public class ProducteurActeur1VenteBourse extends Producteur1Producteur implements IVendeurBourse{
 	
 	//Auteur : Khéo
 	private HashMap<Feve, Double> prixmoyenFeve ;

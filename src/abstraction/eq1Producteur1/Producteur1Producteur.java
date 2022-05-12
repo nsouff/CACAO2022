@@ -2,6 +2,7 @@ package abstraction.eq1Producteur1;
 
 import java.util.HashMap;
 
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -62,6 +63,27 @@ public class Producteur1Producteur extends Producteur1Stock{
 		this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, recolteAfrique.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.getAfrique().MAJParc();
 		this.getAfrique().MAJGuerre();
+		
+		
+		
+		double prixTotal = 0 ;
+		//Calcul du Prix Total de Stockage
+		for (Feve f : this.getFeves().keySet()) {
+			prixTotal = prixTotal + (this.getStock(f, true)*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) ;
+		}
+		
+		//Calcul Prix Entretien Arbre
+		
+		prixTotal = prixTotal 
+				+ this.getAfrique().getNombre_BE_haute()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur() 
+				+ this.getAfrique().getNombre_non_BE_haute()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1 
+				+ this.getAfrique().getNombre_non_BE_moyenne()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()
+				+ this.getAfrique().getNombre_BE_moyenne()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1 
+				+ this.getAfrique().getNombre_non_BE_basse()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*0.9 ;
+		
+		
+		//Retirer l'argent 
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotal);
 	}
 	
 	public Parc getAfrique() {
