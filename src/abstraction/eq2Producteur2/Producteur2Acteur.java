@@ -75,7 +75,6 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	
 
 	public void next() {
-		// il faut appeler nextPlantation() de la classe plantation
 		super.next();
 		
 		// Cout de production, Jules DORE
@@ -111,7 +110,6 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		res.add(StockFeveMoyenne_BE);
 		res.add(StockFeveHaute);
 		res.add(StockFeveHaute_BE);
-		res.add(ProductionBasse);
 		return res;
 	}
 	

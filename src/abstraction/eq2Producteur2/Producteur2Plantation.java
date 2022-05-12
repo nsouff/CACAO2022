@@ -50,7 +50,7 @@ public class Producteur2Plantation {
 		
 		for (int i=0; i<arbres.length; i++) {
 			for (int j=0; j<qt.get(i); j++) {
-			NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
+			this.NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
 			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
 			}
 		}
@@ -96,7 +96,7 @@ public class Producteur2Plantation {
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
-			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
 			for (Parcelle p : ListeParcelles) {
 				p.setAge(p.getAge()+ 1);
 			}
@@ -116,7 +116,7 @@ public class Producteur2Plantation {
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
-			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
 			List<Parcelle> ParcellesASupprimer = new ArrayList<Parcelle>();
 			
 			for (Parcelle p : ListeParcelles) {
@@ -125,8 +125,8 @@ public class Producteur2Plantation {
 				}
 			}
 			for (int i=0; i < ParcellesASupprimer.size(); i++) {
-				NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
-				NbParcelles.get(a).add(new Parcelle(a, 0));
+				this.NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
+				this.NbParcelles.get(a).add(new Parcelle(a, 0));
 			}						
 	}
 		
@@ -226,7 +226,7 @@ public class Producteur2Plantation {
 		Arbre typearbre = conversion(typefeve);
 		
 		int ProductionFinale = 0 ;
-		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
+		List<Parcelle> ListeParcelles = this.NbParcelles.get(typearbre);
 		
 		for (Parcelle p : ListeParcelles) {
 			
