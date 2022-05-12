@@ -104,7 +104,8 @@ public abstract class Producteur1Acteur implements IActeur {
 	}
 
 
-
+	
+	
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		return res;

@@ -1,5 +1,6 @@
 package abstraction.eq1Producteur1;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
@@ -96,6 +97,12 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	 */
 	public Journal getContratCadre() {
 		return contratCadre;
+	}
+	
+	public List<Journal> getJournaux() {
+		List<Journal> res=new ArrayList<Journal>();
+		res.add(this.getContratCadre());
+		return res;
 	}
 
 }

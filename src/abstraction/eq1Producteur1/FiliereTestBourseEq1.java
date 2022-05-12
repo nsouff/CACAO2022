@@ -29,6 +29,7 @@ public class FiliereTestBourseEq1  extends Filiere {
 	};
 
 	private BourseCacao bourse;
+	private SuperviseurVentesContratCadre superviseurCC;
 
 	public FiliereTestBourseEq1() {
 		super();
@@ -57,7 +58,8 @@ public class FiliereTestBourseEq1  extends Filiere {
 		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 17000));
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_BASSE));
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
-		this.ajouterActeur(new SuperviseurVentesContratCadre());
+		this.superviseurCC=(new SuperviseurVentesContratCadre());
+		this.ajouterActeur(this.superviseurCC);
 		this.ajouterActeur(new Romu());
 		this.ajouterActeur(new Producteur1());
 		this.ajouterActeur(new Producteur2());
