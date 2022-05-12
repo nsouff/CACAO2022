@@ -6,7 +6,6 @@ import java.util.List;
 
 import abstraction.eq8Romu.filiere.*;
 import abstraction.eq8Romu.general.*;
-import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class ExempleTransformateurContratCadre implements IActeur {
 	private static int NB_INSTANCES = 0; // Afin d'attribuer un nom different a toutes les instances
@@ -80,10 +79,5 @@ public class ExempleTransformateurContratCadre implements IActeur {
 	}
 	
 	public void notificationOperationBancaire(double montant) {
-	}
-
-	public List<ChocolatDeMarque> getChocolatsProduits() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
