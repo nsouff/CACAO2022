@@ -8,7 +8,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 // auteur Clément //
 
-public class Producteur2Stockage extends Producteur2Acteur {
+public class Producteur2Stockage extends Producteur2ProductionCout {
 	
 	protected HashMap<Feve,LinkedList<Stock>> Stocks;
 	protected HashMap<Feve,Double> StockTot;
@@ -28,14 +28,14 @@ public class Producteur2Stockage extends Producteur2Acteur {
 
 		
 	}
-	public Double SommeQuantite(LinkedList<Stock> L) {
+	public double SommeQuantite(LinkedList<Stock> L) {
 		double s = 0 ;
 		for (int i=0 ; i<L.size() ; i++) {
 			s = s + (L.get(i)).getQuantite();
 		}
 		return s;	
 	}
-	public void removeQuantite(double q, Feve f ) {
+	public void removeQuantite(double q, Feve f) {
 		LinkedList<Stock> L=Stocks.get(f);
 		while (q>0) {
 			int m=0;
@@ -53,8 +53,24 @@ public class Producteur2Stockage extends Producteur2Acteur {
 		
 		}
 	}
-//	public void initialiser() {
-//		this.add
-//	}
+	public void addQuantite(double q, Feve f) {
+		this.Stocks.get(f).add(new Stock(q));
+	}
 	
+	public void initialiser() {
+		super.initialiser();
+		this.addQuantite(1000001,Feve.FEVE_BASSE);
+		this.addQuantite(1000001,Feve.FEVE_MOYENNE);
+		this.addQuantite(1000001,Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.addQuantite(1000001,Feve.FEVE_HAUTE);
+		this.addQuantite(1000001,Feve.FEVE_HAUTE_BIO_EQUITABLE);
+		
+	}
+	public void next() {
+		super.next();
+//		for (Feve f : Feve.values()) {
+//			this.get
+//			
+//		}
+	}
 }

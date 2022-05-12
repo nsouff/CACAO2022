@@ -31,6 +31,11 @@ public interface IStock {
 	 */
 	public void remove(ChocolatDeMarque chocolat,Double quantite);
 	
+	/**
+	 * Retourne la quantité totale dans les stocks
+	 */
+	public double getQuantiteTotale();
+	
 	
 	//Seuil de rachat-------------------------------------------------------------------------------------------
 	
@@ -46,4 +51,5 @@ public interface IStock {
 	 * @param seuil
 	 */
 	public void setSeuilRachat(ChocolatDeMarque chocolat, Double seuil);
+	
 }
