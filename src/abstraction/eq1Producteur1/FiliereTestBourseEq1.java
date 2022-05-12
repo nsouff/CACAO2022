@@ -8,10 +8,14 @@ import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleAcheteurBourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleVendeurBourseCacao;
 import abstraction.eq8Romu.clients.ClientFinal;
+import abstraction.eq8Romu.contratsCadres.ExempleTransformateurContratCadreVendeurAcheteur;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
+
+//Auteur Global : Khéo basé sur le code de eq8
 public class FiliereTestBourseEq1  extends Filiere {
 	private static final double DISTRIBUTIONS_ANNUELLES[][] = {
 			//Jan1 Jan2 Fev1 Fev2 Mar1 Mar2 Avr1 Avr2 Mai1 Mai2 Jui1 Jui2 Jul1 Jul2 Aou1 Aou2 Sep1 Sep2 Oct1 Oct2 Nov1 Nov2 Dec1 Dec2
@@ -25,6 +29,7 @@ public class FiliereTestBourseEq1  extends Filiere {
 	};
 
 	private BourseCacao bourse;
+	private SuperviseurVentesContratCadre superviseurCC;
 
 	public FiliereTestBourseEq1() {
 		super();
@@ -51,6 +56,10 @@ public class FiliereTestBourseEq1  extends Filiere {
 		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_MOYENNE, 0, 5000));
 		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 25000));
 		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 17000));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_BASSE));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
+		this.superviseurCC=(new SuperviseurVentesContratCadre());
+		this.ajouterActeur(this.superviseurCC);
 		this.ajouterActeur(new Romu());
 		this.ajouterActeur(new Producteur1());
 		this.ajouterActeur(new Producteur2());
