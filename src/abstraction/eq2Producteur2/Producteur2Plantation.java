@@ -10,7 +10,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteure : Fiona 
 
-public class Producteur2Plantation {
+public class Producteur2Plantation{
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
@@ -81,8 +81,6 @@ public class Producteur2Plantation {
 	
 	
 	public void next() {
-		this.nextPlantation();
-		this.nextPlantation();
 	}
 	
 	
@@ -244,7 +242,6 @@ public class Producteur2Plantation {
 	
 	
 	public void initialiser() {
-		
 	}
 }
 	
