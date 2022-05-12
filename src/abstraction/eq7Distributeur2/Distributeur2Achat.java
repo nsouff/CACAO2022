@@ -127,7 +127,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		@Override
 		public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 			// TODO Auto-generated method stub
-			if (contrat.getPrix()>PRIX_MAX) {
+			if (contrat.getPrix()>this.PRIX_MAX) {
 				return 0;
 			}else {
 				if(contrat.getPrix()==PRIX_OK) {

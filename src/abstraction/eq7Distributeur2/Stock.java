@@ -2,6 +2,7 @@ package abstraction.eq7Distributeur2;
 
 import java.util.List;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
