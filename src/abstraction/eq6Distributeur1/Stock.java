@@ -2,7 +2,6 @@ package abstraction.eq6Distributeur1;
 import java.util.Map;
 
 import abstraction.eq8Romu.filiere.Filiere;
-import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariablePrivee;
 import abstraction.eq8Romu.produits.Chocolat;
