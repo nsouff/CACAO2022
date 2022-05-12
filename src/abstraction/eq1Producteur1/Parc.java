@@ -79,7 +79,7 @@ public class Parc {
 	public int getfin_aleas() { //Écrit par Antoine
 		return this.fin_aleas;
 	}
-	
+
 	public void setNom(String nom) { //Écrit par Antoine
 		this.nom = nom;
 	}
@@ -119,7 +119,7 @@ public class Parc {
 	public void setfin_aleas(int i) { //Écrit par Antoine
 		this.fin_aleas = i;
 	}
-	
+
 	public MilleArbre getArbre(int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(i);
 	}
