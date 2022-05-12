@@ -34,16 +34,16 @@ public class Producteur2Plantation {
 		
 		 */
 		
-		NbParcelles = new HashMap<Arbre, List<Parcelle>>();
+		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
 		
 		// 1 parcelle = 100 000 arbres 
 		
 		
-		NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
-		NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
+		this.NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
 		
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		ArrayList<Integer> qt = ListeQt(4);

@@ -28,28 +28,28 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	private Variable StockFeveMoyenne_BE;
 	private Variable StockFeveHaute;
 	private Variable StockFeveHaute_BE; 
-	private Variable ProductionBasse;
+
 
 	private Variable prixstockage ;
-	private Variable dureeaffinageBQ ;
+	/*private Variable dureeaffinageBQ ;
 	private Variable dureeaffinageMQ ;
-	private Variable dureeaffinageHQ ;
+	private Variable dureeaffinageHQ ;*/
 	
 	// Auteur : Clément
 	
 	public Producteur2Acteur() {
 		super();
 		this.prixstockage= new Variable("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
-		this.dureeaffinageBQ= new VariableReadOnly("Durée affinage BQ","", this,  0.0, 1000000000, 1) ;
+		/*this.dureeaffinageBQ= new VariableReadOnly("Durée affinage BQ","", this,  0.0, 1000000000, 1) ;
 		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
-		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;
+		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;*/
 		this.journal = new Journal(this.getNom()+" activites", this);
 		this.StockFeveBasse= new VariableReadOnly("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, 1000000);
 		this.StockFeveMoyenne= new VariableReadOnly("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE));
 		this.StockFeveMoyenne_BE= new VariableReadOnly("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_MOYENNE_BIO_EQUITABLE));
 		this.StockFeveHaute= new VariableReadOnly("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE));
 		this.StockFeveHaute_BE= new VariableReadOnly("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.SommeQuantite(FEVE_HAUTE_BIO_EQUITABLE));
-	
+		
 	}
 
 	public void initialiser() {
