@@ -12,7 +12,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 
-public class Distributeur2Acteur implements IActeur{
+public class Distributeur2Acteur implements IActeur, IMarqueChocolat{
 
 	protected int cryptogramme;
 	
@@ -125,6 +125,14 @@ public class Distributeur2Acteur implements IActeur{
 	// Renvoie le solde actuel de l'acteur
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(Filiere.LA_FILIERE.getActeur(getNom()), this.cryptogramme);
+	}
+
+	@Override
+	public List<String> getMarquesChocolat() {
+		// TODO Auto-generated method stub
+		List<String> marque = new ArrayList<String>();
+		marque.add("Biofour");
+		return marque;
 	}
 
 }
