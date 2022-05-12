@@ -27,9 +27,10 @@ public class Distributeur1Acteur implements IActeur {
 	protected List<ExemplaireContratCadre> mesContrats;
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
 	protected Journal journal1;
+	protected Journal journalCompte;
 	protected List<Variable> prix; 
 	protected List<Journal> journaux;
-
+	protected Double prixTotalTour;
 	protected Map<ChocolatDeMarque, Double> prixVente;
 	
 			
@@ -51,14 +52,16 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
-		
+		this.prixTotalTour = 100000.0;
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		journaux = new ArrayList<Journal>();
 		journal1 = new Journal("journal1",this);
+		journalCompte = new Journal("journalCompte",this);
 		journaux.add(journal1);
+		journaux.add(journalCompte);
 		NotreStock = new Stock(this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
@@ -103,7 +106,7 @@ public class Distributeur1Acteur implements IActeur {
 	
 	public void next() {
 		//leorouppert
-		System.out.println("entrer dans next");
+		journal1.ajouter("entrer dans next");
 		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 50) {
@@ -123,8 +126,13 @@ public class Distributeur1Acteur implements IActeur {
 		});
 		//Nolann Banque retirer argent :
 		//System.out.println("on va retirer de l'argent");
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), 1000000);
-		//System.out.println("l'argent a du etre retire");
+		//calcul cout sur le tour :
+		
+		prixTotalTour = Stock.getCoûtStockageTotale() +1.0; 	//+1.0 pour être sur d'avoir un double + >0.
+		
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
+		journalCompte.ajouter("le compte a été débité de "+prixTotalTour);
+		journalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
 		
 	}
 	// Renvoie la liste des filières proposées par l'acteur

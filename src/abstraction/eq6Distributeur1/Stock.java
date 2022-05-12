@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Stock { //Emma Humeau
 	
 
-	private Map<ChocolatDeMarque,Double> stockageQte;
+	private static Map<ChocolatDeMarque,Double> stockageQte;
 	protected Map<Chocolat, Variable> stockVar;
 	protected IActeur acteur;
 
@@ -28,23 +28,25 @@ public class Stock { //Emma Humeau
 	}
 
 	private void initStockVar() {
-		stockVar.put(Chocolat.HQ_BE_O, new VariablePrivee("HQ_BE_O", acteur, 200));
-		stockVar.put(Chocolat.HQ_BE, new VariablePrivee("HQ_BE", acteur, 300));
-		stockVar.put(Chocolat.HQ_O, new VariablePrivee("HQ_O", acteur, 400));
-		stockVar.put(Chocolat.HQ, new VariablePrivee("HQ", acteur, 500));
-		stockVar.put(Chocolat.MQ_BE_O, new VariablePrivee("MQ_BE_O", acteur, 600));
-		stockVar.put(Chocolat.MQ_BE, new VariablePrivee("MQ_BE", acteur, 100));
-		stockVar.put(Chocolat.MQ_O, new VariablePrivee("MQ_O", acteur, 200));
-		stockVar.put(Chocolat.MQ, new VariablePrivee("MQ", acteur, 300));
-		stockVar.put(Chocolat.BQ_O, new VariablePrivee("BQ_O", acteur, 400));
-		stockVar.put(Chocolat.BQ, new VariablePrivee("BQ", acteur, 500));
+		stockVar.put(Chocolat.HQ_BE_O, new VariablePrivee("HQ_BE_O", acteur, 20000));
+		stockVar.put(Chocolat.HQ_BE, new VariablePrivee("HQ_BE", acteur, 3000));
+		stockVar.put(Chocolat.HQ_O, new VariablePrivee("HQ_O", acteur, 4000));
+		stockVar.put(Chocolat.HQ, new VariablePrivee("HQ", acteur, 5000));
+		stockVar.put(Chocolat.MQ_BE_O, new VariablePrivee("MQ_BE_O", acteur, 6000));
+		stockVar.put(Chocolat.MQ_BE, new VariablePrivee("MQ_BE", acteur, 1000));
+		stockVar.put(Chocolat.MQ_O, new VariablePrivee("MQ_O", acteur, 2000));
+		stockVar.put(Chocolat.MQ, new VariablePrivee("MQ", acteur, 30000));
+		stockVar.put(Chocolat.BQ_O, new VariablePrivee("BQ_O", acteur, 40000));
+		stockVar.put(Chocolat.BQ, new VariablePrivee("BQ", acteur, 50000));
 	}
 	
 	/**
 	 * @author Nathan Souffan
 	 * @return the coûtStockageTotale
 	 */
-	public double getCoûtStockageTotale() {
+	public static double getCoûtStockageTotale() {
+		System.out.println("cout total calculé :");
+		System.out.println(Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()* 16 * qteStockageTotale());
 		return Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()* 16 * qteStockageTotale();
 	}
 
@@ -52,7 +54,7 @@ public class Stock { //Emma Humeau
 	 * @author Nathan Souffan
 	 * @return the qteStockageTotale
 	 */
-	public double qteStockageTotale() { //emma humeau
+	public static double qteStockageTotale() { //emma humeau
 		double sumqte=0;
 		//calcule la qte du stockage total
 		for (Double qte : stockageQte.values()) {
