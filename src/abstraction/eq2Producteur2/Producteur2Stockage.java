@@ -41,7 +41,7 @@ public class Producteur2Stockage extends Producteur2Couts {
 		while (q>0) {
 			int m=0;
 			for (int i=0 ; i<L.size() ; i++) {
-				if ((L.get(i)).getStep_arrivee()<L.get(m).getStep_arrivee()) {
+				if ((L.get(i)).getStep_arrivee()<L.get(m).getStep_arrivee() && L.get(i).getQuantite()>0) {
 					m=i;
 				}			
 			}
