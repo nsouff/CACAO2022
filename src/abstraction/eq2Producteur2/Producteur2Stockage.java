@@ -21,15 +21,16 @@ public class Producteur2Stockage extends Producteur2Couts {
 		for (Feve f : Feve.values()) {
 			this.Stocks.put(f,new LinkedList<Stock>());
 		}
-		
-		this.StockTot = new HashMap<Feve, Double>();
-		for (Feve f : Feve.values()) {
-			this.StockTot.put(f, SommeQuantite(new LinkedList<Stock>()));
-		}
+	
+//		this.StockTot = new HashMap<Feve, Double>();
+//		for (Feve f : Feve.values()) {
+//			this.StockTot.put(f, SommeQuantite(new LinkedList<Stock>()));
+//		}
 
 		
 	}
-	public double SommeQuantite(LinkedList<Stock> L) {
+	public double SommeQuantite(Feve f) {
+		LinkedList<Stock> L=this.Stocks.get(f);
 		double s = 0 ;
 		for (int i=0 ; i<L.size() ; i++) {
 			s = s + (L.get(i)).getQuantite();
@@ -73,7 +74,7 @@ public class Producteur2Stockage extends Producteur2Couts {
 		super.next();
 		for(Feve feve : Feve.values()) {
 			this.addQuantite(this.production(feve), feve);
-			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
+//			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
 		}
 		}
 
