@@ -1,7 +1,5 @@
 package abstraction.eq5Transformateur3;
 
-import abstraction.eq8Romu.filiere.Filiere;
-import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 

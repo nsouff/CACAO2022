@@ -22,7 +22,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public void lanceruncontratAcheteur(Feve f) {
 		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		List<IVendeurContratCadre> L = superviseur.getVendeurs(f);
-		int qtt = 10000; // qtt de feve par step, à modifier en fonction des ventes 
+		int qtt = 1000; // qtt de feve par step, à modifier en fonction des ventes 
 		
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, qtt); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
@@ -69,18 +69,20 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	// Julien & Karla
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
-		/*if (prixT < this.seuilMaxAchat) { */
-			this.journal.ajouter("prixT");
+		if (prixT < this.seuilMaxAchat) { 
+			this.journal.ajouter("prix acceptable");
 			return prixT;
-		/*}
+		}
 		else {
 			double nouveauprix = 0.1*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
-				this.journal.ajouter("nouveau prix");
+				this.journal.ajouter(" essaie avec nouveau prix");
 				return nouveauprix;
 			}
+			this.journal.ajouter("prix inadapte");
+
 			return 0.0;
-		} */
+		}
 	}
 
 	// Julien & Karla
@@ -97,7 +99,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		Feve f= ((Feve) produit);
 		this.stockFeves.ajouter(f, quantite);		
-		this.journal.ajouter("On receptionne");
+		this.journal.ajouter("On receptionne " + quantite + "de" + produit.toString());
 	}
 
 	//Karla
