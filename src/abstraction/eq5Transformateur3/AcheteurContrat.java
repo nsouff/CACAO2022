@@ -62,7 +62,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
-		this.journal.ajouter("echeancier ok pour tout");
+		this.achats.ajouter("echeancier ok pour tout");
 		return listeEcheanciers.get(l-1); // le dernier proposé est celui des vendeurs
 	}
 
@@ -70,16 +70,16 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
 		if (prixT < this.seuilMaxAchat) { 
-			this.journal.ajouter("prix acceptable");
+			this.achats.ajouter("prix acceptable");
 			return prixT;
 		}
 		else {
 			double nouveauprix = 0.1*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
-				this.journal.ajouter(" essaie avec nouveau prix");
+				this.achats.ajouter(" essaie avec nouveau prix");
 				return nouveauprix;
 			}
-			this.journal.ajouter("prix inadapte");
+			this.achats.ajouter("prix inadapte");
 
 			return 0.0;
 		}
@@ -90,7 +90,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	 * et on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
 	 */
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.journal.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+		this.achats.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
 
 	}
 
@@ -99,7 +99,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		Feve f= ((Feve) produit);
 		this.stockFeves.ajouter(f, quantite);		
-		this.journal.ajouter("On receptionne " + quantite + "de" + produit.toString());
+		this.achats.ajouter("On receptionne " + quantite + "de" + produit.toString());
 	}
 
 	//Karla

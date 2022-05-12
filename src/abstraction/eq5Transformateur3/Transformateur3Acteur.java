@@ -20,7 +20,7 @@ import abstraction.eq8Romu.produits.Feve;
 public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabricantChocolatDeMarque{
 	
 	protected int cryptogramme;
-	protected Journal journal;
+	protected Journal achats;
 	protected Journal ventes;
 	protected Journal transformation;
 	
@@ -60,7 +60,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.SeuilMinFeves = 100.00;
 		this.SeuilMinChocolat = 500.00;
 		this.achatMaxFeves = 500.00;
-		this.journal = new Journal (this.getNom()+"Activites", this);
+		this.achats= new Journal ("Achats", this);
 		this.ventes= new Journal ("Ventes", this);
 		this.transformation= new Journal ("Transfo", this);
 
@@ -145,7 +145,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	// Renvoie les journaux
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
-		res.add(journal);
+		res.add(achats);
 		res.add(ventes);
 		res.add(transformation);
 		return res;
@@ -176,7 +176,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	
 	//Karla
 	public void next() {
-		this.journal.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
+		this.achats.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
 		this.ventes.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
 		this.transformation.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
 		double montant= prixStockage();
