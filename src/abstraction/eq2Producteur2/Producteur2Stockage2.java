@@ -4,11 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
 
-import abstraction.eq1Producteur1.FeveProducteur1;
 import abstraction.eq8Romu.produits.Feve;
 
 
-// auteur Clément //
+/**
+ * 
+ * @author Clément Modifier par Jules
+ *
+ */
 
 public class Producteur2Stockage2 extends Producteur2Couts {
 	
@@ -44,6 +47,7 @@ public class Producteur2Stockage2 extends Producteur2Couts {
 		
 		}
 	}
+	
 	public void addQuantite(double q, Feve f) {
 		this.getStocks().get(f).add(new Stock(q));
 	}

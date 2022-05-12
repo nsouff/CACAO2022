@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import abstraction.eq1Producteur1.FiliereTestBourseEq1;
+import abstraction.eq8Romu.bourseCacao.IVendeurBourse;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -14,7 +15,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur {
+public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,IVendeurBourse {
 	
 	protected int cryptogramme;
 	protected Journal journal;
@@ -78,7 +79,10 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur {
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
 		}
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
+		//journal, Jules DOTE
+		journal.ajouter("Cout de production"+coutProduction+", Stock Fève Moyenne"+this.getStock(Feve.FEVE_MOYENNE)+"");
 
+		
 // Auteur Clément	
 		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
@@ -116,8 +120,11 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur {
 		return res; 
 	}
 
+	
+	
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
+		res.add(journal);
 		return res;
 	}
 
@@ -150,6 +157,26 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur {
 	}
 	public Variable GetStockHausse_BE() {
 		return StockFeveHaute_BE;
+	}
+
+	public double offre(Feve f, double cours) {
+		double quantiteAVendre = 0;
+		if (cours> 1.3*this.getCout(f)) {
+			 quantiteAVendre= 0.8*this.getStock(f); // on vend 80% du stock;
+		}
+		if (cours> 1.2*this.getCout(f)) {
+			 quantiteAVendre  = 0.6*this.getStock(f); // on vend 60% du stock;
+		}
+		if (cours> 1.1*this.getCout(f)) {
+			  quantiteAVendre = 0.4*this.getStock(f); // on vend 40% du stock ;
+		}
+		return  this.getStock(f);
+	}
+
+	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
+		// TODO Auto-generated method stub
+		this.removeQuantite(quantiteEnKg, f);
+
 	}
 
 
