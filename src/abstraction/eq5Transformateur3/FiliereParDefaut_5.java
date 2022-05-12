@@ -84,7 +84,7 @@ public class FiliereParDefaut_5 extends Filiere {
 		}
 		this.cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 		this.ajouterActeur(cf);
-		//this.ajouterActeur(new Producteur1());
+		this.ajouterActeur(new Producteur1());
 		this.ajouterActeur(new Producteur2());
 		//this.ajouterActeur(new Transformateur1());
 		this.ajouterActeur(new Transformateur2());
