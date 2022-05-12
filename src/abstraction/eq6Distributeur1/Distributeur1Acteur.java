@@ -31,7 +31,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected List<Journal> journaux;
 
 	protected Map<ChocolatDeMarque, Double> prixVente;
-	// private static final ArrayList<Double> NULL = null;
 	
 			
 			
@@ -179,19 +178,35 @@ public class Distributeur1Acteur implements IActeur {
 	
 	
 	/**
+	 * @author Nathan
+	 * @param prixAchat le prix acheté pour toute la qté acheté
+	 * @param quantiteAchete La qté acheté
+	 */
+	public void setPrixVente(ChocolatDeMarque c, double prixAchat, double quantiteAchete) {
+		prixVente.put(c, 2*prixAchat/quantiteAchete);
+	}
+
+	/**
+	 * @author Nathan
+	 * @param prixAchat
+	 * @param quantiteAchete
+	 */
+	public void setPrixVente(ChocolatDeMarque c, double prixAchatKilo) {
+		prixVente.put(c, 2*prixAchatKilo);
+	}
+	
+	/**
 	 * 
 	 * @author Nolann
 	 * @return prixVente (V1 prix vente = 2*prix achat)
 	 */
-	public Map<ChocolatDeMarque, Double> prixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
+	public void setAllprixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
-			prixVente.put(key, (prixAchat.get(key))*2);
-			
-				
+			prixVente.put(key, (prixAchat.get(key))*2);		
 		});
-		
-		return prixVente;
 	}
+
+
 	
 	
 	

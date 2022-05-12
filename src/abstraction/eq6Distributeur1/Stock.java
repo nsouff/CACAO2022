@@ -8,9 +8,7 @@ import abstraction.eq8Romu.general.VariablePrivee;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Stock { //Emma Humeau
 	

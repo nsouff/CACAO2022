@@ -44,6 +44,7 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
     public void notifierAchatAO(PropositionAchatAO propositionRetenue) {
         journalAO.ajouter("Note proposition a été accepté, la prop retenue est " + propositionRetenue);
         this.getNotreStock().addQte(propositionRetenue.getOffre().getChocolat(), (Double) propositionRetenue.getOffre().getQuantiteKG());
+        this.setPrixVente(propositionRetenue.getOffre().getChocolat(), propositionRetenue.getPrixKg());
     }
 
     /**
