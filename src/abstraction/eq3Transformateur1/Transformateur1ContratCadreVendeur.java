@@ -8,6 +8,7 @@ import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.ExempleTransformateurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -21,8 +22,6 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	
 	public Transformateur1ContratCadreVendeur() {
 		super();
-		System.out.println("ok2");
-
 		this.mesContratEnTantQueVendeur=new LinkedList<ExemplaireContratCadre>();
 	}
 	
@@ -59,9 +58,23 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	}
 
 	/** Ajout du contrat dans la liste de contrats à honorer
+	 *  et maj de dernierPrixVenteChoco
 	 *  Alexandre*/
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		mesContratEnTantQueVendeur.add(contrat);
+		if (dernierPrixVenteChocoReset.getPrix(
+				contrat.getAcheteur().getNom(), 
+				((ChocolatDeMarque)contrat.getProduit()).getChocolat())
+				> contrat.getPrix() 
+				&& dernierPrixVenteChocoReset.getPrix(
+						contrat.getAcheteur().getNom(), 
+						((ChocolatDeMarque)contrat.getProduit()).getChocolat()) 
+				!= 0) { // on garde le prix minimum negocie avec les vendeurs
+			dernierPrixVenteChocoReset.setPrix(
+					contrat.getAcheteur().getNom(), 
+					((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
+					contrat.getPrix());
+		}
 		
 	}
 
@@ -76,8 +89,9 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		return livre;
 	}
 	
-	// Supprime les contrats obsolètes et honorés */
 	public void next() {
+		super.next();
+		// Supprime les contrats obsolètes et honorés -Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -86,6 +100,13 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
 	}
+	
+	/** 
+	 *  Alexandre*/
+	public void initialiser() {
+		super.initialiser();
+	}
+	
 
 	
 }

@@ -1,8 +1,14 @@
 package abstraction.eq3Transformateur1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import abstraction.eq1Producteur1.Producteur1Feve;
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
+import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -10,20 +16,19 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	
 	protected DicoFeve quantiteAchatFeve;            /** quantité de fève qu'on souhaite acheter */
 	protected DicoChoco quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
-	protected dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
+	protected dernierPrixVenteChoco dernierPrixVenteChoco;          /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat av ec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuxième les chocolats */
+	protected dernierPrixVenteChoco dernierPrixVenteChocoReset; /** commence le tour avec des valeurs nulles partout et remplace les valeurs par le prix vente mon negocie durant le tour */
 	protected DicoFeve prixAchatFeve;
-	protected DicoFeve stockFeve;               /** Integer --> Double*/
-	protected DicoChoco stockChoco;           /** Integer --> Double*/
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
-	
+	protected  HashMap<Chocolat, Double> stockChoco;
+	protected  HashMap<Feve, Double> stockFeve;
 	// Alexandre
 	public Transformateur1Bourse() {
+		super();
 		quantiteAchatFeve = new DicoFeve();
 		quantiteDemandeeChoco = new DicoChoco();
 		dernierPrixVenteChoco = new dernierPrixVenteChoco();
 		prixAchatFeve = new DicoFeve();
-		stockFeve = new DicoFeve();
-		stockChoco = new DicoChoco();
 		prixVenteMin = new DicoChoco();
 	}
 	
@@ -45,5 +50,19 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	public void notificationBlackList(int dureeEnStep) {
 	
 	}
+	
 
+	/** 
+	 *  Alexandre*/
+	public void initialiser( ) {
+		super.initialiser();
+	}
+	
+	/** 
+	 *  Alexandre*/
+	public void next() {
+		super.next();
+	}
+	
 }
+	

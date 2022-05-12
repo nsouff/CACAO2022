@@ -33,7 +33,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 		if (Filiere.LA_FILIERE.getEtape()>=1) {
 			for (Chocolat c : stockChoco.keySet()) {
 
-				if (stockChoco.get(c)>=0) {
+				if (stockChoco.get(c)>=250.0) {
 					ChocolatDeMarque coco= new ChocolatDeMarque(c, "cote d'or");
 					double stock= stockChoco.get(c);
 					PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, coco, stockChoco.get(c), false);
