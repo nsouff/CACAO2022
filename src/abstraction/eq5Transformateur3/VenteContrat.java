@@ -87,7 +87,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur().toString() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit().toString());
+		this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur().getNom() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit().toString());
 		
 	}
 
@@ -98,7 +98,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		if (peutlivrer>0.0) {
 			this.stockChocolat.utiliser(c.getChocolat(), peutlivrer);
 		}
-		this.ventes.ajouter("nous livrons" + peutlivrer + " kd de" + c.toString()+ "à" + contrat.getAcheteur().toString());
+		this.ventes.ajouter("nous livrons " + peutlivrer + " kg de" + c.toString()+ " à " + contrat.getAcheteur().getNom());
 		return peutlivrer;
 	}
 	
