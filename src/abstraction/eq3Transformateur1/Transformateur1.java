@@ -346,8 +346,8 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	
 	// déclaration de nos chocolats */
 	private ChocolatDeMarque moyen = new ChocolatDeMarque(Chocolat.MQ, "cote d'or");
-	private ChocolatDeMarque moyen_bio = new ChocolatDeMarque(Chocolat.MQ, "cote d'or");
-	private ChocolatDeMarque moyen_original = new ChocolatDeMarque(Chocolat.MQ, "cote d'or");
+	private ChocolatDeMarque moyen_bio = new ChocolatDeMarque(Chocolat.MQ_BE, "cote d'or");
+	private ChocolatDeMarque moyen_original = new ChocolatDeMarque(Chocolat.MQ_O, "cote d'or");
 	
 	// donne nos chocolats produits, auteur Julien */
 	public List<ChocolatDeMarque> getChocolatsProduits() {
