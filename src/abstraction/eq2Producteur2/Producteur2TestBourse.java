@@ -44,13 +44,13 @@ public class Producteur2TestBourse  extends Filiere {
 
 		this.ajouterActeur(cf);
 		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_MOYENNE, 100000));
-		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_MOYENNE, 300000));
+		/*this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_MOYENNE, 300000));
 		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_HAUTE, 200000));
-		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_HAUTE, 400000));
+		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_HAUTE, 400000));*/
 		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_MOYENNE, 0, 10000));
 		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_MOYENNE, 0, 5000));
-		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 25000));
-		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 17000));
+		/*this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 25000));
+		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 17000));*/
 		this.ajouterActeur(new Romu());
 		this.ajouterActeur(new Producteur2());
 		this.bourse=new BourseCacao();
