@@ -21,6 +21,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	
 	protected int cryptogramme;
 	protected Journal journal;
+	protected Journal ventes;
 
 	//Karla
 	protected Double seuilMaxAchat; // par kg en dollars, au dessus de ce prix, on n'achète pas de fèves
@@ -59,6 +60,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.SeuilMinChocolat = 100.00;
 		this.achatMaxFeves = 5000.00;
 		this.journal = new Journal (this.getNom()+" activites", this);
+		this.ventes= new Journal ("ventes", this);
 		
 		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 10000000.00);
 		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 10000000.00);
@@ -138,6 +140,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		res.add(journal);
+		res.add(ventes);
 		return res;
 	}
 

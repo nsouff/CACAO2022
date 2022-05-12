@@ -52,7 +52,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
-		return listeEcheanciers.get(l-1);
+		this.ventes.ajouter("nous proposons un échéancier");
+		return listeEcheanciers.get(l-1); //////////
 	}
 
 	//Yves
@@ -73,21 +74,24 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	@Override
 	//Yves
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
+		
+		if (contrat.getPrix()>this.seuilMaxAchat){       /*+this.cout.Transformation.getValeur()) { ) {*/
+			this.ventes.ajouter("nous acceptons"+contrat.getPrix().toString());
 			return contrat.getPrix();
 		}
 		else {
-			double Nprix = 1.4*(this.seuilMaxAchat+this.coutTransformation.getValeur());
-			if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {
+			double Nprix = (this.seuilMaxAchat);
+			/*if (contrat.getPrix()>(this.seuilMaxAchat+this.coutTransformation.getValeur())) {*/
+			this.ventes.ajouter("nous contreproposons " + Nprix);
 				return Nprix;
 			}
-			return 0.0;
+			
 		}
-	}
+
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.journal.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+		this.journal.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur().toString() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit().toString());
 		
 	}
 

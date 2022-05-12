@@ -28,7 +28,7 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 		if (proposition1.getPrixKg()>= this.seuilMaxAchat + this.coutOriginal.getValeur()*original + this.coutTransformation.getValeur()) {
 				lameilleure = proposition1 ;	
 				}
-			
+		this.ventes.ajouter(lameilleure.toString()+lameilleure.getPrixKg());
 		return lameilleure; // si le prix est trop faible, on prefère garder notre chocolat
 		}
 	
