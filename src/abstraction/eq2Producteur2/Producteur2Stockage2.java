@@ -49,7 +49,7 @@ public class Producteur2Stockage2 extends Producteur2Couts {
 	}
 	
 	public void addQuantite(double q, Feve f) {
-		this.getStocks().get(f).add(new Stock(q));
+		this.Stocks.get(f).add(new Stock(q));
 	}
 	
 	public double getStock(Feve feve) {

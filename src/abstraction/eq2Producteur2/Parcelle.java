@@ -122,39 +122,39 @@ public class Parcelle {
 				}
 			}
 		}
-		if ((StadeMaladie == 1) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 2)) {
+		if ((this.StadeMaladie == 1) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 2)) {
 			this.setStadeMaladie(0);
 		}
-		if ((StadeMaladie == 2) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 5)) {
+		if ((this.StadeMaladie == 2) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 5)) {
 			this.setStadeMaladie(0);
 		}
-		if ((StadeMaladie == 3) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 6)) {
+		if ((this.StadeMaladie == 3) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 6)) {
 			this.setStadeMaladie(0);
 		}
-		if ((StadeMaladie == 4) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 8)) {
+		if ((this.StadeMaladie == 4) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 8)) {
 			this.setStadeMaladie(0);
 		}
 	}
 
 	public int getDebutMaladie() {
-		return DebutMaladie;
+		return this.DebutMaladie;
 	}
 
 	public void setDebutMaladie(int debutMaladie) {
-		DebutMaladie = debutMaladie;
+		this.DebutMaladie = debutMaladie;
 	}
 
 	public int getStadeTensionGeopolitique() {
-		return StadeTensionGeopolitique;
+		return this.StadeTensionGeopolitique;
 	}
 
 	public void setStadeTensionGeopolitique(int STG) {
-		StadeTensionGeopolitique = STG;
+		this.StadeTensionGeopolitique = STG;
 	}
 	
 	public void MAJTensionGeopo() {
-		if (StadeTensionGeopolitique != 0) {
-			StadeTensionGeopolitique = StadeTensionGeopolitique - 1;
+		if (this.StadeTensionGeopolitique != 0) {
+			this.StadeTensionGeopolitique = this.StadeTensionGeopolitique - 1;
 		}
 		
 		else {
@@ -166,7 +166,7 @@ public class Parcelle {
 					d2 = Math.random();
 				}
 				int dureeTG = (int) Math.ceil(d2*6);
-				StadeTensionGeopolitique = dureeTG;
+				this.StadeTensionGeopolitique = dureeTG;
 			}
 		}
 	}
