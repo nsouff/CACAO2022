@@ -11,27 +11,26 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
+<<<<<<< main
 
 public class Distributeur2Acteur implements IActeur, IMarqueChocolat{
 
+=======
+public class Distributeur2Acteur implements IActeur{
+
+	public static final int EPS_ECH_OK=2;
+	public static final int ECH_MAX=5;
+	public static final Double PRIX_MAX=100.0;
+	public static final Double PRIX_OK=50.0;
+	public static final Double EPSILON_PRIX=5.0;
+>>>>>>> 96f93d2 indicator
 	protected int cryptogramme;
-	
-	//Stock
 	protected IStock stock;
-	
-	//Liste des chocolats sur le marché
 	protected List<ChocolatDeMarque> chocolats;
-	
-	//Journaux
 	protected Journal journal;
-	
-	//Indicateurs
-	private List<Variable> listeIndicateur;
-	private Variable stockTotal;
 
 	public Distributeur2Acteur() {
 		this.journal = new Journal(this.getNom()+" activites", this);
-		this.initialiserIndicateurs();
 	}
 
 	public String getNom() {
@@ -48,14 +47,14 @@ public class Distributeur2Acteur implements IActeur, IMarqueChocolat{
 
 
 	public void initialiser() {
-		//Initialiser stock
 		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
-		System.out.println("Liste des chocolats en vente sur le marché : "+chocolats);
+		System.out.println(chocolats);
 		this.stock = new Stock(this,this.chocolats);
 		
 	}
 	
 	public void next() {
+		
 	}
 
 	
@@ -77,25 +76,8 @@ public class Distributeur2Acteur implements IActeur, IMarqueChocolat{
 	// Renvoie les indicateurs
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
-		
-		res.add(stockTotal);
-		System.out.println(res);
 		return res;
 	}
-	
-	//-----------------------------INDICATEURS-------------------------------------------
-
-	public void initialiserIndicateurs() {
-		this.listeIndicateur = new LinkedList<Variable>();
-		this.stockTotal = new Variable("Stock total",this,0);
-		this.listeIndicateur.add(stockTotal);
-	}
-	
-	public void actualiserIndicateurs() {
-		this.stockTotal.setValeur(this,this.stock.getQuantiteTotale());
-	
-	}
-		
 
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
@@ -109,7 +91,6 @@ public class Distributeur2Acteur implements IActeur, IMarqueChocolat{
 		j.add(this.journal);
 		return j;
 	}
-
 
 	public void setCryptogramme(Integer crypto) {
 		this.cryptogramme = crypto;

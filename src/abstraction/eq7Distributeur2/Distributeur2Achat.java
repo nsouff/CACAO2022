@@ -13,11 +13,6 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteurContratCadre{
-	public static final int EPS_ECH_OK=2;
-	public static final int ECH_MAX=5;
-	public static final Double PRIX_MAX=100.0;
-	public static final Double PRIX_OK=50.0;
-	public static final Double EPSILON_PRIX=5.0;
 	
 	protected List<ExemplaireContratCadre> mesContratEnTantQuAcheteur;
 	
@@ -75,8 +70,12 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choc, ech, this.cryptogramme, tg);
 				journal.ajouter("-->aboutit au contrat "+contrat);
 			}
+<<<<<<< main
 			this.actualiserIndicateurs();
 			}
+=======
+			
+>>>>>>> 96f93d2 indicator
 		}
 		
 
@@ -127,7 +126,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		@Override
 		public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 			// TODO Auto-generated method stub
-			if (contrat.getPrix()>this.PRIX_MAX) {
+			if (contrat.getPrix()>PRIX_MAX) {
 				return 0;
 			}else {
 				if(contrat.getPrix()==PRIX_OK) {
