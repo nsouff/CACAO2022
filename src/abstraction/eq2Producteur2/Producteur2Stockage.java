@@ -3,9 +3,6 @@ package abstraction.eq2Producteur2;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
-
-import abstraction.eq1Producteur1.FeveProducteur1;
-import abstraction.eq2Producteur2.Stock;
 import abstraction.eq8Romu.produits.Feve;
 
 
@@ -13,6 +10,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2Stockage extends Producteur2Couts {
 	
+	protected Integer cryptogramme;
 	protected HashMap<Feve,LinkedList<Stock>> Stocks;
 	protected HashMap<Feve,Double> StockTot;
 	
@@ -23,15 +21,16 @@ public class Producteur2Stockage extends Producteur2Couts {
 		for (Feve f : Feve.values()) {
 			this.Stocks.put(f,new LinkedList<Stock>());
 		}
-		
-		this.StockTot = new HashMap<Feve, Double>();
-		for (Feve f : Feve.values()) {
-			this.StockTot.put(f, SommeQuantite(new LinkedList<Stock>()));
-		}
+	
+//		this.StockTot = new HashMap<Feve, Double>();
+//		for (Feve f : Feve.values()) {
+//			this.StockTot.put(f, SommeQuantite(new LinkedList<Stock>()));
+//		}
 
 		
 	}
-	public double SommeQuantite(LinkedList<Stock> L) {
+	public double SommeQuantite(Feve f) {
+		LinkedList<Stock> L=this.Stocks.get(f);
 		double s = 0 ;
 		for (int i=0 ; i<L.size() ; i++) {
 			s = s + (L.get(i)).getQuantite();
@@ -43,15 +42,16 @@ public class Producteur2Stockage extends Producteur2Couts {
 		while (q>0) {
 			int m=0;
 			for (int i=0 ; i<L.size() ; i++) {
-				if ((L.get(i)).getStep_arrivee()<L.get(m).getStep_arrivee()) {
+				if ((L.get(i)).getStep_arrivee()<L.get(m).getStep_arrivee() && L.get(i).getQuantite()>0) {
 					m=i;
 				}			
 			}
 			if ((L.get(m)).getQuantite()>q) {
 				(L.get(m)).removequantite(q);
 			}else {
-				(L.get(m)).removequantite((L.get(m)).getQuantite());
-				q=q-(L.get(m)).getQuantite();				
+				double r = (L.get(m)).getQuantite();
+				(L.get(m)).removequantite(r);
+				q=q-r;				
 			}
 		
 		}
@@ -69,37 +69,17 @@ public class Producteur2Stockage extends Producteur2Couts {
 		this.addQuantite(1000001,Feve.FEVE_HAUTE_BIO_EQUITABLE);
 		
 	}
+
 	public void next() {
-		super.next();
-	//for (Feve f : Feve.values()) {
-		//this.get
-			
-		//}
-	}
-	
-	/**
-	 * @author Jules DORE
-	 */
-	/*public void next() {
 		super.next();
 		for(Feve feve : Feve.values()) {
 			this.addQuantite(this.production(feve), feve);
-			
+
+//			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
 		}
 	}
-	
-	public double getStock(Feve feve) {
-		double s = 0.0;
-		for(Stock stock : this.getStock().get(feve)) {
-			s+= stock.getQuantite();
-		}
-		return s;
-	}*/
-	
-	
-	
-	
-	
+
+
 	public HashMap<Feve, LinkedList<Stock>> getStock() {
 		return this.Stocks;
 	}
