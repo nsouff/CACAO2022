@@ -80,7 +80,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		}
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
 		//journal, Jules DOTE
-		journal.ajouter("Cout de production"+coutProduction+", Stock Fève Moyenne"+this.getStock(Feve.FEVE_MOYENNE)+"");
+		journal.ajouter("Cout de production : "+coutProduction+", Stock Feve Moyenne : "+this.getStock(Feve.FEVE_MOYENNE)+", Production Feve Moyenne : "+this.production(Feve.FEVE_MOYENNE)+",Nombre d'arbre Moyenne : "+this.getNbArbre(Feve.FEVE_MOYENNE)+"");
 
 		
 // Auteur Clément	

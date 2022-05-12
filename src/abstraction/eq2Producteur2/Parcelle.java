@@ -29,7 +29,7 @@ public class Parcelle {
 		this.setAge(age);
 		this.setRendementProgressif(0.2 + Math.random()*0.5);
 		this.setStadeMaladie(0);
-		this.setNbArbres(100_000);
+		this.setNbArbres(100000);
 		
 		
 	}
@@ -40,59 +40,59 @@ public class Parcelle {
 	}
 
 	public Arbre getTypeArbre() {
-		return TypeArbre;
+		return this.TypeArbre;
 	}
 
 	public void setTypeArbre(Arbre typeArbre) {
-		TypeArbre = typeArbre;
+		this.TypeArbre = typeArbre;
 	}
 
 	public int getAge() {
-		return Age;
+		return this.Age;
 	}
 
 	public void setAge(int age) {
-		Age = age;
+		this.Age = age;
 	}
 
 	public int getNbArbres() {
-		return NbArbres;
+		return this.NbArbres;
 	}
 
 	public void setNbArbres(int nbArbres) {
-		NbArbres = nbArbres;
+		this.NbArbres = nbArbres;
 	}
 
 	public int getStadeMaladie() {
-		return StadeMaladie;
+		return this.StadeMaladie;
 	}
 
 	public void setStadeMaladie(int stadeMaladie) {
-	StadeMaladie =stadeMaladie;
+	this.StadeMaladie =stadeMaladie;
 	}
 
 	public boolean isCooperative() {
-		return Cooperative;
+		return this.Cooperative;
 	}
 
 	public void setCooperative(boolean cooperative) {
-		Cooperative = cooperative;
+		this.Cooperative = cooperative;
 	}
 
 	public int getStadeTransition() {
-		return StadeTransition;
+		return this.StadeTransition;
 	}
 
 	public void setStadeTransition(int stadeTransition) {
-		StadeTransition = stadeTransition;
+		this.StadeTransition = stadeTransition;
 	}
 
 	public double getRendementProgressif() {
-		return RendementProgressif;
+		return this.RendementProgressif;
 	}
 
 	public void setRendementProgressif(double rendementProgressif) {
-		RendementProgressif = rendementProgressif;
+		this.RendementProgressif = rendementProgressif;
 	}
 	
 	public void MAJMaladie() { //Écrit par Antoine
