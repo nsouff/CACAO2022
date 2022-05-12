@@ -58,9 +58,23 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	}
 
 	/** Ajout du contrat dans la liste de contrats à honorer
+	 *  et maj de dernierPrixVenteChoco
 	 *  Alexandre*/
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		mesContratEnTantQueVendeur.add(contrat);
+		if (dernierPrixVenteChocoReset.getPrix(
+				contrat.getAcheteur().getNom(), 
+				((ChocolatDeMarque)contrat.getProduit()).getChocolat())
+				> contrat.getPrix() 
+				&& dernierPrixVenteChocoReset.getPrix(
+						contrat.getAcheteur().getNom(), 
+						((ChocolatDeMarque)contrat.getProduit()).getChocolat()) 
+				!= 0) { // on garde le prix minimum negocie avec les vendeurs
+			dernierPrixVenteChocoReset.setPrix(
+					contrat.getAcheteur().getNom(), 
+					((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
+					contrat.getPrix());
+		}
 		
 	}
 

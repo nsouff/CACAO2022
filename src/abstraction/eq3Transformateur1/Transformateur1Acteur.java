@@ -66,11 +66,6 @@ public class Transformateur1Acteur implements IActeur {
 		List<Variable> res=new ArrayList<Variable>();
 		res.add(
 				new Variable(
-						"Solde", 
-						this, 
-						Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme) ));
-		res.add(
-				new Variable(
 						"StockFeve",
 						this,
 						this.stockFeve.get(Feve.FEVE_BASSE)
