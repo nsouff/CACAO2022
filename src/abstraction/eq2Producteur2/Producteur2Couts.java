@@ -38,8 +38,9 @@ public class Producteur2Couts extends Producteur2Plantation {
 	
 	public void next() {
 		super.next();
-	
+		this.setCoutParKg();
 	}
+	
 	public void initialiser() {
 		super.initialiser();
 	}
