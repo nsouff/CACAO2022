@@ -2,6 +2,8 @@ package abstraction.eq4Transformateur2;
 
 import abstraction.eq8Romu.appelsOffres.FiliereTestAO;
 import abstraction.eq8Romu.appelsOffres.IVendeurAO;
+import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
+import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
 import abstraction.eq8Romu.clients.FiliereTestClientFinal;
 import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Transformateur2Acteur implements IActeur {
+public class Transformateur2Acteur implements IActeur,IVendeurAO {
 	
 	//pas sur de celles ci, mais je les laisse au cas ou...
 	private Variable coutStockage;
@@ -30,21 +32,25 @@ public class Transformateur2Acteur implements IActeur {
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
-
 	private double marge;
 
 	
-	// variables pour l'achatAO
+	// variables pour les Appel d'Offres
 	private Stock<Feve> stockfeve;
-	private Stock<ChocolatDeMarque> stockchocolat;
+	private Stock<Chocolat> stockchocolat;
+	private Stock<ChocolatDeMarque> stockchocolatdemarque;
 	protected double prixInit;// Lorsque l'on est acheteur d'une Appel d'Offre
+	protected double prixMin; //Lorsque l'on est vendeur d'une Appel d'Offre
+	protected SuperviseurVentesAO superviseur;
+	
+	
+	
+	
 	protected Journal journal;
-	
-	
-	protected int cryptogramme;
-	public static ChocolatDeMarque Test; //Gabriel? Supprimes?
-	
 
+	
+	//autres
+	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
 
 
@@ -71,13 +77,25 @@ public class Transformateur2Acteur implements IActeur {
 		
 		
 		
-		this.prixInit=100; //arbitraire
-		this.journal=new Journal(this.getNom()+" activites", this);
+		this.prixInit=15; //arbitraire
+		this.prixMin=5;
+		this.journal=new Journal("Opti'Cacao activités", this);
 		
+		
+		//LES STOCKS INITIAUX----VALEURS A CHOISIR
+		this.stockfeve=new Stock();
+		this.stockfeve.ajouter(Feve.FEVE_BASSE, 15000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 9000);
+		
+		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque chocomax=new ChocolatDeMarque(Chocolat.MQ,"Omax");
-		HashMap<ChocolatDeMarque,Double> h1=new HashMap<ChocolatDeMarque,Double>();
-		h1.put(chocomax, (double) 1000000);
-		this.stockchocolat=new Stock(h1,1000000);
+		ChocolatDeMarque chocoptella=new ChocolatDeMarque(Chocolat.BQ,"Optella");
+		ChocolatDeMarque chocoriginal=new ChocolatDeMarque(Chocolat.MQ_O,"Chocoriginal");
+		this.stockchocolatdemarque=new Stock();
+		this.stockchocolatdemarque.ajouter(chocomax, 20000);
+		this.stockchocolatdemarque.ajouter(chocoptella, 30000);
+		this.stockchocolatdemarque.ajouter(chocoriginal, 3000);
+		
 		
 		
 		//this.NewCap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
@@ -119,13 +137,71 @@ public class Transformateur2Acteur implements IActeur {
 	}
 	
 	public void next() {
-		this.journal.ajouter("== ETAPE "+Filiere.LA_FILIERE.getEtape()+" ==");
-		if (this.stockchocolat.getQuantiteStock().keySet().size()>0) {
-			for (ChocolatDeMarque c : this.stockchocolat.getQuantiteStock().keySet()) {
-				this.journal.ajouter("stock de "+c+" : "+this.stockchocolat.getQuantiteStock().get(c));
+		//Nawfel
+		
+		//quelques infos d'abord
+		this.superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
+		journal.ajouter("PrixMin=="+this.prixMin);
+		
+		//ON implemente le journal avec des infos sur nos stocks à chaque tour
+		if (this.stockfeve.getStock().keySet().size()>0) {
+			for (Feve f : this.stockfeve.getStock().keySet()) {
+				this.journal.ajouter("stock de feve "+f+" : "+this.stockfeve.getStock().get(f));
+			}
+		}
+		if (this.stockchocolatdemarque.getStock().keySet().size()>0) {
+			for (ChocolatDeMarque c : this.stockchocolatdemarque.getStock().keySet()) {
+				this.journal.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
+			}
+		}
+		
+		
+		
+		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 2000kg, on en propose 2000kg.
+		for(ChocolatDeMarque c :this.stockchocolatdemarque.getStock().keySet()) {
+			if(this.stockchocolatdemarque.getStock().get(c)>2000) {
+				PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 2000.0, false);
+				if (retenue!=null) {
+					this.stockchocolatdemarque.enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
+					journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
+				} else {
+					journal.ajouter("pas d'offre retenue");
+				}
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	//Nawfel
+	//Vente en AO : comment choisir parmi les offres
+	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
+		this.journal.ajouter("propositions : "+propositions);
+		if (propositions==null) {
+			return null;
+		} else {
+			PropositionAchatAO meilleur_proposition=propositions.get(0);
+			for(PropositionAchatAO p : propositions) {
+				if (p.getPrixKg()>meilleur_proposition.getPrixKg()){
+					meilleur_proposition=p;
+				}
+			}
+			PropositionAchatAO retenue = meilleur_proposition;
+			if (retenue.getPrixKg()>this.prixMin) {
+				this.journal.ajouter("  --> je choisis "+retenue);
+				return retenue;
+			} else {
+				this.journal.ajouter("  --> je ne retiens rien");
+				return null;
 			}
 		}
 	}
+	
+
+	
+	
 	
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filiere = new ArrayList<String>();
@@ -140,19 +216,22 @@ public class Transformateur2Acteur implements IActeur {
 		}
 	}
 	
+	//rajouter les stocks de feves aussi (de chaque type)
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
+		for (Feve f : this.stockfeve.getStock().keySet()) {
+			res.add(new Variable("Opti'Cacao STOCK"+f, this, 0.0, 1000000000.0,this.stockfeve.getStock().get(f)));
+		}
+		for (ChocolatDeMarque c : this.stockchocolatdemarque.getStock().keySet()) {
+			res.add(new Variable("Opti'Cacao STOCK"+c, this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(c)));
+		}
 		return res;
+		
 	}
 	
-	public List<Variable> getParametres() { // A completer avec tous les autres variables d'instances
+	public List<Variable> getParametres() { 
 		List<Variable> p= new ArrayList<Variable>();
-//		p.add(this.qualiteHaute);
-//		p.add(this.qualiteMoyenne);
-//		p.add(this.qualiteBasse);
-//		p.add(this.gainQualiteBioEquitable);
-//		p.add(this.gainQualiteOriginal); 
-//		p.add(this.partDeLaMarqueDansLaQualitePercu);
+//		p.add(this.expirationChoco);
 		return p;
 	} 
 	
@@ -192,9 +271,7 @@ public class Transformateur2Acteur implements IActeur {
 
 
 
-	public Stock<ChocolatDeMarque> getStockchocolat() {
-		return this.stockchocolat;
-	}
+
 	public double getMarge() {
 		return this.marge;
 	}
@@ -268,5 +345,57 @@ public class Transformateur2Acteur implements IActeur {
 	public Variable getExpirationChoco() {
 		return expirationChoco;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public Stock<Chocolat> getStockchocolat() {
+		return stockchocolat;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public Stock<ChocolatDeMarque> getStockchocolatdemarque() {
+		return stockchocolatdemarque;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 }

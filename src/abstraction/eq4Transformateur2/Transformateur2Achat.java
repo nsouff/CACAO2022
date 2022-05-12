@@ -3,12 +3,15 @@ package abstraction.eq4Transformateur2;
 import java.util.HashMap;
 
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur2Achat extends Transformateur2Transfo{
 	
 
-	public Transformateur2Achat(double stocktotalfeve, double stocktotalchoco) {
-		super(stocktotalfeve, stocktotalchoco);
+	public Transformateur2Achat(Stock<Feve> stockfeve, Stock<Chocolat> stockchocolat,Stock<ChocolatDeMarque> stockchocolatdemarque) {
+		super(stockfeve, stockchocolat,stockchocolatdemarque);
 		// TODO Auto-generated constructor stub
 	}
 

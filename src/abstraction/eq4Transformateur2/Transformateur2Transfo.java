@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 //auteur Jad
@@ -16,8 +17,8 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	
 	protected abstract HashMap getCommande();//POUR LA V2
 	
-	public Transformateur2Transfo(double stocktotalfeve, double stocktotalchoco) {
-		super(stocktotalfeve, stocktotalchoco);
+	public Transformateur2Transfo(Stock<Feve> stockfeve, Stock<Chocolat> stockchocolat,Stock<ChocolatDeMarque> stockchocolatdemarque) {
+		super(stockfeve, stockchocolat,stockchocolatdemarque);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -67,7 +68,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		
 		if (trans.equals("longue")){//dans le cas d'une transformation longue
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, (1/rdt)*qt*(prix_transfo+prix_ori))) {//(1/rdt)*qt est la quantité de fève nécessaire pour obtenir qt de chocolat
-					if(this.quantiteStockTotaleFeve(f)>(1/rdt)*qt) {//s'il y a assez de fèves
+					if(super.getStockfeve().getStocktotal()>(1/rdt)*qt) {//s'il y a assez de fèves
 						if(NewCap>cap) {//assez de capacité de stockage
 							NewCap-=(1/rdt)*qt;//mise à jour de la capacité de production
 							this.getStockfeve().enlever(f,(1/rdt)*qt);//baisse le stock de feves
@@ -84,7 +85,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		}
 		if (trans.equals("courte")) {
 			if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, qt*(prix_transfo+prix_ori))) {//qt est la quantité de fève nécessaire pour obtenir qt de chocolat
-				if(this.quantiteStockTotaleFeve(f)>qt) {//s'il y a assez de fèves
+				if(this.getStockfeve().getStocktotal()>qt) {//s'il y a assez de fèves
 					if(NewCap>cap) {//assez de capacité de stockage
 						NewCap-=qt;//mise à jour de la capacité de production
 						this.getStockfeve().enlever(f,qt);//baisse le stock de feves
