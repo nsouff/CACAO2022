@@ -103,7 +103,7 @@ public class Distributeur1Acteur implements IActeur {
 	
 	public void next() {
 		//leorouppert
-		
+		System.out.println("entrer dans next");
 		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 50) {
@@ -118,12 +118,13 @@ public class Distributeur1Acteur implements IActeur {
 				else {journal1.ajouter("échec des négociations");}
 				
 			}
-		//Nolann Banque retirer argent :
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), 1000000);
-
+		
 			
 		});
-		
+		//Nolann Banque retirer argent :
+		//System.out.println("on va retirer de l'argent");
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), 1000000);
+		//System.out.println("l'argent a du etre retire");
 		
 	}
 	// Renvoie la liste des filières proposées par l'acteur
