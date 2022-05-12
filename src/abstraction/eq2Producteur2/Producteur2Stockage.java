@@ -79,4 +79,7 @@ public class Producteur2Stockage extends Producteur2Couts {
 	public HashMap<Feve, LinkedList<Stock>> getStock() {
 		return Stocks;
 	}
+	public  HashMap<Feve,Double> getStockTot(){
+		return this.StockTot;
+	}
 }

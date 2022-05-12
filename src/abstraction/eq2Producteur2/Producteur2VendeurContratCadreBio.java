@@ -46,13 +46,13 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
-			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.StockTot.get((Feve)contrat.getProduit())/contrat.getEcheancier().getNbEcheances())) { 
+			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStockTot().get((Feve)contrat.getProduit())/contrat.getEcheancier().getNbEcheances())) { 
 
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), this.production((Feve)contrat.getProduit()) + this.StockTot.get((Feve)contrat.getProduit())/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				e.set(e.getStepDebut(), this.production((Feve)contrat.getProduit()) + this.getStockTot().get((Feve)contrat.getProduit())/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
 				return e;
 			}
 		}	
