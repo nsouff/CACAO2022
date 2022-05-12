@@ -62,7 +62,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.achatMaxFeves = 500.00;
 		this.journal = new Journal (this.getNom()+"Activites", this);
 		this.ventes= new Journal ("Ventes", this);
-		this.ventes= new Journal ("Transfo", this);
+		this.transformation= new Journal ("Transfo", this);
 
 		
 		Double s = 1000.00;
