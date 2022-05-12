@@ -3,9 +3,6 @@ package abstraction.eq2Producteur2;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
-
-import abstraction.eq1Producteur1.FeveProducteur1;
-import abstraction.eq2Producteur2.Stock;
 import abstraction.eq8Romu.produits.Feve;
 
 
@@ -13,6 +10,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2Stockage extends Producteur2Couts {
 	
+	protected Integer cryptogramme;
 	protected HashMap<Feve,LinkedList<Stock>> Stocks;
 	protected HashMap<Feve,Double> StockTot;
 	
@@ -50,8 +48,9 @@ public class Producteur2Stockage extends Producteur2Couts {
 			if ((L.get(m)).getQuantite()>q) {
 				(L.get(m)).removequantite(q);
 			}else {
-				(L.get(m)).removequantite((L.get(m)).getQuantite());
-				q=q-(L.get(m)).getQuantite();				
+				double r = (L.get(m)).getQuantite();
+				(L.get(m)).removequantite(r);
+				q=q-r;				
 			}
 		
 		}
