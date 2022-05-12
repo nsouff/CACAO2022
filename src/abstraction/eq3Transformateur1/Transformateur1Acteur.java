@@ -16,7 +16,7 @@ public class Transformateur1Acteur implements IActeur {
 	protected int cryptogramme;
 	protected DicoFeve stockFeve;               /** Integer --> Double*/
 	protected DicoChoco stockChoco;           /** Integer --> Double*/
-
+	
 	// Alexandre
 	public Transformateur1Acteur() {
 		cryptogramme = 0;
