@@ -10,6 +10,7 @@ import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq1Producteur1.Producteur1;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
+import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
@@ -21,10 +22,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 
-
-public class Transformateur1 extends Transformateur1AppelsOffres implements IMarqueChocolat{
+public class Transformateur1 extends Transformateur1AppelsOffres implements IMarqueChocolat, IFabricantChocolatDeMarque{
 	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
 	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
 	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
@@ -340,6 +341,20 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	public List<String> getMarquesChocolat() {
 		LinkedList<String> result = new LinkedList<String>();
 		result.add("cote d'or");
+		return result;
+	}
+	
+	// déclaration de nos chocolats */
+	private ChocolatDeMarque moyen = new ChocolatDeMarque(Chocolat.MQ, "cote d'or");
+	private ChocolatDeMarque moyen_bio = new ChocolatDeMarque(Chocolat.MQ, "cote d'or");
+	private ChocolatDeMarque moyen_original = new ChocolatDeMarque(Chocolat.MQ, "cote d'or");
+	
+	// donne nos chocolats produits, auteur Julien */
+	public List<ChocolatDeMarque> getChocolatsProduits() {
+		LinkedList<ChocolatDeMarque> result = new LinkedList<ChocolatDeMarque>();
+		result.add(moyen);
+		result.add(moyen_bio);
+		result.add(moyen_original);
 		return result;
 	}
 

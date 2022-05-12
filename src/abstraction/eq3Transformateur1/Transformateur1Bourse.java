@@ -1,8 +1,13 @@
 package abstraction.eq3Transformateur1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
+import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -14,7 +19,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected dernierPrixVenteChoco dernierPrixVenteChocoReset; /** commence le tour avec des valeurs nulles partout et remplace les valeurs par le prix vente mon negocie durant le tour */
 	protected DicoFeve prixAchatFeve;
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
-	
+
 	// Alexandre
 	public Transformateur1Bourse() {
 		super();
@@ -44,6 +49,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	
 	}
 	
+
 	/** 
 	 *  Alexandre*/
 	public void initialiser( ) {
@@ -53,7 +59,8 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	/** 
 	 *  Alexandre*/
 	public void next() {
-		super.next();
+		super.next();		
 	}
-
+	
 }
+	

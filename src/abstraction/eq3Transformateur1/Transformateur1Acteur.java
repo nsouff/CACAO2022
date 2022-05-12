@@ -64,6 +64,7 @@ public class Transformateur1Acteur implements IActeur {
 	 *  Alexandre*/
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
+
 		res.add(
 				new Variable(
 						"StockFeve",
