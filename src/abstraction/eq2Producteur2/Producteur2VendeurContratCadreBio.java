@@ -63,15 +63,15 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	
 	@Override
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		double prix = 1.4*this.coutParKg.get(((Feve)contrat.getProduit()));
+		double prix = 1.4*this.getCout((Feve)contrat.getProduit());
 		if (getClassementTransformateur( contrat.getAcheteur() )==1){
-			prix = 1.25*this.coutParKg.get(((Feve)contrat.getProduit()));
+			prix = 1.25*this.getCout((Feve)contrat.getProduit());
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==2){
-			prix = 1.35*this.coutParKg.get(((Feve)contrat.getProduit()));
+			prix = 1.35*this.getCout((Feve)contrat.getProduit());
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==3){
-			prix = 1.35*this.coutParKg.get(((Feve)contrat.getProduit()));
+			prix = 1.35*this.getCout((Feve)contrat.getProduit());
 		}
 		
 		return prix;

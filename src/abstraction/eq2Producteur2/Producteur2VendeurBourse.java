@@ -11,17 +11,16 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2VendeurBourse extends Producteur2Vendeur implements IVendeurBourse {
 
-	private double coutProduction;
 	@Override
 	public double offre(Feve f, double cours) {
 		double quantiteAVendre = 0;
-		if (cours> 1.3*coutProduction) {
+		if (cours> 1.3*this.getCout(f)) {
 			 quantiteAVendre= this.getStockTot().get((f)); // on vend 80% du stock;
 		}
-		if (cours> 1.2*coutProduction) {
+		if (cours> 1.2*this.getCout(f)) {
 			 quantiteAVendre  = this.getStockTot().get((f)); // on vend 60% du stock;
 		}
-		if (cours> 1.1*coutProduction) {
+		if (cours> 1.1*this.getCout(f)) {
 			  quantiteAVendre = this.getStockTot().get((f)); // on vend 40% du stock ;
 		}
 		return quantiteAVendre;
