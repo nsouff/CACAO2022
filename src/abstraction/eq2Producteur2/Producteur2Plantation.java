@@ -81,6 +81,8 @@ public class Producteur2Plantation{
 	
 	
 	public void next() {
+		this.renouvellement();
+		
 	}
 	
 	
@@ -239,11 +241,32 @@ public class Producteur2Plantation{
 		Arbre arbre = conversion(feve);
 		return this.NbParcelles.get(arbre).size()*1000000 ;
 	}
-	
+
 	
 	public void initialiser() {
+		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
+		
+		// 1 parcelle = 100 000 arbres 
+		
+		
+		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
+		this.NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
+		
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		ArrayList<Integer> qt = ListeQt(4);
+		
+		for (int i=0; i<arbres.length; i++) {
+			for (int j=0; j<qt.get(i); j++) {
+			this.NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
+			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
+		
+				}
+			}
 	}
-}
+}		
 	
 	
 	
