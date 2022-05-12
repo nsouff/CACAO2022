@@ -22,15 +22,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-<<<<<<< main
-<<<<<<< main
 
-public class Distributeur2Acteur implements IActeur, IMarqueChocolat{
-=======
-public class Distributeur2Acteur implements IActeur{
->>>>>>> 13ae3ee commit
-
-=======
 public class Distributeur2Acteur implements IActeur{
 
 	public static final int EPS_ECH_OK=2;
@@ -38,7 +30,7 @@ public class Distributeur2Acteur implements IActeur{
 	public static final Double PRIX_MAX=100.0;
 	public static final Double PRIX_OK=50.0;
 	public static final Double EPSILON_PRIX=5.0;
->>>>>>> 96f93d2 indicator
+	
 	protected int cryptogramme;
 	protected IStock stock;
 	protected List<ChocolatDeMarque> chocolats;

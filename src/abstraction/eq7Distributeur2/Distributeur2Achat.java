@@ -65,16 +65,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 					ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choc, ech, this.cryptogramme, tg);
 				}
 			}
-<<<<<<< main
-<<<<<<< main
-			this.actualiserIndicateurs();
-			}
-=======
 			
->>>>>>> 96f93d2 indicator
-=======
-			
->>>>>>> 13ae3ee commit
 		}
 		
 
