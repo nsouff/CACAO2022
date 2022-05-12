@@ -1,9 +1,10 @@
-package abstraction.eq8Romu.contratsCadres;
+package abstraction.eq7Distributeur2;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.*;
 import abstraction.eq8Romu.general.*;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -24,7 +25,7 @@ public class ExempleTransformateurContratCadre implements IActeur {
 		NB_INSTANCES++;
 		this.numero=NB_INSTANCES;
 		this.produit=produit;
-		this.stock=new Variable(getNom()+" stock ", null, this, 0, 1000000, 100000);
+		this.stock=new Variable(getNom()+" stock ", null, this, 0, 10E8, 10E8);
 		this.journal = new Journal(this.getNom()+" activites", this);
 	}
 	
