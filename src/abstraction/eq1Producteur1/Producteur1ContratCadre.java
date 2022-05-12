@@ -41,7 +41,7 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		if (contrat.getEcheancier().getQuantiteTotale()<this.getStock((Feve)contrat.getProduit(), false)) {
 			if (contrat.getEcheancier().getQuantiteTotale()<100000) {
 				contrat.getEcheancier().ajouter(100000-contrat.getEcheancier().getQuantiteTotale());
-				this.getContratCadre().ajouter("On ajoute une quantité pour un nouveau contratt");
+				this.getContratCadre().ajouter("On ajoute une quantité pour un nouveau contrat");
 				return contrat.getEcheancier();
 			} else { //Quantité demandé acceptable
 				this.getContratCadre().ajouter("Quantité demandé acceptable");
