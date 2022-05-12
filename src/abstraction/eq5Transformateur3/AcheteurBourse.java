@@ -14,7 +14,7 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 			double pourcentage = (bourse.getCours(f).getMax()-cours)/(bourse.getCours(f).getMax()-bourse.getCours(f).getMin());
 			// on en achete selon le prix actuel de la bourse d'où *pourcentage
-			return this.achatMaxFeves*pourcentage;
+			return this.achatMaxFeves;//on achete le plus possible
 		} else {
 			return 0.0;
 		}
