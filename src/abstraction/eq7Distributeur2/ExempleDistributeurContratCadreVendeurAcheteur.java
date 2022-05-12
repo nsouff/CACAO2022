@@ -71,7 +71,7 @@ public class ExempleDistributeurContratCadreVendeurAcheteur extends ExempleTrans
 		}
 		if (vendeur!=null) {
 			journal.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+produit+" avec le vendeur "+vendeur);
-			ExemplaireContratCadre cc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, produit, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER/10), this.cryptogramme,false);
+			ExemplaireContratCadre cc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, produit, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER/10), cryptogramme,false);
 			journal.ajouter("-->aboutit au contrat "+cc);
 		}
 		// Proposition d'un contrat a un des achteur choisi aleatoirement
@@ -88,7 +88,7 @@ public class ExempleDistributeurContratCadreVendeurAcheteur extends ExempleTrans
 		}
 		if (acheteur!=null) {
 			journal.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+produit+" avec l'acheteur "+acheteur);
-			ExemplaireContratCadre cc = supCCadre.demandeVendeur(acheteur, (IVendeurContratCadre)this, produit, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER/10), this.cryptogramme,false);
+			ExemplaireContratCadre cc = supCCadre.demandeVendeur(acheteur, (IVendeurContratCadre)this, produit, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER/10), cryptogramme,false);
 			journal.ajouter("-->aboutit au contrat "+cc);
 		}
 	}
