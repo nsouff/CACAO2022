@@ -40,7 +40,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;*/
 		this.journal = new Journal(this.getNom()+" activites", this);
 		this.StockFeveBasse= new VariableReadOnly("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, this.getStock(Feve.FEVE_BASSE));
-		this.StockFeveMoyenne= new VariableReadOnly("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, 30000000);
+		this.StockFeveMoyenne= new VariableReadOnly("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE));
 		this.StockFeveMoyenne_BE= new VariableReadOnly("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.StockFeveHaute= new VariableReadOnly("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE));
 		this.StockFeveHaute_BE= new VariableReadOnly("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
@@ -88,7 +88,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		journal.ajouter("Stock Feve Moyenne BE : "+this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+", Production Feve Moyenne BE : "+this.production(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+", Nombre d'arbre Moyenne BE : "+this.getNbArbre(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+"");
 		
 		// Auteur Clément	
-		this.StockFeveHaute.setValeur(this, this.getStock(Feve.FEVE_HAUTE));
+		this.GetStockHaute().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
 		this.GetStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
@@ -174,7 +174,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		if (cours> 1.1*this.getCout(f)) {
 			  quantiteAVendre = 0.4*this.getStock(f); // on vend 40% du stock ;
 		}
-		return  this.getStock(f);
+		return  quantiteAVendre;
 	}
 
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
