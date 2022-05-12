@@ -32,8 +32,10 @@ public class Distributeur1Acteur implements IActeur {
 	protected List<Journal> journaux;
 	protected Double prixTotalTour;
 	protected Map<ChocolatDeMarque, Double> prixVente;
-	
-			
+	protected Variable QteChocoHQ;
+	protected Variable QteChocoMQ;
+	protected Variable QteChocoBq;
+	protected Integer Compteur;	
 			
 			
 			
@@ -52,16 +54,21 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
-		this.prixTotalTour = 100000.0;
-		prix = new ArrayList<Variable>();
-		prixVente = new HashMap<ChocolatDeMarque, Double>();
-		mesContrats = new ArrayList<ExemplaireContratCadre>();
-		ran = new Random();
 		journaux = new ArrayList<Journal>();
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
 		journaux.add(journal1);
 		journaux.add(journalCompte);
+		
+		this.Compteur = 0;
+		journal1.ajouter("Compteur initialisé à"+this.Compteur);
+		
+		this.prixTotalTour = 100000.0;
+		prix = new ArrayList<Variable>();
+		prixVente = new HashMap<ChocolatDeMarque, Double>();
+		mesContrats = new ArrayList<ExemplaireContratCadre>();
+		ran = new Random();
+		
 		NotreStock = new Stock(this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
@@ -79,7 +86,7 @@ public class Distributeur1Acteur implements IActeur {
 	
 	
 	public String getNom() {
-		return "FourAll";
+		return "EQ6-FourAll";
 	}
 
 	public String getDescription() {
@@ -106,10 +113,12 @@ public class Distributeur1Acteur implements IActeur {
 	
 	public void next() {
 		//leorouppert
-		journal1.ajouter("entrer dans next");
+		
+		journal1.ajouter("entrée dans next pour le tour n° " + Compteur);
+		
 		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
-			if (value <= 50) {
+			if (value <= 10000) {
 				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
 				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
 				IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
@@ -120,21 +129,33 @@ public class Distributeur1Acteur implements IActeur {
 				}
 				else {journal1.ajouter("échec des négociations");}
 				
-			}
-		
-			
+			}	
 		});
-		//Nolann Banque retirer argent :		
-		//System.out.println("on va retirer de l'argent");
+		
+		/**
+		 * @author Nolann 
+		 * Gestion des compte -> retirer argent :		
+		 */
 		//calcul cout sur le tour :
 		
-		prixTotalTour = Stock.getCoûtStockageTotale() +1.0; 	//+1.0 pour être sur d'avoir un double + >0.
+		journal1.ajouter(getDescription());
+		
+		prixTotalTour = Stock.getCoûtStockageTotale() +1.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
 		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
+		
 		journalCompte.ajouter("le compte a été débité de "+prixTotalTour);
 		journalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
 		
+		//compteur de tour + 1 :
+		this.Compteur +=1;
+		journal1.ajouter("Tour "+ (Compteur-1) +" terminé pour "+ this.getNom() + " ,compteur itéré à : "+ Compteur);
+	
 	}
+	
+	
+	
+	
 	// Renvoie la liste des filières proposées par l'acteur
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
@@ -149,6 +170,7 @@ public class Distributeur1Acteur implements IActeur {
 	// Renvoie les indicateurs
 	/**
 	 * @author Nolann
+	 * changement : on ne renvoi que la quantité de chocolat de type HQ, MQ, BQ
 	 */
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
@@ -214,7 +236,6 @@ public class Distributeur1Acteur implements IActeur {
 			prixVente.put(key, (prixAchat.get(key))*2);		
 		});
 	}
-
 
 	
 	
