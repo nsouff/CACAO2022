@@ -25,7 +25,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 
 
 
-	//Auteur : Khéo, modification : Laure
+	//Auteur : Khéo
 	public double offre(Feve f, double cours) {
 		//On met à jour les prix de la HashMap
 		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE

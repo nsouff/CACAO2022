@@ -12,6 +12,8 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
+
+//Auteur Global : Khéo basé sur le code de eq8
 public class FiliereTestBourseEq1  extends Filiere {
 	private static final double DISTRIBUTIONS_ANNUELLES[][] = {
 			//Jan1 Jan2 Fev1 Fev2 Mar1 Mar2 Avr1 Avr2 Mai1 Mai2 Jui1 Jui2 Jul1 Jul2 Aou1 Aou2 Sep1 Sep2 Oct1 Oct2 Nov1 Nov2 Dec1 Dec2
