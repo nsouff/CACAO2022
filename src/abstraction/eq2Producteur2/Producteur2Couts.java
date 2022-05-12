@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class Producteur2Couts extends Producteur2Plantation {
 
-	public static double coutHQ_BE=0.5;//cout par arbre
+	public static double coutHQ_BE=0.5; //coût par arbre
 	public static double coutMQ_BE=0.4;
 	public static double coutHQ=0.3;
 	public static double coutMQ=0.2;

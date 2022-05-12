@@ -29,7 +29,6 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 	private Variable StockFeveHaute;
 	private Variable StockFeveHaute_BE; 
 
-
 	private Variable prixstockage ;
 	/*private Variable dureeaffinageBQ ;
 	private Variable dureeaffinageMQ ;
@@ -78,6 +77,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 		super.next();
 		
 		// Cout de production, Jules DORE
+		this.setCoutParKg();
 		double coutProduction = 0.0;
 		for(Feve f : this.coutParKg.keySet()) {
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);

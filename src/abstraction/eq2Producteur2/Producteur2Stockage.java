@@ -84,14 +84,28 @@ public class Producteur2Stockage extends Producteur2Couts {
 		super.next();
 		for(Feve feve : Feve.values()) {
 			this.addQuantite(this.production(feve), feve);
-			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
+			
 		}
+	}
+	
+	public double getStock(Feve feve) {
+		double s = 0.0;
+		for(Stock stock : this.getStock().get(feve)) {
+			s+= stock.getQuantite();
+		}
+		return s;
 	}*/
+	
+	
+	
+	
+	
 	public HashMap<Feve, LinkedList<Stock>> getStock() {
 		return this.Stocks;
 	}
 	public  HashMap<Feve,Double> getStockTot(){
 		return this.StockTot;
 	}
+	
 	
 }
