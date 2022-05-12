@@ -47,7 +47,16 @@ public class Stock { //Emma Humeau
 	public static double getCoûtStockageTotale() {
 		System.out.println("cout total calculé :");
 		System.out.println(Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()* 16 * qteStockageTotale());
+		/**
+		 * @author Nolann
+		
+		double cout = 0.0;
+		getMapStock().forEach((key,values)-> {
+			cout = cout + getStock(key)*16;
+		});*/
+//		return getStock()*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()*16;
 		return Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()* 16 * qteStockageTotale();
+
 	}
 
 	/**

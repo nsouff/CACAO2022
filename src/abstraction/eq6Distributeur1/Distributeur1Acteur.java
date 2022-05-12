@@ -124,7 +124,7 @@ public class Distributeur1Acteur implements IActeur {
 		
 			
 		});
-		//Nolann Banque retirer argent :
+		//Nolann Banque retirer argent :		
 		//System.out.println("on va retirer de l'argent");
 		//calcul cout sur le tour :
 		
