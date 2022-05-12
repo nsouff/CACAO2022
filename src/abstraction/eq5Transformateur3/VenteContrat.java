@@ -19,10 +19,11 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de chocolat sur 10 steps
-		this.journal.ajouter(L.toString());
 
 		if (L.size()!=0) {
 			if (L.size()== 1) {
+				this.journal.ajouter("alors");
+
 				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
 				}
 			else {
@@ -36,16 +37,17 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	
 
 	
-	//Yves
+	//Yves, Karla
 	public boolean vend(Object produit) {
-		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
+		if (this.getChocolatsProduits().contains(produit)) {
+			return true;
+		}
+		/*Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
 		if (stockChocolat.getProduitsEnStock().contains(c)) {
 			this.journal.ajouter("on a ce choco");
 			return true;
-		}
-		else {
-			return false;
-		}
+		}*/
+		return false;
 	}
 
 	//Yves
@@ -97,9 +99,11 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		double peutlivrer = Math.min(this.stockChocolat.getstock(c.getChocolat()), quantite);
 		if (peutlivrer>0.0) {
 			this.stockChocolat.utiliser(c.getChocolat(), peutlivrer);
+			journal.ajouter("CC num " + contrat.getNumero() +" avec" + contrat.getAcheteur() + " on a livre : " + peutlivrer);
 		}
 		return peutlivrer;
 	}
+	
 	//Karla
 	/* on regarde l etat de nos stocks et on lance la procédure */
 	public void next() {
@@ -107,8 +111,6 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
 			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat) {
 				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
-				journal.ajouter(choco.toString());
-				journal.ajouter(Filiere.LA_FILIERE.getChocolatsProduits().toString());
 				lanceruncontratVendeur(choco);
 			}
 		}
