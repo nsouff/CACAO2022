@@ -28,7 +28,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	}
 	
 	
-	//edgard 
+	//Edgar & Matteo
 	//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
 	//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
 	//On compare ces prixs et on réalise finalement le contrat avec le meilleur vendeur.
@@ -104,34 +104,37 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			}else {
 				return false;
 			}
-			//return (produit!=null && (produit instanceof ChocolatDeMarque) && this.chocolats.contains(produit));
 		}
 
 		@Override
-		//edgard
+		//Edgar & Matteo
 		public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat){
-			// TODO Auto-generated method stub
-			Echeancier eC = contrat.getEcheancier();
 			
-			ChocolatDeMarque choc = (ChocolatDeMarque)contrat.getProduit();
+			//On récupère le dernier écheancier négocié
+			Echeancier lastEcheancier = contrat.getEcheancier();
+			
+			//On récupère le chocolat concerné
+			ChocolatDeMarque chocProduit = (ChocolatDeMarque)contrat.getProduit();
+			
+			//L'étape actuelle
 			int currentEtape = Filiere.LA_FILIERE.getEtape();
-			double ventes = 0.0;
-			for (int j=1; j<6; j++) {
-				ventes+=Filiere.LA_FILIERE.getVentes(choc, currentEtape-j);
-			}
-			double venteParStep= ventes/6;
-			double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
-			int nmbStep = (int) Math.round(chocAacheter/venteParStep);
-			Echeancier echOK = new Echeancier(currentEtape,nmbStep,venteParStep);
 			
-			if (eC.getStepFin()>ECH_MAX) {
+
+			//Retourne le volume le plus judicieux à acheter selon le nombre d'étape sur lequel on reparti le contrat
+			double venteParStep = this.volumeParEtapeMoyenne(chocProduit, currentEtape, 10);
+			int nbStepContrat = 10;
+			
+			//On créer un écheancier correspondant à nos besoin
+			Echeancier echeancierAchat = new Echeancier(currentEtape,nbStepContrat,venteParStep);
+			
+			if (lastEcheancier.getStepFin()>ECH_MAX) {
 				return null;
 			}else {
-				if (eC.equals(echOK)) {
-					return eC;
+				if (lastEcheancier.equals(echeancierAchat)) {
+					return lastEcheancier;
 				}else {
-					if(eC.getStepFin()>echOK.getStepFin()) {
-						return new Echeancier(eC.getStepDebut(),eC.getNbEcheances()-EPS_ECH_OK,eC.getQuantiteTotale()/(eC.getNbEcheances()-EPS_ECH_OK));
+					if(lastEcheancier.getStepFin()>echeancierAchat.getStepFin()) {
+						return new Echeancier(lastEcheancier.getStepDebut(),lastEcheancier.getNbEcheances()-EPS_ECH_OK,lastEcheancier.getQuantiteTotale()/(lastEcheancier.getNbEcheances()-EPS_ECH_OK));
 					}else {
 						return null;
 					}
@@ -141,14 +144,14 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 
 		@Override
 		public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-			// TODO Auto-generated method stub
-			if (contrat.getPrix()>PRIX_MAX) {
-				return 0;
+			double prix = contrat.getPrix();
+			if (prix>PRIX_MAX) {
+				return -1;
 			}else {
-				if(contrat.getPrix()==PRIX_OK) {
-					return contrat.getPrix();
+				if(Math.abs(prix-EPSILON_PRIX)==PRIX_OK) {
+					return prix;
 				}else {
-					return contrat.getPrix()-EPSILON_PRIX;
+					return prix-EPSILON_PRIX;
 				}
 			}
 		}
@@ -165,8 +168,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			IVendeurContratCadre v = contrat.getVendeur();
 			IAcheteurContratCadre a = contrat.getAcheteur();
 			Echeancier currentEtape = contrat.getEcheancier();
-			ChocolatDeMarque SupVente = (ChocolatDeMarque) contrat.getProduit();
+			ChocolatDeMarque chocProduit = (ChocolatDeMarque) contrat.getProduit();
 			Double q = contrat.getQuantiteTotale();
-			System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + SupVente + "étalé sur " + currentEtape);
+			System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + chocProduit + "étalé sur " + currentEtape);
 		}
 }
