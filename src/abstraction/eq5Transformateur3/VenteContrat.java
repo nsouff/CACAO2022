@@ -102,6 +102,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		if (peutlivrer>0.0) {
 			this.stockChocolat.utiliser(c.getChocolat(), peutlivrer);
 		}
+		this.ventes.ajouter("nous livrons" + peutlivrer + " kd de" + c.toString()+ "à" + contrat.getAcheteur().toString());
 		return peutlivrer;
 	}
 	//Karla
@@ -111,8 +112,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
 			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat) {
 				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
-				journal.ajouter(choco.toString());
-				journal.ajouter(Filiere.LA_FILIERE.getChocolatsProduits().toString());
+				
 				lanceruncontratVendeur(choco);
 			}
 		}
