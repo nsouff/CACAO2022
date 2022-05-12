@@ -20,7 +20,7 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 		int original = 0;
 		PropositionAchatAO lameilleure = null;
 
-		PropositionAchatAO proposition1=propositions.get(1);
+		PropositionAchatAO proposition1=propositions.get(0);
 		
 		if (proposition1.getOffre().getChocolat().isOriginal()) { 
 			original = 1;

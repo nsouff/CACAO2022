@@ -19,6 +19,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de chocolat sur 10 steps
+		this.journal.ajouter(L.toString());
+
 		if (L.size()!=0) {
 			if (L.size()== 1) {
 				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
@@ -36,7 +38,9 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	
 	//Yves
 	public boolean vend(Object produit) {
-		if (stockChocolat.getProduitsEnStock().contains(produit) == true) {
+		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
+		if (stockChocolat.getProduitsEnStock().contains(c)) {
+			this.journal.ajouter("on a ce choco");
 			return true;
 		}
 		else {
@@ -53,8 +57,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 
 	//Yves
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		if (contrat.getProduit() instanceof Chocolat) {
-			if (((Chocolat)(contrat.getProduit())).isOriginal() == true ) {
+		if (contrat.getProduit() instanceof ChocolatDeMarque) {
+			if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
 				return 2*(this.seuilMaxAchat+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
 			}
 			else {
@@ -89,10 +93,10 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 
 	//Karla
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		Chocolat c = (Chocolat)produit;
-		double peutlivrer = Math.min(this.stockChocolat.getstock(c), quantite);
+		ChocolatDeMarque c = (ChocolatDeMarque)produit;
+		double peutlivrer = Math.min(this.stockChocolat.getstock(c.getChocolat()), quantite);
 		if (peutlivrer>0.0) {
-			this.stockChocolat.utiliser(c, peutlivrer);
+			this.stockChocolat.utiliser(c.getChocolat(), peutlivrer);
 		}
 		return peutlivrer;
 	}
@@ -103,6 +107,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
 			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat) {
 				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
+				journal.ajouter(choco.toString());
+				journal.ajouter(Filiere.LA_FILIERE.getChocolatsProduits().toString());
 				lanceruncontratVendeur(choco);
 			}
 		}
