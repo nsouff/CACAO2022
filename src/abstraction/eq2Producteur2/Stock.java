@@ -15,6 +15,7 @@ public class Stock {
 		this.step_arrivee = duree;
 		this.perime = perime;
 	}
+	
 	public Stock(double quantite) {
 		this.quantite = quantite;
 		this.step_arrivee = Filiere.LA_FILIERE.getEtape();
