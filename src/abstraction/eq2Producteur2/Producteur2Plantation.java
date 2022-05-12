@@ -217,6 +217,9 @@ public class Producteur2Plantation{
 		return this.getNbArbre(feve)*2;
 	}*/
 		
+	
+	
+	//Problème sur cette méthode
 	public int production(Feve typefeve) {
 		//auteure : Fiona
 		
