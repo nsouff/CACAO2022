@@ -46,7 +46,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			}
 			List <Double> prix = new ArrayList<Double>();
 			int e = Filiere.LA_FILIERE.getEtape();
-			if (stock.getQuantite(choc)<=stock.getSeuilRachat(choc)) {
+			if (stock.getQuantite(choc)<stock.getSeuilRachat(choc)) {
 				int index = 0;
 				
 				double ventes = 0.0;
