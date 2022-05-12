@@ -103,6 +103,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
 		filieres.add("TEST_EQ5_CC");
+		filieres.add("TEST_EQ5_sans_nuls");
 		return(filieres);
 	}
 
@@ -111,6 +112,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		
 		switch (nom) { 
 		case "TEST_EQ5_CC" : return new FiliereTestContratCadre_5();
+		case "TEST_EQ5_sans_nuls" : return new FiliereParDefaut_5();
 		
 	    default : return null;
 		}

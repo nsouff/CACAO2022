@@ -86,10 +86,10 @@ public class FiliereParDefaut_5 extends Filiere {
 		this.ajouterActeur(cf);
 		this.ajouterActeur(new Producteur1());
 		this.ajouterActeur(new Producteur2());
-		//this.ajouterActeur(new Transformateur1());
-		//this.ajouterActeur(new Transformateur2());
+		this.ajouterActeur(new Transformateur1());
+		this.ajouterActeur(new Transformateur2());
 		this.ajouterActeur(new Transformateur3());
-//		this.ajouterActeur(new Distributeur1());
+		this.ajouterActeur(new Distributeur1());
 		this.ajouterActeur(new Distributeur2());
 		this.ajouterActeur(new Romu());
 		this.superviseurCC=new SuperviseurVentesContratCadre();
