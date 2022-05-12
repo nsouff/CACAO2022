@@ -36,4 +36,8 @@ public class Producteur2VendeurBourse extends Producteur2Vendeur implements IVen
 	public void initialiser() {
 		super.initialiser();
 	}
+	public void next() {
+	super.next();
+
+	}
 }

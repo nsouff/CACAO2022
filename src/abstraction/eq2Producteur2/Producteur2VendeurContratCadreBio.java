@@ -126,6 +126,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 
 	
 	public void next() {
+		super.next();
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
