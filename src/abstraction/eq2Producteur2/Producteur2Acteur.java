@@ -85,6 +85,7 @@ public class Producteur2Acteur extends Producteur2Stockage implements IActeur {
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
 		}
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
+
 //Auteur Clément	
 		this.GetStockBasse().setValeur(this, this.SommeQuantite(FEVE_BASSE));
 		this.GetStockMoyenne().setValeur(this, this.SommeQuantite(FEVE_MOYENNE));

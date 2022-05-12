@@ -114,12 +114,11 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		
-		return 0;
+		this.removeQuantite(quantite, (Feve)(produit));
+		return quantite;
 	}
 	
 	public boolean peutVendre(Object produit) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

@@ -39,7 +39,7 @@ public class Producteur2Stockage extends Producteur2Couts {
 		return s;	
 	}
 	public void removeQuantite(double q, Feve f) {
-		LinkedList<Stock> L=Stocks.get(f);
+		LinkedList<Stock> L=this.Stocks.get(f);
 		while (q>0) {
 			int m=0;
 			for (int i=0 ; i<L.size() ; i++) {
