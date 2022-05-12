@@ -29,7 +29,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected Journal journal1;
 	protected Journal journalCompte;
 	protected List<Variable> prix; 
-	protected List<Journal> journaux;
 	protected Double prixTotalTour;
 	protected Map<ChocolatDeMarque, Double> prixVente;
 	protected Variable QteChocoHQ;
@@ -37,11 +36,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected Variable QteChocoBq;
 	protected Integer Compteur;	
 			
-			
-			
-			
-	
-	
 	/**
 	 * @return the notreStock
 	 */
@@ -54,11 +48,8 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
-		journaux = new ArrayList<Journal>();
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
-		journaux.add(journal1);
-		journaux.add(journalCompte);
 		
 		this.Compteur = 0;
 		journal1.ajouter("Compteur initialisé à"+this.Compteur);
@@ -69,6 +60,13 @@ public class Distributeur1Acteur implements IActeur {
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		
+		this.prixTotalTour = 100000.0;
+		prix = new ArrayList<Variable>();
+		prixVente = new HashMap<ChocolatDeMarque, Double>();
+		mesContrats = new ArrayList<ExemplaireContratCadre>();
+		ran = new Random();
+		journal1 = new Journal("journal1",this);
+		journalCompte = new Journal("journalCompte",this);
 		NotreStock = new Stock(this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
@@ -79,9 +77,6 @@ public class Distributeur1Acteur implements IActeur {
 		
 		journal1.ajouter("création de la liste de variable des prix terminée");
 		journal1.ajouter("création de la liste de variable stock terminée");
-
-		
-		
 	}
 	
 	
@@ -127,8 +122,9 @@ public class Distributeur1Acteur implements IActeur {
 				if (CC == null) {
 					journal1.ajouter("-->aboutit au contrat "+ CC);
 				}
-				else {journal1.ajouter("échec des négociations");}
-				
+				else {
+					journal1.ajouter("échec des négociations");
+				}
 			}	
 		});
 		
@@ -140,7 +136,7 @@ public class Distributeur1Acteur implements IActeur {
 		
 		journal1.ajouter(getDescription());
 		
-		prixTotalTour = Stock.getCoûtStockageTotale() +1.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
+		prixTotalTour = NotreStock.getCoûtStockageTotale() +1.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
 		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
 		
@@ -185,8 +181,11 @@ public class Distributeur1Acteur implements IActeur {
 		return res;
 	}
 
-	// Renvoie les journaux
+	@Override
 	public List<Journal> getJournaux() {
+		List<Journal> journaux = new ArrayList<Journal>();
+		journaux.add(journal1);
+		journaux.add(journalCompte);
 		return journaux;
 	}
 
@@ -199,7 +198,9 @@ public class Distributeur1Acteur implements IActeur {
 	}
 
 	public void notificationOperationBancaire(double montant) {
+		journalCompte.ajouter("Une opération vient d'avoir lieu d'un montant de " + montant);
 	}
+
 	// Renvoie le solde actuel de l'acteur
 	//Nolann
 	public double getSolde() {
@@ -235,28 +236,5 @@ public class Distributeur1Acteur implements IActeur {
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, (prixAchat.get(key))*2);		
 		});
-	}
-
-	
-	
-	
-	
-	
+	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

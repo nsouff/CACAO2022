@@ -1,6 +1,8 @@
 package abstraction.eq6Distributeur1;
 
 
+import java.util.List;
+
 import abstraction.eq8Romu.appelsOffres.IAcheteurAO;
 import abstraction.eq8Romu.appelsOffres.OffreVente;
 import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
@@ -17,7 +19,6 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
     public AcheteurAO() {
         super();
         journalAO = new Journal("Journal pour les AO", this);
-        journaux.add(journalAO);
     }
     
     /** 
@@ -54,6 +55,17 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
     @Override
     public void notifierPropositionNonRetenueAO(PropositionAchatAO propositionNonRetenue) {
         journalAO.ajouter("Notre proposition " + propositionNonRetenue + " n'a pas été accepté.");
+    }
+
+    /**
+     * @author Nathan
+     * @return La liste des journaux renvoyée dans acheteurContrat et le journal d'appel d'offre
+     */
+    @Override
+    public List<Journal> getJournaux() {
+        List<Journal> j = super.getJournaux();
+        j.add(journalAO);
+        return j;
     }
 
 }
