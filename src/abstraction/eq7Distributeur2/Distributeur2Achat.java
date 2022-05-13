@@ -1,10 +1,8 @@
 package abstraction.eq7Distributeur2;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import abstraction.eq8Romu.contratsCadres.ContratCadre;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
@@ -13,6 +11,7 @@ import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
+//Classe rédigée par Edgar et Matteo
 public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteurContratCadre{
 	public static final int EPS_ECH_OK=2;
 	public static final int ECH_MAX=15;
@@ -24,11 +23,10 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	
 	public Distributeur2Achat() {
 		super();
-		this.mesContratEnTantQuAcheteur=new LinkedList<ExemplaireContratCadre>();
+		this.mesContratEnTantQuAcheteur = new LinkedList<ExemplaireContratCadre>();
 	}
 	
 	
-	//Edgar & Matteo
 	//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
 	//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
 	//On compare ces prixs et on réalise finalement le contrat avec le meilleur vendeur.
@@ -39,10 +37,12 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	//Finalement, on fait un contrat avec le vendeur le plus offrant
 	@Override
 	public void next() {
+		super.next();
+		
+		//-------------------------------------NEXT CONTRAT------------------------------------------//
 		//Initialisation du superviseur de vente
 		SuperviseurVentesContratCadre SupVente = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-		
-		
+	
 		//Pour chaque chocolat produit sur le marché
 		for (ChocolatDeMarque chocProduit : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			
@@ -68,13 +68,12 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				for (IVendeurContratCadre vendeur : vendeurs) {
 					journal.ajouter("BioFour propose d'initier un CC avec "+ vendeur +" avec le produit: "+chocProduit);
 					ExemplaireContratCadre propositionContratCadre = SupVente.demandeAcheteur(this, vendeur, chocProduit, echeancierAchat, cryptogramme,boolTeteGondole);
-					//journal.ajouter("-->aboutit au contrat "+ propositionContratCadre);
+					journal.ajouter("Détail du contrat : "+ propositionContratCadre);
 				}
 			}
 		}
 	}
 	
-	//Matteo
 	public double volumeParEtapeMoyenne(ChocolatDeMarque chocProduit,int currentEtape,int nbEtape) {
 		double ventes = 0.0;
 		//On ajoute les quantités vendues à chaque étape depuis nbStep
@@ -87,9 +86,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	
 
 	@Override
-	//edgard
 	public boolean achete(Object produit) {
-		// TODO Auto-generated method stub
 		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
 			return true;
 		}else {
@@ -99,7 +96,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	}
 
 	@Override
-	//Edgar & Matteo
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat){
 		
 		//On récupère le dernier écheancier négocié
@@ -144,13 +140,11 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		this.stock.addProduit((ChocolatDeMarque)produit, quantite);
 	}
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		IVendeurContratCadre v = contrat.getVendeur();
 		IAcheteurContratCadre a = contrat.getAcheteur();
 		Echeancier currentEtape = contrat.getEcheancier();
