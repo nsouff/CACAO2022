@@ -55,6 +55,7 @@ public class Distributeur2Acteur implements IActeur{
 	}
 	
 	public void next() {
+		this.actualiserIndicateurs();
 	}
 
 	
@@ -76,9 +77,7 @@ public class Distributeur2Acteur implements IActeur{
 	// Renvoie les indicateurs
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
-		
 		res.add(stockTotal);
-		System.out.println(res);
 		return res;
 	}
 	
