@@ -1,30 +1,23 @@
 package abstraction.eq1Producteur1;
 
+
+
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
-import abstraction.eq8Romu.appelsOffres.FiliereTestAO;
-import abstraction.eq8Romu.bourseCacao.BourseCacao;
-import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
-import abstraction.eq8Romu.clients.FiliereTestClientFinal;
-import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
-import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Acteur extends Producteur1Producteur implements IActeur {
+
+public abstract class Producteur1Acteur implements IActeur {
 	private static int NB_INSTANCES = 0; // Afin d'attribuer un nom different a toutes les instances
 	protected int numero;
+	protected Integer cryptogramme;
 	protected Journal journal;
-	private List<Double> prixmoyenFeve ;
-	private Variable StockBasse;
-	private Variable StockMoyenne;
-	private Variable StockHaut_BE;
-	
 	
 	
 	//Auteur : Khéo
@@ -33,16 +26,10 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 		NB_INSTANCES++;
 		this.numero=NB_INSTANCES;
 		this.journal = new Journal(this.getNom()+" activites", this);
-		this.StockBasse= new Variable(this.getNom()+"StockBasse", "Stock de Fèves Basse", 
-				this, 0, 1000000000, this.getStock(Feve.FEVE_BASSE));
-		this.StockMoyenne= new Variable(this.getNom()+"StockMoyenne", "Stock de Fèves Moyenne", 
-				this, 0, 1000000000, this.getStock(Feve.FEVE_MOYENNE));
-		this.StockHaut_BE= new Variable(this.getNom()+"StockHautBE", "Stock de Fèves Haut Bio équitable", 
-				this, 0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		
 	}
 
 	public void initialiser() {
-		super.initialiser();
 	}
 	
 	public String getNom() {
@@ -64,26 +51,6 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 	
 	//Auteur : Khéo
 	public void next() {
-		super.next();
-		
-		//Mis à jour Variable
-		this.getStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE));
-		this.getStockHaut_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
-		this.getStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
-		
-		//Calcul du Prix Total de Stockage
-		double prixTotal = 0 ;
-		for (Feve f : this.getFeves().keySet()) {
-			prixTotal = prixTotal + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()) ;
-		}
-		
-		//Calcul Prix Entretien Arbre 
-		
-		
-		
-		//Retirer l'argent 
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotal);
-		
 
 	}
 	
@@ -101,21 +68,44 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 		}
 	}
 	
+	public abstract Variable getStockBasse();
+	public abstract Variable getStockHaut_BE();
+	public abstract Variable getStockMoyenne();
+	public abstract Variable getStockMoyenne_BE();
+	public abstract Variable getStockBasse_NA();
+	public abstract Variable getStockHaut_BE_NA();
+	public abstract Variable getStockMoyenne_NA();
+	public abstract Variable getStockMoyenne_BE_NA();
+
+	
+	//Auteur : Khéo
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
-		res.add(StockBasse);
-		res.add(StockHaut_BE);
-		res.add(StockMoyenne);
+		res.add(this.getStockBasse());
+		res.add(this.getStockHaut_BE());
+		res.add(this.getStockMoyenne());
+		res.add(this.getStockMoyenne_BE());
+		
+		res.add(this.getStockBasse_NA());
+		res.add(this.getStockHaut_BE_NA());
+		res.add(this.getStockMoyenne_NA());
+		res.add(this.getStockMoyenne_BE_NA());
 		
 		return res;
 	}
 	
+	public abstract Variable getPrixEntretienArbre();
+	
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
+		res.add(this.getPrixEntretienArbre());
 	
 		return res; 
 	}
 
+
+	
+	
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		return res;
@@ -137,26 +127,12 @@ public class Producteur1Acteur extends Producteur1Producteur implements IActeur 
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
 	
+	/**
+	 * @return the nB_INSTANCES
+	 */
+	public static int getNB_INSTANCES() {
+		return NB_INSTANCES;
+	}
 	
-	//Auteur : Khéo
-	/**
-	 * @return the stockBasse
-	 */
-	public Variable getStockBasse() {
-		return StockBasse;
-	}
-
-	/**
-	 * @return the stockMoyenne
-	 */
-	public Variable getStockMoyenne() {
-		return StockMoyenne;
-	}
-
-	/**
-	 * @return the stockHaut_BE
-	 */
-	public Variable getStockHaut_BE() {
-		return StockHaut_BE;
-	}
+	
 }
