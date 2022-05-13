@@ -129,7 +129,9 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			}
 		}
 		// on paie le cout de transformation
+		if (coutQuantiteTransfo.get(0)>0.) {
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), coutQuantiteTransfo.get(0));
+		}
 	}
 	
 	
@@ -153,7 +155,9 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	/** Modifie le solde pour correspondre a la depense liee aux frais de stockage
 	 *  Alexandre*/
 	public void payerStockage(double coutStockage) {
+		if(coutStockage>0.) {
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), coutStockage);
+		}
 	}
 	
 	/** _________________________________________________VENTE DE CHOCOLAT_______________________________________________________*/
