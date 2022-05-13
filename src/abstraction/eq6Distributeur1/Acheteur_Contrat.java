@@ -77,6 +77,7 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		jounralContratCadre.ajouter("Negociation réussie pour le contrat " + contrat);
+		this.setPrixVente((ChocolatDeMarque)contrat.getProduit(), contrat.getPrix());
 		this.mesContrats.add(contrat);
 	}
 
