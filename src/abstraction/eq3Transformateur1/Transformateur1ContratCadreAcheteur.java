@@ -62,6 +62,11 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		stockFeve.put(((Feve)produit), stockFeve.get(contrat.getProduit())+quantite);
 		
 	}
+	
+	// Alexandre
+	public void initialiser( ) {
+		super.initialiser();
+	}
 
 	
 	public void next() {

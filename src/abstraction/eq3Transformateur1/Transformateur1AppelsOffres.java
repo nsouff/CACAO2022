@@ -26,6 +26,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 	}
 	/** auteur Ilyas */
 	public void initialiser() {
+		super.initialiser();
 		this.superviseurAO = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));}
 	
 	public void next() {
