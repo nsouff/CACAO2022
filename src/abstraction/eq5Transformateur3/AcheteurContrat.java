@@ -99,7 +99,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		Feve f= ((Feve) produit);
 		this.stockFeves.ajouter(f, quantite);		
-		this.achats.ajouter("On receptionne " + quantite + "de" + produit.toString());
+		this.achats.ajouter("On receptionne " + quantite + "de" + produit.toString() + " achete par CC");
 	}
 
 	//Karla
