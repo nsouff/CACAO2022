@@ -98,11 +98,13 @@ public class Distributeur1Acteur implements IActeur {
 	}
 	
 	public void suppAnciensContrats() {//leorouppert
+		List<ExemplaireContratCadre> aSupprimer = new ArrayList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : mesContrats) {
 			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
-				mesContrats.remove(contrat);
+				aSupprimer.add(contrat);
 			}
 		}
+		mesContrats.removeAll(aSupprimer);		
 	}
 	
 	public void next() {
