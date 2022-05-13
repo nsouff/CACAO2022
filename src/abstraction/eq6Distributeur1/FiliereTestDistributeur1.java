@@ -15,6 +15,7 @@ import abstraction.eq8Romu.contratsCadres.ExempleTransformateurContratCadreVende
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 /**
@@ -110,6 +111,11 @@ public class FiliereTestDistributeur1 extends Filiere {
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_BASSE));
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_HAUTE));
+
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.BQ, "bas choco")));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.MQ, "moyen choco")));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ, "bon choco")));
+
 		
 		this.ajouterActeur(new Distributeur1());
 		this.ajouterActeur(new Producteur2()); // Pour avoir Prix Stockage
