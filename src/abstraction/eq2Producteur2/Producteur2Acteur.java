@@ -79,8 +79,15 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
 		}
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
+		// Cout de stockage, Jules DORE
 		
-		//journal, Jules DORE
+		double coutStockage = 0.0 ;
+		for (Feve f : this.getStocks().keySet()) {
+			coutStockage = coutStockage + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur());
+		}
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutStockage);	
+		
+					//journal, Jules DORE
 		journal.ajouter("Stock Feve Moyenne : "+this.getStock(Feve.FEVE_MOYENNE)+", Production Feve Moyenne : "+this.production(Feve.FEVE_MOYENNE)+", Nombre d'arbre Moyenne : "+this.getNbArbre(Feve.FEVE_MOYENNE)+"");
 		journal.ajouter("Stock Feve Haute : "+this.getStock(Feve.FEVE_HAUTE)+", Production Feve Haute : "+this.production(Feve.FEVE_HAUTE)+", Nombre d'arbre Haute : "+this.getNbArbre(Feve.FEVE_HAUTE)+"");
 		journal.ajouter("Stock Feve Basse : "+this.getStock(Feve.FEVE_BASSE)+", Production Feve Basse : "+this.production(Feve.FEVE_BASSE)+", Nombre d'arbre Basse : "+this.getNbArbre(Feve.FEVE_BASSE)+"");
