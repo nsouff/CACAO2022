@@ -45,7 +45,6 @@ public class Stock { //Emma Humeau
 	 */
 	public double getCoûtStockageTotale() {
 		//System.out.println("calcul du coût total :");
-		System.out.println(Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()* 16 * qteStockageTotale());
 		/**
 		 * @author Nolann
 		
