@@ -20,7 +20,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 
-public class Transformateur2 extends Transformateur2ContratCadre implements IMarqueChocolat{
+public class Transformateur2 extends Transformateur2VenteAO{
 
 	
 	public void next() {
@@ -35,12 +35,11 @@ public class Transformateur2 extends Transformateur2ContratCadre implements IMar
 		
 		
 	}
-	public List<String> getMarquesChocolat() {
-		return null;
-	}
+	
+//	public List<String> getMarquesChocolat() {
 //		List<String> res = new LinkedList<String>();
-//		//res.add("O'ptella");
-//		//res.add("O'ptibon");
+//		res.add("O'ptella");
+//		res.add("O'ptibon");
 //		res.add("O'max");
 //		return res;
 //	}

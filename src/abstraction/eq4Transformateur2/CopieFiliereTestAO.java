@@ -49,7 +49,7 @@ public class CopieFiliereTestAO  extends Filiere {
 		this.ajouterActeur(new ExempleAcheteurAO(13.5));
 		
 		this.ajouterActeur(new Romu());
-		this.ajouterActeur(new Transformateur2AO());
+		this.ajouterActeur(new Transformateur2());
 		
 		this.superviseurAO=new SuperviseurVentesAO();
 		this.ajouterActeur(this.superviseurAO);

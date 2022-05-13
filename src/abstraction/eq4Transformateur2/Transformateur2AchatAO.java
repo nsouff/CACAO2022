@@ -18,15 +18,10 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 //Nawfel
-public class Transformateur2AO extends Transformateur2Acteur implements IAcheteurAO {
+public class Transformateur2AchatAO extends Transformateur2Stock implements IAcheteurAO {
 	
-	//achat
+	protected double prixInit;// Lorsque l'on est acheteur d'une Appel d'Offre
 	protected HashMap<IVendeurAO, Double> prix;
-	
-	
-	
-	
-	
 	
 	
 	
@@ -38,14 +33,12 @@ public class Transformateur2AO extends Transformateur2Acteur implements IAcheteu
 		
 	}
 	
-	
-	
-	public Transformateur2AO() {
+	public Transformateur2AchatAO() {
 		super();
 		this.prix=new HashMap<IVendeurAO, Double>();
+		this.prixInit=15;
 	}
 
-	//achat
 	//Nawfel (il ne faut pas repondre a nos propres appels d'offres
 	public double proposerPrix(OffreVente offre) {
 		if (offre.getVendeur().getNom().equals(super.getNom())) {
@@ -63,7 +56,6 @@ public class Transformateur2AO extends Transformateur2Acteur implements IAcheteu
 	}
 
 	
-	//achat
 	//Pour la vrai simulation : changer les chocolats en feve. On achete des feves. Ici pb de stock : les stocks de chocolats vont grossir lorsque l'on achete des feves.
 	public void notifierAchatAO(PropositionAchatAO propositionRetenue) {
 		double stock = (this.getStockchocolatdemarque().getStock().keySet().contains(propositionRetenue.getOffre().getChocolat())) ?this.getStockchocolatdemarque().getStock().get(propositionRetenue.getOffre().getChocolat()) : 0.0;
@@ -71,11 +63,16 @@ public class Transformateur2AO extends Transformateur2Acteur implements IAcheteu
 		this.prix.put(propositionRetenue.getOffre().getVendeur(), propositionRetenue.getPrixKg()-1.0);
 		journal.ajouter("   mon prix a ete accepte. Mon prix pour "+propositionRetenue.getOffre().getVendeur()+" passe a "+(propositionRetenue.getPrixKg()-1.0));
 	}
-	//achat
+
 	public void notifierPropositionNonRetenueAO(PropositionAchatAO propositionNonRetenue) {
 		this.prix.put(propositionNonRetenue.getOffre().getVendeur(), propositionNonRetenue.getPrixKg()+0.1);
-		journal.ajouter("   mon prix a ete refuse. Mon prix pour "+propositionNonRetenue.getOffre().getVendeur()+" passe a "+(propositionNonRetenue.getPrixKg()+0.1));
+		journal.ajouter("   mon prix a ete refuse. Mon prix" +propositionNonRetenue.getOffre().getVendeur()+" passe a "+(propositionNonRetenue.getPrixKg()+0.1));
 	}
+	
+//	protected HashMap getCommande() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 	
 	
