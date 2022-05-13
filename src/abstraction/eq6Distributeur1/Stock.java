@@ -2,7 +2,6 @@ package abstraction.eq6Distributeur1;
 import java.util.Map;
 
 import abstraction.eq8Romu.filiere.Filiere;
-import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariablePrivee;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -15,12 +14,12 @@ public class Stock { //Emma Humeau
 
 	private static Map<ChocolatDeMarque,Double> stockageQte;
 	protected Map<Chocolat, Variable> stockVar;
-	protected IActeur acteur;
+	protected Distributeur1Acteur acteur;
 
 	/**
 	 * @author Nathan Souffan
 	 */
-	public Stock(IActeur acteur) {
+	public Stock(Distributeur1Acteur acteur) {
 		this.acteur = acteur;
 		stockVar = new HashMap<Chocolat, Variable>(); 
 		stockageQte = new HashMap<ChocolatDeMarque, Double>();
@@ -28,23 +27,23 @@ public class Stock { //Emma Humeau
 	}
 
 	private void initStockVar() {
-		stockVar.put(Chocolat.HQ_BE_O, new VariablePrivee("HQ_BE_O", acteur, 20000));
-		stockVar.put(Chocolat.HQ_BE, new VariablePrivee("HQ_BE", acteur, 3000));
-		stockVar.put(Chocolat.HQ_O, new VariablePrivee("HQ_O", acteur, 4000));
-		stockVar.put(Chocolat.HQ, new VariablePrivee("HQ", acteur, 5000));
-		stockVar.put(Chocolat.MQ_BE_O, new VariablePrivee("MQ_BE_O", acteur, 6000));
-		stockVar.put(Chocolat.MQ_BE, new VariablePrivee("MQ_BE", acteur, 1000));
-		stockVar.put(Chocolat.MQ_O, new VariablePrivee("MQ_O", acteur, 2000));
-		stockVar.put(Chocolat.MQ, new VariablePrivee("MQ", acteur, 30000));
-		stockVar.put(Chocolat.BQ_O, new VariablePrivee("BQ_O", acteur, 40000));
-		stockVar.put(Chocolat.BQ, new VariablePrivee("BQ", acteur, 50000));
+		stockVar.put(Chocolat.HQ_BE_O, new VariablePrivee("HQ_BE_O", acteur, 0));
+		stockVar.put(Chocolat.HQ_BE, new VariablePrivee("HQ_BE", acteur, 0));
+		stockVar.put(Chocolat.HQ_O, new VariablePrivee("HQ_O", acteur, 0));
+		stockVar.put(Chocolat.HQ, new VariablePrivee("HQ", acteur, 0));
+		stockVar.put(Chocolat.MQ_BE_O, new VariablePrivee("MQ_BE_O", acteur, 0));
+		stockVar.put(Chocolat.MQ_BE, new VariablePrivee("MQ_BE", acteur, 0));
+		stockVar.put(Chocolat.MQ_O, new VariablePrivee("MQ_O", acteur, 0));
+		stockVar.put(Chocolat.MQ, new VariablePrivee("MQ", acteur, 0));
+		stockVar.put(Chocolat.BQ_O, new VariablePrivee("BQ_O", acteur, 0));
+		stockVar.put(Chocolat.BQ, new VariablePrivee("BQ", acteur, 0));
 	}
 	
 	/**
 	 * @author Nathan Souffan
 	 * @return the coûtStockageTotale
 	 */
-	public static double getCoûtStockageTotale() {
+	public double getCoûtStockageTotale() {
 		//System.out.println("calcul du coût total :");
 		System.out.println(Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()* 16 * qteStockageTotale());
 		/**
@@ -63,7 +62,7 @@ public class Stock { //Emma Humeau
 	 * @author Nathan Souffan
 	 * @return the qteStockageTotale
 	 */
-	public static double qteStockageTotale() { //emma humeau
+	public double qteStockageTotale() { //emma humeau
 		double sumqte=0;
 		//calcule la qte du stockage total
 		for (Double qte : stockageQte.values()) {
@@ -100,7 +99,7 @@ public class Stock { //Emma Humeau
 		 * @author Nolann
 		 * actualisation des indicateurs
 		 */
-		stockVar.get(choco.getChocolat()).ajouter(acteur, qte);	
+		stockVar.get(choco.getChocolat()).setValeur(this.acteur, qte+stockAct,this.acteur.cryptogramme);	
 	}
 
 	public Map<ChocolatDeMarque, Double> getMapStock() { //emma humeau
