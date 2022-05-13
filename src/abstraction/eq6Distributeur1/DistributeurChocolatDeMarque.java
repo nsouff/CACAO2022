@@ -1,18 +1,53 @@
 package abstraction.eq6Distributeur1;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
+import abstraction.eq8Romu.general.Journal;
+import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements IDistributeurChocolatDeMarque{
 
-	private Map<ChocolatDeMarque, Double> teteGondole = new HashMap<ChocolatDeMarque, Double>(); // (nom du chocolat,% en tête de gondole), Emma Humeau 
-
+	private Map<ChocolatDeMarque, Double> teteGondole; // (nom du chocolat,% en tête de gondole), Emma Humeau 
+	protected Journal journalVente; // Nathan
 	private double qteEnVenteTG; //Emma Humeau
+	protected Variable totalVente; // Nathan
 
-	//private List<HashMap<ChocolatDeMarque, Double>> HistoriqueVentes = new LinkedList<HashMap<ChocolatDeMarque, Double>>();
+	/**
+	 * @author Nathan
+	 */
+	public DistributeurChocolatDeMarque() {
+		super();
+		totalVente = new Variable("Total des ventes", this, 0);
+		journalVente = new Journal("Journal pour les ventes", this);
+		teteGondole = new HashMap<ChocolatDeMarque, Double>();
+	}
+
+	/**
+	 * @author Nathan
+	 * @return la liste des indicateurs faites dans Distributeur1Acteur et la variable totalVente
+	 */
+	@Override
+	public List<Variable> getIndicateurs() {
+		List<Variable> l = super.getIndicateurs();
+		l.add(totalVente);
+		return l;
+	}
+
+	/**
+	 * @author Nathan
+	 * @return La liste des journaux renvoyée dans Distributeur1Acteur et le journal de vente
+	 */
+	@Override
+	public List<Journal> getJournaux() {
+		List<Journal> j = super.getJournaux();
+		j.add(journalVente);
+		return j;
+	}
+
 	/**
 	 * @return the teteGondole
 	 */
@@ -36,12 +71,13 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	}
 
 	@Override
-	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau
-		if (NotreStock.qteStockageTotale() <= 200) {  
-			return NotreStock.getStock(choco); }  //on met tout le stock en vente
-		else {
-			return NotreStock.getStock(choco)*0.9;  //on met que 90% du stock en vente
+	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau, Nathan
+		double qte =  NotreStock.getStock(choco);
+		if (qte > 200) {
+			qte *= 0.9;
 		}
+		journalVente.ajouter("Nous mettons en vente " + qte + " pour " + choco);
+		return qte;
 	}
 
 	@Override
@@ -64,12 +100,13 @@ public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements
 	@Override
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) { //emma Humeau
 		NotreStock.addQte(choco, -quantite);
+		totalVente.ajouter(this, quantite);
+		journalVente.ajouter(quantite + " de " + choco + "vient d'être vendu");
 	}
 
 	@Override
-	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) { //Emma Humeau
-			journal1.ajouter("Rayon vide pour la tête de gondole");
-
+	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) { //Emma Humeau, Nathan
+			journalVente.ajouter("Rayon vide pour " + choco);
 	}
 
 }
