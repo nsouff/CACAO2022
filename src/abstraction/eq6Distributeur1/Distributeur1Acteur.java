@@ -133,8 +133,10 @@ public class Distributeur1Acteur implements IActeur {
 		});
 		
 		/**
-		 * @author Nolann 
-		 * Gestion des compte -> retirer argent :		
+		 *  
+		 * Gestion des compte -> retirer argent :
+		 * @author Nolann	
+		 * 	
 		 */
 		//calcul cout sur le tour :
 		
