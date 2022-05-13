@@ -39,6 +39,11 @@ public class Transformateur2Acteur implements IActeur,IVendeurAO {
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat> stockchocolat;
 	private Stock<ChocolatDeMarque> stockchocolatdemarque;
+	private Variable stockfevebasseVAR;
+	private Variable stockfevemoyVAR;
+	private Variable stockchocolatdemarqueomaxVAR;
+	private Variable stockchocolatdemarqueoptellaVAR;
+	private Variable stockchocolatdemarqueoriginalVAR;
 	protected double prixInit;// Lorsque l'on est acheteur d'une Appel d'Offre
 	protected double prixMin; //Lorsque l'on est vendeur d'une Appel d'Offre
 	protected SuperviseurVentesAO superviseur;
@@ -86,6 +91,8 @@ public class Transformateur2Acteur implements IActeur,IVendeurAO {
 		this.stockfeve=new Stock();
 		this.stockfeve.ajouter(Feve.FEVE_BASSE, 15000);
 		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 9000);
+		this.stockfevebasseVAR=new Variable("Opti'Cacao STOCKFEVE_BASSE", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_BASSE));
+		this.stockfevemoyVAR=new Variable("Opti'Cacao STOCKFEVE_MOY", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_MOYENNE));
 		
 		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque chocomax=new ChocolatDeMarque(Chocolat.MQ,"Omax");
@@ -95,6 +102,10 @@ public class Transformateur2Acteur implements IActeur,IVendeurAO {
 		this.stockchocolatdemarque.ajouter(chocomax, 20000);
 		this.stockchocolatdemarque.ajouter(chocoptella, 30000);
 		this.stockchocolatdemarque.ajouter(chocoriginal, 3000);
+		this.stockchocolatdemarqueomaxVAR=new Variable("Opti'Cacao STOCK chocomax", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocomax));
+		this.stockchocolatdemarqueoptellaVAR=new Variable("Opti'Cacao STOCK optella", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocoptella));
+		this.stockchocolatdemarqueoriginalVAR=new Variable("Opti'Cacao STOCK chocoriginal", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocoriginal));
+		
 		
 		
 		
@@ -219,12 +230,11 @@ public class Transformateur2Acteur implements IActeur,IVendeurAO {
 	//rajouter les stocks de feves aussi (de chaque type)
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
-		for (Feve f : this.stockfeve.getStock().keySet()) {
-			res.add(new Variable("Opti'Cacao STOCK"+f, this, 0.0, 1000000000.0,this.stockfeve.getStock().get(f)));
-		}
-		for (ChocolatDeMarque c : this.stockchocolatdemarque.getStock().keySet()) {
-			res.add(new Variable("Opti'Cacao STOCK"+c, this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(c)));
-		}
+		res.add(this.stockfevebasseVAR);
+		res.add(this.stockfevemoyVAR);
+		res.add(this.stockchocolatdemarqueomaxVAR);
+		res.add(this.stockchocolatdemarqueoptellaVAR);
+		res.add(this.stockchocolatdemarqueoriginalVAR);
 		return res;
 		
 	}
