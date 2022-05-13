@@ -95,7 +95,6 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-		System.out.print(Filiere.LA_FILIERE.getChocolatsProduits());
 	}
 	
 	public void suppAnciensContrats() {//leorouppert
@@ -116,14 +115,16 @@ public class Distributeur1Acteur implements IActeur {
 			if (value <= 10000) {
 				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
 				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
-				IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
-				journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
-				ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
-				if (CC == null) {
-					journal1.ajouter("-->aboutit au contrat "+ CC);
-				}
-				else {
-					journal1.ajouter("échec des négociations");
+				if (ListeVendeurs.size() != 0) {
+					IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
+					journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
+					ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100), cryptogramme, false);
+					if (CC == null) {
+						journal1.ajouter("-->aboutit au contrat "+ CC);
+					}
+					else {
+						journal1.ajouter("échec des négociations");
+					}
 				}
 			}	
 		});
@@ -152,15 +153,27 @@ public class Distributeur1Acteur implements IActeur {
 	
 	
 	
-	// Renvoie la liste des filières proposées par l'acteur
+	/**
+	 * @author Nathan
+	 * @return La liste des filières proposées par l'acteur
+	 */
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filieres = new ArrayList<String>();
+		filieres.add("FD1TEST");
 		return(filieres);
 	}
 
-	// Renvoie une instance d'une filière d'après son nom
+	/**
+	 * @author Nathan
+	 * @return Renvoie une instance d'une filière d'après son nom
+	 */
 	public Filiere getFiliere(String nom) {
-		return Filiere.LA_FILIERE;
+		switch (nom) {
+			case "FD1TEST":
+				return new FiliereTestDistributeur1();
+			default:
+				return null;
+		}
 	}
 
 	// Renvoie les indicateurs
