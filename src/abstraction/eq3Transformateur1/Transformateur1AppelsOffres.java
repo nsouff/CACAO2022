@@ -24,6 +24,9 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 	protected double stockRestant;
 	protected HashMap<Chocolat,Double> stockChoco;
 	
+	public Transformateur1AppelsOffres() { 
+		super();
+	}
 	/** auteur Ilyas */
 	public void initialiser() {
 		this.superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));}
