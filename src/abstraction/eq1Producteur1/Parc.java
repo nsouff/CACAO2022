@@ -186,8 +186,13 @@ public class Parc {
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
 			MilleArbre arbre_i = this.getArbre(i);
 			arbre_i.MAJMaladie();
-			if ((arbre_i.getStade_maladie() == 5)
-					|| (arbre_i.Age() == arbre_i.getUt_esperance_vie())) {
+			if (arbre_i.getStade_maladie() == 5) { //Si un arbre meurt à cause de la maladie, on le remplace
+				int qualite = arbre_i.getQualite();
+				boolean BE = arbre_i.getBioequitable();
+				this.Planter(new MilleArbre(qualite,BE,Filiere.LA_FILIERE.getEtape()));
+				this.getCacaoyers().remove(arbre_i);
+			}
+			if (arbre_i.Age() == arbre_i.getUt_esperance_vie()) {
 				this.getCacaoyers().remove(arbre_i);
 				this.MAJCompteur(arbre_i,-1);
 			}
