@@ -161,7 +161,7 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				}
 			}
 		}
-		
+
 		// === Lancement si possible d'un appel d'offre
 		boolean tg = Math.random()*100.0 >=50.0 ? true : false;
 		List<Chocolat> chocoEnStock = new LinkedList<Chocolat>();
@@ -179,7 +179,7 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 			this.stockChoco.put(cho, this.stockChoco.get(cho)-250.0);
 			this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : stock("+cho+") -->"+this.stockChoco.get(cho));
 		}
-		
+
 		// === Lancement si possible d'un contrat cadre
 		List<Object> produits = new LinkedList<Object>();
 		produits.addAll(Filiere.LA_FILIERE.getChocolatsProduits());
@@ -189,7 +189,7 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 		for (Chocolat c : Chocolat.values()) {
 			produits.add(c);
 		}
-		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Tentative de lancer une contrat cadre");
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Tentative de lancer un contrat cadre");
 		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Liste de tous les produits "+produits);
 		List<Object> produitsVendus = new LinkedList<Object>();
 		List<Object> produits2Vendeurs = new LinkedList<Object>();
@@ -203,15 +203,22 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 		}
 		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Liste de tous les produits pour lesquels il existe au moins 1 vendeur  "+produitsVendus);
 		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Liste de tous les produits pour lesquels il existe au moins 2 vendeurs "+produits2Vendeurs);
-		Object produit = produits.get((int)(Math.random()*produitsVendus.size()));
-		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Produit tire au sort = "+produit);
-		List<IVendeurContratCadre> vendeurs = superviseurVentesCC.getVendeurs(produit);
-		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Les vendeurs de "+produit+" sont : "+vendeurs);
-		if (vendeurs.size()>0) {
-			IVendeurContratCadre vendeur = vendeurs.get((int)(Math.random()*vendeurs.size()));
-			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Vendeur tire au sort = "+vendeur);
+		if (produitsVendus.size()>0) {
+			Object produit = produitsVendus.get((int)(Math.random()*produitsVendus.size()));
+			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Produit tire au sort = "+produit);
+			List<IVendeurContratCadre> vendeurs = superviseurVentesCC.getVendeurs(produit);
+			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Les vendeurs de "+produit+" sont : "+vendeurs);
+			if (vendeurs.size()>0) {
+				IVendeurContratCadre vendeur = vendeurs.get((int)(Math.random()*vendeurs.size()));
+				this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Vendeur tire au sort = "+vendeur);
+				Echeancier echeancier = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100);
+				ExemplaireContratCadre contrat = superviseurVentesCC.demandeAcheteur(this, vendeur, produit, echeancier, this.cryptogramme, false);
+				if (contrat!=null) {
+					this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : contrat signe = "+contrat);
+				}
+			}
 		}
-		
+
 	}
 
 	public List<String> getNomsFilieresProposees() {
