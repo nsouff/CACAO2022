@@ -16,7 +16,12 @@ import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.bourseCacao.IVendeurBourse;
 import abstraction.eq8Romu.clients.FiliereTestClientFinal;
+import abstraction.eq8Romu.contratsCadres.Echeancier;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
+import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
+import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
@@ -29,7 +34,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
-public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueChocolat, IFabricantChocolatDeMarque, IVendeurAO, IAcheteurAO {
+public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueChocolat, IFabricantChocolatDeMarque, IVendeurAO, IAcheteurAO, IAcheteurContratCadre {
 
 	@SuppressWarnings("unused")
 	public static Color COLOR_LLGRAY = new Color(238,238,238);
@@ -54,6 +59,7 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	private Variable totalStocksChocoMarque;  // La qualite totale de stock de chocolat de marque 
 	private HashMap<Feve, HashMap<Chocolat, Double>> pourcentageTransfo; // pour les differentes feves, le chocolat qu'elle peuvent contribuer a produire avec le ratio
 	private SuperviseurVentesAO superviseurVentesAO;
+	private SuperviseurVentesContratCadre superviseurVentesCC;
 	private Journal journal;
 	private List<ChocolatDeMarque>chocosProduits;
 
@@ -121,6 +127,7 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 		this.pourcentageTransfo.get(Feve.FEVE_BASSE).put(Chocolat.BQ_O, 1.82);// choco 55%
 		this.pourcentageTransfo.get(Feve.FEVE_BASSE).put(Chocolat.BQ, 1.82);// choco 55%
 		this.superviseurVentesAO = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
+		this.superviseurVentesCC = (SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"));
 	}
 
 	public void setCryptogramme(Integer crypto) {
@@ -154,6 +161,8 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				}
 			}
 		}
+		
+		// === Lancement si possible d'un appel d'offre
 		boolean tg = Math.random()*100.0 >=50.0 ? true : false;
 		List<Chocolat> chocoEnStock = new LinkedList<Chocolat>();
 		for (Chocolat c : this.stockChoco.keySet()) {
@@ -170,6 +179,39 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 			this.stockChoco.put(cho, this.stockChoco.get(cho)-250.0);
 			this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : stock("+cho+") -->"+this.stockChoco.get(cho));
 		}
+		
+		// === Lancement si possible d'un contrat cadre
+		List<Object> produits = new LinkedList<Object>();
+		produits.addAll(Filiere.LA_FILIERE.getChocolatsProduits());
+		for (Feve f : Feve.values()) {
+			produits.add(f);
+		}
+		for (Chocolat c : Chocolat.values()) {
+			produits.add(c);
+		}
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Tentative de lancer une contrat cadre");
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Liste de tous les produits "+produits);
+		List<Object> produitsVendus = new LinkedList<Object>();
+		List<Object> produits2Vendeurs = new LinkedList<Object>();
+		for (Object prod : produits) {
+			if (superviseurVentesCC.getVendeurs(prod).size()>0) {
+				produitsVendus.add(prod);
+				if (superviseurVentesCC.getVendeurs(prod).size()>1) {
+					produits2Vendeurs.add(prod);
+				}
+			}
+		}
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Liste de tous les produits pour lesquels il existe au moins 1 vendeur  "+produitsVendus);
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Liste de tous les produits pour lesquels il existe au moins 2 vendeurs "+produits2Vendeurs);
+		Object produit = produits.get((int)(Math.random()*produitsVendus.size()));
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Produit tire au sort = "+produit);
+		List<IVendeurContratCadre> vendeurs = superviseurVentesCC.getVendeurs(produit);
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Les vendeurs de "+produit+" sont : "+vendeurs);
+		if (vendeurs.size()>0) {
+			IVendeurContratCadre vendeur = vendeurs.get((int)(Math.random()*vendeurs.size()));
+			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, " CCA : Vendeur tire au sort = "+vendeur);
+		}
+		
 	}
 
 	public List<String> getNomsFilieresProposees() {
@@ -331,6 +373,90 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 
 	public void notifierPropositionNonRetenueAO(PropositionAchatAO propositionNonRetenue) {
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_LGREEN, "   AOA : offre non retenue ");
+	}
+
+	//========================================================
+	//                  IAcheteurContratCadre
+	//========================================================
+	public boolean achete(Object produit) {
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : j'affirme acheter le produit "+produit);
+		return true;
+	}
+
+	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : j'accepte l'echeancier "+contrat.getEcheancier());
+		return contrat.getEcheancier();
+	}
+
+	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
+		double prix=0.0;
+		double solde = Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
+		Object produit = contrat.getProduit();
+		if (produit instanceof ChocolatDeMarque) {
+			produit = ((ChocolatDeMarque)produit).getChocolat();
+		}
+		if (produit instanceof Chocolat) {
+			switch ((Chocolat)produit) {
+			case HQ_BE_O : prix= 12.0;break;
+			case HQ_BE   : prix= 11.0;break;
+			case HQ_O    : prix= 10.0;break;
+			case HQ      : prix=  9.0;break;
+			case MQ_BE_O : prix=  8.0;break;
+			case MQ_BE   : prix=  7.0;break;
+			case MQ_O    : prix=  6.5;break;
+			case MQ      : prix=  6.0;break;
+			case BQ_O    : prix=  5.5;break;
+			case BQ      : prix=  5.0;break;
+			}
+		} else if (produit instanceof Feve) {
+			switch ((Feve)produit) {
+			case FEVE_HAUTE_BIO_EQUITABLE : prix= 3.5;break;
+			case FEVE_HAUTE   : prix= 3.0;break;
+			case FEVE_MOYENNE_BIO_EQUITABLE    : prix= 2.7;break;
+			case FEVE_MOYENNE      : prix= 2.5;break;
+			case FEVE_BASSE : prix= 1.5;break;
+			}
+		}
+		while (prix*contrat.getQuantiteTotale()>(solde/10.0)) {
+			prix = 0.75*prix;
+		};
+		prix = Math.min(prix, contrat.getPrix());
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : on me propose le prix "+contrat.getPrix()+" -> ma proposition ="+prix);
+		return prix;
+	}
+
+	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : nouveau cc conclu "+contrat);
+	}
+
+	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
+		if (produit instanceof ChocolatDeMarque) {
+			if (this.stockChocoMarque.keySet().contains(produit)) {
+				this.stockChocoMarque.put((ChocolatDeMarque)produit, this.stockChocoMarque.get(produit)+quantite);
+			} else {
+				this.stockChocoMarque.put((ChocolatDeMarque)produit, quantite);
+			}
+			this.totalStocksChocoMarque.ajouter(this, quantite, this.cryptogramme);
+			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : reception "+quantite+" Kg de C.M. "+produit+". Stock->  "+this.stockChocoMarque.get(produit));
+		} else if (produit instanceof Chocolat) {
+			if (this.stockChoco.keySet().contains(produit)) {
+				this.stockChoco.put((Chocolat)produit, this.stockChoco.get(produit)+quantite);
+			} else {
+				this.stockChoco.put((Chocolat)produit, quantite);
+			}
+			this.totalStocksChoco.ajouter(this, quantite, this.cryptogramme);
+			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : reception "+quantite+" Kg de Choco "+produit+". Stock->  "+this.stockChoco.get(produit));
+		} else if (produit instanceof Feve) {
+			if (this.stockFeves.keySet().contains(produit)) {
+				this.stockFeves.put((Feve)produit, this.stockFeves.get(produit)+quantite);
+			} else {
+				this.stockFeves.put((Feve)produit, quantite);
+			}
+			this.totalStocksFeves.ajouter(this, quantite, this.cryptogramme);
+			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : reception "+quantite+" Kg de feves "+produit+". Stock->  "+this.stockFeves.get(produit));
+		} else {
+			this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : reception d'un produit de type surprenant... "+produit);
+		}
 	}
 
 }
