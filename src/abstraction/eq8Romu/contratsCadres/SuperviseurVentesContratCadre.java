@@ -88,9 +88,7 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		if (echeancier==null) {
 			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec null pour echeancier");
 		}
-		if (echeancier.getQuantiteTotale()<QUANTITE_MIN_ECHEANCIER) {
-			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
-		}
+
 		if (acheteur==vendeur) {
 			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec vendeur==acheteur. On ne peut pas faire un contrat cadre avec soi meme");
 		}
@@ -100,7 +98,12 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		if (!(acheteur instanceof IDistributeurChocolatDeMarque) && tg) {
 			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre par l'acheteur "+acheteur.getNom()+" avec tg==true alors que l'acheteur n'est pas un distributeur (seuls les distributeurs peuvent s'engager a vendre en tete de gondole)");
 		}
-
+		if (echeancier.getQuantiteTotale()<QUANTITE_MIN_ECHEANCIER) {
+			System.out.println("!!! "+acheteur.getNom()+" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
+			Filiere.LA_FILIERE.getBanque().faireFaillite(acheteur);
+			return null;
+			//			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
+		}
 		ContratCadre contrat = new ContratCadre(acheteur, vendeur, produit, echeancier, cryptogramme, tg);
 		return negociations(acheteur, vendeur, produit, echeancier, cryptogramme, tg, contrat,acheteur);
 	}
