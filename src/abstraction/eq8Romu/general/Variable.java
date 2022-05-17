@@ -255,7 +255,7 @@ public class Variable implements Comparable<Variable>{
 	 * pas le cryptogramme
 	 */
 	public void ajouter(IActeur auteur, double delta, Integer crypto) {
-		this.ajouter(auteur, delta);
+		this.setValeur(auteur, this.getValeur(crypto)+delta, crypto);
 	}
 	/**
 	 * Retire montant a la valeur de l'indicateur
