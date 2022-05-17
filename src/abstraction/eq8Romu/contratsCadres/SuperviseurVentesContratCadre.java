@@ -162,7 +162,6 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		return negociations(acheteur, vendeur, produit, echeancier, cryptogramme, tg, contrat,vendeur);
 	}
 	private ExemplaireContratCadre negociations(IAcheteurContratCadre acheteur, IVendeurContratCadre vendeur, Object produit, Echeancier echeancier, int cryptogramme, boolean tg, ContratCadre contrat, IActeur initiateur) {
-		
 		int maxNego = 5 + (int)(Math.random()*11); // Le nombre maximum de contrepropositions est compris dans [5, 15]
 
 		// NEGOCIATIONS SUR L'ECHEANCIER
@@ -199,7 +198,6 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		} else {
 			journal.ajouter("   accord sur l'echeancier : "+contrat.getEcheancier());
 		}
-
 		// NEGOCIATIONS SUR LE PRIX
 		double propositionV = vendeur.propositionPrix(new ExemplaireContratCadre(contrat));
 		journal.ajouter("   "+Journal.texteColore(vendeur, vendeur.getNom())+" propose un prix de "+Journal.doubleSur(propositionV,4));
@@ -212,6 +210,7 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		double propositionA;
 		numNego=0;
 		do {
+			numNego++;
 			propositionA = acheteur.contrePropositionPrixAcheteur(new ExemplaireContratCadre(contrat));
 			journal.ajouter("   "+Journal.texteColore(acheteur, acheteur.getNom())+" propose un prix de "+Journal.doubleSur(propositionA,4));
 			if (propositionA<=0.0) {
