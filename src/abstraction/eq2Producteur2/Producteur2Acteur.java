@@ -15,7 +15,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,IVendeurBourse {
+public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur/*,IVendeurBourse*/ {
 	
 	protected int cryptogramme;
 	protected Journal journal;
@@ -72,13 +72,13 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 	public void next() {
 		super.next();
 		
-		/*// Cout de production, Jules DORE
+		// Cout de production, Jules DORE
 		this.setCoutParKg();
 		double coutProduction = 0.0;
 		for(Feve f : this.coutParKg.keySet()) {
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
 		}
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);*/
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
 		// Cout de stockage, Jules DORE
 		
 		double coutStockage = 0.0 ;
@@ -169,8 +169,8 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 	public Variable GetStockHausse_BE() {
 		return StockFeveHaute_BE;
 	}
-	// mettre this.getCout(f) à la place de cout
-	public double offre(Feve f, double cours) {
+
+	/*public double offre(Feve f, double cours) {
 		double quantiteAVendre = 0;
 		if (cours> 1.3*this.getCout(f)) {
 			 quantiteAVendre= 0.8*this.getStock(f); // on vend 80% du stock;
@@ -182,7 +182,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 			  quantiteAVendre = 0.4*this.getStock(f); // on vend 40% du stock ;
 		}
 		return  quantiteAVendre;
-	}
+	}*/
 
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
