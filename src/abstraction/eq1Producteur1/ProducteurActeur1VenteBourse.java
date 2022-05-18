@@ -41,9 +41,18 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 			if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE
 			if (Filiere.LA_FILIERE.getEtape()>=1) {
 				// Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
-				if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1)) <= cours) {
+				
+				if (this.getStock(f, false)<1000000) {
+					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 milllion jusqu'à 75 %
+				if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours) {
 					return this.getStock(f, false);
-					
+					}
+			
+				}
+				else {
+					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*0.75 <= cours) {
+					return this.getStock(f, false);
+					}
 				}
 			}
 		}
