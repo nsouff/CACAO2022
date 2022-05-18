@@ -53,7 +53,9 @@ public class Transformateur1Acteur implements IActeur {
 	}
 	
 	public List<String> getNomsFilieresProposees() {
-		return new ArrayList<String>();
+		ArrayList<String> filiere = new ArrayList<String>();
+		filiere.add(this.getNom());
+		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
