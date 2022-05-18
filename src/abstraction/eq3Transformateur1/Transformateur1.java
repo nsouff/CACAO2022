@@ -240,7 +240,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		/** ____________________Choix quantite et prix Feve____________________ */
 		
-		this.prixMaxAchat();
+		//this.prixMaxAchat();
 		this.determinationQuantiteAchat();
 		
 		

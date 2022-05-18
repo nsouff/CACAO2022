@@ -42,7 +42,8 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 		if (cours<prixAchatFeve.get(f)) {
 			return quantiteAchatFeve.get(f)*0.5;
 		}
-		return 0.;
+		journal.ajouter("on ajoute 0");
+		return 0.;	
 	}
 
 	/** modification du stock de fèves; auteur Anna */
@@ -61,6 +62,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void initialiser( ) {
 		super.initialiser();
+		prixAchatFeve.put(Feve.FEVE_BASSE, 10000.);
 	}
 	
 	/** 
