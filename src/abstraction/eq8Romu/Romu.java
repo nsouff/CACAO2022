@@ -348,7 +348,7 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 			index++;
 			retenue = propositions.get(index);
 		}
-		return retenue;
+		return retenue; 
 	}
 
 	//========================================================
