@@ -6,6 +6,7 @@ import java.util.List;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -62,6 +63,7 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		} else {
 			System.out.println(" keyset ===>"+this.getPrixmoyenFeve().keySet());
 			System.out.println(" produit===>"+contrat.getProduit());
+			Filiere.LA_FILIERE.getBanque().faireFaillite(this);
 			return 0.0;
 		}
 		// mis en commentaire par Romu car l'acces a la hashmap avec une cle ne figurant pas dans le keyset de la hashmap leve une exception et empeche tout acteur voulant vous avoir pour vendeur de contrat cadre a ne pas pouvoir faire de pull request.
