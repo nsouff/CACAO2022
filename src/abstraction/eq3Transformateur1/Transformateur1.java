@@ -9,6 +9,7 @@ import abstraction.eq8Romu.produits.Gamme;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq1Producteur1.Producteur1;
+import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
@@ -127,6 +128,10 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				}
 			}
 		}
+		// on paie le cout de transformation
+		if (coutQuantiteTransfo.get(0)>0.) {
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), coutQuantiteTransfo.get(0));
+		}
 	}
 	
 	
@@ -147,9 +152,12 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		return cout;
 	}
 	
-	/** Modifie le solde pour correspondre a la depense liee aux frais de stockage*/
+	/** Modifie le solde pour correspondre a la depense liee aux frais de stockage
+	 *  Alexandre*/
 	public void payerStockage(double coutStockage) {
-		
+		if(coutStockage>0.) {
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), coutStockage);
+		}
 	}
 	
 	/** _________________________________________________VENTE DE CHOCOLAT_______________________________________________________*/
@@ -309,10 +317,28 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		
 		/** ____________________Appels d'offres____________________
-		 *  je laisse blanc pour le moment car je n'ai aucune idée de commet cela se passe 
-		 *  et j'étais trop fatigué pour m'en occuper */
+		 *  Ilyas puis modif apportées par Alexandre*/
 		
-		
+		if (Filiere.LA_FILIERE.getEtape()>=1) {
+			for (Chocolat c : stockChoco.keySet()) {
+				// calcule la quantite qu'on doit livrer de ce chocolat
+				double aLivrer =0.;
+				for (ExemplaireContratCadre cc : this.mesContratEnTantQueVendeur) {
+					if (cc.getProduit() instanceof ChocolatDeMarque && ((ChocolatDeMarque)cc.getProduit()).getChocolat()==c) {
+						aLivrer = aLivrer + cc.getQuantiteALivrerAuStep();
+					}
+				}
+				// determine si on lance un appel d'offre ou non
+				if (stockChoco.get(c)>=aLivrer + 250) {
+					// on vend notre surplus de chocolat
+					ChocolatDeMarque coco= new ChocolatDeMarque(c, "cote d'or");
+					double stockDispo= stockChoco.get(c) - aLivrer;
+					PropositionAchatAO retenue = superviseurAO.vendreParAO(this, cryptogramme, coco, stockDispo, false);
+					stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());	
+				}
+				
+			}
+		}
 		
 		/** ____________________Stocks____________________*/
 		

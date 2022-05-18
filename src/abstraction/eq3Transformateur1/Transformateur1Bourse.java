@@ -20,16 +20,19 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected dernierPrixVenteChoco dernierPrixVenteChocoReset; /** commence le tour avec des valeurs nulles partout et remplace les valeurs par le prix vente mon negocie durant le tour */
 	protected DicoFeve prixAchatFeve;
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
-	protected  HashMap<Chocolat, Double> stockChoco;
-	protected  HashMap<Feve, Double> stockFeve;
+	protected DicoChoco stockChoco;
+	protected DicoFeve stockFeve;
 	// Alexandre
 	public Transformateur1Bourse() {
 		super();
 		quantiteAchatFeve = new DicoFeve();
 		quantiteDemandeeChoco = new DicoChoco();
 		dernierPrixVenteChoco = new dernierPrixVenteChoco();
+		dernierPrixVenteChocoReset = new dernierPrixVenteChoco();
 		prixAchatFeve = new DicoFeve();
 		prixVenteMin = new DicoChoco();
+		stockChoco = new DicoChoco();
+		stockFeve = new DicoFeve();
 	}
 	
 	/** renvoie la quantité de fève voulue; auteur Julien 

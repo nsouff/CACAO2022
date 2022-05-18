@@ -19,32 +19,18 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 
 
 	protected String marque;
-	protected double prixMin;
-	protected SuperviseurVentesAO superviseur;
-	protected double stockRestant;
-	protected HashMap<Chocolat,Double> stockChoco;
+	protected SuperviseurVentesAO superviseurAO;
 	
+	public Transformateur1AppelsOffres() { 
+		super();
+	}
 	/** auteur Ilyas */
 	public void initialiser() {
-		this.superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));}
+		super.initialiser();
+		this.superviseurAO = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));}
 	
 	public void next() {
-		
-		if (Filiere.LA_FILIERE.getEtape()>=1) {
-			for (Chocolat c : stockChoco.keySet()) {
-
-				if (stockChoco.get(c)>=250.0) {
-					ChocolatDeMarque coco= new ChocolatDeMarque(c, "cote d'or");
-					double stock= stockChoco.get(c);
-					PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, coco, stockChoco.get(c), false);
-					stockChoco.put(c, stock-retenue.getOffre().getQuantiteKG());
-				
-				
-					
-				}
-				
-			}
-		}
+		super.next();
 	}
 
 	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas 
@@ -56,8 +42,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 			return null;
 		} else {
 			PropositionAchatAO retenue = propositions.get(0);
-			if (retenue.getPrixKg()>this.prixMin) {
-				
+			if (retenue.getPrixKg()>this.prixVenteMin.get(propositions.get(0).getOffre().getChocolat().getChocolat())) {
 				return retenue;
 			} else {
 				
