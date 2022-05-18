@@ -17,6 +17,8 @@ import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariableReadOnly;
+import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
@@ -35,6 +37,8 @@ public class Distributeur1Acteur implements IActeur {
 	protected Variable QteChocoMQ;
 	protected Variable QteChocoBq;
 	protected Integer Compteur;	
+	protected Map<ChocolatDeMarque, VariableReadOnly> HistoChoco; // Léo
+
 			
 	/**
 	 * @return the notreStock
@@ -48,6 +52,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
+		HistoChoco = new HashMap<ChocolatDeMarque, VariableReadOnly>(); // Léo
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
 		
@@ -91,6 +96,9 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		for (ChocolatDeMarque C : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			HistoChoco.put(C, new VariableReadOnly(C.toString(), this,0));
+		}
 	}
 	
 	public void suppAnciensContrats() {//leorouppert
@@ -105,12 +113,13 @@ public class Distributeur1Acteur implements IActeur {
 	
 	public void next() {
 		//leorouppert
-		
 		journal1.ajouter("entrée dans next pour le tour n° " + Compteur);
-		
 		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
-			if (value <= 10000) {
+			if (Compteur > 100) {
+				System.out.println(HistoChoco.get(key).getValeur(Compteur,cryptogramme));
+			}
+			if (value <= 5000) {
 				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
 				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
 				if (ListeVendeurs.size() != 0) {
@@ -179,7 +188,7 @@ public class Distributeur1Acteur implements IActeur {
 	// Renvoie les indicateurs
 	/**
 	 * @author Nolann
-	 * changement : on ne renvoi que la quantité de chocolat de type HQ, MQ, BQ
+	 * changement : on ne renvoie que la quantité de chocolat de type HQ, MQ, BQ
 	 */
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
