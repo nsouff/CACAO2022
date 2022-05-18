@@ -60,11 +60,7 @@ public class Distributeur1Acteur implements IActeur {
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		
-		this.prixTotalTour = 100000.0;
-		prix = new ArrayList<Variable>();
-		prixVente = new HashMap<ChocolatDeMarque, Double>();
-		mesContrats = new ArrayList<ExemplaireContratCadre>();
-		ran = new Random();
+		
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
 		NotreStock = new Stock(this);
@@ -141,7 +137,7 @@ public class Distributeur1Acteur implements IActeur {
 		
 		journal1.ajouter(getDescription());
 		
-		prixTotalTour = NotreStock.getCoûtStockageTotale() +1.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
+		prixTotalTour = NotreStock.getCoûtStockageTotale() +0.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
 		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
 		
