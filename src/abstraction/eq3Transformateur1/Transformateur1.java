@@ -352,11 +352,17 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				}
 				// determine si on lance un appel d'offre ou non
 				if (stockChoco.get(c)>=aLivrer + 250) {
+					journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
 					// on vend notre surplus de chocolat
 					ChocolatDeMarque coco= new ChocolatDeMarque(c, "cote d'or");
 					double stockDispo= stockChoco.get(c) - aLivrer;
 					PropositionAchatAO retenue = superviseurAO.vendreParAO(this, cryptogramme, coco, stockDispo, false);
-					stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());	
+					if (retenue!=null) {
+						stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());
+						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
+					} else {
+						journal.ajouter("pas d'offre retenue");
+					}
 				}
 				
 			}
