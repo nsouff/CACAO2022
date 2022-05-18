@@ -20,7 +20,6 @@ public class Producteur1Stock extends Producteur1Acteur {
 	private Variable StockMoyenne_NA;
 	private Variable StockHaut_BE_NA;
 	private Variable StockMoyenne_BE_NA;
-	
 	private Variable PrixEntretienArbre;
 	
 	

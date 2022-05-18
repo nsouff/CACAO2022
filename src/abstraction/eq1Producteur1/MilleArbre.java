@@ -9,6 +9,7 @@ public class MilleArbre {
 	private int stade_maladie;
 	private int ut_debut_maladie;
 	private int qualite ;
+	private boolean cooperative;
 	private boolean bioequitable;
 	private boolean transition_bio;
 	private int date_transition;
@@ -20,17 +21,19 @@ public class MilleArbre {
 		this.stade_maladie=0;
 		this.ut_debut_maladie = 0;
 		this.qualite=1;
+		this.cooperative=false;
 		this.bioequitable=false;
 		this.transition_bio=false;
 		this.date_transition=0;
 		this.productivite_max=this.Production_max();
 	}
 	
-	public MilleArbre(int qualite, boolean BE,int ut_plantation) { //Écrit par Antoine
+	public MilleArbre(int qualite,boolean cooperative, boolean BE,int ut_plantation) { //Écrit par Antoine
 		this.ut_plantation = ut_plantation;
 		this.ut_esperance_vie = Esperance_vie();
 		this.stade_maladie = 0;
 		this.ut_debut_maladie = 0;
+		this.cooperative= cooperative;
 		this.qualite = qualite;
 		this.bioequitable = BE;
 		this.transition_bio = false;
@@ -52,6 +55,9 @@ public class MilleArbre {
 	}
 	public void setQualite(int qualite) { //Écrit par Maxime
 		this.qualite=qualite;
+	}
+	public void setCooperative(boolean cooperative) {
+		this.cooperative=cooperative;
 	}
 	public void setBioequitable(boolean bioequitable) { //Écrit par Maxime
 		this.bioequitable= bioequitable;
@@ -79,6 +85,9 @@ public class MilleArbre {
 	}
 	public int getQualite() { //Écrit par Antoine
 		return this.qualite;
+	}
+	public boolean getCooperative() { //Écrit par Antoine
+		return this.cooperative;
 	}
 	public boolean getBioequitable() { //Écrit par Antoine
 		return this.bioequitable;
@@ -244,5 +253,8 @@ public class MilleArbre {
 			this.setTransition_bio(false);
 		}
 		
+	}
+	public void Regrouper() {
+		this.setCooperative(true);
 	}
 }

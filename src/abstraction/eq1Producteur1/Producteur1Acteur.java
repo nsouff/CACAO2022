@@ -37,7 +37,7 @@ public abstract class Producteur1Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "On est pas ici pour enfiler des perles. On va mettre les points sur les I et les barres sur leur mère";
+		return "Nous sommes la filière Cacaco";
 	}
 
 	public Color getColor() {
