@@ -10,7 +10,8 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	
 	protected DicoFeve quantiteAchatFeve;            /** quantité de fève qu'on souhaite acheter */
 	protected DicoChoco quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
-	protected dernierPrixVenteChoco dernierPrixVenteChoco;        /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
+	protected dernierPrixVenteChoco dernierPrixVenteChoco;
+	protected dernierPrixVenteChoco dernierPrixVenteChocoReset; /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuixème les chocolats */
 	protected DicoFeve prixAchatFeve;
 	protected DicoFeve stockFeve;               /** Integer --> Double*/
 	protected DicoChoco stockChoco;           /** Integer --> Double*/
