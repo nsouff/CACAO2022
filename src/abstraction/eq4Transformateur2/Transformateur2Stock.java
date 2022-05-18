@@ -113,24 +113,29 @@ public double coutStockage() {
 //}	
 
 //Marie
-/*public boolean capaciteMaxAtteinte() {
-	if ((this.capaciteStockage.getValeur()-this.stockfeve-this.stockchocolat)>0 || ) {
+
+public boolean capaciteMaxAtteinte() {
+	if (((this.capaciteStockage.getValeur())-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()))>0 ) { 
 		return false;	
 	}else {
 		return true;
 	}
 }
+// Marie 
 
-public double augmenterCapacite(Variable capaciteStockage) {
+/*public double augmenterCapacite(Variable capaciteStockage) {
 	//condition pour augmenter la capacité (par ex. dès qu'on souhaite acheter et que l'on n'a pas de capcité de stockage suffisante, on augmente notre capacité)
-	if (capaciteMaxAtteinte=true) {
-		capaciteStockage=this.getCapaciteStockage()*1.20;
-		
-		
+	
+	if (capaciteMaxAtteinte()) {
+		this.capaciteStockage=this.capaciteStockage+(1.10*(this.capaciteStockage-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal())));
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), 1.10*((this.capaciteStockage.getValeur())-(this.stockfeve+this.stockchocolat))*Filiere.LA_FILIERE.getIndicateur("prixEntrepot").getValeur());
 	}
+	
 	//si validé alors on augmente le stock d'une quantité définie 
 	// sinon on garde le même stock
 }*/
+
+// REMARQUE : PROBLEME DANS LE CODE !!
 
 }
 
