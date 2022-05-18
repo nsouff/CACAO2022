@@ -27,13 +27,12 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 
 public class Transformateur1 extends Transformateur1AppelsOffres implements IMarqueChocolat, IFabricantChocolatDeMarque{
-	private static final double rendementHaute=Filiere.LA_FILIERE.getParametre("rendement").getValeur();                  /** rendement de la transformation haute à définir*/
-	private static final double coutTransfo=Filiere.LA_FILIERE.getParametre("coutTransformateur").getValeur();                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
-	private static final double coutTransfoOriginal=coutTransfo
-			+ Filiere.LA_FILIERE.getParametre("coutOrginial").getValeur(); /** somme de couTransfo et du supplément pour l'original*/
-	private static final double coutStockage=4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();                  /** coutStockageTransfo = 4*coutStockageProd */
-	private static final double capaciteStockageEntreprot = 1. ;
-	private static final double coutEntrepot = 1. ;
+	private double rendementHaute= 1.;                  /** rendement de la transformation haute à définir*/
+	private double coutTransfo=1. ;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
+	private double coutTransfoOriginal=1. ; /** somme de couTransfo et du supplément pour l'original*/
+	private double coutStockage=4*1.;                  /** coutStockageTransfo = 4*coutStockageProd */
+	private double capaciteStockageEntreprot = 1. ;
+	private double coutEntrepot = 1. ;
 	private double capaciteStockage = 1. ; //modifier
 
 
@@ -199,6 +198,14 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	/** Alexandre*/
 	public void initialiser() {
 		super.initialiser();
+		this.rendementHaute = Filiere.LA_FILIERE.getParametre("rendement").getValeur();
+		this.coutTransfo = Filiere.LA_FILIERE.getParametre("coutTransformateur").getValeur();
+		this.coutTransfoOriginal = coutTransfo
+				+ Filiere.LA_FILIERE.getParametre("coutOrginial").getValeur();
+		this.coutStockage = 4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();
+		
+		
+		
 	}
 	
 	/** 
