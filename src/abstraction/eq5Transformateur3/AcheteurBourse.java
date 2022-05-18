@@ -45,4 +45,5 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 	public void next () {
 		super.next();	
 	}
+	
 }

@@ -1,4 +1,5 @@
 package abstraction.eq5Transformateur3;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -103,10 +104,25 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		return peutlivrer;
 	}
 	
+	//Karla
+	public LinkedList <ExemplaireContratCadre> majCC(LinkedList <ExemplaireContratCadre> L) {
+		for (ExemplaireContratCadre contrat : this.contratsEnCoursVente) {
+			if (contrat.getEcheancier().getStepFin() < Filiere.LA_FILIERE.getEtape()) {
+				L.remove(contrat);
+			}
+		}
+		return L ;
+	}
+	
 	//Karla & Yves
 	/* on regarde l etat de nos stocks et on lance la procédure */
 	public void next() {
 		super.next();
+		
+		/* Mise à jour de la liste des CC en cours */
+		this.contratsEnCoursVente = majCC(this.contratsEnCoursVente);
+		
+		/* Lancer des CC */
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
 			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat && c.isBioEquitable() == true) {
 				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
