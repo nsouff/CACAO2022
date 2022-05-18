@@ -29,9 +29,9 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	// fonction qui détermine quel type de chocolat on vend en contrat cadre; auteur Julien */
 	public boolean vend(Object produit) {
 // COMMENTE PAR ROMU CAR CODE BLOQUANT LES VENTES PAR CONTRAT CADRE : Avant de caster en ChocolatDeMarque il est indispensable de s'assurer via un instanceof qu'il s'agit bien d'un chocolat de marque car les contrats cadres peuvent concerner tous les types de produits
-//		if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
-//			return true;
-//		}
+		if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
+			return true;
+	}
 		return false;
 	}
 
