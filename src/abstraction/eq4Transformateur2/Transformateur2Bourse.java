@@ -25,7 +25,7 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 
 
 	}
-	
+
 	public void next() {
 		super.next();
 	}

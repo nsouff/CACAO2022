@@ -39,7 +39,8 @@ public class Transformateur2AchatAO extends Transformateur2Bourse implements IAc
 		this.prixInit=15;
 	}
 
-	//Nawfel (il ne faut pas repondre a nos propres appels d'offres
+	//Nawfel (il ne faut pas repondre a nos propres appels d'offres)
+	
 	public double proposerPrix(OffreVente offre) {
 		if (offre.getVendeur().getNom().equals(super.getNom())) {
 			return 0;

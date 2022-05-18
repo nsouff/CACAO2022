@@ -32,7 +32,7 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	private Variable prixTransformation; // a renseigner (0? On considere juste le rendement pour le pb des transfolongue, ainsi, un seul parametre à gerer.)
 	private Variable TransformationSeuil;
 	private Variable prixChocoOriginal;
-	private Variable capaciteStockage;
+	protected Variable capaciteStockage;
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
@@ -87,19 +87,6 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 
 	}
 	
-	
-
-
-
-
-
-
-
-
-
-
-
-
 
 	public void initialiser() {
 		
@@ -125,11 +112,6 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	public void next() {
 			
 	}
-	
-	
-	
-
-	
 	
 	
 	public List<String> getNomsFilieresProposees() {
@@ -183,20 +165,9 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
 
-
-
-
-
-
-
-
-
-
 	public double getMarge() {
 		return this.marge;
 	}
-
-
 
 
 	public int getCryptogramme() {
@@ -204,13 +175,9 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-
-
 	public Variable getCoutStockage() {
 		return coutStockage;
 	}
-
-
 
 
 	public Variable getPrixSeuil() {
@@ -218,13 +185,9 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-
-
 	public Variable getRendementTransfoLongue() {
 		return rendementTransfoLongue;
 	}
-
-
 
 
 	public Variable getPrixTransformation() {
@@ -232,13 +195,9 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-
-
 	public Variable getPrixChocoOriginal() {
 		return prixChocoOriginal;
 	}
-
-
 
 
 	public Variable getCapaciteStockage() {
@@ -246,13 +205,9 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-
-
 	public Variable getCapaciteStockageFixe() {
 		return capaciteStockageFixe;
 	}
-
-
 
 
 	public Variable getExpirationFeve() {
@@ -260,43 +215,13 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-
-
 	public Variable getExpirationChoco() {
 		return expirationChoco;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	public Variable getTransformationSeuil() {
 		return TransformationSeuil;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public LinkedList<String> getMarquesChocolat() {
@@ -306,11 +231,6 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		res.add("O'max");
 		return res;
 	}
-
-
-
-
-
 
 	@Override
 	public LinkedList<ChocolatDeMarque> getChocolatsProduits() {
@@ -322,47 +242,5 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		return res;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 }
