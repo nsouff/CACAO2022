@@ -60,11 +60,7 @@ public class Distributeur1Acteur implements IActeur {
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		
-		this.prixTotalTour = 100000.0;
-		prix = new ArrayList<Variable>();
-		prixVente = new HashMap<ChocolatDeMarque, Double>();
-		mesContrats = new ArrayList<ExemplaireContratCadre>();
-		ran = new Random();
+		
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
 		NotreStock = new Stock(this);
@@ -120,7 +116,7 @@ public class Distributeur1Acteur implements IActeur {
 				if (ListeVendeurs.size() != 0) {
 					IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
 					journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
-					ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,100000), cryptogramme, false);
+					ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,10000), cryptogramme, false);
 					if (CC == null) {
 						journal1.ajouter("-->aboutit au contrat "+ CC);
 					}
@@ -132,14 +128,16 @@ public class Distributeur1Acteur implements IActeur {
 		});
 		
 		/**
-		 * @author Nolann 
-		 * Gestion des compte -> retirer argent :		
+		 *  
+		 * Gestion des compte -> retirer argent :
+		 * @author Nolann	
+		 * 	
 		 */
 		//calcul cout sur le tour :
 		
 		journal1.ajouter(getDescription());
 		
-		prixTotalTour = NotreStock.getCoûtStockageTotale() +1.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
+		prixTotalTour = NotreStock.getCoûtStockageTotale() +10.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
 		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
 		
@@ -226,14 +224,6 @@ public class Distributeur1Acteur implements IActeur {
 
 	
 	
-	/**
-	 * @author Nathan
-	 * @param prixAchat le prix acheté pour toute la qté acheté
-	 * @param quantiteAchete La qté acheté
-	 */
-	public void setPrixVente(ChocolatDeMarque c, double prixAchat, double quantiteAchete) {
-		prixVente.put(c, 2*prixAchat/quantiteAchete);
-	}
 
 	/**
 	 * @author Nathan
@@ -248,6 +238,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * 
 	 * @author Nolann
 	 * @return prixVente (V1 prix vente = 2*prix achat)
+	 *  
 	 */
 	public void setAllprixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
