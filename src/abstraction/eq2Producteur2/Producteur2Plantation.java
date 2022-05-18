@@ -70,11 +70,11 @@ public class Producteur2Plantation {
 		
 		ArrayList<Integer> qt = new ArrayList<Integer>();
 		
-		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); // HGB
-		qt.add((int) (Math.ceil((800*NbTotalArbres)/5))); // HG
-		qt.add((int) (Math.ceil((400*NbTotalArbres)/5))); // MGB
-		qt.add((int) (Math.ceil((1600*NbTotalArbres)/5))); //MG 
-		qt.add((int) (Math.ceil((2000*NbTotalArbres)/5))); //BG
+		qt.add((int) (Math.ceil((20*NbTotalArbres)/5))); // HGB
+		qt.add((int) (Math.ceil((80*NbTotalArbres)/5))); // HG
+		qt.add((int) (Math.ceil((40*NbTotalArbres)/5))); // MGB
+		qt.add((int) (Math.ceil((160*NbTotalArbres)/5))); //MG 
+		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); //BG
 		
 		return qt;
 	}
