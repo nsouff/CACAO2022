@@ -6,6 +6,7 @@ import java.util.List;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -28,7 +29,6 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	public boolean vend(Object produit) {
 		if(produit instanceof Feve) {
 			if(this.getStock((Feve)produit, false)>100000) { //On peut initier la vente si on a les bonnes quantités
-				this.getContratCadre().ajouter("Ready to sell");
 				return true;
 			}
 		}
@@ -38,13 +38,21 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	@Override
 	//Auteur : Khéo
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+		this.getContratCadre().ajouter("============================================");
+		this.getContratCadre().ajouter("L'acheteur est " + contrat.getAcheteur().toString() + " pour du " + contrat.getProduit().toString());
+		this.getContratCadre().ajouter("Premier échéancier " + contrat.getEcheancier());
+		
+		
 		if (contrat.getEcheancier().getQuantiteTotale()<this.getStock((Feve)contrat.getProduit(), false)) {
 			if (contrat.getEcheancier().getQuantiteTotale()<100000) {
-				contrat.getEcheancier().ajouter(100000-contrat.getEcheancier().getQuantiteTotale());
+				Echeancier newcontrat = contrat.getEcheancier();
+				newcontrat.ajouter(100000-newcontrat.getQuantiteTotale());
 				this.getContratCadre().ajouter("On ajoute une quantité pour un nouveau contrat");
-				return contrat.getEcheancier();
+				this.getContratCadre().ajouter("Nouvelle échéancier " + newcontrat.toString());
+				return newcontrat;
 			} else { //Quantité demandé acceptable
 				this.getContratCadre().ajouter("Quantité demandé acceptable");
+				this.getContratCadre().ajouter(contrat.getEcheancier().toString());
 				return contrat.getEcheancier(); 
 			}
 			
@@ -58,10 +66,9 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	//Auteur : Khéo
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		if (this.getPrixmoyenFeve().keySet().contains(contrat.getProduit())) {
-			return this.getPrixmoyenFeve().get(contrat.getProduit())*1000;
+			this.getContratCadre().ajouter("Prix proposé " + this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape() );
+			return this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 		} else {
-			System.out.println(" keyset ===>"+this.getPrixmoyenFeve().keySet());
-			System.out.println(" produit===>"+contrat.getProduit());
 			return 0.0;
 		}
 		// mis en commentaire par Romu car l'acces a la hashmap avec une cle ne figurant pas dans le keyset de la hashmap leve une exception et empeche tout acteur voulant vous avoir pour vendeur de contrat cadre a ne pas pouvoir faire de pull request.
@@ -71,19 +78,20 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	@Override
 	//Auteur : Khéo
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit());
-		if(contrat.getPrix()<prixmoyen*0.75*1000) {
-			this.getContratCadre().ajouter("Prix qui passe pas");
-			return prixmoyen*0.75*1000;	
+		double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
+		if(contrat.getPrix()<prixmoyen*0.75) {
+			this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
+			this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75 );
+			return prixmoyen*0.75;	
 		}
-		this.getContratCadre().ajouter("Prix qui passe");
+		this.getContratCadre().ajouter("Prix qui passe " + contrat.getPrix().toString());
 		return contrat.getPrix();
 	}
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.getContratCadre().ajouter("Mashallah ce nouveau contrat");
-		
+		this.getContratCadre().ajouter(contrat.getProduit().toString() + " Mashallah ce nouveau contrat avec "  + contrat.getAcheteur().getNom()
+				+ " pour " + contrat.getPrix());
 	}
 
 
@@ -95,7 +103,8 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		if (livre>0.0) {
 			this.retirerQuantite((Feve)contrat.getProduit(), livre);;
 		}
-		this.getContratCadre().ajouter("Livraison faite zebi");
+		this.getContratCadre().ajouter(contrat.getProduit() +" "+contrat.getAcheteur()+ " Livraison faite zebi avec quantité à livrer " + quantite +". Wallah on a livré " + livre 
+				);
 		return livre;
 		
 	}
