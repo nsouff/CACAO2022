@@ -56,13 +56,13 @@ public class Transformateur1Acteur implements IActeur {
 	
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filiere = new ArrayList<String>();
-		filiere.add(this.getNom());
+		filiere.add("FiliereTest1");
 		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
-		case "FiliereTest1" : return new FiliereTestBourseEq1();
+		case "FiliereTest1" : return new FiliereTest1();
 	    default : return null;
 		}
 	}
