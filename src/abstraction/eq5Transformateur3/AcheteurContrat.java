@@ -105,7 +105,8 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			
 			/* Selon la place libre dans nos entrepots et selon l'etat de nos stocks pour cette feve,
-			 * on essaie d'initier des contrats */
+			 * on essaie d'initier des contrats 
+			 */
 			Double stocktotal = this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal();
 			
 			if (stocktotal < this.capaciteStockageEQ5) {
