@@ -215,8 +215,8 @@ public class Producteur2Plantation{
 		
 		
 
-	/*public double production(Feve feve) {
-		return this.getNbArbre(feve)*3.0; //methode qui ne fait pas planter la fillière Test seulement avec 2 et qui ne s'affiche correctement dans le journal que pour 3/5 type de feves
+	/*public int production(Feve feve) {
+		return this.getNbArbre(feve)*2; //methode qui ne fait pas planter la fillière Test seulement avec 2 et qui ne s'affiche correctement dans le journal que pour 3/5 type de feves
 	}*/
 		
 	

@@ -15,7 +15,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,IVendeurBourse {
+public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur/*,IVendeurBourse*/ {
 	
 	protected int cryptogramme;
 	protected Journal journal;
@@ -85,7 +85,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		for (Feve f : this.getStocks().keySet()) {
 			coutStockage = coutStockage + (this.getStock(f)*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur());
 		}
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutStockage);	
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutStockage);
 		
 					//journal, Jules DORE
 		journal.ajouter("Stock Feve Moyenne : "+this.getStock(Feve.FEVE_MOYENNE)+", Production Feve Moyenne : "+this.production(Feve.FEVE_MOYENNE)+", Nombre d'arbre Moyenne : "+this.getNbArbre(Feve.FEVE_MOYENNE)+"");
@@ -99,7 +99,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		this.GetStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
-		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));		
+		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));	
 	}
 	
 	public List<String> getNomsFilieresProposees() {
@@ -170,7 +170,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		return StockFeveHaute_BE;
 	}
 
-	public double offre(Feve f, double cours) {
+	/*public double offre(Feve f, double cours) {
 		double quantiteAVendre = 0;
 		if (cours> 1.3*this.getCout(f)) {
 			 quantiteAVendre= 0.8*this.getStock(f); // on vend 80% du stock;
@@ -182,7 +182,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 			  quantiteAVendre = 0.4*this.getStock(f); // on vend 40% du stock ;
 		}
 		return  quantiteAVendre;
-	}
+	}*/
 
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
