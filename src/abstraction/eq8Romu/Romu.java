@@ -342,7 +342,13 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	//========================================================
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : propositions recues : "+propositions);
-		return propositions.size()>0 ? propositions.get(0) : null;
+		PropositionAchatAO retenue = propositions.size()>0 ? propositions.get(0) : null;
+		int index=0;
+		while (retenue!=null && index<propositions.size()-1 && retenue.getAcheteur()==this) {
+			index++;
+			retenue = propositions.get(index);
+		}
+		return retenue; 
 	}
 
 	//========================================================
