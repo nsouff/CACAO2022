@@ -364,11 +364,11 @@ public class Parc {
 		non_BE_basse = non_BE_basse*parasites_non_BE;
 		non_BE_moyenne = non_BE_moyenne*parasites_non_BE;
 		non_BE_haute = non_BE_haute*parasites_non_BE;
-		this.getRetourRécolte().ajouter("On a recolté " + non_BE_basse + " kg de Khécao fèves de qualité assez nulle...même pas BE en plus");
-		this.getRetourRécolte().ajouter("On a recolté " + non_BE_moyenne + " kg de Khécao fèves de qualité médiocre...même pas BE en plus");
-		this.getRetourRécolte().ajouter("On a recolté " + non_BE_haute + " kg de Khécao fèves de qualité exceptionnelle...même pas BE par contre");
-		this.getRetourRécolte().ajouter("On a recolté " + BE_moyenne + " kg de Khécao fèves de qualité médiocre...mais BE !");
-		this.getRetourRécolte().ajouter("On a recolté " + BE_haute + " kg de Khécao fèves de qualité exceptionnelle...mais BE !");
+		this.getRetourRécolte().ajouter("On a recolté " + non_BE_basse + " kg de Khécao de qualité assez nulle...même pas BE en plus");
+		this.getRetourRécolte().ajouter("On a recolté " + non_BE_moyenne + " kg de Khécao de qualité médiocre...même pas BE en plus");
+		this.getRetourRécolte().ajouter("On a recolté " + non_BE_haute + " kg de Khécao de qualité exceptionnelle...même pas BE par contre");
+		this.getRetourRécolte().ajouter("On a recolté " + BE_moyenne + " kg de Khécao de qualité médiocre...mais BE !");
+		this.getRetourRécolte().ajouter("On a recolté " + BE_haute + " kg de Khécao de qualité exceptionnelle...mais BE !");
 		dicorecolte.put(Feve.FEVE_BASSE,non_BE_basse);
 		dicorecolte.put(Feve.FEVE_MOYENNE,non_BE_moyenne);
 		dicorecolte.put(Feve.FEVE_HAUTE,non_BE_haute);
