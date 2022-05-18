@@ -102,7 +102,7 @@ public class FeveProducteur1 {
 	
 	//Auteur : Khéo
 	//Modifié par : Antoine 
-	//La durée de péremption des fèves est de 2ans de mémoire
+	//La durée de péremption des fèves est de 2 ans
 	public void MajPeremption() {  
 		if (this.getAge()>48) {
 			this.setPerime(true);
