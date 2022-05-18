@@ -16,6 +16,8 @@ public class Transformateur2Stock extends Transformateur2ContratCadre {
 	private Stock<Chocolat>  stockchocolat;
 	private Stock<ChocolatDeMarque> stockchocolatdemarque;
 	
+	private double prixstockage;
+	
 	
 	
 	public void next() {
@@ -31,9 +33,17 @@ public class Transformateur2Stock extends Transformateur2ContratCadre {
 						this.journal.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
 					}
 				}
+				
+				
+				
+		//On paye le cout de stockage
+				Filiere.LA_FILIERE.getBanque().virer(this, super.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.coutStockage());
+				journal.ajouter("Le stock nous coûte "+this.coutStockage());
 	}
 	
 	public void initialiser() {
+		//double prixstockage=Filiere.LA_FILIERE.getIndicateur("prixstockage").getValeur();
+		
 		super.initialiser();
 	}
 
@@ -43,7 +53,7 @@ public class Transformateur2Stock extends Transformateur2ContratCadre {
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
 		this.stockfeve=new Stock();
 		this.stockfeve.ajouter(Feve.FEVE_BASSE, 150000);
-		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 100000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 150000);
 //		this.stockfevebasseVAR=new Variable("Opti'Cacao STOCKFEVE_BASSE", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_BASSE));
 //		this.stockfevemoyVAR=new Variable("Opti'Cacao STOCKFEVE_MOY", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_MOYENNE));
 		
@@ -59,6 +69,7 @@ public class Transformateur2Stock extends Transformateur2ContratCadre {
 		this.stockchocolat=new Stock();
 		this.stockchocolat.ajouter(Chocolat.MQ,30000);
 		this.stockchocolat.ajouter(Chocolat.BQ, 20000);
+		
 		
 	}
 	
@@ -79,20 +90,7 @@ public Stock<ChocolatDeMarque> getStockchocolatdemarque(){
 
 //Marie
 public double coutStockage() {
-	double cout=0;
-	/*for (Feve f : stockfeve.quantite_stock.keySet()) {
-		cout=cout+ stockfeve.quantite_stock.get(f)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
-	for (Feve f : stockfeve.getStock().keySet()) {
-		cout=cout+ stockfeve.getStock().get(f)*this.getCout();
-	}
-
-	/*for (Chocolat c : stockchocolat.quantite_stock.keySet()) {
-		cout= cout + stockchocolat.quantite_stock.get(c)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
-
-	for (Chocolat c : stockchocolat.getStock().keySet()) {
-		cout= cout + stockchocolat.getStock().get(c)*this.getCout();
-	}
-	return cout;
+	return 4*0.01*(this.getStockchocolatdemarque().getStocktotal()+this.getStockfeve().getStocktotal());
 }
 // Marie 
 

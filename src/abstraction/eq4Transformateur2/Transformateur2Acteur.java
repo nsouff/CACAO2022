@@ -26,16 +26,8 @@ import java.util.List;
 public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
 	
 	//pas sur de celles ci, mais je les laisse au cas ou...
-	private Variable coutStockage;
 	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
-	private Variable rendementTransfoLongue;
-	private Variable prixTransformation; // a renseigner (0? On considere juste le rendement pour le pb des transfolongue, ainsi, un seul parametre à gerer.)
-	private Variable TransformationSeuil;
-	private Variable prixChocoOriginal;
-	protected Variable capaciteStockage;
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
-	private Variable expirationFeve; //a considerer dans une v1 ?
-	private Variable expirationChoco;//a considerer dans une v1?
 	private double marge;
 
 	
@@ -64,26 +56,14 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	public Transformateur2Acteur() { //valeurs des min, max, et init (3 derniers parametres) à changer plus tard.
 	
 		//pas sur de celles ci, mais je les laisse au cas ou...
-		this.coutStockage = new Variable("cout stockage", "<html>Cout de stockage</html>",this, 0.0, 10.0, 3.0);
-		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 3.0);
-		this.rendementTransfoLongue=new Variable("rendement transfo longue", "<html>Rendement d'une transformation longue</html>",this, 0.0, 10.0, 3.0);
-		this.prixTransformation = new Variable("prix transfo", "<html>Cout d'une transformation longue</html>",this, 0.0, 10.0, 3.0);
-		this.TransformationSeuil=new Variable("sddsqfqs", "<html>Cout pour passer à la gamme original</html>",this, 0.0, 10.0, 3.0);
-		this.prixChocoOriginal=new Variable("cout passage original", "<html>Cout pour passer à la gamme original</html>",this, 0.0, 10.0, 3.0);
-		this.capaciteStockage=new Variable("capacite stockage", "<html>Capacite max de stockage</html>",this, 0.0, 10.0, 3.0);
-		this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 10.0, 3.0);
-		this.expirationFeve=new Variable("expiration feve", "<html>Duree avant expiration d'une feve</html>",this, 0.0, 10.0, 3.0);
-		this.expirationChoco=new Variable("expiration choco", "<html>Duree avant expiration du chocolat</html>",this, 0.0, 10.0, 3.0);
+		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 1000);
+		this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 10.0, 150000.0);
 		this.marge = 1.1;
 		this.journal=new Journal("Opti'Cacao activités", this);
 		
 		
 
-		
-		
-		
-		
-		this.NewCap=this.TransformationSeuil.getValeur();
+
 
 	}
 	
@@ -145,9 +125,7 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		j.add(this.journal);
 		return j;
 	}
-	public double getCout() {
-		return this.coutStockage.getValeur();
-	}
+	
 
 	public void notificationFaillite(IActeur acteur) {
 		if (this==acteur) {
@@ -165,6 +143,7 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
 
+
 	public double getMarge() {
 		return this.marge;
 	}
@@ -175,34 +154,13 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-	public Variable getCoutStockage() {
-		return coutStockage;
-	}
-
 
 	public Variable getPrixSeuil() {
 		return prixSeuil;
 	}
 
 
-	public Variable getRendementTransfoLongue() {
-		return rendementTransfoLongue;
-	}
 
-
-	public Variable getPrixTransformation() {
-		return prixTransformation;
-	}
-
-
-	public Variable getPrixChocoOriginal() {
-		return prixChocoOriginal;
-	}
-
-
-	public Variable getCapaciteStockage() {
-		return capaciteStockage;
-	}
 
 
 	public Variable getCapaciteStockageFixe() {
@@ -210,27 +168,16 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-	public Variable getExpirationFeve() {
-		return expirationFeve;
-	}
-
-
-	public Variable getExpirationChoco() {
-		return expirationChoco;
-	}
-
-	public Variable getTransformationSeuil() {
-		return TransformationSeuil;
-	}
 
 	@Override
 	public LinkedList<String> getMarquesChocolat() {
-		LinkedList<String> res = new LinkedList<String>();
-		res.add("O'ptella");
-//		res.add("O'ptibon");
-		res.add("O'max");
-		return res;
+//		LinkedList<String> res = new LinkedList<String>();
+//		res.add("O'ptella");
+////		res.add("O'ptibon");
+//		res.add("O'max");
+		return this.getMarquesChocolat();
 	}
+
 
 	@Override
 	public LinkedList<ChocolatDeMarque> getChocolatsProduits() {
@@ -241,6 +188,5 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		res.add(c1);
 		return res;
 	}
-
 
 }
