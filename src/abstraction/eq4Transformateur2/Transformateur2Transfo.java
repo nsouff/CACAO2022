@@ -33,8 +33,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	}
 	public void initialiser() {
 		super.initialiser();
-		//cap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
-		cap=100000;
+		cap=Filiere.LA_FILIERE.getParametre("seuiTransformation").getValeur();
 		rdt=Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
 		prix_transfo=Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur();
 		prix_ori=Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
