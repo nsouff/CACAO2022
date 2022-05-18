@@ -207,7 +207,7 @@ public class Parc {
 					this.getRetourGuerre().ajouter("Nos ennemis n'achètent pas notre cacao, il est temps de les goumer et ce pendant"+temps+"ut");
 			}
 				else {
-					this.getRetourGuerre().ajouter("Ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
+					this.getRetourGuerre().ajouter("La période de paix est fini mais ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
 				}
 		}
 		if (	(Filiere.LA_FILIERE.getEtape()>=this.getUt_debut_guerre()) 
