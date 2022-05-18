@@ -1,5 +1,3 @@
-// julien 27/04
-
 package abstraction.eq5Transformateur3;
 
 import java.util.List;
@@ -100,13 +98,16 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 
 	//Karla
 	/* on regarde l etat de nos stocks et on lance la procédure demande 
-	acheteur + get vendeur de la classe supperviseur vente cadre */
+	acheteur + get vendeur de la classe superviseur vente cadre */
 	public void next() {
 		super.next();
+		
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
+			
 			/* Selon la place libre dans nos entrepots et selon l'etat de nos stocks pour cette feve,
 			 * on essaie d'initier des contrats */
 			Double stocktotal = this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal();
+			
 			if (stocktotal < this.capaciteStockageEQ5) {
 				if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
 					Double placeLibre = this.stockChocolat.getstocktotal() - this.stockFeves.getstocktotal();
