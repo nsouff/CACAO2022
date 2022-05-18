@@ -25,24 +25,13 @@ import java.util.List;
 
 public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
 	
-	//pas sur de celles ci, mais je les laisse au cas ou...
 	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private double marge;
-
-	
-	// variables pour les Appel d'Offres
 	
 	
 	protected SuperviseurVentesAO superviseur;
-	
-	
-	
-	
 	protected Journal journal;
-
-	
-	//autres
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
 
