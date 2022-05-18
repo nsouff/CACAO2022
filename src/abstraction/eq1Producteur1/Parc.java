@@ -238,7 +238,9 @@ public class Parc {
 				malade5+=1;
 				int qualite = arbre_i.getQualite();
 				boolean BE = arbre_i.getBioequitable();
-				this.Planter(new MilleArbre(qualite,BE,Filiere.LA_FILIERE.getEtape()));
+				boolean cooperative=arbre_i.getCooperative();
+				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
+				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
 				plantés+=1;
 				this.getCacaoyers().remove(arbre_i);
 			}
@@ -250,7 +252,8 @@ public class Parc {
 			if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) {
 				int qualite = arbre_i.getQualite();
 				boolean BE = arbre_i.getBioequitable();
-				this.Planter(new MilleArbre(qualite,BE,Filiere.LA_FILIERE.getEtape()));
+				boolean cooperative=arbre_i.getCooperative();
+				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
 				this.MAJCompteur(arbre_i,1);
 				plantés+=1;
 			}

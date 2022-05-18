@@ -13,8 +13,11 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Producteur extends Producteur1Stock{
 	private Parc ParcAfrique;
-
-	
+	protected Journal RetourMaladie;
+	protected Journal RetourRécolte;
+	protected Journal RetourGuerre;
+	protected Journal RetourAléas;
+	protected Journal RetourMAJParc;
 	public Producteur1Producteur() {
 		super();
 		Parc afrique = new Parc("Afrique", this);
@@ -41,19 +44,19 @@ public class Producteur1Producteur extends Producteur1Stock{
 		for (int i=0;i<nombre_arbre_debut;i++) {
 			int d = (int)Math.random()*écart_moyenne;
 			if (i<nombre_arbre_nBE_basse) {
-				this.getAfrique().Planter(new MilleArbre(1,false,ut_debut-d));
+				this.getAfrique().Planter(new MilleArbre(1,false,false,ut_debut-d));
 			}
 			if ((i>=nombre_arbre_nBE_basse) && (i<nombre_arbre_nBE_moyenne)) {
-				this.getAfrique().Planter(new MilleArbre(2,false,ut_debut-d));
+				this.getAfrique().Planter(new MilleArbre(2,false,false,ut_debut-d));
 			}
 			if ((i>=nombre_arbre_nBE_moyenne) && (i<nombre_arbre_nBE_haute)) {
-				this.getAfrique().Planter(new MilleArbre(3,false,ut_debut-d));
+				this.getAfrique().Planter(new MilleArbre(3,false,false,ut_debut-d));
 			}
 			if ((i>=nombre_arbre_nBE_haute) && (i<nombre_arbre_BE_moyenne)) {
-				this.getAfrique().Planter(new MilleArbre(2,true,ut_debut-d));
+				this.getAfrique().Planter(new MilleArbre(2,false,true,ut_debut-d));
 			}
 			if ((i>=nombre_arbre_BE_moyenne)) {
-				this.getAfrique().Planter(new MilleArbre(3,true,ut_debut-d));
+				this.getAfrique().Planter(new MilleArbre(3,false,true,ut_debut-d));
 			}
 		}
 	}
