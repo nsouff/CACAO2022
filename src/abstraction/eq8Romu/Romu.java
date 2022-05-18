@@ -154,7 +154,8 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				if (transfo>0) {
 					this.stockFeves.put(f, this.stockFeves.get(f)-transfo);
 					this.totalStocksFeves.retirer(this, transfo, this.cryptogramme);
-					this.stockChoco.put(c, this.stockChoco.get(c)+(transfo*this.pourcentageTransfo.get(f).get(c)));
+					this.stockChoco.put(c, this.stockChoco.get(c)+((transfo/2.0)*this.pourcentageTransfo.get(f).get(c)));
+					this.stockChocoMarque.put(new ChocolatDeMarque(c, "Villors"), this.stockChoco.get(c)+((transfo/2.0)*this.pourcentageTransfo.get(f).get(c)));
 					this.totalStocksChoco.ajouter(this, (transfo*this.pourcentageTransfo.get(f).get(c)), this.cryptogramme);
 					this.journal.ajouter(COLOR_LLGRAY, Color.PINK, "Transfo de "+(transfo<10?" "+transfo:transfo)+" Kg de "+f+" en "+Journal.doubleSur(transfo*this.pourcentageTransfo.get(f).get(c),3,2)+" Kg de "+c);
 					this.journal.ajouter(COLOR_LLGRAY, COLOR_BROWN," stock("+f+")->"+this.stockFeves.get(f));
@@ -176,9 +177,11 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 			Chocolat cho = chocoEnStock.get(alea);
 			ChocolatDeMarque choc = new ChocolatDeMarque(cho, "Villors");
 			PropositionAchatAO propositionRetenue = this.superviseurVentesAO.vendreParAO(this, this.cryptogramme, choc, 250, tg);
-			this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : vente de 250Kg de "+propositionRetenue.getOffre().getChocolat()+" a "+propositionRetenue.getAcheteur().getNom());
-			this.stockChoco.put(cho, this.stockChoco.get(cho)-250.0);
-			this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : stock("+cho+") -->"+this.stockChoco.get(cho));
+			if (propositionRetenue!=null) {
+				this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : vente de 250Kg de "+propositionRetenue.getOffre().getChocolat()+" a "+propositionRetenue.getAcheteur().getNom());
+				this.stockChoco.put(cho, this.stockChoco.get(cho)-250.0);
+				this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : stock("+cho+") -->"+this.stockChoco.get(cho));
+			}
 		}
 
 		// === Lancement si possible d'un contrat cadre
@@ -342,13 +345,22 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	//========================================================
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : propositions recues : "+propositions);
-		return propositions.size()>0 ? propositions.get(0) : null;
+		PropositionAchatAO retenue = propositions.size()>0 ? propositions.get(0) : null;
+		int index=0;
+		while (retenue!=null && index<propositions.size()-1 && retenue.getAcheteur()==this) {
+			index++;
+			retenue = propositions.get(index);
+		}
+		return retenue; 
 	}
 
 	//========================================================
 	//                        IAcheteurAO
 	//========================================================
 	public double proposerPrix(OffreVente offre) {
+		if (offre.getVendeur()==this) {
+			return 0.0;
+		}
 		Chocolat c = offre.getChocolat().getChocolat();
 		double prix=0.0;
 		switch (c) {
@@ -476,10 +488,13 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	public boolean vend(Object produit) {
 		boolean res=false;
 		if (produit instanceof ChocolatDeMarque) {
+			this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+(this.stockChocoMarque.keySet().contains(produit)?" dans keySet "+this.stockChocoMarque.get(produit):"pas dans keySet"));
 			res=this.stockChocoMarque.keySet().contains(produit) && this.stockChocoMarque.get(produit)>1000;
 		} else if (produit instanceof Chocolat) {
+			this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+(this.stockChoco.keySet().contains(produit)?" dans keySet "+this.stockChoco.get(produit):"pas dans keySet"));
 			res=this.stockChoco.keySet().contains(produit) && this.stockChoco.get(produit)>1000;
 		} else if (produit instanceof Feve) {
+			this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+(this.stockFeves.keySet().contains(produit)?" dans keySet "+this.stockFeves.get(produit):"pas dans keySet"));
 			res=this.stockFeves.keySet().contains(produit) && this.stockFeves.get(produit)>1000;
 		} 
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+res);
@@ -588,11 +603,11 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				if (livre>0) {
 					this.stockFeves.put((Feve)produit, this.stockFeves.get(produit)-livre);
 				}
-				
+
 			}
 		} 
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : doit livrer "+quantite+" de "+produit+" --> livre "+livre);
-		
+
 		return livre;
 	}
 
