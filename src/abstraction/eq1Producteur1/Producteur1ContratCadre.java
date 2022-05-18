@@ -57,7 +57,15 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	@Override
 	//Auteur : Khéo
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		return this.getPrixmoyenFeve().get(contrat.getProduit())*1000; //On propose le prix moyen au départ
+		if (this.getPrixmoyenFeve().keySet().contains(contrat.getProduit())) {
+			return this.getPrixmoyenFeve().get(contrat.getProduit())*1000;
+		} else {
+			System.out.println(" keyset ===>"+this.getPrixmoyenFeve().keySet());
+			System.out.println(" produit===>"+contrat.getProduit());
+			return 0.0;
+		}
+		// mis en commentaire par Romu car l'acces a la hashmap avec une cle ne figurant pas dans le keyset de la hashmap leve une exception et empeche tout acteur voulant vous avoir pour vendeur de contrat cadre a ne pas pouvoir faire de pull request.
+		// return this.getPrixmoyenFeve().get(contrat.getProduit())*1000; //On propose le prix moyen au départ
 	}
 
 	@Override

@@ -137,6 +137,7 @@ public class Filiere implements IAssermente {
 			this.journalFiliere.ajouter("Producteurs de "+c+" : "+this.fabricantsChocolatDeMarque.get(c));
 		}
 
+
 		// Association a chaque marque de la qualite moyenne des produits portant cette marque
 		for (String marque : getMarquesChocolat()) {
 			int nbProduits=0;
