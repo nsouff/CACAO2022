@@ -42,8 +42,8 @@ public class Transformateur2Stock extends Transformateur2ContratCadre {
 	public Transformateur2Stock() {
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
 		this.stockfeve=new Stock();
-		this.stockfeve.ajouter(Feve.FEVE_BASSE, 15000);
-		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 9000);
+		this.stockfeve.ajouter(Feve.FEVE_BASSE, 150000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 100000);
 //		this.stockfevebasseVAR=new Variable("Opti'Cacao STOCKFEVE_BASSE", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_BASSE));
 //		this.stockfevemoyVAR=new Variable("Opti'Cacao STOCKFEVE_MOY", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_MOYENNE));
 		
