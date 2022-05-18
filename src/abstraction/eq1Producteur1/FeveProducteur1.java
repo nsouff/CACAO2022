@@ -2,33 +2,38 @@ package abstraction.eq1Producteur1;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
-public class Producteur1Feve {
+public class FeveProducteur1 {
 	private int ut_debut; //Plus pratique puisqu'on a pas besoin d'actualiser
 	private boolean perime;
 	private double poids;
+	private boolean affine;
 	
 	
 //Auteur : Laure ; Modificateur : Khéo
-	public Producteur1Feve(double poids) {
+	public FeveProducteur1(double poids) {
 		this.ut_debut = Filiere.LA_FILIERE.getEtape();
 		this.perime = false;
+		this.poids = poids;
+		this.affine=false;
 	}
 
 	/**
 	 * @param age
 	 * @param perime
 	 */
-	public Producteur1Feve(int ut_debut, boolean perime,double poids) {
+	public FeveProducteur1(int ut_debut, boolean perime,double poids) { 
 		this.ut_debut = ut_debut;
 		this.perime = perime;
+		this.poids = poids;
 	}
 
 	public int getAge() {
 		return Filiere.LA_FILIERE.getEtape()-this.getUt_debut();
 	}
 	
-	public void setAge(int ut_debut) {
+	public void setUt_debut(int ut_debut) {
 		this.ut_debut=ut_debut;
 	}
 	
@@ -36,7 +41,7 @@ public class Producteur1Feve {
 	 * @return the ut_debut
 	 */
 	public int getUt_debut() {
-		return ut_debut;
+		return this.ut_debut;
 	}
 
 	/**
@@ -68,10 +73,47 @@ public class Producteur1Feve {
 		this.perime = perime;
 	}
 	
-	public void Peremption() {
-		if (this.getAge()>24) {
+	public boolean isAffine() {
+		return this.affine;
+	}
+	
+	//Auteur : Khéo
+
+	public void MAJAffinage(Feve f) {
+		if (f.getGamme().equals(Gamme.HAUTE)) {
+			if (this.getAge()>3) {
+				this.setAffine(true);
+			}
+		}
+		
+		if (f.getGamme().equals(Gamme.MOYENNE)) {
+			if (this.getAge()>2) {
+				this.setAffine(true);
+			}
+		}
+		
+		if (f.getGamme().equals(Gamme.BASSE)) {
+			if (this.getAge()>1) {
+				this.setAffine(true);
+			}
+		}
+	}
+	
+	
+	//Auteur : Khéo
+	//Modifié par : Antoine 
+	//La durée de péremption des fèves est de 2ans de mémoire
+	public void MajPeremption() {  
+		if (this.getAge()>48) {
 			this.setPerime(true);
 		}
+	}
+	
+	/**
+	 * @param affine the affine to set
+	 */
+	public void setAffine(boolean affine) {
+		this.affine = affine;
 	}
 	
 }

@@ -1,42 +1,32 @@
 package abstraction.eq1Producteur1;
 
+
+
 import java.awt.Color;
 import java.util.ArrayList;
+
 import java.util.List;
 
-import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
-import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Acteur implements IActeur {
+
+public abstract class Producteur1Acteur implements IActeur {
 	private static int NB_INSTANCES = 0; // Afin d'attribuer un nom different a toutes les instances
 	protected int numero;
 	protected Integer cryptogramme;
 	protected Journal journal;
-	protected Variable stockFeve;
-	protected Feve feve;
-	public Variable prixstockageVariable ;
-	public Variable prixstockageFixe ;
-	private List<Double> prixmoyenFeve ;
 	
 	
-	
-
-	public Producteur1Acteur(Feve feve, double stock) {
-		if (feve==null ||stock<=0) {
-			throw new IllegalArgumentException("creation d'une instance de ExempleAbsVendeurBourseCacao avec des arguments non valides");
-		}		
+	//Auteur : Khéo
+	public Producteur1Acteur() {
+		super();
 		NB_INSTANCES++;
 		this.numero=NB_INSTANCES;
-		this.stockFeve=new Variable(this.getNom()+"Stock"+feve, this, 0.0, 1000000000.0,stock);
-		this.feve = feve;
 		this.journal = new Journal(this.getNom()+" activites", this);
 		
-		this.prixstockageVariable=new Variable("prixStockageVariable", this, 0.0, 1000000000.0,0.01);
-		this.prixstockageFixe=new Variable("prixStockageFixe", this, 0.0, 1000000000.0,100);
 	}
 
 	public void initialiser() {
@@ -59,31 +49,63 @@ public class Producteur1Acteur implements IActeur {
 		this.cryptogramme = crypto;
 	}
 	
-
+	//Auteur : Khéo
 	public void next() {
+
 	}
 	
+
 	public List<String> getNomsFilieresProposees() {
-		return new ArrayList<String>();
+		ArrayList<String> filieres = new ArrayList<String>();
+		filieres.add("TESTBOURSEEQ1"); 
+		return filieres;
 	}
 
 	public Filiere getFiliere(String nom) {
-		return null;
+		switch (nom) { 
+		case "TESTBOURSEEQ1" : return new FiliereTestBourseEq1();
+	    default : return null;
+		}
 	}
 	
+	public abstract Variable getStockBasse();
+	public abstract Variable getStockHaut_BE();
+	public abstract Variable getStockMoyenne();
+	public abstract Variable getStockMoyenne_BE();
+	public abstract Variable getStockBasse_NA();
+	public abstract Variable getStockHaut_BE_NA();
+	public abstract Variable getStockMoyenne_NA();
+	public abstract Variable getStockMoyenne_BE_NA();
+
+	
+	//Auteur : Khéo
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
+		res.add(this.getStockBasse());
+		res.add(this.getStockHaut_BE());
+		res.add(this.getStockMoyenne());
+		res.add(this.getStockMoyenne_BE());
+		
+		res.add(this.getStockBasse_NA());
+		res.add(this.getStockHaut_BE_NA());
+		res.add(this.getStockMoyenne_NA());
+		res.add(this.getStockMoyenne_BE_NA());
+		
 		return res;
 	}
 	
+	public abstract Variable getPrixEntretienArbre();
+	
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
-		res.add(prixstockageFixe);
-		res.add(stockFeve);
-		res.add(prixstockageVariable);
+		res.add(this.getPrixEntretienArbre());
+	
 		return res; 
 	}
 
+
+	
+	
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		return res;
@@ -91,7 +113,7 @@ public class Producteur1Acteur implements IActeur {
 
 	public void notificationFaillite(IActeur acteur) {
 		if (this==acteur) {
-		System.out.println("I'll be back... or not... "+this.getNom());
+		System.out.println("Le Stonks n'était qu'un rêve "+this.getNom());
 		} else {
 			System.out.println("Poor "+acteur.getNom()+"... Why so serious ? "+this.getNom());
 		}
@@ -104,4 +126,13 @@ public class Producteur1Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
+	
+	/**
+	 * @return the nB_INSTANCES
+	 */
+	public static int getNB_INSTANCES() {
+		return NB_INSTANCES;
+	}
+	
+	
 }

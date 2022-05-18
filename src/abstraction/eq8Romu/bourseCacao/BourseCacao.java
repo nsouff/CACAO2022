@@ -133,7 +133,7 @@ public class BourseCacao implements IActeur, IAssermente {
 			for (IAcheteurBourse acheteur : this.acheteurs) {
 				if (blackList.get(acheteur)==0) {
 					double demande = acheteur.demande(f, cours);
-					journal.get(f).ajouter(Journal.texteColore((IActeur)acheteur, acheteur+" souhaite acheter "+Journal.doubleSur(demande, 2)+" kg de "+f));
+					journal.get(f).ajouter(Journal.texteColore((IActeur)acheteur, ((IActeur)acheteur).getNom()+" souhaite acheter "+Journal.doubleSur(demande, 2)+" kg de "+f));
 					if (demande>0) {
 						if (banque.verifierCapacitePaiement((IActeur)acheteur, cryptos.get((IActeur)acheteur), cours*demande)) {
 							demandes.put(acheteur, demande);
@@ -151,7 +151,7 @@ public class BourseCacao implements IActeur, IAssermente {
 			double totalOffres=0;
 			for (IVendeurBourse vendeur : this.vendeurs) {
 				double offre = vendeur.offre(f, cours);
-				journal.get(f).ajouter(Journal.texteColore((IActeur)vendeur, vendeur+" souhaite vendre  "+Journal.doubleSur(offre, 2)+" kg de "+f));
+				journal.get(f).ajouter(Journal.texteColore((IActeur)vendeur, ((IActeur)vendeur).getNom()+" souhaite vendre  "+Journal.doubleSur(offre, 2)+" kg de "+f));
 				if (offre>0) {
 					offres.put(vendeur, offre);
 					totalOffres+=offre;
@@ -164,7 +164,7 @@ public class BourseCacao implements IActeur, IAssermente {
 					boolean virementOk = banque.virer((IActeur)a, cryptos.get((IActeur)a), this,cours*demandes.get(a));
 					if (virementOk) {
 						a.notificationAchat(f,demandes.get(a), cours);
-						journal.get(f).ajouter(Journal.texteColore((IActeur)a, a+" obtient "+Journal.doubleSur(demandes.get(a),2)+" et paye "+Journal.doubleSur(cours*demandes.get(a), 2)));
+						journal.get(f).ajouter(Journal.texteColore((IActeur)a, ((IActeur)a).getNom()+" obtient "+Journal.doubleSur(demandes.get(a),2)+" et paye "+Journal.doubleSur(cours*demandes.get(a), 2)));
 					} else { // Normalement la transaction peut avoir lieu vu qu'on a verifie au prealable la capacite du vendeur a payer
 						a.notificationBlackList(6);
 						blackList.put(a,6);
@@ -175,7 +175,7 @@ public class BourseCacao implements IActeur, IAssermente {
 					double quantite = (totalDemandes*offres.get(v))/totalOffres; 
 					banque.virer(this, crypto, (IActeur)v,cours*quantite);
 					v.notificationVente(f, quantite,cours);
-					journal.get(f).ajouter(Journal.texteColore((IActeur)v, v+" vend "+Journal.doubleSur(quantite, 2)+" et est paye "+Journal.doubleSur(cours*quantite, 2)));
+					journal.get(f).ajouter(Journal.texteColore((IActeur)v, ((IActeur)v).getNom()+" vend "+Journal.doubleSur(quantite, 2)+" et est paye "+Journal.doubleSur(cours*quantite, 2)));
 				}
 			} else if (totalOffres<=totalDemandes && totalOffres>0.0){ // offre<demande : Les vendeurs vont vendre tout ce qu'ils ont mis en vente et les acheteurs auront des feves au prorata de leur proposition d'achat
 				journal.get(f).ajouter("la demande ("+Journal.doubleSur(totalDemandes, 2)+") est superieure a l'offre ("+Journal.doubleSur(totalOffres, 2)+")");
@@ -186,7 +186,7 @@ public class BourseCacao implements IActeur, IAssermente {
 						boolean virementOk = banque.virer((IActeur)a, cryptos.get((IActeur)a), this,cours*quantite);
 						if (virementOk) { // normalement c'est le cas vu qu'on a verifie auparavant
 							a.notificationAchat(f,quantite, cours);
-							journal.get(f).ajouter(Journal.texteColore((IActeur)a, a+" obtient "+Journal.doubleSur(quantite,2)+" et paye "+Journal.doubleSur(cours*quantite, 2)));
+							journal.get(f).ajouter(Journal.texteColore((IActeur)a, ((IActeur)a).getNom()+" obtient "+Journal.doubleSur(quantite,2)+" et paye "+Journal.doubleSur(cours*quantite, 2)));
 						} else {
 							a.notificationBlackList(6);
 							blackList.put(a,6);
@@ -199,7 +199,7 @@ public class BourseCacao implements IActeur, IAssermente {
 					if (cours*quantite>0) {
 						banque.virer(this, crypto, (IActeur)v,cours*quantite);
 						v.notificationVente(f, quantite,cours);
-						journal.get(f).ajouter(Journal.texteColore((IActeur)v, v+" vend "+Journal.doubleSur(quantite, 2)+" et est paye "+Journal.doubleSur(cours*quantite, 2)));
+						journal.get(f).ajouter(Journal.texteColore((IActeur)v, ((IActeur)v).getNom()+" vend "+Journal.doubleSur(quantite, 2)+" et est paye "+Journal.doubleSur(cours*quantite, 2)));
 					}
 				}
 			}
