@@ -18,7 +18,6 @@ public class Producteur1Producteur extends Producteur1Stock{
 	protected Journal RetourGuerre;
 	protected Journal RetourAléas;
 	protected Journal RetourMAJParc;
-	
 	public Producteur1Producteur() {
 		super();
 		Parc afrique = new Parc("Afrique", this);

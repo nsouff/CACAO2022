@@ -206,7 +206,9 @@ public class Parc {
 					this.setUt_fin_guerre(this.getUt_debut_guerre()+temps);
 					this.getRetourGuerre().ajouter("Nos ennemis n'achètent pas notre cacao, il est temps de les goumer et ce pendant"+temps+"ut");
 			}
-				this.getRetourGuerre().ajouter("Ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
+				else {
+					this.getRetourGuerre().ajouter("Ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
+				}
 		}
 		else {
 			this.getRetourGuerre().ajouter("C'est la période de paix frérot, on cherche pas les embrouilles");
@@ -238,6 +240,8 @@ public class Parc {
 				boolean BE = arbre_i.getBioequitable();
 				boolean cooperative=arbre_i.getCooperative();
 				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
+				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
+				plantés+=1;
 				this.getCacaoyers().remove(arbre_i);
 			}
 			if (arbre_i.Age() == arbre_i.getUt_esperance_vie()) {
@@ -365,11 +369,11 @@ public class Parc {
 		non_BE_basse = non_BE_basse*parasites_non_BE;
 		non_BE_moyenne = non_BE_moyenne*parasites_non_BE;
 		non_BE_haute = non_BE_haute*parasites_non_BE;
-		this.getRetourRécolte().ajouter("On a recolté " + non_BE_basse + " kg de Khécao fèves de qualité assez nulle...même pas BE en plus");
-		this.getRetourRécolte().ajouter("On a recolté " + non_BE_moyenne + " kg de Khécao fèves de qualité médiocre...même pas BE en plus");
-		this.getRetourRécolte().ajouter("On a recolté " + non_BE_haute + " kg de Khécao fèves de qualité exceptionnelle...même pas BE par contre");
-		this.getRetourRécolte().ajouter("On a recolté " + BE_moyenne + " kg de Khécao fèves de qualité médiocre...mais BE !");
-		this.getRetourRécolte().ajouter("On a recolté " + BE_haute + " kg de Khécao fèves de qualité exceptionnelle...mais BE !");
+		this.getRetourRécolte().ajouter("On a recolté " + non_BE_basse + " kg de Khécao de qualité assez nulle...même pas BE en plus");
+		this.getRetourRécolte().ajouter("On a recolté " + non_BE_moyenne + " kg de Khécao de qualité médiocre...même pas BE en plus");
+		this.getRetourRécolte().ajouter("On a recolté " + non_BE_haute + " kg de Khécao de qualité exceptionnelle...même pas BE par contre");
+		this.getRetourRécolte().ajouter("On a recolté " + BE_moyenne + " kg de Khécao de qualité médiocre...mais BE !");
+		this.getRetourRécolte().ajouter("On a recolté " + BE_haute + " kg de Khécao de qualité exceptionnelle...mais BE !");
 		dicorecolte.put(Feve.FEVE_BASSE,non_BE_basse);
 		dicorecolte.put(Feve.FEVE_MOYENNE,non_BE_moyenne);
 		dicorecolte.put(Feve.FEVE_HAUTE,non_BE_haute);
