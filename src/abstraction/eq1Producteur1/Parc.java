@@ -254,12 +254,7 @@ public class Parc {
 		this.getRetourAléas().ajouter("Cette année (ut :"+Filiere.LA_FILIERE.getEtape()+"), les aléas climatiques vont durer"+temps+"ut" );
 		}
 	}
-	
-	public int MAJMecontentementBQ() {
-		
-	}
 
-	
 	public void MAJParc() { //Écrit par Antoine
 		int malade5 = 0;
 		int plantés = 0;
