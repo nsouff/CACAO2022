@@ -9,31 +9,36 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
 	
-	//Karla
-	/* Initier un contrat */
+	//chgmt 
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de chocolat sur 10 steps
-
-		if (L.size()!=0) {
-			if (L.size()== 1) {
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
+		List<IAcheteurContratCadre>L2 = new LinkedList<IAcheteurContratCadre>();
+		for (IAcheteurContratCadre a : L) {
+			if (a instanceof IDistributeurChocolatDeMarque) {
+				L2.add(a);//d.remove(Filiere.LA_FILIERE.getActeur("eq8"));
+			}
+		}
+		if (L2.size()!=0) {
+			if (L2.size()== 1) {
+				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L2.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
 				}
 			else {
 				// On choisit aléatoirement un des distributeurs
 				Random randomizer = new Random();
-				IAcheteurContratCadre random = L.get(randomizer.nextInt(L.size()));
+				IAcheteurContratCadre random = L2.get(randomizer.nextInt(L2.size()));
 				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(random, (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
+
 			}
 		}
 	}
-	
 
 	
 	//Yves, Karla
