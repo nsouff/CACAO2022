@@ -215,14 +215,14 @@ public class Producteur2Plantation {
 		
 		
 
-	public int production(Feve feve) {
-		return this.getNbArbre(feve)*2; //methode qui ne fait pas planter la fillière Test seulement avec 2 et qui ne s'affiche correctement dans le journal que pour 3/5 type de feves
-	}
+	/*public double production(Feve feve) {
+		return this.getNbArbre(feve)*3.0; //methode qui ne fait pas planter la fillière Test seulement avec 2 et qui ne s'affiche correctement dans le journal que pour 3/5 type de feves
+	}*/
 		
 	
 	
 	//Problème sur cette méthode
-/*public int production(Feve typefeve) {
+	public double production(Feve typefeve) {
 		//auteure : Fiona
 		
 		
@@ -230,15 +230,15 @@ public class Producteur2Plantation {
 		
 		Arbre typearbre = conversion(typefeve);
 		
-		int ProductionFinale = 0 ;
+		double ProductionFinale = 0.0 ;
 		List<Parcelle> ListeParcelles = this.NbParcelles.get(typearbre);
 		
 		for (Parcelle p : ListeParcelles) {
 			
-			ProductionFinale = (int) (ProductionFinale + RendementParcelle(p))*p.getNbArbres();
+			ProductionFinale = ProductionFinale + RendementParcelle(p)*p.getNbArbres();
 		}
 		return ProductionFinale;
-	}*/
+	}
 	
 	public int getNbArbre(Feve feve) {
 		//auteure : Fiona
