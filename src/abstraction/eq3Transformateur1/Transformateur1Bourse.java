@@ -66,6 +66,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void next() {
 		super.next();
+		journal.ajouter("test journal");
 		
 	}
 	
