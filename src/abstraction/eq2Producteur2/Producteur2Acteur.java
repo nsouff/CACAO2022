@@ -78,6 +78,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		for(Feve f : this.coutParKg.keySet()) {
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
 		}
+		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
 		
 		//journal, Jules DORE
