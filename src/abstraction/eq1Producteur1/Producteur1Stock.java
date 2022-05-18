@@ -139,8 +139,8 @@ public class Producteur1Stock extends Producteur1Acteur {
 					this.getFeves().get(Feve).remove(i);
 				}
 			}
-			
 		}
+		this.nextParasites();	
 	}
 	
 	/**
@@ -151,69 +151,126 @@ public class Producteur1Stock extends Producteur1Acteur {
 	}
 	
 	//Auteur : Khéo
-		/**
-		 * @return the stockBasse
-		 */
-		public Variable getStockBasse() {
-			return StockBasse;
-		}
+	/**
+	 * @return the stockBasse
+	 */
+	public Variable getStockBasse() {
+		return StockBasse;
+	}
 
-		/**
-		 * @return the stockMoyenne
-		 */
-		public Variable getStockMoyenne() {
-			return StockMoyenne;
-		}
+	/**
+	 * @return the stockMoyenne
+	 */
+	public Variable getStockMoyenne() {
+		return StockMoyenne;
+	}
 
-		/**
-		 * @return the stockHaut_BE
-		 */
-		public Variable getStockHaut_BE() {
-			return StockHaut_BE;
-		}
+	/**
+	 * @return the stockHaut_BE
+	 */
+	public Variable getStockHaut_BE() {
+		return StockHaut_BE;
+	}
 		
-		/**
-		 * @return the stockMoyenne_BE
-		 */
-		public Variable getStockMoyenne_BE() {
-			return StockMoyenne_BE;
-		}
+	/**
+	 * @return the stockMoyenne_BE
+	 */
+	public Variable getStockMoyenne_BE() {
+		return StockMoyenne_BE;
+	}
 		
-		/**
-		 * @return the prixEntretienArbre
-		 */
-		public Variable getPrixEntretienArbre() {
-			return PrixEntretienArbre;
+	/**
+	 * @return the prixEntretienArbre
+	 */
+	public Variable getPrixEntretienArbre() {
+		return PrixEntretienArbre;
+	}
+
+
+
+	/**
+	 * @return the stockBasse_NA
+	 */
+	public Variable getStockBasse_NA() {
+		return StockBasse_NA;
+	}
+
+	/**
+	 * @return the stockMoyenne_NA
+	 */
+	public Variable getStockMoyenne_NA() {
+		return StockMoyenne_NA;
+	}
+
+	/**
+	 * @return the stockHaut_BE_NA
+	 */
+	public Variable getStockHaut_BE_NA() {
+		return StockHaut_BE_NA;
+	}
+
+	/**
+	 * @return the stockMoyenne_BE_NA
+	 */
+	public Variable getStockMoyenne_BE_NA() {
+		return StockMoyenne_BE_NA;
+	}
+		
+	/**
+	 * Auteur : Laure
+	 * met à jour le stock après des parasites
+	 */
+	public void nextParasites() {
+		// Differentiation entre gammes / bio :
+		// bio : 25% par UT
+		// non bio : 15% par UT
+		// 3 niveaux de parasites
+		// 1 : 70 %
+		// 2 : 25%
+		// 3 : 5%
+		// 1 : Perte de 10% de la récolte
+		// 2 : Perte de 50% de la récolte
+		// 3 : Perte de 80% de la récolte
+		double aleaParasiteGlobal = 0.0;
+		for(Feve Feve : this.getFeves().keySet()) {
+			aleaParasiteGlobal = Math.random();
+			double tauxPerteStock = 0.0;
+			if (Feve.isBioEquitable()) {
+				if (aleaParasiteGlobal <=0.25) {
+					double aleaForceParasites = Math.random();
+					if (aleaForceParasites <= 0.70) {
+						// On perd 10% de notre stock
+						tauxPerteStock = 0.1;
+					} else if (aleaForceParasites <=0.95) {
+						// On perd 50% de notre stock
+						tauxPerteStock = 0.5;
+					} else {
+						// On perd 80% de notre stock
+						tauxPerteStock = 0.8;
+					}
+				}
+				double stockAvantPar = this.getStock(Feve, true);
+				double perteStock = stockAvantPar*tauxPerteStock;
+				this.retirerQuantite(Feve, perteStock);
+			} else {
+				if (aleaParasiteGlobal <=0.15) {
+					double aleaForceParasites = Math.random();
+					if (aleaForceParasites <= 0.70) {
+						// On perd 10% de notre stock
+						tauxPerteStock = 0.1;
+					} else if (aleaForceParasites <=0.95) {
+						// On perd 50% de notre stock
+						tauxPerteStock = 0.5;
+					} else {
+						// On perd 80% de notre stock
+						tauxPerteStock = 0.8;
+					}
+					double stockAvantPar = this.getStock(Feve, true);
+					double perteStock = stockAvantPar*tauxPerteStock;
+					this.retirerQuantite(Feve, perteStock);
+				}
+				
+			}
 		}
-
-
-
-		/**
-		 * @return the stockBasse_NA
-		 */
-		public Variable getStockBasse_NA() {
-			return StockBasse_NA;
-		}
-
-		/**
-		 * @return the stockMoyenne_NA
-		 */
-		public Variable getStockMoyenne_NA() {
-			return StockMoyenne_NA;
-		}
-
-		/**
-		 * @return the stockHaut_BE_NA
-		 */
-		public Variable getStockHaut_BE_NA() {
-			return StockHaut_BE_NA;
-		}
-
-		/**
-		 * @return the stockMoyenne_BE_NA
-		 */
-		public Variable getStockMoyenne_BE_NA() {
-			return StockMoyenne_BE_NA;
-		}
-
+	}
 }
