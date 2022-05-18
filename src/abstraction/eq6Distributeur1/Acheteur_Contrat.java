@@ -84,7 +84,7 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.getNotreStock().addQte((ChocolatDeMarque) produit, quantite);
-		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix(), contrat.getQuantiteTotale());
+		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix());
 	}
 }
 
