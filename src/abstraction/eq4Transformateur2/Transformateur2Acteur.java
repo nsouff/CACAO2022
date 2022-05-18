@@ -67,19 +67,6 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 
 	}
 	
-	
-
-
-
-
-
-
-
-
-
-
-
-
 
 	public void initialiser() {
 		
@@ -105,11 +92,6 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	public void next() {
 			
 	}
-	
-	
-	
-
-	
 	
 	
 	public List<String> getNomsFilieresProposees() {
@@ -162,13 +144,9 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-
-
 	public double getMarge() {
 		return this.marge;
 	}
-
-
 
 
 	public int getCryptogramme() {
@@ -182,23 +160,23 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
+
+
+
 	public Variable getCapaciteStockageFixe() {
 		return capaciteStockageFixe;
 	}
 
 
-	
-	
-	
+
 	@Override
 	public LinkedList<String> getMarquesChocolat() {
-		LinkedList<String> res = new LinkedList<String>();
-		res.add("O'ptella");
-//		res.add("O'ptibon");
-		res.add("O'max");
-		return res;
+//		LinkedList<String> res = new LinkedList<String>();
+//		res.add("O'ptella");
+////		res.add("O'ptibon");
+//		res.add("O'max");
+		return this.getMarquesChocolat();
 	}
-
 
 
 	@Override
@@ -210,4 +188,5 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		res.add(c1);
 		return res;
 	}
+
 }

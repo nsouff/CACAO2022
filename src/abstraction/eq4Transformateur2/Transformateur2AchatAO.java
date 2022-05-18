@@ -39,7 +39,9 @@ public class Transformateur2AchatAO extends Transformateur2Bourse implements IAc
 		this.prixInit=15;
 	}
 
+
 	//Nawfel (Decommenter les 2 lignes si un jour on achete par AO)
+	
 	public double proposerPrix(OffreVente offre) {
 		if (offre.getVendeur().getNom().equals(super.getNom())) {
 			return 0;
