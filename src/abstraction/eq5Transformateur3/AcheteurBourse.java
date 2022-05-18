@@ -8,16 +8,23 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 
 	// Karla 
 	public double demande(Feve f, double cours) {
+		
+		/* on calcule notre besoin en la fève f pour honorer nos contrats */
 		Double besoin = 0.00;
 		for (ExemplaireContratCadre contrat : this.contratsEnCoursVente) {
 			if (contrat.getProduit() == f) {
 				besoin += contrat.getQuantiteALivrerAuStep();
 			}
 		}
+		
+		/* Si notre stock permet de répondre au besoin, on n'achète pas, 
+		 * sinon on achète  
+		 */
 		Double difference = besoin - this.stockFeves.getstock(f) ;
-		if (difference > 0 ) {
+		if (difference > 0.0 ) {
 			this.achats.ajouter("demande de" + difference + " kg de feve" + f.getGamme().toString() + "à un cours" + cours );
 		}
+		
 		return difference ;
 	}
 
@@ -32,7 +39,6 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 	}
 
 	public void next () {
-		super.next();
-		
+		super.next();	
 	}
 }
