@@ -169,16 +169,17 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 	public Variable GetStockHausse_BE() {
 		return StockFeveHaute_BE;
 	}
-
+	// mettre this.getCout(f) à la place de cout
+	public double cout = 0.2;
 	public double offre(Feve f, double cours) {
 		double quantiteAVendre = 0;
-		if (cours> 1.3*this.getCout(f)) {
+		if (cours> 1.3*cout) {
 			 quantiteAVendre= 0.8*this.getStock(f); // on vend 80% du stock;
 		}
-		if (cours> 1.2*this.getCout(f)) {
+		if (cours> 1.2*cout) {
 			 quantiteAVendre  = 0.6*this.getStock(f); // on vend 60% du stock;
 		}
-		if (cours> 1.1*this.getCout(f)) {
+		if (cours> 1.1*cout) {
 			  quantiteAVendre = 0.4*this.getStock(f); // on vend 40% du stock ;
 		}
 		return  quantiteAVendre;
