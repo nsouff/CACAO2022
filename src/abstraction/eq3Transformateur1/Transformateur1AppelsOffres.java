@@ -16,7 +16,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAcheteur implements IVendeurAO {
 
-	
+
 
 	protected String marque;
 	protected SuperviseurVentesAO superviseurAO;

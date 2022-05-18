@@ -78,7 +78,7 @@ public class VariableReadOnly extends Variable {
 			Banque b = Filiere.LA_FILIERE.getBanque();
 			if (b!=null) {
 				if (b.verifier(this.getCreateur(), crypto)) {
-					super.ajouter(auteur, delta);
+					super.ajouter(auteur, delta, crypto);
 				}
 			}
 		}

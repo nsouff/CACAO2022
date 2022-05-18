@@ -1,10 +1,10 @@
 package abstraction.eq3Transformateur1;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import abstraction.eq1Producteur1.Producteur1Feve;
+//import abstraction.eq1Producteur1.Producteur1Feve;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.filiere.Filiere;

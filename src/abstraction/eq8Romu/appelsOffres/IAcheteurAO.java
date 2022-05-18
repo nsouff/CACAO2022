@@ -6,7 +6,7 @@ public interface IAcheteurAO extends IActeur {
 	
 	/**
 	 * @param offre offre!=null
-	 * @return Retourne une proposition de prix pour l'offre indiquee en parametre
+	 * @return Retourne une proposition de prix au Kg pour l'offre indiquee en parametre
 	 * (retourne 0.0 si l'acheteur n'est pas interesse par cette offre).
 	 */
 	public double proposerPrix(OffreVente offre);
