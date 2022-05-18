@@ -210,7 +210,7 @@ public class Parc {
 					this.getRetourGuerre().ajouter("Ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
 				}
 		}
-		else {
+		if (Filiere.LA_FILIERE.getEtape()<this.getUt_fin_guerre()+Math.ceil((this.getUt_fin_guerre()-this.getUt_debut_guerre())*1.5)) {
 			this.getRetourGuerre().ajouter("C'est la période de paix frérot, on cherche pas les embrouilles");
 		}
 	}
@@ -358,10 +358,10 @@ public class Parc {
 		else {
 			this.getRetourAléas().ajouter("ON RÉCOLTE PAS C'EST LA TEMPÊTE PLANQUEZ VOUS LES GADJOS");
 		}
-		this.getRetourMaladie().ajouter("Il y a actuellement "+malade1+" arbres malades au stade 1");
-		this.getRetourMaladie().ajouter("Il y a actuellement "+malade2+" arbres malades au stade 2");
-		this.getRetourMaladie().ajouter("Il y a actuellement "+malade3+" arbres malades au stade 3");
-		this.getRetourMaladie().ajouter("Il y a actuellement "+malade4+" arbres malades au stade 4");
+		this.getRetourMaladie().ajouter("Il y a actuellement "+malade1+" MilleArbres malades au stade 1");
+		this.getRetourMaladie().ajouter("Il y a actuellement "+malade2+" MilleArbres malades au stade 2");
+		this.getRetourMaladie().ajouter("Il y a actuellement "+malade3+" MilleArbres malades au stade 3");
+		this.getRetourMaladie().ajouter("Il y a actuellement "+malade4+" MilleArbres malades au stade 4");
 		double parasitesBE = ParasitesBE();
 		double parasites_non_BE = Parasites_non_BE();
 		BE_moyenne = BE_moyenne*parasitesBE;
