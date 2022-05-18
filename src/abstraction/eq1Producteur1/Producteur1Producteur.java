@@ -6,7 +6,6 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Producteur extends Producteur1Stock{
 	private Parc ParcAfrique;
-	
 	public Producteur1Producteur() {
 		Parc afrique = new Parc("Afrique");
 		this.ParcAfrique = afrique;
