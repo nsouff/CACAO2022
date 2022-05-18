@@ -88,9 +88,7 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		if (echeancier==null) {
 			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec null pour echeancier");
 		}
-		if (echeancier.getQuantiteTotale()<QUANTITE_MIN_ECHEANCIER) {
-			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
-		}
+
 		if (acheteur==vendeur) {
 			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec vendeur==acheteur. On ne peut pas faire un contrat cadre avec soi meme");
 		}
@@ -100,7 +98,12 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		if (!(acheteur instanceof IDistributeurChocolatDeMarque) && tg) {
 			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre par l'acheteur "+acheteur.getNom()+" avec tg==true alors que l'acheteur n'est pas un distributeur (seuls les distributeurs peuvent s'engager a vendre en tete de gondole)");
 		}
-
+		if (echeancier.getQuantiteTotale()<QUANTITE_MIN_ECHEANCIER) {
+			System.out.println("!!! "+acheteur.getNom()+" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
+			Filiere.LA_FILIERE.getBanque().faireFaillite(acheteur);
+			return null;
+			//			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
+		}
 		ContratCadre contrat = new ContratCadre(acheteur, vendeur, produit, echeancier, cryptogramme, tg);
 		return negociations(acheteur, vendeur, produit, echeancier, cryptogramme, tg, contrat,acheteur);
 	}
@@ -159,7 +162,6 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		return negociations(acheteur, vendeur, produit, echeancier, cryptogramme, tg, contrat,vendeur);
 	}
 	private ExemplaireContratCadre negociations(IAcheteurContratCadre acheteur, IVendeurContratCadre vendeur, Object produit, Echeancier echeancier, int cryptogramme, boolean tg, ContratCadre contrat, IActeur initiateur) {
-		
 		int maxNego = 5 + (int)(Math.random()*11); // Le nombre maximum de contrepropositions est compris dans [5, 15]
 
 		// NEGOCIATIONS SUR L'ECHEANCIER
@@ -196,7 +198,6 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		} else {
 			journal.ajouter("   accord sur l'echeancier : "+contrat.getEcheancier());
 		}
-
 		// NEGOCIATIONS SUR LE PRIX
 		double propositionV = vendeur.propositionPrix(new ExemplaireContratCadre(contrat));
 		journal.ajouter("   "+Journal.texteColore(vendeur, vendeur.getNom())+" propose un prix de "+Journal.doubleSur(propositionV,4));
@@ -209,6 +210,7 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		double propositionA;
 		numNego=0;
 		do {
+			numNego++;
 			propositionA = acheteur.contrePropositionPrixAcheteur(new ExemplaireContratCadre(contrat));
 			journal.ajouter("   "+Journal.texteColore(acheteur, acheteur.getNom())+" propose un prix de "+Journal.doubleSur(propositionA,4));
 			if (propositionA<=0.0) {

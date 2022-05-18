@@ -37,9 +37,9 @@ public interface IVendeurContratCadre extends IActeur {
 	
 	/**
 	 * Methode appele par le SuperviseurVentesContratCadre apres une negociation reussie
-	 * sur l'echeancier afin de connaitre le prix a la tonne que le vendeur propose.
+	 * sur l'echeancier afin de connaitre le prix au kg que le vendeur propose.
 	 * @param contrat
-	 * @return La proposition initale du prix a la tonne.
+	 * @return La proposition initale du prix a kg.
 	 */
 	public double propositionPrix(ExemplaireContratCadre contrat);
 
@@ -49,8 +49,8 @@ public interface IVendeurContratCadre extends IActeur {
 	 * de prix du vendeur.
 	 * @param contrat
 	 * @return Retourne un nombre inferieur ou egal a 0.0 si le vendeur souhaite mettre fin
-	 * aux negociation en renoncant a ce contrat. Retourne le prix actuel a la tonne du 
-	 * contrat (contrat.getPrixALaTonne()) si le vendeur est d'accord avec ce prix.
+	 * aux negociation en renoncant a ce contrat. Retourne le prix actuel au kg du 
+	 * contrat (contrat.getPrix()) si le vendeur est d'accord avec ce prix.
 	 * Sinon, retourne une contreproposition de prix.
 	 */
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat);
@@ -68,12 +68,12 @@ public interface IVendeurContratCadre extends IActeur {
 
 	/**
 	 * Methode appelee par le SuperviseurVentesContratCadre lorsque le vendeur doit livrer 
-	 * quantite tonnes de produit afin d'honorer le contrat precise en parametre. 
+	 * quantite kg de produit afin d'honorer le contrat precise en parametre. 
 	 * @param produit
 	 * @param quantite
 	 * @param contrat
 	 * @return Retourne la quantite livree (quantite si le vendeur "livre" effectivement 
-	 * quantite tonne de ce produit (il avait cette quantite en stock et l'a enlevee de 
+	 * quantite kg de ce produit (il avait cette quantite en stock et l'a enlevee de 
 	 * son stock) et un nombre de [0.0, quantite[ si il ne peut livrer qu'une partie de 
 	 * la quantite prevue -- une penalite sera alors prevue )
 	 */

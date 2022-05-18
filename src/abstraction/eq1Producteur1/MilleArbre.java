@@ -9,6 +9,7 @@ public class MilleArbre {
 	private int stade_maladie;
 	private int ut_debut_maladie;
 	private int qualite ;
+	private boolean cooperative;
 	private boolean bioequitable;
 	private boolean transition_bio;
 	private int date_transition;
@@ -20,17 +21,19 @@ public class MilleArbre {
 		this.stade_maladie=0;
 		this.ut_debut_maladie = 0;
 		this.qualite=1;
+		this.cooperative=false;
 		this.bioequitable=false;
 		this.transition_bio=false;
 		this.date_transition=0;
 		this.productivite_max=this.Production_max();
 	}
 	
-	public MilleArbre(int qualite, boolean BE,int ut_plantation) { //Écrit par Antoine
+	public MilleArbre(int qualite,boolean cooperative, boolean BE,int ut_plantation) { //Écrit par Antoine
 		this.ut_plantation = ut_plantation;
 		this.ut_esperance_vie = Esperance_vie();
 		this.stade_maladie = 0;
 		this.ut_debut_maladie = 0;
+		this.cooperative= cooperative;
 		this.qualite = qualite;
 		this.bioequitable = BE;
 		this.transition_bio = false;
@@ -52,6 +55,9 @@ public class MilleArbre {
 	}
 	public void setQualite(int qualite) { //Écrit par Maxime
 		this.qualite=qualite;
+	}
+	public void setCooperative(boolean cooperative) {
+		this.cooperative=cooperative;
 	}
 	public void setBioequitable(boolean bioequitable) { //Écrit par Maxime
 		this.bioequitable= bioequitable;
@@ -80,13 +86,16 @@ public class MilleArbre {
 	public int getQualite() { //Écrit par Antoine
 		return this.qualite;
 	}
+	public boolean getCooperative() { //Écrit par Antoine
+		return this.cooperative;
+	}
 	public boolean getBioequitable() { //Écrit par Antoine
 		return this.bioequitable;
 	}
 	public boolean getTransition_bio() { //Écrit par Antoine
 		return this.transition_bio;
 	}
-	public int getDate_transition() {
+	public int getDate_transition() { //Écrit par Antoine
 		return this.date_transition;
 	}
 	public double getProductivite_max() { //Écrit par Antoine
@@ -94,9 +103,9 @@ public class MilleArbre {
 	}
 	
 	public void MAJMaladie() { //Écrit par Antoine
-		if (stade_maladie == 0) {
-			double d = Math.random();
-			if (d<=0.03) {
+		if (this.getStade_maladie() == 0) {
+			double chance_maladie = Math.random();
+			if (chance_maladie<=0.03) {
 				double stade_maladie = Math.random();
 				if (stade_maladie<=0.45) {
 					this.setMaladie(1);
@@ -120,37 +129,37 @@ public class MilleArbre {
 				}
 			}
 		}
-		if ((stade_maladie == 1) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 2)) {
+		if ((this.getStade_maladie() == 1) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 2)) {
 			this.setMaladie(0);
 		}
-		if ((stade_maladie == 2) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 5)) {
+		if ((this.getStade_maladie() == 2) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 5)) {
 			this.setMaladie(0);
 		}
-		if ((stade_maladie == 3) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 6)) {
+		if ((this.getStade_maladie() == 3) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 6)) {
 			this.setMaladie(0);
 		}
-		if ((stade_maladie == 4) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 8)) {
+		if ((this.getStade_maladie() == 4) && (Filiere.LA_FILIERE.getEtape() - this.getUt_debut_maladie() == 8)) {
 			this.setMaladie(0);
 		}
 	}
 	
 	public int Esperance_vie() { //Écrit par Antoine
-		double d = Math.random();
-		if (d<0.5) {
-			int esp = 960-(int)Math.floor(d*240);
+		double écart_moyenne = Math.random();
+		if (écart_moyenne<0.5) {
+			int esp = 960-(int)Math.floor(écart_moyenne*240);
 			return esp;
 		}
 		else {
-			int esp = 960+(int)Math.floor((d-0.5)*240);
+			int esp = 960+(int)Math.floor((écart_moyenne-0.5)*240);
 			return esp;
 		}
 	}
 	public double Production_max() { //Écrit par Maxime
-		double d = 200 + Math.random()*50; //La production de 1000 arbres
+		double production = 200 + Math.random()*50; //La production de 1000 arbres
 		if (this.bioequitable) {
-			d = 0.8*d;
+			production = 0.8*production;
 		}
-		return d;
+		return production;
 	}
 	public int Age() { //Écrit par Maxime
 		return Filiere.LA_FILIERE.getEtape()-this.getUt_plantation();
@@ -183,6 +192,7 @@ public class MilleArbre {
 							return 0;
 						}
 						else {
+							
 							return 0.8*quantite;
 						}
 					}
@@ -243,5 +253,8 @@ public class MilleArbre {
 			this.setTransition_bio(false);
 		}
 		
+	}
+	public void Regrouper() {
+		this.setCooperative(true);
 	}
 }

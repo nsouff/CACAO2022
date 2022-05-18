@@ -1,14 +1,37 @@
 package abstraction.eq4Transformateur2;
 
+import java.util.List;
+
+import abstraction.eq8Romu.appelsOffres.IVendeurAO;
+import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
+import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class Transformateur2Vente extends Transformateur2Achat {
-
+public class Transformateur2Vente extends Transformateur2Achat implements IVendeurAO {
+	protected SuperviseurVentesAO superviseur;
  
  
  public Transformateur2Vente(double stocktotalfeve, double stocktotalchoco) {
 		super(stocktotalfeve, stocktotalchoco);
 		// TODO Auto-generated constructor stub
+	}
+	public void initialiser() {
+		this.superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
+
+	}
+	public void next() {
+		if (Filiere.LA_FILIERE.getEtape()>=1) {
+			if (this.getStockchocolat().quantiteStockTotale()>5000) {
+				PropositionAchatAO vente = superviseur.vendreParAO(this, cryptogramme, Test = new ChocolatDeMarque(Chocolat.BQ,"test"),(this.getStockchocolat().quantiteStockTotale()-5000)/3 , false);
+				if (vente!=null) {
+					this.setStock(getStockchocolat().quantiteStockTotale()-vente.getOffre().getQuantiteKG());
+					
+				
+				}
+			}
+		}
 	}
 // Gabriel
  public double prixVoulu(double prix_achat) { 
@@ -38,6 +61,20 @@ public class Transformateur2Vente extends Transformateur2Achat {
  public boolean vente() {
 	 return false;//this.StockDispo() & this.prixAcceptable(prix_ori, prix_ori);
  }
+@Override
+public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
+	// TODO Auto-generated method stub
+	if (propositions==null) {
+		return null;
+	} else {
+		PropositionAchatAO retenue = propositions.get(0);
+		if (retenue.getPrixKg()>500) { // il faut mettre à la place de 500 qui est une valeur indicative le prix d'achat
+			return retenue;
+		} else {
+			return null;
+		}
+	}
+}
 
  // Gabriel
  //public void enlever() {

@@ -28,16 +28,16 @@ public class Transformateur2Achat extends Transformateur2Transfo{
 
 
 	}
-	public double quantite(int stock) { 
-		return super.getCapaciteStockageFixe().getValeur()-super.getStockfeve().quantiteStockTotale();
+//	public double quantite() { 
+//		return super.getCapaciteStockageFixe().getValeur()-super.getStockfeve().quantiteStockTotale();
+//	}
+	
+	public boolean deficit(double quantite, double prix_vente) { //False si l'achat nous mettrait en deficit
+		return (super.getSolde()-quantite*prix_vente)>0;
 	}
 	
-	public boolean deficit(double quantite, double capital, double prix_vente) { //False si l'achat nous mettrait en deficit
-		return true;
-	}
-	
-	public boolean Achat(double prix_vente,int stock,double capital) {//on achete ou pas
-		return comparer_prix(prix_vente)&&deficit(quantite(stock), capital, prix_vente);
+	public boolean Achat(double prix_vente,double quantite) {//on achete ou pas
+		return comparer_prix(prix_vente)&&deficit(quantite,prix_vente);
 		
 	}
 
