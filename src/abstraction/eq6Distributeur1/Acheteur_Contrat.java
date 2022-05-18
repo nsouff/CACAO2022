@@ -30,6 +30,9 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 
 	@Override
 	public boolean achete(Object produit) {
+		if (NotreStock.seuilSecuFaillite() == false) {
+			return false;
+		}
 		if (produit instanceof ChocolatDeMarque && this.getNotreStock().getStock((ChocolatDeMarque) produit) <= 1000) {
 			switch (((ChocolatDeMarque) produit).getChocolat()) {
 				case BQ:

@@ -26,6 +26,10 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
      */
     @Override
     public double proposerPrix(OffreVente offre) {
+    	
+    	if (NotreStock.seuilSecuFaillite() == false) {   //EmmaHumeau
+    		return 0.0;
+    	}
 
 
         if (this.getNotreStock().getStock(offre.getChocolat()) > 5000) {

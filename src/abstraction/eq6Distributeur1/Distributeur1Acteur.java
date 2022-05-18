@@ -206,7 +206,9 @@ public class Distributeur1Acteur implements IActeur {
 		this.cryptogramme = crypto;
 		
 	}
-
+	
+	
+	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
 	}
 

@@ -103,4 +103,13 @@ public class Stock { //Emma Humeau
 	public Map<ChocolatDeMarque, Double> getMapStock() { //emma humeau
 		return stockageQte;
 	}
+	
+	//EmmaHumeau
+	//calcule un seuil de sécurité qui renvoie faux si au prochain tour on risque de faire faillite à cause du coût de stockage
+	// il faut arrêter d'acheter durant 1 tour
+	public boolean seuilSecuFaillite () {
+		if (acteur.getSolde() <= getCoûtStockageTotale()) {
+			return false;}
+		return true;
+	}
 }
