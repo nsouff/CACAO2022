@@ -147,6 +147,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		res.add(seuilTransformation);
 		res.add(coutOriginal);
 		res.add(coutTransformation);
+		res.add(limiteStockage);
+		res.add(prixEntrepot);
 		return res;
 	}
 
