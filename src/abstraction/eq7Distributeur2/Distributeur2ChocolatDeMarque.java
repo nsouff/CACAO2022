@@ -23,7 +23,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
-			return Math.min(capaciteDeVente, this.stock.getQuantite(choco));
+			return Math.min(capaciteDeVente, this.stock.getQuantite(choco)*(9/10));
 		}
 	}
 
@@ -38,6 +38,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
 		this.stock.remove(choco, quantite);
+		journal.ajouter("vente de "+quantite+" "+choco.name()+" a "+client.getNom()+" pour un prix de "+ montant);
 		
 	}
 
