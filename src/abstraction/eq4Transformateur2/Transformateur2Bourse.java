@@ -21,6 +21,8 @@ public class Transformateur2Bourse extends Transformateur2Acteur implements IAch
 
 
 	}
+
+	
 //Marie et Jad
 	public double demande(Feve f, double cours) {
 		if (cours < this.getPrixSeuil().getValeur()) {

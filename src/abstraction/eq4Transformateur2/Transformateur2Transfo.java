@@ -122,7 +122,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		if(f.getGamme().equals(Gamme.BASSE)) {
 			return new ChocolatDeMarque(Chocolat.BQ,super.getMarquesChocolat().get(0));
 		} else {
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(2));
+			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
 		}
 	}
 	

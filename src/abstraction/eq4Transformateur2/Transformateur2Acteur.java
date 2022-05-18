@@ -30,7 +30,7 @@ public class Transformateur2Acteur implements IActeur {
 	private Variable prixTransformation; // a renseigner (0? On considere juste le rendement pour le pb des transfolongue, ainsi, un seul parametre à gerer.)
 	private Variable TransformationSeuil;
 	private Variable prixChocoOriginal;
-	private Variable capaciteStockage;
+	protected Variable capaciteStockage;
 	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	private Variable expirationFeve; //a considerer dans une v1 ?
 	private Variable expirationChoco;//a considerer dans une v1?
@@ -181,20 +181,9 @@ public class Transformateur2Acteur implements IActeur {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
 
-
-
-
-
-
-
-
-
-
 	public double getMarge() {
 		return this.marge;
 	}
-
-
 
 
 	public int getCryptogramme() {
@@ -202,13 +191,9 @@ public class Transformateur2Acteur implements IActeur {
 	}
 
 
-
-
 	public Variable getCoutStockage() {
 		return coutStockage;
 	}
-
-
 
 
 	public Variable getPrixSeuil() {
@@ -216,13 +201,9 @@ public class Transformateur2Acteur implements IActeur {
 	}
 
 
-
-
 	public Variable getRendementTransfoLongue() {
 		return rendementTransfoLongue;
 	}
-
-
 
 
 	public Variable getPrixTransformation() {
@@ -230,13 +211,9 @@ public class Transformateur2Acteur implements IActeur {
 	}
 
 
-
-
 	public Variable getPrixChocoOriginal() {
 		return prixChocoOriginal;
 	}
-
-
 
 
 	public Variable getCapaciteStockage() {
@@ -244,13 +221,9 @@ public class Transformateur2Acteur implements IActeur {
 	}
 
 
-
-
 	public Variable getCapaciteStockageFixe() {
 		return capaciteStockageFixe;
 	}
-
-
 
 
 	public Variable getExpirationFeve() {
@@ -258,23 +231,9 @@ public class Transformateur2Acteur implements IActeur {
 	}
 
 
-
-
 	public Variable getExpirationChoco() {
 		return expirationChoco;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

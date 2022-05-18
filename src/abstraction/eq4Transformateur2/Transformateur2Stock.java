@@ -112,8 +112,25 @@ public double coutStockage() {
 	
 //}	
 
+//Marie
+/*public boolean capaciteMaxAtteinte() {
+	if ((this.capaciteStockage.getValeur()-this.stockfeve-this.stockchocolat)>0 || ) {
+		return false;	
+	}else {
+		return true;
+	}
+}
 
-
+public double augmenterCapacite(Variable capaciteStockage) {
+	//condition pour augmenter la capacité (par ex. dès qu'on souhaite acheter et que l'on n'a pas de capcité de stockage suffisante, on augmente notre capacité)
+	if (capaciteMaxAtteinte=true) {
+		capaciteStockage=this.getCapaciteStockage()*1.20;
+		
+		
+	}
+	//si validé alors on augmente le stock d'une quantité définie 
+	// sinon on garde le même stock
+}*/
 
 }
 
