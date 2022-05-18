@@ -31,7 +31,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Double achatMaxFeves; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 	protected Double capaciteStockageEQ5; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 
-	
+	//Paramètres
 	protected Variable seuilTransformation;
 	protected Variable limiteStockage; // quantité maximale que l'on peut stocker
 	protected Variable prixEntrepot; // prix d'un entrepot qui a une capacite de stockage de limiteStockage
