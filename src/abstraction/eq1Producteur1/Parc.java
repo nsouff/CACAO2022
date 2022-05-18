@@ -237,6 +237,7 @@ public class Parc {
 				int qualite = arbre_i.getQualite();
 				boolean BE = arbre_i.getBioequitable();
 				this.Planter(new MilleArbre(qualite,BE,Filiere.LA_FILIERE.getEtape()));
+				plantés+=1;
 				this.getCacaoyers().remove(arbre_i);
 			}
 			if (arbre_i.Age() == arbre_i.getUt_esperance_vie()) {
