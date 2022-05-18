@@ -264,7 +264,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					// initiation d'un contrat cadre avec producteur 1
 					((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(
 							(IAcheteurContratCadre)this, 
-							(IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ1"), 
+							(IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("CAC'AO40"), 
 							f, 
 							echeancier, 
 							cryptogramme, 
@@ -278,7 +278,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					// initiation d'un contrat cadre avec producteur 2
 					((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(
 							(IAcheteurContratCadre)this, 
-							(IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ2"), 
+							(IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("Cacao Doré"), 
 							f, 
 							echeancier, 
 							cryptogramme, 
