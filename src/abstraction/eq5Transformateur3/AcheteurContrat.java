@@ -19,10 +19,9 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	
 	//Karla / Julien
 	/* Initier un contrat */
-	public void lanceruncontratAcheteur(Feve f) {
+	public void lanceruncontratAcheteur(Feve f, Double qtt) {
 		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-		List<IVendeurContratCadre> L = superviseur.getVendeurs(f);
-		int qtt = 10000; // qtt de feve par step, à modifier en fonction des ventes 
+		List<IVendeurContratCadre> L = superviseur.getVendeurs(f); 
 		
 		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, qtt); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
@@ -35,9 +34,6 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 				IVendeurContratCadre random = L.get(randomizer.nextInt(L.size()));
 				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
 			}
-		}
-		else {
-			
 		}
 		//Julien else on achete des feve par le biais de la bourse si besoin ( bourse.getCours(f).getValeur() )
 	}
@@ -108,8 +104,16 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public void next() {
 		super.next();
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
-			if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
-				lanceruncontratAcheteur(f);
+			/* Selon la place libre dans nos entrepots et selon l'etat de nos stocks pour cette feve,
+			 * on essaie d'initier des contrats */
+			Double stocktotal = this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal();
+			if (stocktotal < this.capaciteStockageEQ5) {
+				if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
+					Double placeLibre = this.stockChocolat.getstocktotal() - this.stockFeves.getstocktotal();
+					/* On essaie d'initier un contrat pour une qtt de placeLibre/nombre de types de fèves */
+					Double qtt = placeLibre/4;
+					lanceruncontratAcheteur(f, qtt);
+				}
 			}
 		}
 	}

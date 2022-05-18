@@ -31,7 +31,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Double achatMaxFeves; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 	protected Double capaciteStockageEQ5; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 
-	
+	//Paramètres
 	protected Variable seuilTransformation;
 	protected Variable limiteStockage; // quantité maximale que l'on peut stocker
 	protected Variable prixEntrepot; // prix d'un entrepot qui a une capacite de stockage de limiteStockage
@@ -59,7 +59,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 1);
 		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par kg", this, 0, 100, 1);
 		this.limiteStockage = new VariableReadOnly ("limiteStockage", "quantité maximale que l'on peut stocker", this, 0, 100000000, 10000000);
-		this.prixEntrepot = new VariableReadOnly ("prixEntrepot", "prix d'un entrepot qui a une capacite de stockage de limiteStockage", this, 0, 100000000, 500000);
+		this.prixEntrepot = new VariableReadOnly ("prixEntrepot", "prix d'un entrepot qui a une capacite de stockage de limiteStockage", this, 0, 100000000, 9000000);
 
 		this.capaciteStockageEQ5 = this.limiteStockage.getValeur();
 		this.stockFeves = new Stock<Feve> ();
