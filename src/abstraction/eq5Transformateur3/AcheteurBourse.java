@@ -1,24 +1,31 @@
 package abstraction.eq5Transformateur3;
 
-import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
-import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.produits.Feve;
 
 public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurBourse{
 
 	// Karla 
 	public double demande(Feve f, double cours) {
-		// Si on a moins d'un certain seuil de fèves, on cherche à en acheter via la bourse
-		if (this.stockFeves.getstock(f)<this.SeuilMinFeves) {
-			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-			double pourcentage = (bourse.getCours(f).getMax()-cours)/(bourse.getCours(f).getMax()-bourse.getCours(f).getMin());
-			// on en achete selon le prix actuel de la bourse d'où *pourcentage
-			this.achats.ajouter("demande de" + this.achatMaxFeves + " kg de feve" + f.getGamme().toString() + "à un cours" + cours );
-			return this.achatMaxFeves;//on achete le plus possible
-		} else {
-			return 0.0;
+		
+		/* on calcule notre besoin en la fève f pour honorer nos contrats */
+		Double besoin = 0.00;
+		for (ExemplaireContratCadre contrat : this.contratsEnCoursVente) {
+			if (contrat.getProduit() == f) {
+				besoin += contrat.getQuantiteALivrerAuStep();
+			}
 		}
+		
+		/* Si notre stock permet de répondre au besoin, on n'achète pas, 
+		 * sinon on achète  
+		 */
+		Double difference = besoin - this.stockFeves.getstock(f) ;
+		if (difference > 0.0 ) {
+			this.achats.ajouter("demande de" + difference + " kg de feve" + f.getGamme().toString() + "à un cours" + cours );
+		}
+		
+		return difference ;
 	}
 
 	// Karla
@@ -32,7 +39,6 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 	}
 
 	public void next () {
-		super.next();
-		
+		super.next();	
 	}
 }

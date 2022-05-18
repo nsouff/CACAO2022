@@ -29,7 +29,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
 			}
 			else {
-				// On choisit aléatoirement un des producteurs
+				// On choisit aleatoirement
 				Random randomizer = new Random();
 				IVendeurContratCadre random = L.get(randomizer.nextInt(L.size()));
 				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);

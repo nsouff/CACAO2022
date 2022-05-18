@@ -2,10 +2,10 @@ package abstraction.eq5Transformateur3;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
-import abstraction.eq8Romu.contratsCadres.ContratCadre;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
@@ -47,9 +47,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Variable stockChocolatVariableM;
 	protected Variable stockChocolatVariableH;
 	
-	//julien 04/05 : 
-	
-	protected HashMap<Double ,ContratCadre> contratsEnCours;
+	//karla
+	protected LinkedList<ExemplaireContratCadre> contratsEnCoursVente;
 	
 	
 	//Karla
@@ -61,6 +60,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.limiteStockage = new VariableReadOnly ("limiteStockage", "quantité maximale que l'on peut stocker", this, 0, 100000000, 10000000);
 		this.prixEntrepot = new VariableReadOnly ("prixEntrepot", "prix d'un entrepot qui a une capacite de stockage de limiteStockage", this, 0, 100000000, 9000000);
 
+		this.contratsEnCoursVente = new LinkedList <ExemplaireContratCadre>();
 		this.capaciteStockageEQ5 = this.limiteStockage.getValeur();
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
