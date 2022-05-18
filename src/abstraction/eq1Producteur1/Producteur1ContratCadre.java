@@ -117,6 +117,11 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		res.add(this.getContratCadre());
+		res.add(this.getAfrique().getRetourMAJParc());
+		res.add(this.getAfrique().getRetourRécolte());
+		res.add(this.getAfrique().getRetourGuerre());
+		res.add(this.getAfrique().getRetourAléas());
+		res.add(this.getAfrique().getRetourMaladie());
 		return res;
 	}
 
