@@ -110,14 +110,14 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	}
 	
 	//Karla
-	public LinkedList <ExemplaireContratCadre> majCC(LinkedList <ExemplaireContratCadre> L) {
+	/*public LinkedList <ExemplaireContratCadre> majCC(LinkedList <ExemplaireContratCadre> L) {
 		for (ExemplaireContratCadre contrat : this.contratsEnCoursVente) {
 			if (contrat.getEcheancier().getStepFin() < Filiere.LA_FILIERE.getEtape()) {
 				L.remove(contrat);
 			}
 		}
 		return L ;
-	}
+	}*/
 	
 	//Karla & Yves
 	/* on regarde l etat de nos stocks et on lance la procédure */
@@ -125,7 +125,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		super.next();
 		
 		/* Mise à jour de la liste des CC en cours */
-		this.contratsEnCoursVente = majCC(this.contratsEnCoursVente);
+		//this.contratsEnCoursVente = majCC(this.contratsEnCoursVente);
 		
 		/* Lancer des CC */
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
