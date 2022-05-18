@@ -234,8 +234,8 @@ public class Distributeur1Acteur implements IActeur {
 		
 		for(ChocolatDeMarque Choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			this.ChocoTotalTour = this.ChocoTotalTour + Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()-24);
-			//System.out.println("il y a eu : "+Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()) +" kg de chocolats vendus au tour : " 
-					//			+ (Filiere.LA_FILIERE.getEtape()-24));
+			journal1.ajouter("il y a eu : "+Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()) +" kg de chocolats vendus de type " 
+			+ Choco + " au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
 		}
 		journal1.ajouter("Il y a eu au total : " + this.ChocoTotalTour + "kg de chocolats vendus au total au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
 	}
