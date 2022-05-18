@@ -43,9 +43,11 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 			return null;
 		} else {
 			PropositionAchatAO retenue = propositions.get(0);
-			if (retenue.getPrixKg()>this.prixVenteMin.get(propositions.get(0).getOffre().getChocolat().getChocolat())) {
+			if (retenue.getPrixKg()>this.prixVenteMin.get(propositions.get(0).getOffre().getChocolat().getChocolat())){
+				journal.ajouter("  --> je choisis "+retenue);
 				return retenue;
 			} else {
+				journal.ajouter("  --> je ne retiens rien");
 				
 				return null;
 			}
