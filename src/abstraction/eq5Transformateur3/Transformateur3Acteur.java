@@ -137,16 +137,16 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		res.add(stockFevesVariableH);
 		res.add(stockChocolatVariableM);
 		res.add(stockChocolatVariableH);
+		res.add(rendement);
+		res.add(seuilTransformation);
+		res.add(coutOriginal);
+		res.add(coutTransformation);
 		return res;
 	}
 
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
 		List<Variable> res=new ArrayList<Variable>();
-		res.add(rendement);
-		res.add(seuilTransformation);
-		res.add(coutOriginal);
-		res.add(coutTransformation);
 		res.add(limiteStockage);
 		res.add(prixEntrepot);
 		return res;
