@@ -113,7 +113,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 						NewCap-=qt;//mise à jour de la capacité de production
 						this.getStockfeve().enlever(f,qt);//baisse le stock de feves
 						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), qt);//augmente le stock de chocolat
-						this.journal.ajouter("Transformation Courte de " +qt+" kg de "+f+"en "+this.fevechoco(f).toString());
+						this.journal.ajouter("Transformation Courte de " +qt+" kg de "+f+" en "+this.fevechoco(f).toString());
 						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), qt*(prix_transfo+s*prix_ori));//paye
 					}
 				}
