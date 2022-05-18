@@ -40,7 +40,7 @@ public class Transformateur2 extends Transformateur2VenteAO{
 	public LinkedList<String> getMarquesChocolat() {
 		LinkedList<String> res = new LinkedList<String>();
 		res.add("O'ptella");
-		res.add("O'ptibon");
+		res.add("O'max");
 //		res.add("O'max");
 		return res;
 	}

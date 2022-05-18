@@ -225,11 +225,11 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 
 	@Override
 	public LinkedList<String> getMarquesChocolat() {
-		LinkedList<String> res = new LinkedList<String>();
-		res.add("O'ptella");
-//		res.add("O'ptibon");
-		res.add("O'max");
-		return res;
+//		LinkedList<String> res = new LinkedList<String>();
+//		res.add("O'ptella");
+////		res.add("O'ptibon");
+//		res.add("O'max");
+		return this.getMarquesChocolat();
 	}
 
 	@Override
