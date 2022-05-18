@@ -1,7 +1,6 @@
 package abstraction.eq4Transformateur2;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -22,6 +21,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	protected double prix_ori;
 	protected double cap;
 	
+	protected abstract HashMap getCommande();//POUR LA V2
 	
 	
 	public void next() {//EN V1 on ne transforme que de façon arbitraire
@@ -120,9 +120,9 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		
 	public ChocolatDeMarque fevechoco(Feve f) {
 		if(f.getGamme().equals(Gamme.BASSE)) {
-			return new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+			return new ChocolatDeMarque(Chocolat.BQ,super.getMarquesChocolat().get(0));
 		} else {
-			return new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(2));
+			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(2));
 		}
 	}
 	

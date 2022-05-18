@@ -1,26 +1,38 @@
 package abstraction.eq4Transformateur2;
 
+import java.util.List;
+
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleAbsAcheteurBourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
 // Marie et JAd
 
-public class Transformateur2Bourse extends Transformateur2Acteur implements IAcheteurBourse{
+public class Transformateur2Bourse extends Transformateur2Transfo implements IAcheteurBourse{
 	
 	private double quantiteEnKg;
 	
 
-	public Transformateur2Bourse(Feve feve, double stock, double quantiteEnKg) {
+	public Transformateur2Bourse() {
 		super();
 		this.quantiteEnKg=quantiteEnKg;
 
 
 	}
+	
+	public void next() {
+		super.next();
+	}
+	public void initialiser() {
+		super.initialiser();
+	}
+	
 //Marie et Jad
 	public double demande(Feve f, double cours) {
 		if (cours < this.getPrixSeuil().getValeur()) {
@@ -52,6 +64,6 @@ public class Transformateur2Bourse extends Transformateur2Acteur implements IAch
 		//this.journal.ajouter("Aie... je suis blackliste... Nous sommes pauvres... :(");
 		
 	}
-	public void supernext() {
-	}
+
+	
 }
