@@ -79,6 +79,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 			}
 		}
 		this.mesContratEnTantQueAcheteur.removeAll(contratsObsoletes);
+		journal.ajouter("test contratcadre acheteur");
 	}
 
 }
