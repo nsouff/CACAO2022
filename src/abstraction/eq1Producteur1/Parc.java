@@ -210,7 +210,7 @@ public class Parc {
 					this.getRetourGuerre().ajouter("Ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
 				}
 		}
-		if (Filiere.LA_FILIERE.getEtape()<this.getUt_fin_guerre()+Math.ceil((this.getUt_fin_guerre()-this.getUt_debut_guerre())*1.5)) {
+		if ((Filiere.LA_FILIERE.getEtape()<this.getUt_fin_guerre()+Math.ceil((this.getUt_fin_guerre()-this.getUt_debut_guerre())*1.5)) && (this.getGuerre()==false)) {
 			this.getRetourGuerre().ajouter("C'est la période de paix frérot, on cherche pas les embrouilles");
 		}
 	}
