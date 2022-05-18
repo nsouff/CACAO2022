@@ -13,7 +13,7 @@ import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1Bourse extends Transformateur1Acteur implements IAcheteurBourse{
-	
+	protected Journal journal;
 	protected DicoFeve quantiteAchatFeve;            /** quantité de fève qu'on souhaite acheter */
 	protected DicoChoco quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
 	protected dernierPrixVenteChoco dernierPrixVenteChoco;          /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat av ec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuxième les chocolats */
@@ -33,6 +33,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 		prixVenteMin = new DicoChoco();
 		stockChoco = new DicoChoco();
 		stockFeve = new DicoFeve();
+		
 	}
 	
 	/** renvoie la quantité de fève voulue; auteur Julien 
@@ -65,6 +66,11 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void next() {
 		super.next();
+		journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
+		if (Filiere.LA_FILIERE.getEtape()>=1) {
+			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+			journal.ajouter("le cours de "+Feve.FEVE_BASSE+" est : "+Journal.doubleSur(bourse.getCours(Feve.FEVE_BASSE).getValeur(), 2));
+		}
 	}
 	
 }
