@@ -39,7 +39,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		super();
 		stockFeve = new DicoFeve();
 		stockChoco = new DicoChoco();
-		this.journal= new Journal("Bourse",this);
+		
 		for (Feve f : Feve.values()) {
 			stockFeve.put(f, 10000.);
 		}
