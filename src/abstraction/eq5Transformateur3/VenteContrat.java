@@ -103,13 +103,17 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		return peutlivrer;
 	}
 	
-	//Karla
+	//Karla & Yves
 	/* on regarde l etat de nos stocks et on lance la procédure */
 	public void next() {
 		super.next();
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
-			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat) {
+			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat && c.isBioEquitable() == true) {
 				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
+				lanceruncontratVendeur(choco);
+			}
+			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat && c.isBioEquitable() == false) {
+				ChocolatDeMarque choco = new ChocolatDeMarque(c,"CHOCO'riginal");
 				lanceruncontratVendeur(choco);
 			}
 		}
