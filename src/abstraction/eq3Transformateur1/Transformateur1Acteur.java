@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstraction.eq1Producteur1.FiliereTestBourseEq1;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -60,7 +61,10 @@ public class Transformateur1Acteur implements IActeur {
 	}
 
 	public Filiere getFiliere(String nom) {
-		return null;
+		switch (nom) { 
+		case "FiliereTest1" : return new FiliereTestBourseEq1();
+	    default : return null;
+		}
 	}
 	
 	/** Indicateurs : stockChoco, stockFeve, solde
