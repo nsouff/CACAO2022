@@ -38,7 +38,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		stockFeve = new DicoFeve();
 		stockChoco = new DicoChoco();
 		for (Feve f : Feve.values()) {
-			stockFeve.put(f, 0.);
+			stockFeve.put(f, 10000.);
 		}
 		for (Chocolat c : Chocolat.values()) {
 			stockChoco.put(c, 0.);

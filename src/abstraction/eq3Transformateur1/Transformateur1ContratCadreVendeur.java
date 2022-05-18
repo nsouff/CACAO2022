@@ -27,7 +27,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	
 	// fonction qui détermine quel type de chocolat on vend en contrat cadre; auteur Julien */
 	public boolean vend(Object produit) {
-		if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
+		if ((produit instanceof ChocolatDeMarque)&&(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
 			return true;
 		}
 		return false;
