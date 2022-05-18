@@ -21,7 +21,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		List<IVendeurContratCadre> L = superviseur.getVendeurs(f); 
 		
-		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, qtt); //qtt kg de feves par etape pendant  10 steps
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 10000); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
 			if (L.size()== 1) {
 				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
