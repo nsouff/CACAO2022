@@ -31,6 +31,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 	
 	public void next() {
 		super.next();
+		journal.ajouter("test journal Appeldoffres");
 	}
 
 	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas 

@@ -98,6 +98,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	
 	public void next() {
 		super.next();
+		journal.ajouter("test ContratCadreVendeur");
 		// Supprime les contrats obsolètes et honorés -Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
