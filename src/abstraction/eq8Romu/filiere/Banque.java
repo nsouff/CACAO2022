@@ -310,9 +310,9 @@ public class Banque implements IActeur, IAssermente {
 			if (!(acteurADebiter  instanceof IAssermente)) { // Les comptes bancaires des acteurs assermentes (bourse, superviseurs, clients fnaux, ...) ne sont pas impactes
 				comptes.get(acteurADebiter).retirer(this, montant);
 				acteurADebiter.notificationOperationBancaire(-montant);
+				comptes.get(acteurACrediter).ajouter(this,  montant);
+				acteurACrediter.notificationOperationBancaire(montant);
 			}
-			comptes.get(acteurACrediter).ajouter(this,  montant);
-			acteurACrediter.notificationOperationBancaire(montant);
 			this.journalBanque.ajouter("virement de "+Journal.texteColore(acteurADebiter.getColor(), Color.BLACK, Journal.texteSurUneLargeurDe(acteurADebiter.getNom(),10))+" vers "+Journal.texteColore(acteurACrediter.getColor(), Color.BLACK, Journal.texteSurUneLargeurDe(acteurACrediter.getNom(),10))+" d'un mondant de "+Journal.doubleSur(montant, 15,3));
 			return true;
 		}

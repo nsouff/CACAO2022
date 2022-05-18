@@ -194,7 +194,6 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			}
 		}
 	}
-
 	
 	/**  _________________________________________________TOUR ET INITIALISATION_________________________________________________*/
 	
