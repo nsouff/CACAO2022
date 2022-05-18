@@ -72,7 +72,8 @@ public class Producteur1Stock extends Producteur1Acteur {
 		
 		
 		this.MAJStock();
-		
+		this.nextParasites();	
+
 		for (Feve f : this.getFeves().keySet()) {
 			for(FeveProducteur1 Lot : this.getFeves().get(f)) {
 				Lot.MAJAffinage(f);
@@ -139,7 +140,6 @@ public class Producteur1Stock extends Producteur1Acteur {
 				}
 			}
 		}
-		this.nextParasites();	
 	}
 	
 	/**
