@@ -4,30 +4,21 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import abstraction.eq1Producteur1.FiliereTestBourseEq1;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
-import abstraction.eq8Romu.produits.Chocolat;
-import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1Acteur implements IActeur {
-	protected Journal journal;
-	protected int cryptogramme;
-	protected DicoFeve stockFeve;               /** Integer --> Double*/
-	protected DicoChoco stockChoco;           /** Integer --> Double*/
 	
+	protected int cryptogramme;
+
 	// Alexandre
 	public Transformateur1Acteur() {
-		cryptogramme = 0;
-		stockFeve = new DicoFeve();
-		stockChoco = new DicoChoco();
-		this.journal = new Journal("test",this);
+		cryptogramme = 0; //euh on prend en argument crypto ? ou pas ? sinon on initialise a 0
 	}
 
 	public void initialiser() {
-		//initialiser les stocks
 	}
 	
 	public String getNom() {
@@ -35,8 +26,7 @@ public class Transformateur1Acteur implements IActeur {
 	}
 
 	public String getDescription() {
-		return "Notre entreprise, nommée “Côtes du monde”, a pour ligne de conduite : le meilleur rapport qualité/prix. Nous avons pour but de produire des tablettes de chocolats accessibles à tous, tout en assurant une bonne qualité pour le consommateur.";
-				
+		return "Bla bla bla";
 	}
 
 	public Color getColor() {
@@ -47,45 +37,21 @@ public class Transformateur1Acteur implements IActeur {
 	public void setCryptogramme(Integer crypto) {
 		this.cryptogramme = crypto;
 	}
-		
-	/** 
-	 *  Alexandre*/
+	
+
 	public void next() {
-		
 	}
 	
 	public List<String> getNomsFilieresProposees() {
-		ArrayList<String> filiere = new ArrayList<String>();
-		filiere.add(this.getNom());
-		return filiere;
+		return new ArrayList<String>();
 	}
 
 	public Filiere getFiliere(String nom) {
-		switch (nom) { 
-		case "FiliereTest1" : return new FiliereTestBourseEq1();
-	    default : return null;
-		}
+		return null;
 	}
 	
-	/** Indicateurs : stockChoco, stockFeve, solde
-	 *  Alexandre*/
 	public List<Variable> getIndicateurs() {
 		List<Variable> res=new ArrayList<Variable>();
-
-		res.add(
-				new Variable(
-						"StockFeve",
-						this,
-						this.stockFeve.get(Feve.FEVE_BASSE)
-						+ this.stockFeve.get(Feve.FEVE_MOYENNE)
-						+ this.stockFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)));
-		res.add(
-				new Variable(
-						"StockChoco",
-						this,
-						this.stockChoco.get(Chocolat.MQ)
-						+ this.stockChoco.get(Chocolat.MQ_BE)
-						+ this.stockChoco.get(Chocolat.MQ_O)));
 		return res;
 	}
 	
@@ -96,7 +62,6 @@ public class Transformateur1Acteur implements IActeur {
 
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
-		res.add(journal);
 		return res;
 	}
 

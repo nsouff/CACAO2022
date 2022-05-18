@@ -12,4 +12,5 @@ public class DicoChoco extends HashMap<Chocolat, Double>{
 			this.put(c, 0.);
 		}
 	}
+	
 }

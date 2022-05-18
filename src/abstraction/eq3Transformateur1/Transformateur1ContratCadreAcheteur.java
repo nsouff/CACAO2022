@@ -9,7 +9,6 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
-import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 
 public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratCadreVendeur implements IAcheteurContratCadre {
 	
@@ -17,6 +16,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 	
 	public Transformateur1ContratCadreAcheteur() {
 		super();
+		System.out.println("ok");
 		this.mesContratEnTantQueAcheteur=new LinkedList<ExemplaireContratCadre>();
 	}
 	/** On décide d'initier un nouveau contrat cadre lorsque moins de 50% de la quantité de fèves désrirées provient de contrats cadre.
@@ -62,24 +62,19 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		stockFeve.put(((Feve)produit), stockFeve.get(contrat.getProduit())+quantite);
 		
 	}
-	
-	// Alexandre
-	public void initialiser( ) {
-		super.initialiser();
-	}
 
-	
+	// supprime les contrats d'achats obsolètes; auteur Julien */
 	public void next() {
-		super.next();
-		// supprime les contrats d'achats obsolètes; auteur Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
+		System.out.println("ok"+this.mesContratEnTantQueAcheteur);
+
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueAcheteur) {
+			
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
 				contratsObsoletes.add(contrat);
 			}
 		}
 		this.mesContratEnTantQueAcheteur.removeAll(contratsObsoletes);
-		journal.ajouter("test contratcadre acheteur");
 	}
 
 }
