@@ -200,11 +200,11 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	/** Alexandre*/
 	public void initialiser() {
 		super.initialiser();
-		this.rendementHaute = Filiere.LA_FILIERE.getParametre("rendement").getValeur();
-		this.coutTransfo = Filiere.LA_FILIERE.getParametre("coutTransformateur").getValeur();
-		this.coutTransfoOriginal = coutTransfo
-				+ Filiere.LA_FILIERE.getParametre("coutOrginial").getValeur();
-		this.coutStockage = 4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();
+		//this.rendementHaute = Filiere.LA_FILIERE.getParametre("rendement").getValeur();
+		//this.coutTransfo = Filiere.LA_FILIERE.getParametre("coutTransformateur").getValeur();
+		//this.coutTransfoOriginal = coutTransfo
+			//	+ Filiere.LA_FILIERE.getParametre("coutOrginial").getValeur();
+		//this.coutStockage = 4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();
 		
 		
 		
