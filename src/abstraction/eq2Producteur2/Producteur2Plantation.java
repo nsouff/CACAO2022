@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
-//auteure : Fiona Martin 
+//auteure : Fiona 
 
-public class Plantation  {
+public class Producteur2Plantation {
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
-	public Plantation () {
+	public Producteur2Plantation () {
 		//auteure : Fiona
 		
 		/*
@@ -33,23 +34,23 @@ public class Plantation  {
 		
 		 */
 		
-		NbParcelles = new HashMap<Arbre, List<Parcelle>>();
+		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
 		
 		// 1 parcelle = 100 000 arbres 
 		
 		
-		NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
-		NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
+		this.NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
 		
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		ArrayList<Integer> qt = ListeQt(4);
 		
 		for (int i=0; i<arbres.length; i++) {
 			for (int j=0; j<qt.get(i); j++) {
-			NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
+			this.NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
 			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
 			}
 		}
@@ -69,18 +70,19 @@ public class Plantation  {
 		
 		ArrayList<Integer> qt = new ArrayList<Integer>();
 		
-		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); // HGB
-		qt.add((int) (Math.ceil((800*NbTotalArbres)/5))); // HG
-		qt.add((int) (Math.ceil((400*NbTotalArbres)/5))); // MGB
-		qt.add((int) (Math.ceil((1600*NbTotalArbres)/5))); //MG 
-		qt.add((int) (Math.ceil((2000*NbTotalArbres)/5))); //BG
+		qt.add((int) (Math.ceil((20*NbTotalArbres)/5))); // HGB
+		qt.add((int) (Math.ceil((80*NbTotalArbres)/5))); // HG
+		qt.add((int) (Math.ceil((40*NbTotalArbres)/5))); // MGB
+		qt.add((int) (Math.ceil((160*NbTotalArbres)/5))); //MG 
+		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); //BG
 		
 		return qt;
 	}
 	
 	
 	public void next() {
-		this.nextPlantation();
+		this.renouvellement();
+		
 	}
 	
 	
@@ -94,7 +96,7 @@ public class Plantation  {
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
-			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
 			for (Parcelle p : ListeParcelles) {
 				p.setAge(p.getAge()+ 1);
 			}
@@ -114,7 +116,7 @@ public class Plantation  {
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
-			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
 			List<Parcelle> ParcellesASupprimer = new ArrayList<Parcelle>();
 			
 			for (Parcelle p : ListeParcelles) {
@@ -123,8 +125,8 @@ public class Plantation  {
 				}
 			}
 			for (int i=0; i < ParcellesASupprimer.size(); i++) {
-				NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
-				NbParcelles.get(a).add(new Parcelle(a, 0));
+				this.NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
+				this.NbParcelles.get(a).add(new Parcelle(a, 0));
 			}						
 	}
 		
@@ -196,6 +198,10 @@ public class Plantation  {
 			return 0; 		
 		}
 		
+		else if (p.getStadeTensionGeopolitique() != 0) {
+			return 0;
+		}
+		
 		else {
 				if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
 					return (int) (p.getTypeArbre().getRendementFinal());
@@ -209,9 +215,14 @@ public class Plantation  {
 		
 		
 
-	
+	/*public double production(Feve feve) {
+		return this.getNbArbre(feve)*3.0;
+	}*/
 		
-	public int production(Feve typefeve) {
+	
+	
+	//Problème sur cette méthode
+	public double production(Feve typefeve) {
 		//auteure : Fiona
 		
 		
@@ -219,15 +230,28 @@ public class Plantation  {
 		
 		Arbre typearbre = conversion(typefeve);
 		
-		int ProductionFinale = 0 ;
-		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
+		double ProductionFinale = 0.0 ;
+		List<Parcelle> ListeParcelles = this.NbParcelles.get(typearbre);
 		
 		for (Parcelle p : ListeParcelles) {
 			
-			ProductionFinale = (int) (ProductionFinale + RendementParcelle(p))*p.getNbArbres();
+			ProductionFinale = ProductionFinale + RendementParcelle(p)*p.getNbArbres();
 		}
 		return ProductionFinale;
 	}
+	
+	
+	public double getRendement(Feve feve) {
+		Arbre arbre = conversion(feve);
+		List<Parcelle> ListeParcelles = this.NbParcelles.get(arbre);
+		double rendement = 0.0;
+		for (Parcelle p : ListeParcelles) {
+			rendement+=RendementParcelle(p)*p.getNbArbres();
+		}
+		return rendement/this.NbParcelles.get(arbre).size();
+	}
+		
+	
 	
 	public int getNbArbre(Feve feve) {
 		//auteure : Fiona
@@ -235,9 +259,32 @@ public class Plantation  {
 		Arbre arbre = conversion(feve);
 		return this.NbParcelles.get(arbre).size()*1000000 ;
 	}
+
 	
-	
+	public void initialiser() {
+		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
+		
+		// 1 parcelle = 100 000 arbres 
+		
+		
+		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
+		this.NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
+		
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		ArrayList<Integer> qt = ListeQt(4);
+		
+		for (int i=0; i<arbres.length; i++) {
+			for (int j=0; j<qt.get(i); j++) {
+			this.NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
+			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
+		
+				}
+			}
 	}
+}		
 	
 	
 	

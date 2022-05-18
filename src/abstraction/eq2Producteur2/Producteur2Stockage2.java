@@ -3,40 +3,31 @@ package abstraction.eq2Producteur2;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.HashMap;
+
 import abstraction.eq8Romu.produits.Feve;
 
 
-// auteur Clément //
+/**
+ * 
+ * @author Clément Modifier par Jules
+ *
+ */
 
-public class Producteur2Stockage extends Producteur2Couts {
+public class Producteur2Stockage2 extends Producteur2Couts {
 	
 	protected Integer cryptogramme;
 	protected HashMap<Feve,LinkedList<Stock>> Stocks;
-	protected HashMap<Feve,Double> StockTot;
+
 	
-	public Producteur2Stockage () {
+	public Producteur2Stockage2() {
 		super();
 		
 		this.Stocks = new HashMap<Feve,LinkedList<Stock>>();
 		for (Feve f : Feve.values()) {
 			this.Stocks.put(f,new LinkedList<Stock>());
 		}
-	
-//		this.StockTot = new HashMap<Feve, Double>();
-//		for (Feve f : Feve.values()) {
-//			this.StockTot.put(f, SommeQuantite(new LinkedList<Stock>()));
-//		}
+	}
 
-		
-	}
-	public double SommeQuantite(Feve f) {
-		LinkedList<Stock> L=this.Stocks.get(f);
-		double s = 0 ;
-		for (int i=0 ; i<L.size() ; i++) {
-			s = s + (L.get(i)).getQuantite();
-		}
-		return s;	
-	}
 	public void removeQuantite(double q, Feve f) {
 		LinkedList<Stock> L=this.Stocks.get(f);
 		while (q>0) {
@@ -56,17 +47,27 @@ public class Producteur2Stockage extends Producteur2Couts {
 		
 		}
 	}
+	
 	public void addQuantite(double q, Feve f) {
-		this.getStock().get(f).add(new Stock(q));
+		this.Stocks.get(f).add(new Stock(q));
 	}
+	
+	public double getStock(Feve feve) {
+		double s = 0.0 ;
+		for(Stock stock : this.getStocks().get(feve)) {
+			s = s + stock.getQuantite() ;
+			}
+			return s ;	
+		}
+	
 	
 	public void initialiser() {
 		super.initialiser();
-		this.addQuantite(1000001,Feve.FEVE_BASSE);
-		this.addQuantite(1000001,Feve.FEVE_MOYENNE);
-		this.addQuantite(1000001,Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.addQuantite(1000001,Feve.FEVE_HAUTE);
-		this.addQuantite(1000001,Feve.FEVE_HAUTE_BIO_EQUITABLE);
+		for (Feve feve : Feve.values()) {
+			int qt = super.getNbArbre(feve);
+			this.addQuantite(qt, feve);
+		}
+		
 		
 	}
 
@@ -74,17 +75,12 @@ public class Producteur2Stockage extends Producteur2Couts {
 		super.next();
 		for(Feve feve : Feve.values()) {
 			this.addQuantite(this.production(feve), feve);
-
-//			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
 		}
 	}
 
 
-	public HashMap<Feve, LinkedList<Stock>> getStock() {
+	public HashMap<Feve, LinkedList<Stock>> getStocks() {
 		return this.Stocks;
-	}
-	public  HashMap<Feve,Double> getStockTot(){
-		return this.StockTot;
 	}
 	
 	

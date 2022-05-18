@@ -16,7 +16,7 @@ import abstraction.eq8Romu.produits.Feve;
  * @author Jules DORE
  */
 
-public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurContratCadre implements IVendeurContratCadre{
+public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur implements IVendeurContratCadre{
 	
 
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
@@ -129,6 +129,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	}
 	
 	public void next() {
+		super.next();
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurNonBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -139,10 +140,13 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2VendeurCont
 	}
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
+		this.removeQuantite(quantite, (Feve)(produit));
+		return quantite;
 	}
 
+	public void initialiser() {
+		super.initialiser();
+	}
 
 //	@Override
 	public boolean peutVendre(Object produit) {

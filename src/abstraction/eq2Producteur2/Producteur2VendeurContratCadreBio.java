@@ -23,7 +23,6 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	public Producteur2VendeurContratCadreBio() {
 		super();
 		this.mesContratEnTantQueVendeurBio = new LinkedList<ExemplaireContratCadre>();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -43,16 +42,16 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 		return qtiteTotaleContratEnCours;
 	}
 	
-	@Override
+
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
-			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.StockTot.get((Feve)contrat.getProduit())/contrat.getEcheancier().getNbEcheances())) { 
+			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())) { 
 
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), this.production((Feve)contrat.getProduit()) + this.StockTot.get((Feve)contrat.getProduit())/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
 				return e;
 			}
 		}	
@@ -63,15 +62,15 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	
 	@Override
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		double prix = 1.4*this.coutParKg.get(((Feve)contrat.getProduit()));
+		double prix = 1.4*this.getCout((Feve)contrat.getProduit());
 		if (getClassementTransformateur( contrat.getAcheteur() )==1){
-			prix = 1.25*this.coutParKg.get(((Feve)contrat.getProduit()));
+			prix = 1.25*this.getCout((Feve)contrat.getProduit());
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==2){
-			prix = 1.35*this.coutParKg.get(((Feve)contrat.getProduit()));
+			prix = 1.30*this.getCout((Feve)contrat.getProduit());
 		}
 		if (getClassementTransformateur( contrat.getAcheteur() )==3){
-			prix = 1.35*this.coutParKg.get(((Feve)contrat.getProduit()));
+			prix = 1.35*this.getCout((Feve)contrat.getProduit());
 		}
 		
 		return prix;
@@ -115,17 +114,17 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		
-		return 0;
+		this.removeQuantite(quantite, (Feve)(produit));
+		return quantite;
 	}
 	
 	public boolean peutVendre(Object produit) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	
 	public void next() {
+		super.next();
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -135,5 +134,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 		this.mesContratEnTantQueVendeurBio.removeAll(contratsObsoletes);
 	}
 
-	
+	public void initialiser() {
+		super.initialiser();
+	}
 }
