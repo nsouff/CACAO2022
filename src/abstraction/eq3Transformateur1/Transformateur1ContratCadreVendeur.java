@@ -33,8 +33,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 //			return true;
 //		}
 
-		if ((produit instanceof ChocolatDeMarque)&&(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
+		if (produit instanceof ChocolatDeMarque){
+			if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
 			return true;
+			}
 		}
 //>>>>>>> branch 'main' of https://github.com/AnnaCharles/CACAO2022
 		return false;
