@@ -55,10 +55,10 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 			return contrat.getEcheancier();
 		}
 		Echeancier ech = contrat.getEcheancier();
-		if ((ech.getQuantite(ech.getStepDebut()) < 1000)) {
-			ech.set(ech.getStepDebut(), 1000);
-			ech.set(ech.getStepDebut()+1, 1000);
-			ech.set(ech.getStepDebut()+2, 1000);
+		if ((ech.getQuantite(ech.getStepDebut()) < 10000)) {
+			ech.set(ech.getStepDebut(), 10000);
+			ech.set(ech.getStepDebut()+1, 10000);
+			ech.set(ech.getStepDebut()+2, 10000);
 		}
 		jounralContratCadre.ajouter("Nous faisons une contre proposition pour le contrat" + contrat + ". Le nouvel écheancier est " + ech);
 		return ech;

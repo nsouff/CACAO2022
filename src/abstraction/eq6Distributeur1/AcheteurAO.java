@@ -27,7 +27,11 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
     @Override
     public double proposerPrix(OffreVente offre) {
 
+<<<<<<< HEAD
         if (this.getNotreStock().getStock(offre.getChocolat()) > 400) {
+=======
+        if (this.getNotreStock().getStock(offre.getChocolat()) > 5000) {
+>>>>>>> branch 'main' of https://github.com/nsouff/CACAO2022
             journalAO.ajouter("Nous refusons proposition: " + offre + " car nous avons déjà " + this.getNotreStock().getStock(offre.getChocolat())) ;
             return 0.0;
         }
