@@ -16,7 +16,7 @@ You are changing files outside of your java package. You can see the files that 
 You can replace them with the version from the main repository. To do that, right click on these files or folders -> Replace with -> Branch, Tag or Reference -> Remote tracking -> select the main repository -> Replace. If the files or folders do not exist in the main repository, you can simply delete them. Then commit and push to your repository. Don't close the pull request, it will be automatically updated.
 
 ## Hidden changes outside of package
-You are changing some files or folders are hidden in the Java perspective of Eclipse. You can see the files that you are changing in the "Files changed" tab of your pull request on the github website. This list must contain only files in your package.
+You are changing some files or folders that are hidden in the Java perspective of Eclipse. You can see the files that you are changing in the "Files changed" tab of your pull request on the github website. This list must contain only files in your package.
 
 To see the files, go to the Resource perspective of Eclipse. Right click on these files or folders -> Replace with -> Branch, Tag or Reference -> Remote tracking -> select the main repository -> Replace. Then commit and push to your repository. Don't close this pull request, it will be automatically updated.
 
@@ -24,7 +24,7 @@ To see the files, go to the Resource perspective of Eclipse. Right click on thes
 In the Resource perspective you can replace all folders and files (including hidden files). Since there is no .metadata folder in the main repository, you don't have anything to replace it with. You can simply delete it.
 
 ## Compilation error
-Your code has a compilation error (red mark in Eclipse). You can read the error message by going in the tab "Checks" of your pull request and opening the log "Build with Ant". Please fix it and commit+push again.
+Your code has a compilation error (red mark in Eclipse). You can read the error message by clicking on "Details" near to the failed test at the bottom of your pull request. Please fix it and commit+push again.
 
 ## Execution error
 Not accepting because the code does not pass the tests. You can run the same tests on your Eclipse, they are `test/abstraction/FiliereParDefaultTest.java` and `test/presentation/FenetrePrincipaleTest.java`. To run them right-click on "build.xml", Run As -> Ant Build. You will see the error message in the console.

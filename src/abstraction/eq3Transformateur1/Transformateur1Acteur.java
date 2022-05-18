@@ -13,7 +13,9 @@ public class Transformateur1Acteur implements IActeur {
 	
 	protected int cryptogramme;
 
+	// Alexandre
 	public Transformateur1Acteur() {
+		cryptogramme = 0; //euh on prend en argument crypto ? ou pas ? sinon on initialise a 0
 	}
 
 	public void initialiser() {

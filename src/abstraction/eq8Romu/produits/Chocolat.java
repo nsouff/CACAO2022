@@ -1,4 +1,4 @@
-package abstraction.eq8Romu.produits;
+ package abstraction.eq8Romu.produits;
 
 import abstraction.eq8Romu.filiere.Filiere;
 
@@ -22,6 +22,14 @@ public enum Chocolat {
 		this.gamme = gamme;
 		this.bioEquitable = bioEquitable;
 		this.original = original;
+	}
+	public static Chocolat get(Gamme gamme, boolean bioEquitable, boolean original) {
+		for (Chocolat c : Chocolat.values()) {
+			if (c.gamme==gamme && c.isBioEquitable()==bioEquitable && c.isOriginal()==original) {
+				return c;
+			}
+		}
+		return null;
 	}
 	public Gamme getGamme() {
 		return this.gamme;
@@ -51,5 +59,6 @@ public enum Chocolat {
 		for (Chocolat c : Chocolat.values()) {
 			System.out.println(c);
 		}
+		System.out.println("get->"+Chocolat.get(Gamme.HAUTE, true, true));
 	}
 }

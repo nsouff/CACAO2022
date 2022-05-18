@@ -10,6 +10,7 @@ import java.util.Set;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import controle.CtrlDecouvertAutorise;
+import presentation.FenetrePrincipale;
 
 public class Banque implements IActeur, IAssermente {
 	public static final double SOLDE_MAX = 100000000000.0;
@@ -30,7 +31,7 @@ public class Banque implements IActeur, IAssermente {
 	private Variable agiosDecouvertAutorise; // Agios applicables pour une solde debiteur de [decouvertAutorise, 0]
 	private Variable agiosDecouvertAuDela; // Agios applicables pour un solde debiteur allant au dela du decouvert autorise
 	private Variable seuilOperationsRefusees; // Aucune operation amenant le solde a un niveau inferieur n'est autorisee mis a part l'ajout d'agios 
-
+	
 	public Banque() {
 		this.comptes = new HashMap<IActeur, Variable>();
 		this.decouvertsConsecutifs=new HashMap<IActeur, Integer>();
@@ -62,6 +63,9 @@ public class Banque implements IActeur, IAssermente {
 			}
 		}
 		Filiere.LA_FILIERE.setCryptos(this.cryptogramme);
+		if (FenetrePrincipale.LA_FENETRE_PRINCIPALE!=null) {
+			FenetrePrincipale.LA_FENETRE_PRINCIPALE.setCryptos(this.cryptogramme);
+		}
 	}
 
 	public void setCryptogramme(Integer crypto) {
@@ -261,6 +265,26 @@ public class Banque implements IActeur, IAssermente {
 			}
 		}
 	}
+	public boolean verifierCapacitePaiement(IActeur acteurADebiter, int cryptogrammeActeurADebiter, double montant) {
+		if (acteurADebiter==null) {
+			erreur(" Appel de verifierCapacitePaiement de Banque avec un parametre null");
+		} else if (!comptes.containsKey(acteurADebiter)  ) {
+			erreur(" Appel de verifierCapacitePaiement de Banque avec un acteur qui n'a pas de compte bancaire");
+		} else if (montant<=0) {
+			erreur(" Appel de verifierCapacitePaiement de Banque avec un montant egal a "+montant+" au lieu d'un montant strictement positif");
+		} else if (this.cryptogramme.get(acteurADebiter)!=cryptogrammeActeurADebiter) {
+			erreur(" Appel de verifierCapacitePaiement de Banque avec un cryptogramme qui n'est pas celui du compte a verifier");
+		} else if (this.aFaitFaillite(acteurADebiter)) {
+			this.journalBanque.ajouter(Color.RED, Color.WHITE," Appel de verifierCapacitePaiement de Banque avec l'acteur dont le compte est a verifier qui a fait faillite : "+Journal.texteColore(acteurADebiter.getColor(), Color.BLACK, acteurADebiter.getNom()));
+			return false;
+		} else if (getSolde(acteurADebiter,cryptogrammeActeurADebiter)-montant<this.getSeuilOperationsRefusees()) {
+			return false;
+		} else{
+			return true;
+		}
+		return false;
+	}
+
 
 	public boolean virer(IActeur acteurADebiter, int cryptogrammeActeurADebiter, IActeur acteurACrediter, double montant) {
 		if (acteurADebiter==null || acteurACrediter==null) {
@@ -273,7 +297,7 @@ public class Banque implements IActeur, IAssermente {
 			erreur(" Appel de virer de Banque avec un montant egal a "+montant+" au lieu d'un montant strictement positif");
 		} else if (this.cryptogramme.get(acteurADebiter)!=cryptogrammeActeurADebiter) {
 			erreur(" Appel de virer de Banque avec un cryptogramme qui n'est pas celui du compte a debiter");
-		} else if (getSolde(acteurADebiter,cryptogrammeActeurADebiter)-montant<this.getSeuilOperationsRefusees()) {
+		} else if (acteurACrediter!=this && getSolde(acteurADebiter,cryptogrammeActeurADebiter)-montant<this.getSeuilOperationsRefusees()) {
 			this.journalBanque.ajouter(Color.RED, Color.WHITE," Virement d'un montant "+Journal.doubleSur(montant, 15,3)+" impossible car cela amenerait le solde du compte de "+Journal.texteColore(acteurADebiter.getColor(), Color.BLACK, acteurADebiter.getNom())+Journal.texteColore(Color.red, Color.white, " en dessous du decouvert autorise"));
 			return false;
 		} else if (this.aFaitFaillite(acteurADebiter)) {
@@ -283,12 +307,12 @@ public class Banque implements IActeur, IAssermente {
 			this.journalBanque.ajouter(Color.RED, Color.WHITE," Appel de virer de Banque avec l'acteur dont le compte est a crediter qui a fait faillite : "+Journal.texteColore(acteurACrediter.getColor(), Color.BLACK, acteurACrediter.getNom()));
 			return false;
 		} else{
-			if (!acteurADebiter.getNom().startsWith("C.F.")) {
+			if (!(acteurADebiter  instanceof IAssermente)) { // Les comptes bancaires des acteurs assermentes (bourse, superviseurs, clients fnaux, ...) ne sont pas impactes
 				comptes.get(acteurADebiter).retirer(this, montant);
 				acteurADebiter.notificationOperationBancaire(-montant);
+				comptes.get(acteurACrediter).ajouter(this,  montant);
+				acteurACrediter.notificationOperationBancaire(montant);
 			}
-			comptes.get(acteurACrediter).ajouter(this,  montant);
-			acteurACrediter.notificationOperationBancaire(montant);
 			this.journalBanque.ajouter("virement de "+Journal.texteColore(acteurADebiter.getColor(), Color.BLACK, Journal.texteSurUneLargeurDe(acteurADebiter.getNom(),10))+" vers "+Journal.texteColore(acteurACrediter.getColor(), Color.BLACK, Journal.texteSurUneLargeurDe(acteurACrediter.getNom(),10))+" d'un mondant de "+Journal.doubleSur(montant, 15,3));
 			return true;
 		}

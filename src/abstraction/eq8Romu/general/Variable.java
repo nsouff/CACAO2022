@@ -96,12 +96,33 @@ public class Variable implements Comparable<Variable>{
 		return this.historique;
 	}
 	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public Historique getHistorique(Integer crypto) {
+		return this.getHistorique();
+	}
+	
+	
+	/**
 	 * @return Retourne la Courbe (utilise principalement 
 	 * pour l'affichage du graphique correspondant)
 	 */
 	public Courbe getCourbe() {
 		return this.courbe;
 	}
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public Courbe getCourbe(Integer crypto) {
+		return this.getCourbe();
+	}
+	
 	/**
 	 * @return Retourne la valeur actuelle de la variable
 	 * (donc la derniere valeur indiquee dans l'historique)
@@ -110,6 +131,16 @@ public class Variable implements Comparable<Variable>{
 		return this.historique.getValeur();
 	}
 	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public double getValeur(Integer crypto) {
+		return this.getValeur();
+	}
+	
+	/**
 	 * @param step
 	 * @return Retourne la valeur de la variable au step
 	 * indique en parametre
@@ -117,6 +148,17 @@ public class Variable implements Comparable<Variable>{
 	public double getValeur(int step) {
 		return this.historique.getValeur(step);
 	}
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public double getValeur(int step, Integer crypto) {
+		return this.getValeur(step);
+	}
+	
+	
 	/**
 	 * Affecte la valeur valeur a la variable en precisant
 	 * que c'est auteur qui est a l'origine de ce changement.
@@ -130,27 +172,71 @@ public class Variable implements Comparable<Variable>{
 		this.courbe.ajouter(etape, this.getValeur());
 		pcs.firePropertyChange("Value",old,valeur);
 	}
-
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public void setValeur(IActeur auteur, double valeur, Integer crypto) {
+		this.setValeur(auteur, valeur);
+	}
+	
 	public double getMin() {
 		return this.min;
 	}
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public double getMin(Integer crypto) {
+		return this.getMin();
+	}	
 	
 	public void setMin(double min) {
 		double oldMin=this.min;
 		this.min = min;
 		pcs.firePropertyChange("min",oldMin,min);
 	}
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public void setMin(double min, Integer crypto) {
+		this.setMin(min);
+	}
 	
 	public double getMax() {
 		return this.max;
 	}
-
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public double getMax(Integer crypto) {
+		return this.getMax();
+	}
+	
 	public void setMax(double max) {
 		double oldMax=this.max;
 		this.max = max;
 		pcs.firePropertyChange("max",oldMax,max);
 	}
-
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public void setMax(double max, Integer crypto) {
+		this.setMax(max);
+	}
 	public boolean equals(Object o) {
 		return (o instanceof Variable) && (this.getNom().equals(((Variable)o).getNom()));
 	}
@@ -162,7 +248,15 @@ public class Variable implements Comparable<Variable>{
 	public void ajouter(IActeur auteur, double delta) {
 		this.setValeur(auteur, this.getValeur()+delta);
 	}
-
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public void ajouter(IActeur auteur, double delta, Integer crypto) {
+		this.setValeur(auteur, this.getValeur(crypto)+delta, crypto);
+	}
 	/**
 	 * Retire montant a la valeur de l'indicateur
 	 * @param auteur
@@ -171,6 +265,16 @@ public class Variable implements Comparable<Variable>{
 	public void retirer(IActeur auteur, double delta) {
 		this.setValeur(auteur, this.getValeur()-delta);
 	}
+	/**
+	 * Version ciblee pour les variables a acces limite.
+	 * Dans le cas des Variable l'acces est ouvert a la fois
+	 * en lecture et en ecriture et on ne verifie donc
+	 * pas le cryptogramme
+	 */
+	public void retirer(IActeur auteur, double delta, Integer crypto) {
+		this.retirer(auteur, delta);
+	}
+
 	public void addObserver(PropertyChangeListener obs) {
 		pcs.addPropertyChangeListener(obs);
 	}
