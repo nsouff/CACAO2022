@@ -6,12 +6,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import abstraction.eq8Romu.filiere.Banque;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
 
-public class Producteur1Stock {
+public class Producteur1Stock extends Producteur1Acteur {
 	private  HashMap<Feve,List<FeveProducteur1>> Feves;
-	protected Integer cryptogramme;
+	private Variable StockBasse;
+	private Variable StockMoyenne;
+	private Variable StockHaut_BE;
+	private Variable StockMoyenne_BE;
+	private Variable StockBasse_NA; //on compte les fèves non affinées
+	private Variable StockMoyenne_NA;
+	private Variable StockHaut_BE_NA;
+	private Variable StockMoyenne_BE_NA;
+	
+	private Variable PrixEntretienArbre;
 	
 	
 	//Auteur : Khéo
@@ -22,6 +32,30 @@ public class Producteur1Stock {
 		Feves.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, new ArrayList<FeveProducteur1>());
 		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<FeveProducteur1>());
 		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<FeveProducteur1>());
+		
+		
+		this.StockBasse_NA= new Variable(this.getNom()+"StockBasse_NA", "Stock de Fèves Basse avec sans Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_BASSE, true));
+		this.StockMoyenne_NA= new Variable(this.getNom()+"StockMoyenne_NA", "Stock de Fèves Moyenne avec sans Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_MOYENNE, true));
+		this.StockHaut_BE_NA= new Variable(this.getNom()+"StockHautBE_NA", "Stock de Fèves Haut Bio équitable avec sans Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE, true));
+		this.StockMoyenne_BE_NA= new Variable(this.getNom()+"StockMoyenne_BE_NA", "Stock de Fèves Moyenne Bio équitable avec sans Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE, true));
+		
+		this.StockBasse= new Variable(this.getNom()+"StockBasse", "Stock de Fèves Basse sans non Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_BASSE, false));
+		this.StockMoyenne= new Variable(this.getNom()+"StockMoyenne", "Stock de Fèves Moyenne sans non Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_MOYENNE, false));
+		this.StockHaut_BE= new Variable(this.getNom()+"StockHautBE", "Stock de Fèves Haut Bio équitable sans non Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE, false));
+		this.StockMoyenne_BE= new Variable(this.getNom()+"StockMoyenne_BE", "Stock de Fèves Moyenne Bio équitable sans non Affinage", 
+				this, 0, 1000000000, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE, false));
+		
+		this.PrixEntretienArbre= new Variable(this.getNom()+"Prix Entretien Arbre", "Prix Entretien des Arbres", 
+				this, 0, 1000000000, 0.001);
+		
+		
 		
 	}
 	
@@ -35,15 +69,38 @@ public class Producteur1Stock {
 	
 	//Auteur : Khéo
 	public void next(){
-	
+		super.next();
+		
+		
+		this.MAJStock();
+		
+		for (Feve f : this.getFeves().keySet()) {
+			for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+				Lot.MAJAffinage(f);
+			}
+		}
+		
+		//Mis à jour Variable
+		this.getStockBasse().setValeur(this, this.getStock(Feve.FEVE_BASSE, false));
+		this.getStockHaut_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE, false));
+		this.getStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE, false));
+		this.getStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE, false));
+		
+		this.getStockBasse_NA().setValeur(this, this.getStock(Feve.FEVE_BASSE, true));
+		this.getStockHaut_BE_NA().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE, true));
+		this.getStockMoyenne_NA().setValeur(this, this.getStock(Feve.FEVE_MOYENNE, true));
+		this.getStockMoyenne_BE_NA().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE, true));
+		
 	}
 	
 	//Auteur : Khéo
-	public double getStock(Feve f){
+	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+			if (Lot.isAffine() || affinage) {
 			somme = somme + Lot.getPoids() ;
+			}
 		}
 		return somme ;	
 	}
@@ -71,11 +128,92 @@ public class Producteur1Stock {
 		}
 	}
 	
+	//Auteur : Khéo
+	public void MAJStock() {
+		
+		for(Feve Feve : this.getFeves().keySet()) {
+			for (int i=0; i< this.getFeves().get(Feve).size(); i++) {
+				this.getFeves().get(Feve).get(i).MajPeremption();
+				
+				if (this.getFeves().get(Feve).get(i).isPerime()) { //On retire du stock si c'est périmée
+					this.getFeves().get(Feve).remove(i);
+				}
+			}
+			
+		}
+	}
+	
 	/**
 	 * @return the feves
 	 */
 	public HashMap<Feve, List<FeveProducteur1>> getFeves() {
 		return Feves;
 	}
+	
+	//Auteur : Khéo
+		/**
+		 * @return the stockBasse
+		 */
+		public Variable getStockBasse() {
+			return StockBasse;
+		}
+
+		/**
+		 * @return the stockMoyenne
+		 */
+		public Variable getStockMoyenne() {
+			return StockMoyenne;
+		}
+
+		/**
+		 * @return the stockHaut_BE
+		 */
+		public Variable getStockHaut_BE() {
+			return StockHaut_BE;
+		}
+		
+		/**
+		 * @return the stockMoyenne_BE
+		 */
+		public Variable getStockMoyenne_BE() {
+			return StockMoyenne_BE;
+		}
+		
+		/**
+		 * @return the prixEntretienArbre
+		 */
+		public Variable getPrixEntretienArbre() {
+			return PrixEntretienArbre;
+		}
+
+
+
+		/**
+		 * @return the stockBasse_NA
+		 */
+		public Variable getStockBasse_NA() {
+			return StockBasse_NA;
+		}
+
+		/**
+		 * @return the stockMoyenne_NA
+		 */
+		public Variable getStockMoyenne_NA() {
+			return StockMoyenne_NA;
+		}
+
+		/**
+		 * @return the stockHaut_BE_NA
+		 */
+		public Variable getStockHaut_BE_NA() {
+			return StockHaut_BE_NA;
+		}
+
+		/**
+		 * @return the stockMoyenne_BE_NA
+		 */
+		public Variable getStockMoyenne_BE_NA() {
+			return StockMoyenne_BE_NA;
+		}
 
 }

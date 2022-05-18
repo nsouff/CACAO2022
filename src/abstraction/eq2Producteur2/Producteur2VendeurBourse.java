@@ -2,9 +2,9 @@ package abstraction.eq2Producteur2;
 
 import java.util.LinkedList;
 
-/**
- * @author SAIDI Mohamed
- */
+
+// @author SAIDI Mohamed
+ 
 
 import abstraction.eq8Romu.bourseCacao.IVendeurBourse;
 import abstraction.eq8Romu.produits.Feve;
@@ -16,13 +16,13 @@ public class Producteur2VendeurBourse extends Producteur2Vendeur implements IVen
 	public double offre(Feve f, double cours) {
 		double quantiteAVendre = 0;
 		if (cours> 1.3*coutProduction) {
-			 //quantiteAVendre=StockTot.get(f) // on vend 80% du stock;
+			 quantiteAVendre= this.StockTot.get((f)); // on vend 80% du stock;
 		}
 		if (cours> 1.2*coutProduction) {
-			//quantiteAVendre   =on vend 60% du stock;
+			 quantiteAVendre  = this.StockTot.get((f)); // on vend 60% du stock;
 		}
 		if (cours> 1.1*coutProduction) {
-			// quantiteAVendre = on vend 40% du stock ;
+			  quantiteAVendre = this.StockTot.get((f)); // on vend 40% du stock ;
 		}
 		return quantiteAVendre;
 	}
@@ -30,7 +30,8 @@ public class Producteur2VendeurBourse extends Producteur2Vendeur implements IVen
 	@Override
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
-		
+		this.removeQuantite(quantiteEnKg, f);
+
 	}
 
 }

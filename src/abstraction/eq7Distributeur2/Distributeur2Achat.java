@@ -1,6 +1,6 @@
 package abstraction.eq7Distributeur2;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import abstraction.eq8Romu.contratsCadres.Echeancier;
@@ -11,136 +11,145 @@ import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
+//Classe rédigée par Edgar et Matteo
 public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteurContratCadre{
+	public static final int EPS_ECH_OK=2;
+	public static final int ECH_MAX=15;
+	public static final Double PRIX_MAX=100.0;
+	public static final Double PRIX_OK=50.0;
+	public static final Double EPSILON_PRIX=5.0;
+	
+	protected List<ExemplaireContratCadre> mesContratEnTantQuAcheteur;
 	
 	public Distributeur2Achat() {
 		super();
+		this.mesContratEnTantQuAcheteur = new LinkedList<ExemplaireContratCadre>();
 	}
 	
 	
-		//edgard 
-		//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
-		//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
-		//On compare ces prixs et on réalise finalement le contrat avec le meilleur vendeur.
-		//On réalise une moyenne des achats du client final sur les 6 steps précédents pour determiner la quantité achetée par step
-		//On compare notre stock au seuil limite pour determiner la quantité à acheter pour remettre au seuil
-		//Pour qu'un produit soit en tg, il doit être bioéquitable
-		//On réalise un contrat pour chacun des différents chocolatss produits afin de tous les avoir en stock
-		//Finalement, on fait un contrat avec le vendeur le plus offrant
-		@Override
-		public void next() {
-			SuperviseurVentesContratCadre c = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-			for (ChocolatDeMarque choc : Filiere.LA_FILIERE.getChocolatsProduits()) {
-				boolean tg = true;
-				if (choc.isBioEquitable()==false) {
-					tg=false;
-				}
-				List <Double> prix = new ArrayList<Double>();
-				int e = Filiere.LA_FILIERE.getEtape();
-				if (stock.getQuantite(choc)<stock.getSeuilRachat(choc)) {
-					int index = 0;
-					
-					double ventes = 0.0;
-					for (int j=1; j<6; j++) {
-						ventes+=Filiere.LA_FILIERE.getVentes(choc, e-j);
-					}
-					double venteParStep= ventes/6;
-					double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
-					int nmbStep = (int) Math.round(chocAacheter/venteParStep);
-					Echeancier ech = new Echeancier(e,nmbStep,venteParStep);
-					
-					List<IVendeurContratCadre> vendeurs =c.getVendeurs(choc);
-					for (int i=0; i<vendeurs.size(); i++) {
-						ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeurs.get(i), choc, ech, this.cryptogramme, tg);
-						prix.set(i, contrat.getPrix());
-						double pMin = prix.get(0);
-						for (double p : prix) {
-							if(p>pMin) {
-								pMin=p;
-								index+=1;
-							}
-						}
-					}
-					IVendeurContratCadre vendeur= vendeurs.get(index);
-					ExemplaireContratCadre contrat = c.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choc, ech, this.cryptogramme, tg);
+	//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
+	//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
+	//On compare ces prixs et on réalise finalement le contrat avec le meilleur vendeur.
+	//On réalise une moyenne des achats du client final sur les 6 steps précédents pour determiner la quantité achetée par step
+	//On compare notre stock au seuil limite pour determiner la quantité à acheter pour remettre au seuil
+	//Pour qu'un produit soit en boolTeteGondole, il doit être bioéquitable
+	//On réalise un contrat pour chacun des différents chocolatss produits afin de tous les avoir en stock
+	//Finalement, on fait un contrat avec le vendeur le plus offrant
+	@Override
+	public void next() {
+		super.next();
+		
+		//-------------------------------------NEXT CONTRAT------------------------------------------//
+		//Initialisation du superviseur de vente
+		SuperviseurVentesContratCadre SupVente = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+	
+		//Pour chaque chocolat produit sur le marché
+		for (ChocolatDeMarque chocProduit : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			
+			//On pose le chocolat en tête de gondole si il est bio et équitable
+			boolean boolTeteGondole = chocProduit.isBioEquitable();
+			
+			int currentEtape = Filiere.LA_FILIERE.getEtape();
+			
+			//Si la quantite du chocolat en question est inférieure au seuil auquel on a décidé d'en racheter, alors on va en racheter
+			if (stock.getQuantite(chocProduit)<=stock.getSeuilRachat(chocProduit)) {
+				
+				int nbStepContrat = 10;
+				//Retourne le volume le plus judicieux à acheter selon le nombre d'étape sur lequel on reparti le contrat
+				double venteParStep = this.volumeParEtapeMoyenne(chocProduit, currentEtape, nbStepContrat);
+				
+				//On créer un écheancier correspondant à nos besoin
+				Echeancier echeancierAchat = new Echeancier(currentEtape,nbStepContrat,venteParStep);
+				
+				//On récupère tout les vendeurs actifs
+				List<IVendeurContratCadre> vendeurs = SupVente.getVendeurs(chocProduit);
+				
+				//Pour chaque vendeur
+				for (IVendeurContratCadre vendeur : vendeurs) {
+					journal.ajouter("BioFour propose d'initier un CC avec "+ vendeur +" avec le produit: "+chocProduit);
+					ExemplaireContratCadre propositionContratCadre = SupVente.demandeAcheteur(this, vendeur, chocProduit, echeancierAchat, cryptogramme,boolTeteGondole);
+					journal.ajouter("Détail du contrat : "+ propositionContratCadre);
 				}
 			}
-			
 		}
+	}
+	
+	public double volumeParEtapeMoyenne(ChocolatDeMarque chocProduit,int currentEtape,int nbEtape) {
+		double ventes = 0.0;
+		//On ajoute les quantités vendues à chaque étape depuis nbStep
+		for (int j=1; j<=nbEtape; j++) {
+			ventes+=Filiere.LA_FILIERE.getVentes(chocProduit, currentEtape-j);
+		}
+		return ventes/(10*nbEtape);
+		
+	}
+	
+
+	@Override
+	public boolean achete(Object produit) {
+		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
+			return true;
+		}else {
+			return false;
+		}
+		//return (produit!=null && (produit instanceof ChocolatDeMarque) && this.chocolats.contains(produit));
+	}
+
+	@Override
+	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat){
+		
+		//On récupère le dernier écheancier négocié
+		Echeancier lastEcheancier = contrat.getEcheancier();
+		
+		//On récupère le chocolat concerné
+		ChocolatDeMarque chocProduit = (ChocolatDeMarque)contrat.getProduit();
+		
+		//L'étape actuelle
+		int currentEtape = Filiere.LA_FILIERE.getEtape();
 		
 
-		@Override
-		//edgard
-		public boolean achete(Object produit) {
-			// TODO Auto-generated method stub
-			if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
-				return true;
+		//Retourne le volume le plus judicieux à acheter selon le nombre d'étape sur lequel on reparti le contrat
+		double venteParStep = this.volumeParEtapeMoyenne(chocProduit, currentEtape, 10);
+		int nbStepContrat = 10;
+		
+		//On créer un écheancier correspondant à nos besoin
+		Echeancier echeancierAchat = new Echeancier(currentEtape,nbStepContrat,venteParStep);
+		
+		if (lastEcheancier.getStepFin()>ECH_MAX) {
+			return null;
+		}else {
+			//On ne cherche pas trop à négocier pour l'instant
+			return lastEcheancier;
+		}
+	}
+
+	@Override
+	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
+		double prix = contrat.getPrix();
+		if (prix>PRIX_MAX) {
+			return -1;
+		}else {
+			if(Math.abs(prix-EPSILON_PRIX)==PRIX_OK || prix<=PRIX_OK) {
+				this.journal.ajouter("Contrat négocié : " + contrat);
+				return prix;
 			}else {
-				return false;
-			}
-			//return (produit!=null && (produit instanceof ChocolatDeMarque) && this.chocolats.contains(produit));
-		}
-
-		@Override
-		//edgard
-		public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat){
-			// TODO Auto-generated method stub
-			Echeancier eC = contrat.getEcheancier();
-			
-			ChocolatDeMarque choc = (ChocolatDeMarque)contrat.getProduit();
-			int e = Filiere.LA_FILIERE.getEtape();
-			double ventes = 0.0;
-			for (int j=1; j<6; j++) {
-				ventes+=Filiere.LA_FILIERE.getVentes(choc, e-j);
-			}
-			double venteParStep= ventes/6;
-			double chocAacheter=stock.getSeuilRachat(choc)-stock.getQuantite(choc);
-			int nmbStep = (int) Math.round(chocAacheter/venteParStep);
-			Echeancier echOK = new Echeancier(e,nmbStep,venteParStep);
-			
-			if (eC.getStepFin()>ECH_MAX) {
-				return null;
-			}else {
-				if (eC.equals(echOK)) {
-					return eC;
-				}else {
-					if(eC.getStepFin()>echOK.getStepFin()) {
-						return new Echeancier(eC.getStepDebut(),eC.getNbEcheances()-EPS_ECH_OK,eC.getQuantiteTotale()/(eC.getNbEcheances()-EPS_ECH_OK));
-					}else {
-						return null;
-					}
-				}
+				return prix-EPSILON_PRIX;
 			}
 		}
+	}
 
-		@Override
-		public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-			// TODO Auto-generated method stub
-			if (contrat.getPrix()>PRIX_MAX) {
-				return 0;
-			}else {
-				if(contrat.getPrix()==PRIX_OK) {
-					return contrat.getPrix();
-				}else {
-					return contrat.getPrix()-EPSILON_PRIX;
-				}
-			}
-		}
+	@Override
+	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
+		this.stock.addProduit((ChocolatDeMarque)produit, quantite);
+	}
 
-		@Override
-		public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-			// TODO Auto-generated method stub
-			this.stock.addProduit((ChocolatDeMarque)produit, quantite);
-		}
-
-		@Override
-		public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-			// TODO Auto-generated method stub
-			IVendeurContratCadre v = contrat.getVendeur();
-			IAcheteurContratCadre a = contrat.getAcheteur();
-			Echeancier e = contrat.getEcheancier();
-			ChocolatDeMarque c = (ChocolatDeMarque) contrat.getProduit();
-			Double q = contrat.getQuantiteTotale();
-			System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + c + "étalé sur " + e);
-		}
+	@Override
+	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+		IVendeurContratCadre v = contrat.getVendeur();
+		IAcheteurContratCadre a = contrat.getAcheteur();
+		Echeancier currentEtape = contrat.getEcheancier();
+		ChocolatDeMarque chocProduit = (ChocolatDeMarque) contrat.getProduit();
+		Double q = contrat.getQuantiteTotale();
+		System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + chocProduit + "étalé sur " + currentEtape);
+	}
 }
