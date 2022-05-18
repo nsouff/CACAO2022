@@ -13,17 +13,12 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur1Producteur extends Producteur1Stock{
 	private Parc ParcAfrique;
-	protected Journal RetourMaladie;
-	protected Journal RetourRécolte;
-	protected Journal RetourGuerre;
-	protected Journal RetourAléas;
-	protected Journal RetourMAJParc;
+
 	
 	public Producteur1Producteur() {
 		super();
-		Parc afrique = new Parc("Afrique");
+		Parc afrique = new Parc("Afrique", this);
 		this.ParcAfrique = afrique;
-		//this.RetourMaladie = new Journal("Prise en compte des maladies?", this);
 	}
 	
 	//Écrit par Antoine
