@@ -35,7 +35,9 @@ public class Distributeur1Acteur implements IActeur {
 	protected Variable QteChocoMQ;
 	protected Variable QteChocoBq;
 	protected Integer Compteur;	
-			
+	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
+	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
+	
 	/**
 	 * @return the notreStock
 	 */
@@ -60,6 +62,7 @@ public class Distributeur1Acteur implements IActeur {
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		
+		this.ChocoTotalTour = 0.0;
 		
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
@@ -91,6 +94,7 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		
 	}
 	
 	public void suppAnciensContrats() {//leorouppert
@@ -107,7 +111,7 @@ public class Distributeur1Acteur implements IActeur {
 		//leorouppert
 		
 		journal1.ajouter("entrée dans next pour le tour n° " + Compteur);
-		
+		getChocoTotalTour();
 		this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 10000) {
@@ -221,7 +225,20 @@ public class Distributeur1Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
-
+	
+	/**
+	 * @author Nolann
+	 * renvoie le nombre de kg de chocolats vendus au l'année précédente à la même période  
+	 */
+	public void getChocoTotalTour() {
+		
+		for(ChocolatDeMarque Choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			this.ChocoTotalTour = this.ChocoTotalTour + Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()-24);
+			//System.out.println("il y a eu : "+Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()) +" kg de chocolats vendus au tour : " 
+					//			+ (Filiere.LA_FILIERE.getEtape()-24));
+		}
+		journal1.ajouter("Il y a eu au total : " + this.ChocoTotalTour + "kg de chocolats vendus au total au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
+	}
 	
 	
 
