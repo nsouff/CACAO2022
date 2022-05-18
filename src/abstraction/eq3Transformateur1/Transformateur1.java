@@ -27,10 +27,11 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 
 public class Transformateur1 extends Transformateur1AppelsOffres implements IMarqueChocolat, IFabricantChocolatDeMarque{
-	private static final double rendementHaute=1;                  /** rendement de la transformation haute à définir*/
-	private static final double coutTransfo=1;                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
-	private static final double coutTransfoOriginal=coutTransfo+1; /** somme de couTransfo et du supplément pour l'original*/
-	private static final double coutStockage=4*1;                  /** coutStockageTransfo = 4*coutStockageProd */
+	private static final double rendementHaute=Filiere.LA_FILIERE.getParametre("rendement").getValeur();                  /** rendement de la transformation haute à définir*/
+	private static final double coutTransfo=Filiere.LA_FILIERE.getParametre("coutTransformateur").getValeur();                     /** rappel : seul le rendement varie entre la trasnforamtion haute et celle basse ; à remplacer par this.Filiere.LA_FILIERE.getIndicateurs(coutTransfo)*/
+	private static final double coutTransfoOriginal=coutTransfo
+			+ Filiere.LA_FILIERE.getParametre("coutOrginial").getValeur(); /** somme de couTransfo et du supplément pour l'original*/
+	private static final double coutStockage=4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();                  /** coutStockageTransfo = 4*coutStockageProd */
 
 
 	public Transformateur1() { 
@@ -38,7 +39,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		stockFeve = new DicoFeve();
 		stockChoco = new DicoChoco();
 		for (Feve f : Feve.values()) {
-			stockFeve.put(f, 0.);
+			stockFeve.put(f, 10000.);
 		}
 		for (Chocolat c : Chocolat.values()) {
 			stockChoco.put(c, 0.);
