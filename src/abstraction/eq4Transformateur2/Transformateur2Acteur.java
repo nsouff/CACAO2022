@@ -235,8 +235,8 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	@Override
 	public LinkedList<ChocolatDeMarque> getChocolatsProduits() {
 		LinkedList<ChocolatDeMarque> res= new LinkedList<ChocolatDeMarque>();
-		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(0));
-		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
 		res.add(c0);
 		res.add(c1);
 		return res;
