@@ -22,6 +22,7 @@ public class Transformateur1Acteur implements IActeur {
 		cryptogramme = 0;
 		stockFeve = new DicoFeve();
 		stockChoco = new DicoChoco();
+		this.journal = new Journal("test",this);
 	}
 
 	public void initialiser() {
