@@ -193,20 +193,25 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		}
 	}
 
-	//juju
+	//juju & Yves
 	public List<String> getMarquesChocolat() {
 			List<String> marques=new ArrayList<String>();
 			marques.add("BIO'riginal");
+			marques.add("CHOCO'riginal");
 			return marques;
 		}
 
-	//juju
+	//juju & Yves
 	public List<ChocolatDeMarque> getChocolatsProduits() {
 		List<ChocolatDeMarque> cm=new ArrayList<ChocolatDeMarque>();
-		cm.add( new ChocolatDeMarque(Chocolat.HQ_BE_O,"BIO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.HQ_BE_O,"BIO'riginal"));
 		cm.add(new ChocolatDeMarque(Chocolat.HQ_BE,"BIO'riginal"));
 		cm.add(new ChocolatDeMarque(Chocolat.MQ_BE_O,"BIO'riginal"));
 		cm.add(new ChocolatDeMarque(Chocolat.MQ_BE,"BIO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.HQ_O,"CHOCO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.HQ,"CHOCO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.MQ_O,"CHOCO'riginal"));
+		cm.add(new ChocolatDeMarque(Chocolat.MQ,"CHOCO'riginal"));
 		return cm;
 	}
 	
