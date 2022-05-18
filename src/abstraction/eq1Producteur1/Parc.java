@@ -27,6 +27,9 @@ public class Parc {
 	protected Journal RetourAléas;
 	protected Journal RetourMaladie;
 	protected Journal RetourRécolte;
+	private int mecontentementBQ;
+	private int mecontentementMQ;
+	private int mecontentementHQ;
 	
 	public Parc(String nom, Object producteur) { //Écrit par Antoine
 		this.cacaoyers = new ArrayList<MilleArbre>();
@@ -45,8 +48,9 @@ public class Parc {
 		this.RetourAléas = new Journal("CAC'AO40 "+nom+" Le réchauffement climatique n'est pas un hoax?", ((IActeur)producteur));
 		this.RetourMaladie = new Journal("CAC'AO40 "+ nom + " Prise en compte des maladies?", ((IActeur)producteur));
 		this.RetourRécolte = new Journal("CAC'AO40 "+ nom + " On récolte du Khécao?", ((IActeur)producteur));
-
-		
+		this.mecontentementBQ=0;
+		this.mecontentementMQ=0;
+		this.mecontentementHQ=0;
 	}
 	
 	public List<MilleArbre> getCacaoyers() { //Écrit par Antoine
@@ -112,6 +116,18 @@ public class Parc {
 	public int getfin_aleas() { //Écrit par Antoine
 		return this.fin_aleas;
 	}
+	
+	public int getMecontentementBQ() {
+		return this.mecontentementBQ;
+	}
+	
+	public int getMecontentementMQ() {
+		return this.mecontentementMQ;
+	}
+	
+	public int getMecontentementHQ() {
+		return this.mecontentementHQ;
+	}
 
 	public void setNom(String nom) { //Écrit par Antoine
 		this.nom = nom;
@@ -151,6 +167,18 @@ public class Parc {
 	
 	public void setfin_aleas(int i) { //Écrit par Antoine
 		this.fin_aleas = i;
+	}
+	
+	public void setmecontentementBQ(int mecontentementBQ) {
+		this.mecontentementBQ=mecontentementBQ;
+	}
+	
+	public void setmecontentementMQ(int mecontentementMQ) {
+		this.mecontentementMQ=mecontentementMQ;
+	}
+	
+	public void setmecontentementHQ(int mecontentementHQ) {
+		this.mecontentementHQ=mecontentementHQ;
 	}
 
 	public MilleArbre getArbre(int i) { //Écrit par Antoine
@@ -226,6 +254,11 @@ public class Parc {
 		this.getRetourAléas().ajouter("Cette année (ut :"+Filiere.LA_FILIERE.getEtape()+"), les aléas climatiques vont durer"+temps+"ut" );
 		}
 	}
+	
+	public int MAJMecontentementBQ() {
+		
+	}
+
 	
 	public void MAJParc() { //Écrit par Antoine
 		int malade5 = 0;
@@ -326,7 +359,7 @@ public class Parc {
 				if (maladie==1) {
 					malade1+=1;
 				}
-				if (maladie==2) {
+				if (maladie==2) { 
 					malade2+=1;
 				}
 				if (maladie==3) {
