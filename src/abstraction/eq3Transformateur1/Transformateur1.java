@@ -270,7 +270,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 							cryptogramme, 
 							false);
 				}
-			} else if (f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) { // BE => prod 2
+			}/** else if (f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) { // BE => prod 2
 				// desire t on un CC  ?
 				if (this.achete(f)) {
 					// creation de l'echeancier
@@ -284,7 +284,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 							cryptogramme, 
 							false);
 				}
-			}
+			}*/
 		}
 		
 		
