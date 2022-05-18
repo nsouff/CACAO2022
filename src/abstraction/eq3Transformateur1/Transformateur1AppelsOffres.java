@@ -33,7 +33,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 		super.next();
 		journal.ajouter("test journal Appeldoffres");
 	}
-	
+
 	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas 
 	/** on veut faire par type de chocolat */
 

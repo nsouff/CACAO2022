@@ -8,6 +8,7 @@ import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.ExempleTransformateurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -21,17 +22,17 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	
 	public Transformateur1ContratCadreVendeur() {
 		super();
-		System.out.println("ok2");
-
 		this.mesContratEnTantQueVendeur=new LinkedList<ExemplaireContratCadre>();
 	}
 	
 	// fonction qui détermine quel type de chocolat on vend en contrat cadre; auteur Julien */
 	public boolean vend(Object produit) {
-// COMMENTE PAR ROMU CAR CODE BLOQUANT LES VENTES PAR CONTRAT CADRE : Avant de caster en ChocolatDeMarque il est indispensable de s'assurer via un instanceof qu'il s'agit bien d'un chocolat de marque car les contrats cadres peuvent concerner tous les types de produits
-		if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
+
+		if (produit instanceof ChocolatDeMarque){
+			if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
 			return true;
-	}
+			}
+		}
 		return false;
 	}
 
@@ -60,9 +61,23 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	}
 
 	/** Ajout du contrat dans la liste de contrats à honorer
+	 *  et maj de dernierPrixVenteChoco
 	 *  Alexandre*/
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		mesContratEnTantQueVendeur.add(contrat);
+		if (dernierPrixVenteChocoReset.getPrix(
+				contrat.getAcheteur().getNom(), 
+				((ChocolatDeMarque)contrat.getProduit()).getChocolat())
+				> contrat.getPrix() 
+				&& dernierPrixVenteChocoReset.getPrix(
+						contrat.getAcheteur().getNom(), 
+						((ChocolatDeMarque)contrat.getProduit()).getChocolat()) 
+				!= 0) { // on garde le prix minimum negocie avec les vendeurs
+			dernierPrixVenteChocoReset.setPrix(
+					contrat.getAcheteur().getNom(), 
+					((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
+					contrat.getPrix());
+		}
 		
 	}
 
@@ -77,8 +92,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		return livre;
 	}
 	
-	// Supprime les contrats obsolètes et honorés */
 	public void next() {
+		super.next();
+		journal.ajouter("test ContratCadreVendeur");
+		// Supprime les contrats obsolètes et honorés -Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -87,6 +104,13 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
 	}
+	
+	/** 
+	 *  Alexandre*/
+	public void initialiser() {
+		super.initialiser();
+	}
+	
 
 	
 }
