@@ -62,5 +62,17 @@ public class dernierPrixVenteChoco {
 		}
 		return chocolats;
 	}
+	
+	/** renvoie une copie de l'objet dernierPrixVenteChoco
+	 *  Alexandre */
+	public dernierPrixVenteChoco copy() {
+		dernierPrixVenteChoco copy = new dernierPrixVenteChoco();
+		for (String distrib : this.getDistributeurs()) {
+			for (Chocolat c : this.getChocolats()) {
+				copy.setPrix(distrib, c, this.getPrix(distrib, c));
+			}
+		}
+		return copy;
+	}
 
 }
