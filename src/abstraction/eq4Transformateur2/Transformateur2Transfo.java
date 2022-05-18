@@ -1,6 +1,7 @@
 package abstraction.eq4Transformateur2;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -21,7 +22,6 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	protected double prix_ori;
 	protected double cap;
 	
-	protected abstract HashMap getCommande();//POUR LA V2
 	
 	
 	public void next() {//EN V1 on ne transforme que de façon arbitraire
@@ -33,14 +33,16 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	}
 	public void initialiser() {
 		super.initialiser();
+		cap=Filiere.LA_FILIERE.getIndicateur("seuiTransformation").getValeur();
+		rdt=Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
+		prix_transfo=Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur();
+		prix_ori=Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
 	}
 	
 	public Transformateur2Transfo() {
 		super();
-		rdt=super.getRendementTransfoLongue().getValeur();
-		prix_transfo= super.getPrixTransformation().getValeur();
-		prix_ori=super.getPrixChocoOriginal().getValeur();
-		cap=super.getTransformationSeuil().getValeur();
+		
+		
 	}
 
 	
@@ -111,6 +113,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 						NewCap-=qt;//mise à jour de la capacité de production
 						this.getStockfeve().enlever(f,qt);//baisse le stock de feves
 						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), qt);//augmente le stock de chocolat
+						this.journal.ajouter("Transformation Courte de " +qt+" kg de "+f+"en "+this.fevechoco(f).toString());
 						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), qt*(prix_transfo+s*prix_ori));//paye
 					}
 				}
@@ -120,8 +123,9 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		
 	public ChocolatDeMarque fevechoco(Feve f) {
 		if(f.getGamme().equals(Gamme.BASSE)) {
-			return new ChocolatDeMarque(Chocolat.BQ,super.getMarquesChocolat().get(0));
+			return new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
 		} else {
+
 			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
 		}
 	}

@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
+
 
 public class Parc {
 	private ArrayList<MilleArbre> cacaoyers;
@@ -31,16 +33,14 @@ public class Parc {
 		this.guerre = false;
 		this.ut_debut_guerre = 0;
 		this.ut_fin_guerre = 0;
-		fin_aleas = 0;
-		
-		
+		this.fin_aleas = 0;
 	}
 	
 	public List<MilleArbre> getCacaoyers() { //Écrit par Antoine
 		return this.cacaoyers;
 	}
 	
-	public String getNom() {
+	public String getNom() { //Écrit par Antoine
 		return this.nom;
 	}
 	
@@ -79,8 +79,8 @@ public class Parc {
 	public int getfin_aleas() { //Écrit par Antoine
 		return this.fin_aleas;
 	}
-	
-	public void setNom(String nom) {
+
+	public void setNom(String nom) { //Écrit par Antoine
 		this.nom = nom;
 	}
 	
@@ -119,7 +119,7 @@ public class Parc {
 	public void setfin_aleas(int i) { //Écrit par Antoine
 		this.fin_aleas = i;
 	}
-	
+
 	public MilleArbre getArbre(int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(i);
 	}
@@ -158,15 +158,15 @@ public class Parc {
 			this.setGuerre(false);
 		}
 		if (Filiere.LA_FILIERE.getEtape()>=this.getUt_fin_guerre()+Math.ceil((this.getUt_fin_guerre()-this.getUt_debut_guerre())*1.5)) {
-				double d = Math.random();
-				if (d<=0.15) {
+				double chance_guerre = Math.random();
+				if (chance_guerre<=0.15) {
 					this.setGuerre(true);
 					this.setUt_debut_guerre(Filiere.LA_FILIERE.getEtape());
-					double dd = Math.random();
-					while (dd==0) {
-						dd = Math.random();
+					double aléa_durée_guerre = Math.random();
+					while (aléa_durée_guerre==0) {
+						aléa_durée_guerre = Math.random();
 					}
-					int temps = (int)Math.ceil(dd*6);
+					int temps = (int)Math.ceil(aléa_durée_guerre*6);
 					this.setUt_fin_guerre(this.getUt_debut_guerre()+temps);
 			}
 		}
@@ -174,11 +174,11 @@ public class Parc {
 	
 	public void MAJAleas() { //Écrit par Antoine
 		if (Filiere.LA_FILIERE.getEtape()%24==20) {
-			double d = Math.random();
-			while (d==0) {
-				d = Math.random();
+			double aléa_durée_aléas = Math.random();
+			while (aléa_durée_aléas==0) {
+				aléa_durée_aléas = Math.random();
 			}
-		this.setfin_aleas((int)(Filiere.LA_FILIERE.getEtape()+Math.ceil((d+1)*2)));
+		this.setfin_aleas((int)(Filiere.LA_FILIERE.getEtape()+Math.ceil((aléa_durée_aléas+1)*2)));
 		}
 	}
 	
@@ -191,20 +191,26 @@ public class Parc {
 				this.getCacaoyers().remove(arbre_i);
 				this.MAJCompteur(arbre_i,-1);
 			}
+			if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) {
+				int qualite = arbre_i.getQualite();
+				boolean BE = arbre_i.getBioequitable();
+				this.Planter(new MilleArbre(qualite,BE,Filiere.LA_FILIERE.getEtape()));
+				this.MAJCompteur(arbre_i,1);
+			}
 		}
 	}
 	
 	public double ParasitesBE() { //Écrit par Antoine
-		double d = Math.random();
-		if (d<=0.2) {
-			double dd = Math.random();
-			if (dd<=0.7) {
+		double chance_parasite = Math.random();
+		if (chance_parasite<=0.2) {
+			double niveau_parasite = Math.random();
+			if (niveau_parasite<=0.7) {
 				return 0.9;
 			}
-			if ((dd>0.7) && (dd<=0.95)) {
+			if ((niveau_parasite>0.7) && (niveau_parasite<=0.95)) {
 				return 0.5;
 			}
-			if ((dd>0.95) && (dd<=1)) {
+			if ((niveau_parasite>0.95) && (niveau_parasite<=1)) {
 				return 0.2;
 			}
 			return 1;
@@ -215,16 +221,16 @@ public class Parc {
 	}
 	
 	public double Parasites_non_BE() { //Écrit par Antoine
-		double d = Math.random();
-		if (d<=0.04) {
-			double dd = Math.random();
-			if (dd<=0.7) {
+		double chance_parasite = Math.random();
+		if (chance_parasite<=0.04) {
+			double niveau_parasite = Math.random();
+			if (niveau_parasite<=0.7) {
 				return 0.9;
 			}
-			if ((dd>0.7) && (dd<=0.95)) {
+			if ((niveau_parasite>0.7) && (niveau_parasite<=0.95)) {
 				return 0.5;
 			}
-			if ((dd>0.95) && (dd<=1)) {
+			if ((niveau_parasite>0.95) && (niveau_parasite<=1)) {
 				return 0.2;
 			}
 			else {

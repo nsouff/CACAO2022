@@ -11,7 +11,6 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 
 	public Distributeur2ChocolatDeMarque() {
 		super();
-		//TODO
 	}
 	
 	
@@ -20,7 +19,6 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
-		// TODO Auto-generated method stub
 		if (crypto!=this.cryptogramme) {
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
@@ -30,7 +28,6 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) {
-		// TODO Auto-generated method stub
 		if (crypto!=this.cryptogramme) {
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
@@ -40,17 +37,15 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
-		// TODO Auto-generated method stub
 		this.stock.remove(choco, quantite);
 		
 	}
 
 	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) {
-		// TODO Auto-generated method stub
 		if (crypto!=this.cryptogramme) {
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 		} else {
-			journal.ajouter("Je n'ai pas assez mis en vente de "+choco);
+			journal.ajouter("Rayon vide : "+choco);
 		}
 	}
 

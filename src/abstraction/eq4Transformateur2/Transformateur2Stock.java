@@ -42,17 +42,17 @@ public class Transformateur2Stock extends Transformateur2ContratCadre {
 	public Transformateur2Stock() {
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
 		this.stockfeve=new Stock();
-		this.stockfeve.ajouter(Feve.FEVE_BASSE, 15000);
-		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 9000);
+		this.stockfeve.ajouter(Feve.FEVE_BASSE, 150000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 100000);
 //		this.stockfevebasseVAR=new Variable("Opti'Cacao STOCKFEVE_BASSE", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_BASSE));
 //		this.stockfevemoyVAR=new Variable("Opti'Cacao STOCKFEVE_MOY", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_MOYENNE));
 		
 		//On se fixe une marque pour un type de chocolat
-		ChocolatDeMarque chocomax=new ChocolatDeMarque(Chocolat.MQ,"O'max");
-		ChocolatDeMarque chocoptella=new ChocolatDeMarque(Chocolat.BQ,"O'ptella");
+		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
 		this.stockchocolatdemarque=new Stock();
-		this.stockchocolatdemarque.ajouter(chocomax, 20000);
-		this.stockchocolatdemarque.ajouter(chocoptella, 30000);
+		this.stockchocolatdemarque.ajouter(c1, 20000);
+		this.stockchocolatdemarque.ajouter(c0, 30000);
 //		this.stockchocolatdemarqueomaxVAR=new Variable("Opti'Cacao STOCK chocomax", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocomax));
 //		this.stockchocolatdemarqueoptellaVAR=new Variable("Opti'Cacao STOCK optella", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocoptella));
 //		this.stockchocolatdemarqueoriginalVAR=new Variable("Opti'Cacao STOCK chocoriginal", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocoriginal));

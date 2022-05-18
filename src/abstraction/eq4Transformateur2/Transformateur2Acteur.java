@@ -9,6 +9,8 @@ import abstraction.eq8Romu.clients.FiliereTestClientFinal;
 import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
+import abstraction.eq8Romu.filiere.IMarqueChocolat;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -21,7 +23,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Transformateur2Acteur implements IActeur {
+public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
 	
 	//pas sur de celles ci, mais je les laisse au cas ou...
 	private Variable coutStockage;
@@ -85,19 +87,6 @@ public class Transformateur2Acteur implements IActeur {
 
 	}
 	
-	
-
-
-
-
-
-
-
-
-
-
-
-
 
 	public void initialiser() {
 		
@@ -123,11 +112,6 @@ public class Transformateur2Acteur implements IActeur {
 	public void next() {
 			
 	}
-	
-	
-	
-
-	
 	
 	
 	public List<String> getNomsFilieresProposees() {
@@ -235,55 +219,28 @@ public class Transformateur2Acteur implements IActeur {
 		return expirationChoco;
 	}
 
-
-
 	public Variable getTransformationSeuil() {
 		return TransformationSeuil;
 	}
 
+	@Override
+	public LinkedList<String> getMarquesChocolat() {
+		LinkedList<String> res = new LinkedList<String>();
+		res.add("O'ptella");
+//		res.add("O'ptibon");
+		res.add("O'max");
+		return res;
+	}
 
+	@Override
+	public LinkedList<ChocolatDeMarque> getChocolatsProduits() {
+		LinkedList<ChocolatDeMarque> res= new LinkedList<ChocolatDeMarque>();
+		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		res.add(c0);
+		res.add(c1);
+		return res;
+	}
 
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 }

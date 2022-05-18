@@ -1,5 +1,7 @@
 package abstraction.eq2Producteur2;
 
+// Auteur : Clément
+
 import java.util.Random;
 
 public class AleaClimatique {
