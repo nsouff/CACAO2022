@@ -10,7 +10,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteure : Fiona 
 
-public class Producteur2Plantation {
+public class Producteur2Plantation{
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
@@ -70,11 +70,11 @@ public class Producteur2Plantation {
 		
 		ArrayList<Integer> qt = new ArrayList<Integer>();
 		
-		qt.add((int) (Math.ceil((20*NbTotalArbres)/5))); // HGB
-		qt.add((int) (Math.ceil((80*NbTotalArbres)/5))); // HG
-		qt.add((int) (Math.ceil((40*NbTotalArbres)/5))); // MGB
-		qt.add((int) (Math.ceil((160*NbTotalArbres)/5))); //MG 
-		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); //BG
+		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); // HGB
+		qt.add((int) (Math.ceil((800*NbTotalArbres)/5))); // HG
+		qt.add((int) (Math.ceil((400*NbTotalArbres)/5))); // MGB
+		qt.add((int) (Math.ceil((1600*NbTotalArbres)/5))); //MG 
+		qt.add((int) (Math.ceil((2000*NbTotalArbres)/5))); //BG
 		
 		return qt;
 	}
@@ -216,7 +216,7 @@ public class Producteur2Plantation {
 		
 
 	/*public double production(Feve feve) {
-		return this.getNbArbre(feve)*3.0;
+		return this.getNbArbre(feve)*3.0; //methode qui ne fait pas planter la fillière Test seulement avec 2 et qui ne s'affiche correctement dans le journal que pour 3/5 type de feves
 	}*/
 		
 	
@@ -239,19 +239,6 @@ public class Producteur2Plantation {
 		}
 		return ProductionFinale;
 	}
-	
-	
-	public double getRendement(Feve feve) {
-		Arbre arbre = conversion(feve);
-		List<Parcelle> ListeParcelles = this.NbParcelles.get(arbre);
-		double rendement = 0.0;
-		for (Parcelle p : ListeParcelles) {
-			rendement+=RendementParcelle(p)*p.getNbArbres();
-		}
-		return rendement/this.NbParcelles.get(arbre).size();
-	}
-		
-	
 	
 	public int getNbArbre(Feve feve) {
 		//auteure : Fiona
