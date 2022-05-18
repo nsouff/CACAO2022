@@ -206,7 +206,9 @@ public class Parc {
 					this.setUt_fin_guerre(this.getUt_debut_guerre()+temps);
 					this.getRetourGuerre().ajouter("Nos ennemis n'achètent pas notre cacao, il est temps de les goumer et ce pendant"+temps+"ut");
 			}
-				this.getRetourGuerre().ajouter("Ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
+				else {
+					this.getRetourGuerre().ajouter("Ces cancres de Producteur2 ne méritent pas qu'on leur déclare la guerre pour le moment");
+				}
 		}
 		else {
 			this.getRetourGuerre().ajouter("C'est la période de paix frérot, on cherche pas les embrouilles");
