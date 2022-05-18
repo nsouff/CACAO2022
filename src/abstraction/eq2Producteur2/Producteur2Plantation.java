@@ -216,7 +216,7 @@ public class Producteur2Plantation {
 		
 
 	/*public double production(Feve feve) {
-		return this.getNbArbre(feve)*3.0; //methode qui ne fait pas planter la fillière Test seulement avec 2 et qui ne s'affiche correctement dans le journal que pour 3/5 type de feves
+		return this.getNbArbre(feve)*3.0;
 	}*/
 		
 	
@@ -239,6 +239,19 @@ public class Producteur2Plantation {
 		}
 		return ProductionFinale;
 	}
+	
+	
+	public double getRendement(Feve feve) {
+		Arbre arbre = conversion(feve);
+		List<Parcelle> ListeParcelles = this.NbParcelles.get(arbre);
+		double rendement = 0.0;
+		for (Parcelle p : ListeParcelles) {
+			rendement+=RendementParcelle(p)*p.getNbArbres();
+		}
+		return rendement/this.NbParcelles.get(arbre).size();
+	}
+		
+	
 	
 	public int getNbArbre(Feve feve) {
 		//auteure : Fiona
