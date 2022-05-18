@@ -85,6 +85,7 @@ public class FiliereTest1  extends Filiere {
 			repartitionInitiale.put(Chocolat.BQ_O,   20.0); // Basse Qualite  ,pas Bio-Equitable, Original
 			repartitionInitiale.put(Chocolat.BQ,     35.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
 		}
+		
 		this.cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 		this.ajouterActeur(cf);
 		this.ajouterActeur(new Producteur1());
@@ -99,7 +100,7 @@ public class FiliereTest1  extends Filiere {
 		this.ajouterActeur(this.superviseurCC);
 		this.bourse=new BourseCacao();
 		this.ajouterActeur(this.bourse);
-		this.superviseurAO=new SuperviseurVentesAO();
+		this.superviseurAO=new SuperviseurVentesAO(); System.out.println("sup init");
 		this.ajouterActeur(this.superviseurAO);
 
 	}

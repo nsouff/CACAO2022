@@ -62,7 +62,7 @@ public class Transformateur1Acteur implements IActeur {
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
-		case "FiliereTest1" : return new FiliereTestBourseEq1();
+		case "FiliereTest1" : return new FiliereTest1();
 	    default : return null;
 		}
 	}
