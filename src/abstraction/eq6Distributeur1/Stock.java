@@ -44,7 +44,6 @@ public class Stock { //Emma Humeau
 	 * @return the coûtStockageTotale
 	 */
 	public double getCoûtStockageTotale() {
-		//System.out.println("calcul du coût total :");
 		/**
 		 * @author Nolann
 		

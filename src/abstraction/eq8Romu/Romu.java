@@ -154,7 +154,8 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				if (transfo>0) {
 					this.stockFeves.put(f, this.stockFeves.get(f)-transfo);
 					this.totalStocksFeves.retirer(this, transfo, this.cryptogramme);
-					this.stockChoco.put(c, this.stockChoco.get(c)+(transfo*this.pourcentageTransfo.get(f).get(c)));
+					this.stockChoco.put(c, this.stockChoco.get(c)+((transfo/2.0)*this.pourcentageTransfo.get(f).get(c)));
+					this.stockChocoMarque.put(new ChocolatDeMarque(c, "Villors"), this.stockChoco.get(c)+((transfo/2.0)*this.pourcentageTransfo.get(f).get(c)));
 					this.totalStocksChoco.ajouter(this, (transfo*this.pourcentageTransfo.get(f).get(c)), this.cryptogramme);
 					this.journal.ajouter(COLOR_LLGRAY, Color.PINK, "Transfo de "+(transfo<10?" "+transfo:transfo)+" Kg de "+f+" en "+Journal.doubleSur(transfo*this.pourcentageTransfo.get(f).get(c),3,2)+" Kg de "+c);
 					this.journal.ajouter(COLOR_LLGRAY, COLOR_BROWN," stock("+f+")->"+this.stockFeves.get(f));
@@ -487,10 +488,13 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	public boolean vend(Object produit) {
 		boolean res=false;
 		if (produit instanceof ChocolatDeMarque) {
+			this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+(this.stockChocoMarque.keySet().contains(produit)?" dans keySet "+this.stockChocoMarque.get(produit):"pas dans keySet"));
 			res=this.stockChocoMarque.keySet().contains(produit) && this.stockChocoMarque.get(produit)>1000;
 		} else if (produit instanceof Chocolat) {
+			this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+(this.stockChoco.keySet().contains(produit)?" dans keySet "+this.stockChoco.get(produit):"pas dans keySet"));
 			res=this.stockChoco.keySet().contains(produit) && this.stockChoco.get(produit)>1000;
 		} else if (produit instanceof Feve) {
+			this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+(this.stockFeves.keySet().contains(produit)?" dans keySet "+this.stockFeves.get(produit):"pas dans keySet"));
 			res=this.stockFeves.keySet().contains(produit) && this.stockFeves.get(produit)>1000;
 		} 
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : vend("+produit+") --> "+res);
