@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1Acteur implements IActeur {
-	
+	protected Journal journal;
 	protected int cryptogramme;
 	protected DicoFeve stockFeve;               /** Integer --> Double*/
 	protected DicoChoco stockChoco;           /** Integer --> Double*/
@@ -89,6 +89,7 @@ public class Transformateur1Acteur implements IActeur {
 
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
+		res.add(journal);
 		return res;
 	}
 

@@ -16,6 +16,7 @@ import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.filiere.IMarqueChocolat;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
@@ -40,6 +41,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		super();
 		stockFeve = new DicoFeve();
 		stockChoco = new DicoChoco();
+		
 		for (Feve f : Feve.values()) {
 			stockFeve.put(f, 10000.);
 		}

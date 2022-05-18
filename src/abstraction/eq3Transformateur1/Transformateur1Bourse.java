@@ -33,6 +33,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 		prixVenteMin = new DicoChoco();
 		stockChoco = new DicoChoco();
 		stockFeve = new DicoFeve();
+		
 	}
 	
 	/** renvoie la quantité de fève voulue; auteur Julien 
@@ -65,6 +66,8 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void next() {
 		super.next();
+		journal.ajouter("test journal");
+		
 	}
 	
 }
