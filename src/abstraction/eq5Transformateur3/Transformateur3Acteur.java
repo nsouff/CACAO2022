@@ -29,7 +29,12 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Double SeuilMinFeves; // en kg : En dessous de ce seuil, on achète des fèves car stock trop "bas"
 	protected Double SeuilMinChocolat; // en kg : Au dessus de ce seuil, on vend du chocolat car stock trop "haut"
 	protected Double achatMaxFeves; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
+	protected Double capaciteStockageEQ5; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
+
+	
 	protected Variable seuilTransformation;
+	protected Variable limiteStockage; // quantité maximale que l'on peut stocker
+	protected Variable prixEntrepot; // prix d'un entrepot qui a une capacite de stockage de limiteStockage
 	protected Variable rendement;
 	protected Variable coutTransformation;
 	protected Variable coutOriginal;
@@ -53,7 +58,10 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
 		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 1);
 		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par kg", this, 0, 100, 1);
-		
+		this.limiteStockage = new VariableReadOnly ("limiteStockage", "quantité maximale que l'on peut stocker", this, 0, 100000000, 10000000);
+		this.prixEntrepot = new VariableReadOnly ("prixEntrepot", "prix d'un entrepot qui a une capacite de stockage de limiteStockage", this, 0, 100000000, 500000);
+
+		this.capaciteStockageEQ5 = this.limiteStockage.getValeur();
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.seuilMaxAchat = 2.500;
@@ -139,6 +147,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		res.add(seuilTransformation);
 		res.add(coutOriginal);
 		res.add(coutTransformation);
+		res.add(limiteStockage);
+		res.add(prixEntrepot);
 		return res;
 	}
 
