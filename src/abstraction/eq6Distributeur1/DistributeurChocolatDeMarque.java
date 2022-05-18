@@ -11,7 +11,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class DistributeurChocolatDeMarque extends Distributeur1Acteur implements IDistributeurChocolatDeMarque{
+public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements IDistributeurChocolatDeMarque{
 
 	private Map<ChocolatDeMarque, Double> teteGondole; // (nom du chocolat,% en tête de gondole), Emma Humeau 
 	protected Journal journalVente; // Nathan

@@ -176,9 +176,11 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 			Chocolat cho = chocoEnStock.get(alea);
 			ChocolatDeMarque choc = new ChocolatDeMarque(cho, "Villors");
 			PropositionAchatAO propositionRetenue = this.superviseurVentesAO.vendreParAO(this, this.cryptogramme, choc, 250, tg);
-			this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : vente de 250Kg de "+propositionRetenue.getOffre().getChocolat()+" a "+propositionRetenue.getAcheteur().getNom());
-			this.stockChoco.put(cho, this.stockChoco.get(cho)-250.0);
-			this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : stock("+cho+") -->"+this.stockChoco.get(cho));
+			if (propositionRetenue!=null) {
+				this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : vente de 250Kg de "+propositionRetenue.getOffre().getChocolat()+" a "+propositionRetenue.getAcheteur().getNom());
+				this.stockChoco.put(cho, this.stockChoco.get(cho)-250.0);
+				this.journal.ajouter(COLOR_LLGRAY, COLOR_GREEN, "   AOV : stock("+cho+") -->"+this.stockChoco.get(cho));
+			}
 		}
 
 		// === Lancement si possible d'un contrat cadre
@@ -355,6 +357,9 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	//                        IAcheteurAO
 	//========================================================
 	public double proposerPrix(OffreVente offre) {
+		if (offre.getVendeur()==this) {
+			return 0.0;
+		}
 		Chocolat c = offre.getChocolat().getChocolat();
 		double prix=0.0;
 		switch (c) {
@@ -594,11 +599,11 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				if (livre>0) {
 					this.stockFeves.put((Feve)produit, this.stockFeves.get(produit)-livre);
 				}
-				
+
 			}
 		} 
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : doit livrer "+quantite+" de "+produit+" --> livre "+livre);
-		
+
 		return livre;
 	}
 
