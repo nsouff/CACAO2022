@@ -137,7 +137,7 @@ public class Distributeur1Acteur implements IActeur {
 		
 		journal1.ajouter(getDescription());
 		
-		prixTotalTour = NotreStock.getCoûtStockageTotale() +0.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
+		prixTotalTour = NotreStock.getCoûtStockageTotale() +10.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
 		
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
 		
@@ -222,14 +222,6 @@ public class Distributeur1Acteur implements IActeur {
 
 	
 	
-	/**
-	 * @author Nathan
-	 * @param prixAchat le prix acheté pour toute la qté acheté
-	 * @param quantiteAchete La qté acheté
-	 */
-	public void setPrixVente(ChocolatDeMarque c, double prixAchat, double quantiteAchete) {
-		prixVente.put(c, 2*prixAchat/quantiteAchete);
-	}
 
 	/**
 	 * @author Nathan
@@ -244,6 +236,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * 
 	 * @author Nolann
 	 * @return prixVente (V1 prix vente = 2*prix achat)
+	 *  
 	 */
 	public void setAllprixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		prixAchat.forEach((key,value)->{
