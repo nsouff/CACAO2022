@@ -32,6 +32,9 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	private static final double coutTransfoOriginal=coutTransfo
 			+ Filiere.LA_FILIERE.getParametre("coutOrginial").getValeur(); /** somme de couTransfo et du supplément pour l'original*/
 	private static final double coutStockage=4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();                  /** coutStockageTransfo = 4*coutStockageProd */
+	private static final double capaciteStockageEntreprot = 1. ;
+	private static final double coutEntrepot = 1. ;
+	private double capaciteStockage = 1. ; //modifier
 
 
 	public Transformateur1() { 
@@ -160,6 +163,15 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), coutStockage);
 		}
 	}
+	/** Methode pour acheter des entrepots pour augmenter notre capacite de stockage
+	 *  Alexandre */
+	public void achatCapaciteStockage(int nbEntrepots) {
+		if (nbEntrepots*coutEntrepot < this.getSolde()) {
+			this.capaciteStockage = this.capaciteStockage + nbEntrepots*capaciteStockageEntreprot;
+			Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), nbEntrepots*coutEntrepot);
+		}
+	}
+	
 	
 	/** _________________________________________________VENTE DE CHOCOLAT_______________________________________________________*/
 	
