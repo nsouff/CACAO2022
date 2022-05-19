@@ -44,6 +44,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		for (Feve f : Feve.values()) {
 			stockFeve.put(f, 10000.);
+			journal.ajouter("on initialise le stock de feve " + f + " a 10000 kg");
 		}
 		for (Chocolat c : Chocolat.values()) {
 			stockChoco.put(c, 0.);
@@ -154,6 +155,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			cout = cout + stockChoco.get(c)*coutStockage;
 		}
+		journal.ajouter("Notre cout de stockage est "+ cout);
 		return cout;
 	}
 	
@@ -229,6 +231,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				/** si aucune vente de ce chocolat avec ce distributeur n'a ete effectuee, on garde les valeurs precedentes 
 				 *  au sinon, on ecrase*/
 				if (Double.compare(dernierPrixVenteChoco.getPrix(distrib, c), 0.) != 0) {
+					journal.ajouter("le dernier prix de vente du chocolat " + c + " au distributeur" + distrib+ " est de " + dernierPrixVenteChoco.getPrix(distrib, c));
 					dernierPrixVenteChoco.setPrix(distrib, c, dernierPrixVenteChocoReset.getPrix(distrib, c));
 				}
 			}
@@ -253,6 +256,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) { 
 				if (f == c.getProduit()) {
 					quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
+					journal.ajouter("La quantite de feve provenant de contrat cadre est de "+ quantiteFeveContrat+ "kg");
 				}
 			}
 			// choisit le producteur de feve selon le type de feve desire
@@ -299,6 +303,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				
 				// on determine la quantite de ce type de feve a transformer
 				double quantiteATransformer = this.transfoQt(stockFeve.get(f));
+				journal.ajouter("La quantite a transformer de feves "+ f + "est de "+ this.transfoQt(stockFeve.get(f)));
 				
 				// on calcule le cout et la quantite de chocolat obtenu
 				if (f.isBioEquitable()) {

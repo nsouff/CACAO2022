@@ -42,15 +42,18 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 		if (cours<prixAchatFeve.get(f)) {
 			return quantiteAchatFeve.get(f)*0.5;
 			}
+			else {
+			journal.ajouter("Le cours est superieur au prix auquel on peut acheter la feve"+ f+", la bourse n'est pas interessante");
 			return 0.;
-		}
-		
-	
+			}	
+	}
+
 
 	/** modification du stock de fèves; auteur Anna */
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		stockFeve.put(f, quantiteEnKg + stockFeve.get(f)) ;
 		journal.ajouter(quantiteEnKg+" kg de fèves "+f+" achetées en bourse");
+		journal.ajouter("Le nouveau stock de feve "+ f +" est de " +stockFeve.get(f)+" kg" );
 	}
 
 	/** */
@@ -63,6 +66,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void initialiser( ) {
 		super.initialiser();
+		prixAchatFeve.put(Feve.FEVE_BASSE, 10000.);
 	}
 	
 	/** 

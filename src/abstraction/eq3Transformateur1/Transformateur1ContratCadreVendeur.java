@@ -88,13 +88,12 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 			stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())-quantite);
 			return quantite;
 		}
-		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),0.0);
+		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),1000.0);
 		return livre;
 	}
 	
 	public void next() {
 		super.next();
-		journal.ajouter("test ContratCadreVendeur");
 		// Supprime les contrats obsolètes et honorés -Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
@@ -103,6 +102,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
+		journal.ajouter("test ContratCadreVendeur / Les contrats cadres vendeur obsolete ont ete supprime");
 	}
 	
 	/** 

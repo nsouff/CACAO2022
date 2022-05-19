@@ -40,11 +40,13 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 		
 		if (propositions==null) {
+			journal.ajouter("Il n y a pas de propositions d'achat par appel d'offre");
 			return null;
 		} else {
+			journal.ajouter("propositions : "+propositions);
 			PropositionAchatAO retenue = propositions.get(0);
 			if (retenue.getPrixKg()>this.prixVenteMin.get(propositions.get(0).getOffre().getChocolat().getChocolat())){
-				journal.ajouter("  --> je choisis "+retenue);
+				journal.ajouter("  --> je choisis l'offre "+retenue);
 				return retenue;
 			} else {
 				journal.ajouter("  --> je ne retiens rien");
