@@ -1,5 +1,6 @@
 package abstraction.eq6Distributeur1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +15,25 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
 	protected Map<ChocolatDeMarque, Echeancier> echeanceTotal;
 	protected Journal jounralContratCadre;
+	protected List<ExemplaireContratCadre> mesContrats;
+
 	
 	public AcheteurContrat() {
 		super();
 		echeanceTotal = new HashMap<ChocolatDeMarque, Echeancier>();
+		mesContrats = new ArrayList<ExemplaireContratCadre>();
+		jounralContratCadre = new Journal("Journal pour les contrat cadre", this);
+	}
+
+	/**
+	 * @author Nathan
+	 */
+	@Override
+	public void initialiser() {
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			System.out.println(choco);
 			echeanceTotal.put(choco, new Echeancier());
 		}
-		jounralContratCadre = new Journal("Journal pour les contrat cadre", this);
 	}
 
 	/**
@@ -94,7 +106,8 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		Echeancier eContrat = contrat.getEcheancier();
 		Echeancier eChocoTotal = echeanceTotal.get(contrat.getProduit()); 
 		for (int i = eContrat.getStepDebut(); i <= eContrat.getStepFin(); i++) {
-			eChocoTotal.set(i, eContrat.getQuantite(i) + eChocoTotal.getQuantite(i));
+			double qteStepI = eChocoTotal.getQuantite(i);
+			eChocoTotal.set(i, eContrat.getQuantite(i) + qteStepI);
 		}
 	}
 
@@ -102,6 +115,26 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.getNotreStock().addQte((ChocolatDeMarque) produit, quantite);
 		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix());
+	}
+
+	private void suppAnciensContrats() {//leorouppert
+		List<ExemplaireContratCadre> aSupprimer = new ArrayList<ExemplaireContratCadre>();
+		for (ExemplaireContratCadre contrat : mesContrats) {
+			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
+				aSupprimer.add(contrat);
+			}
+		}
+		mesContrats.removeAll(aSupprimer);		
+	}
+
+
+	/**
+	 * @author Nathan
+	 */
+	@Override
+	public void next() {
+		super.next();
+		this.suppAnciensContrats();
 	}
 }
 

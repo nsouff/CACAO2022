@@ -9,10 +9,6 @@ import java.util.Map;
 import java.util.Random;
 
 import abstraction.eq8Romu.filiere.Filiere;
-import abstraction.eq8Romu.contratsCadres.Echeancier;
-import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
-import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
-import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -24,7 +20,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected SuperviseurVentesContratCadre supCCadre;
 	protected Stock NotreStock;
 	Random ran;
-	protected List<ExemplaireContratCadre> mesContrats;
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
 	protected Journal journal1;
 	protected Journal journalCompte;
@@ -34,7 +29,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected Variable QteChocoHQ;
 	protected Variable QteChocoMQ;
 	protected Variable QteChocoBq;
-	protected Integer Compteur;	
 	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
 	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
 	/**
@@ -51,14 +45,11 @@ public class Distributeur1Acteur implements IActeur {
 	public Distributeur1Acteur() {
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
-		
-		this.Compteur = 0;
-		journal1.ajouter("Compteur initialisé à"+this.Compteur);
+
 		
 		this.prixTotalTour = 100000.0;
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
-		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		
 		this.ChocoTotalTour = 0.0;
@@ -95,41 +86,12 @@ public class Distributeur1Acteur implements IActeur {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		
 	}
-	
-	public void suppAnciensContrats() {//leorouppert
-		List<ExemplaireContratCadre> aSupprimer = new ArrayList<ExemplaireContratCadre>();
-		for (ExemplaireContratCadre contrat : mesContrats) {
-			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
-				aSupprimer.add(contrat);
-			}
-		}
-		mesContrats.removeAll(aSupprimer);		
-	}
-	
+		
 	public void next() {
 		//leorouppert
 		
-		journal1.ajouter("entrée dans next pour le tour n° " + Compteur);
+		journal1.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
 		getChocoTotalTour();
-		this.suppAnciensContrats();
-		this.getNotreStock().getMapStock().forEach((key,value)->{
-			if (value <= 10000) {
-				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
-				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
-				if (ListeVendeurs.size() != 0) {
-					IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
-					journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
-					ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,10000), cryptogramme, false);
-					if (CC == null) {
-						journal1.ajouter("-->aboutit au contrat "+ CC);
-					}
-					else {
-						journal1.ajouter("échec des négociations");
-					}
-				}
-			}	
-		});
-		
 		/**
 		 *  
 		 * Gestion des compte -> retirer argent :
@@ -140,16 +102,13 @@ public class Distributeur1Acteur implements IActeur {
 		
 		journal1.ajouter(getDescription());
 		
-		prixTotalTour = NotreStock.getCoûtStockageTotale() +10.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
-		
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
-		
-		journalCompte.ajouter("le compte a été débité de "+prixTotalTour);
-		journalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
-		
-		//compteur de tour + 1 :
-		this.Compteur +=1;
-		journal1.ajouter("Tour "+ (Compteur-1) +" terminé pour "+ this.getNom() + " ,compteur itéré à : "+ Compteur);
+		prixTotalTour = NotreStock.getCoûtStockageTotale();
+		if (prixTotalTour > 0) {
+			Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
+			journalCompte.ajouter("le compte a été débité de "+prixTotalTour);
+			journalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
+		}		
+		journal1.ajouter("Tour "+ Filiere.LA_FILIERE.getEtape() +" terminé pour "+ this.getNom());
 	
 	}
 	
