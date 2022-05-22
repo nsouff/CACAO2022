@@ -10,11 +10,13 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteur Marie
 
-public class Transformateur2Stock extends Transformateur2ContratCadre {
+public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 	
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat>  stockchocolat;
 	private Stock<ChocolatDeMarque> stockchocolatdemarque;
+	
+	private double prixstockage;
 	
 	
 	
@@ -31,31 +33,35 @@ public class Transformateur2Stock extends Transformateur2ContratCadre {
 						this.journal.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
 					}
 				}
+				
+				
+				
+		//On paye le cout de stockage
+				Filiere.LA_FILIERE.getBanque().virer(this, super.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.coutStockage());
+				journal.ajouter("Le stock nous coûte "+this.coutStockage());
 	}
 	
 	public void initialiser() {
+		//double prixstockage=Filiere.LA_FILIERE.getIndicateur("prixstockage").getValeur();
 		super.initialiser();
+		
 	}
 
 	
 // Marie	
 	public Transformateur2Stock() {
+		
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
 		this.stockfeve=new Stock();
-		this.stockfeve.ajouter(Feve.FEVE_BASSE, 150000);
-		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 100000);
-//		this.stockfevebasseVAR=new Variable("Opti'Cacao STOCKFEVE_BASSE", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_BASSE));
-//		this.stockfevemoyVAR=new Variable("Opti'Cacao STOCKFEVE_MOY", this, 0.0, 1000000000.0,this.stockfeve.getStock().get(Feve.FEVE_MOYENNE));
+		this.stockfeve.ajouter(Feve.FEVE_BASSE, 8000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 5000);
 		
 		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
 		this.stockchocolatdemarque=new Stock();
-		this.stockchocolatdemarque.ajouter(c1, 20000);
-		this.stockchocolatdemarque.ajouter(c0, 30000);
-//		this.stockchocolatdemarqueomaxVAR=new Variable("Opti'Cacao STOCK chocomax", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocomax));
-//		this.stockchocolatdemarqueoptellaVAR=new Variable("Opti'Cacao STOCK optella", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocoptella));
-//		this.stockchocolatdemarqueoriginalVAR=new Variable("Opti'Cacao STOCK chocoriginal", this, 0.0, 1000000000.0,this.stockchocolatdemarque.getStock().get(chocoriginal));
+		this.stockchocolatdemarque.ajouter(c1, 5000);
+		this.stockchocolatdemarque.ajouter(c0, 8000);
 		this.stockchocolat=new Stock();
 		this.stockchocolat.ajouter(Chocolat.MQ,30000);
 		this.stockchocolat.ajouter(Chocolat.BQ, 20000);
@@ -79,23 +85,11 @@ public Stock<ChocolatDeMarque> getStockchocolatdemarque(){
 
 //Marie
 public double coutStockage() {
-	double cout=0;
-	/*for (Feve f : stockfeve.quantite_stock.keySet()) {
-		cout=cout+ stockfeve.quantite_stock.get(f)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
-	for (Feve f : stockfeve.getStock().keySet()) {
-		cout=cout+ stockfeve.getStock().get(f)*this.getCout();
-	}
-
-	/*for (Chocolat c : stockchocolat.quantite_stock.keySet()) {
-		cout= cout + stockchocolat.quantite_stock.get(c)*(Filiere.LA_FILIERE.getIndicateur("PrixStockage").getValeur());*/
-
-	for (Chocolat c : stockchocolat.getStock().keySet()) {
-		cout= cout + stockchocolat.getStock().get(c)*this.getCout();
-	}
-	return cout;
+	return 4*0.01*(this.getStockchocolatdemarque().getStocktotal()+this.getStockfeve().getStocktotal());
 }
-// Marie 
 
+
+// Marie 
 //public double quantiteStockTotaleFeve(Feve produit) {
 //	for(Feve f : stockfeve.getStock().keySet()) {
 //		this.stocktotalfeve=this.stocktotalfeve+stockfeve.quantite_stock.get(f);
