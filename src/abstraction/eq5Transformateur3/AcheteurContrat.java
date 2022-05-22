@@ -1,5 +1,3 @@
-// julien 27/04
-
 package abstraction.eq5Transformateur3;
 
 import java.util.List;
@@ -14,42 +12,34 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
-public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurContratCadre {
+public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
-	//Karla
+	
+	//Karla / Julien
 	/* Initier un contrat */
-	public void lanceruncontrat(Feve f) {
-		List<IVendeurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getVendeurs(f);
-		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de feves sur 10 steps
+	public void lanceruncontratAcheteur(Feve f, Double qtt) {
+		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		List<IVendeurContratCadre> L = superviseur.getVendeurs(f); 
+		
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 10000); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
 			if (L.size()== 1) {
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
+				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
 			}
 			else {
-				// On choisit aléatoirement un des producteurs
+				// On choisit aleatoirement
 				Random randomizer = new Random();
 				IVendeurContratCadre random = L.get(randomizer.nextInt(L.size()));
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
+				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
 			}
 		}
+		//Julien else on achete des feve par le biais de la bourse si besoin ( bourse.getCours(f).getValeur() )
 	}
 	
-	//Karla
-	/* on regarde l etat de nos stocks et on lance la procédure demande 
-	acheteur + get vendeur de la classe supperviseur vente cadre */
-	public void next() {
-		// TODO Auto-generated method stub
-		super.next();
-		for (Feve f : this.stockFeves.getProduitsEnStock()) {
-			if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
-				lanceruncontrat(f);
-			}
-		}
-	}
+
 
 	// Julien & Karla
 	public boolean achete(Object produit) {
-		// TODO Auto-generated method stub.
 		if  (!( produit instanceof Feve) ) {
 			return false;
 		}
@@ -64,41 +54,70 @@ public class AcheteurContrat extends Transformateur3Acteur implements IAcheteurC
 	// Julien & Karla
 	// On accepte tout le temps l'echeancier
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		List<Echeancier> listeEcheanciers=contrat.getEcheanciers();
 		int l = listeEcheanciers.size();
-		return listeEcheanciers.get(l-1);
+		this.achats.ajouter("echeancier ok pour tout");
+		return listeEcheanciers.get(l-1); // le dernier proposé est celui des vendeurs
 	}
 
 	// Julien & Karla
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		double prixT = contrat.getPrix();
-		if (prixT < this.seuilMaxAchat) {
+		if (prixT < this.seuilMaxAchat) { 
+			this.achats.ajouter("prix acceptable");
 			return prixT;
 		}
 		else {
-			double nouveauprix = 0.7*prixT;
+			double nouveauprix = 0.1*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
+				this.achats.ajouter(" essaie avec nouveau prix");
 				return nouveauprix;
 			}
+			this.achats.ajouter("prix inadapte");
+
 			return 0.0;
 		}
 	}
 
 	// Julien & Karla
-	// on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
+	/* On met à jour le journal
+	 * et on pourra par la suite mettre fin aux autres négociations pour un même produit : on achete tout pour l'instant
+	 */
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
+		this.achats.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+
 	}
 
 	// Julien & Karla
 	// si la quantité reçue est inférieure à celle prévue : en acheter à la bourse ?
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		Feve f= ((Feve) produit);
-		this.stockFeves.ajouter(f, quantite);
+		this.stockFeves.ajouter(f, quantite);		
+		this.achats.ajouter("On receptionne " + quantite + "de" + produit.toString() + " achete par CC");
 	}
-	
+
+	//Karla
+	/* on regarde l etat de nos stocks et on lance la procédure demande 
+	acheteur + get vendeur de la classe superviseur vente cadre */
+	public void next() {
+		super.next();
+		
+		for (Feve f : this.stockFeves.getProduitsEnStock()) {
+			
+			/* Selon la place libre dans nos entrepots et selon l'etat de nos stocks pour cette feve,
+			 * on essaie d'initier des contrats 
+			 */
+			Double stocktotal = this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal();
+			
+			if (stocktotal < this.capaciteStockageEQ5) {
+				if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
+					Double placeLibre = this.stockChocolat.getstocktotal() - this.stockFeves.getstocktotal();
+					/* On essaie d'initier un contrat pour une qtt de placeLibre/nombre de types de fèves */
+					Double qtt = placeLibre/4;
+					lanceruncontratAcheteur(f, qtt);
+				}
+			}
+		}
+	}
 }
 	
