@@ -1,19 +1,26 @@
 package abstraction.eq6Distributeur1;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
-
+public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
+	protected Map<ChocolatDeMarque, Echeancier> echeanceTotal;
 	protected Journal jounralContratCadre;
 	
-	public Acheteur_Contrat() {
+	public AcheteurContrat() {
 		super();
+		echeanceTotal = new HashMap<ChocolatDeMarque, Echeancier>();
+		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			echeanceTotal.put(choco, new Echeancier());
+		}
 		jounralContratCadre = new Journal("Journal pour les contrat cadre", this);
 	}
 
@@ -27,7 +34,9 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 		l.add(jounralContratCadre);
 		return l;
 	}
-
+	/**
+	 * @author Leo, Emma, Nathan
+	 */
 	@Override
 	public boolean achete(Object produit) {
 		if (NotreStock.seuilSecuFaillite() == false) {
@@ -82,6 +91,11 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 		jounralContratCadre.ajouter("Negociation réussie pour le contrat " + contrat);
 		this.setPrixVente((ChocolatDeMarque)contrat.getProduit(), contrat.getPrix());
 		this.mesContrats.add(contrat);
+		Echeancier eContrat = contrat.getEcheancier();
+		Echeancier eChocoTotal = echeanceTotal.get(contrat.getProduit()); 
+		for (int i = eContrat.getStepDebut(); i <= eContrat.getStepFin(); i++) {
+			eChocoTotal.set(i, eContrat.getQuantite(i) + eChocoTotal.getQuantite(i));
+		}
 	}
 
 	@Override

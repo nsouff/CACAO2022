@@ -37,7 +37,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected Integer Compteur;	
 	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
 	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
-	
 	/**
 	 * @return the notreStock
 	 */

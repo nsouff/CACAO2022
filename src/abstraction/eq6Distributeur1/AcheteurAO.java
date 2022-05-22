@@ -12,7 +12,7 @@ import abstraction.eq8Romu.general.Journal;
 /**
  * @author Nathan
  */
-public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
+public class AcheteurAO extends AcheteurContrat implements IAcheteurAO {
 
     private Journal journalAO;
     
