@@ -17,7 +17,7 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
  
  public Transformateur2VenteAO() {
 		super();
-		this.prixMin=10;
+		this.prixMin=7;
 	}
  
 	public void initialiser() {
@@ -42,8 +42,8 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 50000kg, on en propose 8000kg.
 			super.next();	
 		for(ChocolatDeMarque c :this.getStockchocolatdemarque().getStock().keySet()) {
-					if(this.getStockchocolatdemarque().getStock().get(c)>50000) {
-						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 8000.0, false);
+					if(this.getStockchocolatdemarque().getStock().get(c)>3000) {
+						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 500.0, false);
 						if (retenue!=null) {
 							this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
 							journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());

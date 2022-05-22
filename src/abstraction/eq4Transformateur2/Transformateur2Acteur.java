@@ -102,12 +102,14 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filiere = new ArrayList<String>();
 		filiere.add("TESTAOOPTI'CACAO");  
+		filiere.add("TESTCCOPTI'CACAO"); 
 		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
 		case "TESTAOOPTI'CACAO" : return new CopieFiliereTestAO();
+		case "TESTCCOPTI'CACAO" : return new CopieFiliereTestContratCadre();
 	    default : return null;
 		}
 	}
