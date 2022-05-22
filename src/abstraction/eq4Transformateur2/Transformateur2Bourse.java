@@ -36,22 +36,15 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 //Marie et Jad
 	public double demande(Feve f, double cours) {
 		if (cours < this.getPrixSeuil().getValeur()) {
-			if(f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()) {
+			if(!f.isBioEquitable()) {
 				
 				//On verifie qu'on a la capacite de paiemeent nécessaire, puis on demande
-				if (Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f)))) {
-				return Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f));
+				if (Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f)))) {
+				return Math.max(0,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
 			}
 				else { 
 					return 0.0;}}
-			else if (f.getGamme().equals(Gamme.BASSE) && !f.isBioEquitable()) {
-					if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f)))) {
-						return Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f));}
-					else
-						return 0.0;
-			}
 			
-		
 		} 
 		else {
 			return 0.0;
@@ -64,7 +57,7 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		this.getStockfeve().ajouter(f,quantiteEnKg);
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coursEnEuroParKg*quantiteEnKg);
-		this.journal.ajouter("Achat de "+quantiteEnKg+" kg de fèves "+f+" pour "+coursEnEuroParKg);
+		this.journal.ajouter("Achat de "+quantiteEnKg+" kg de fèves "+f+" pour "+coursEnEuroParKg +" €/kg");
 	}
 
 //Marie et Jad

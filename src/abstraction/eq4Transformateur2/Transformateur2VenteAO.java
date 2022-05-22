@@ -39,7 +39,7 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 //		}
 		
 		
-		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 2000kg, on en propose 2000kg.
+		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 50000kg, on en propose 8000kg.
 			super.next();	
 		for(ChocolatDeMarque c :this.getStockchocolatdemarque().getStock().keySet()) {
 					if(this.getStockchocolatdemarque().getStock().get(c)>50000) {

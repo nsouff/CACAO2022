@@ -23,17 +23,22 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
+public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
+	
+	
 	
 	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
-	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
-	private double marge;
+	//private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	
+	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
+	private Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
+	private double marge;
 	
 	protected SuperviseurVentesAO superviseur;
 	protected Journal journal;
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
+	
 
 
 
@@ -42,13 +47,23 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	
 	
 	//Nawfel
-	public Transformateur2Acteur() { //valeurs des min, max, et init (3 derniers parametres) à changer plus tard.
+	public Transformateur2Acteur() {
 	
-		//pas sur de celles ci, mais je les laisse au cas ou...
-		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 1000);
-		this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 10.0, 150000.0);
+		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10000000, 10);
+		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.marge = 1.1;
 		this.journal=new Journal("Opti'Cacao activités", this);
+		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
+		this.stockReferenceFeve=new Stock();
+		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 8000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 5000);
+		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		this.stockReferenceChocolat=new Stock();
+		this.stockReferenceChocolat.ajouter(c1, 5000);
+		this.stockReferenceChocolat.ajouter(c0, 8000);
+		
+		
 		
 		
 
@@ -58,6 +73,7 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	
 
 	public void initialiser() {
+		
 		
 	}
 	
@@ -152,9 +168,7 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 
 
 
-	public Variable getCapaciteStockageFixe() {
-		return capaciteStockageFixe;
-	}
+
 
 
 
@@ -176,6 +190,16 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		res.add(c0);
 		res.add(c1);
 		return res;
+	}
+
+
+	public Stock<Feve> getStockReferenceFeve() {
+		return stockReferenceFeve;
+	}
+
+
+	public Stock<ChocolatDeMarque> getStockReferenceChocolat() {
+		return stockReferenceChocolat;
 	}
 
 }
