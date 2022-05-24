@@ -90,7 +90,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		}
 		
 		if (trans.equals("longue")){//dans le cas d'une transformation longue
-				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, (1/rdt)*qt*(prix_transfo+prix_ori))) {//(1/rdt)*qt est la quantité de fève nécessaire pour obtenir qt de chocolat
+				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, (1/rdt)*qt*(prix_transfo+prix_ori*s))) {//(1/rdt)*qt est la quantité de fève nécessaire pour obtenir qt de chocolat
 					if(super.getStockfeve().getStocktotal()>(1/rdt)*qt) {//s'il y a assez de fèves
 						if(NewCap>cap) {//assez de capacité de stockage
 							NewCap-=(1/rdt)*qt;//mise à jour de la capacité de production
@@ -100,21 +100,21 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 							}
 							else if (g.equals(Gamme.MOYENNE)) {
 								this.getStockchocolat().ajouter(Chocolat.get(Gamme.HAUTE, f.isBioEquitable(),  ori), qt);//augmente le stock de chocolat
-							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), (1/rdt)*qt*(prix_transfo+s*prix_ori));//paye
+							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), (1/rdt)*qt*(prix_transfo+s*prix_ori*s));//paye
 							}
 						}
 					}
 				}
 		}
 		if (trans.equals("courte")) {
-			if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, qt*(prix_transfo+prix_ori))) {//qt est la quantité de fève nécessaire pour obtenir qt de chocolat
-				if(this.getStockfeve().getStocktotal()>qt) {//s'il y a assez de fèves
+			if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, qt*(prix_transfo+prix_ori*s))) {//qt est la quantité de fève nécessaire pour obtenir qt de chocolat
+				if(this.getStockfeve().getQuantite(f)>qt) {//s'il y a assez de fèves
 					if(NewCap>=qt) {//assez de capacité de production
 						NewCap-=qt;//mise à jour de la capacité de production
 						this.getStockfeve().enlever(f,qt);//baisse le stock de feves
 						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), qt);//augmente le stock de chocolat
-						this.journal.ajouter("Transformation Courte de " +qt+" kg de "+f+"en "+this.fevechoco(f).toString());
-						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), qt*(prix_transfo+s*prix_ori));//paye
+						this.journal.ajouter("Transformation Courte de " +qt+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+qt*(prix_transfo+prix_ori*s)+"€");
+						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), qt*(prix_transfo+s*prix_ori*s));//paye
 					}
 				}
 			}
