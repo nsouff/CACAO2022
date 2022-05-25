@@ -31,6 +31,11 @@ public class Distributeur1Acteur implements IActeur {
 	protected Variable QteChocoBq;
 	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
 	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
+	protected final double partCC = 0.9;
+	// 												 HQ_BE_O  HQ_BE  HQ_O  HQ   MQ_BE_O  MQ_BE  MQ_O   MQ   BQ_O  BQ
+	protected final double[] PART_DU_MARCHE_VOULU = {0.5    , 0.5  , 0.5 , 0.5, 0.5    , 0.5  , 0.5  , 0.5, 0.5 , 0.5};
+	// TODO: mettre les bonnes valeurs voulues.
+	
 	/**
 	 * @return the notreStock
 	 */
