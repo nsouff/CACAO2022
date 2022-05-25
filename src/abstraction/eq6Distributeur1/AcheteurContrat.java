@@ -25,13 +25,6 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		jounralContratCadre = new Journal("Journal pour les contrat cadre", this);
 	}
 
-	/**
-	 * @author Nathan
-	 */
-	@Override
-	public void initialiser() {
-		
-	}
 
 	/**
 	 * @author Nathan,
@@ -125,7 +118,9 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	 */
 	public Map<ChocolatDeMarque, Echeancier> getEchenaceParChoco() {
 		Map<ChocolatDeMarque, Echeancier> res = new HashMap<ChocolatDeMarque, Echeancier>();
-		
+		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			res.put(choco, new Echeancier());
+		}
 		for (ExemplaireContratCadre ecd : mesContrats) {
 			ChocolatDeMarque cm = (ChocolatDeMarque) ecd.getProduit();
 			Echeancier e = ecd.getEcheancier();
