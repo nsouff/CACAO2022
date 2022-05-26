@@ -1,5 +1,6 @@
 package abstraction.eq6Distributeur1;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +16,10 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
-	protected Journal journalContratCadre;
+	protected Journal journalNegociationCC;
+	protected Journal journalSuiviCC;
 	protected List<ExemplaireContratCadre> mesContrats;
-	private final double SEUIL_DELTA_ECHEANCE_PROPOSEE = 0.2;
+	private final double SEUIL_DELTA_ECHEANCE_PROPOSEE = 0.7;
 	private final double SEUIL_AJOUT_ECHEANCE = 0.3;
 	private final int STEP_INTERSECTION_MIN = 6;
 	private final double PRIX_LIMITE = 1.2;
@@ -25,7 +27,8 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	public AcheteurContrat() {
 		super();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
-		journalContratCadre = new Journal("Journal pour les contrat cadre", this);
+		journalNegociationCC = new Journal("Negociations CC", this);
+		journalSuiviCC = new Journal("Suivi des livraisons des CC", this);
 	}
 
 
@@ -36,7 +39,8 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	@Override
 	public List<Journal> getJournaux() {
 		List<Journal> l = super.getJournaux();
-		l.add(journalContratCadre);
+		l.add(journalNegociationCC);
+		l.add(journalSuiviCC);
 		return l;
 	}
 	/**
@@ -44,22 +48,11 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	 */
 	@Override
 	public boolean achete(Object produit) {
-		if (NotreStock.seuilSecuFaillite() == false) {
+		if (NotreStock.seuilSecuFaillite() == false || ! (produit instanceof ChocolatDeMarque)) {
 			return false;
 		}
-		if (produit instanceof ChocolatDeMarque && this.getNotreStock().getStock((ChocolatDeMarque) produit) <= 1000) {
-			switch (((ChocolatDeMarque) produit).getChocolat()) {
-				case BQ:
-				case BQ_O:
-				case MQ:
-				case MQ_BE:
-				case MQ_O:
-				case HQ:
-				case HQ_BE:
-					return true;
-				default:
-					return false;
-			}
+		if (partDuMarcheVoulu( ((ChocolatDeMarque)produit).getChocolat()) > 0.0) {
+			return true;
 		}
 		return false;
 	}
@@ -81,64 +74,60 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		}
 		double delta = 0.0;
 		for (int i = intersection[0]; i <= intersection[1]; i++) {
-			delta += e2.getQuantite(i) - e1.getQuantite(i);
+			if (e1.getQuantite(i) > e2.getQuantite(i)) {
+				return -1.0;
+			}
+			delta += Math.abs(e2.getQuantite(i) - e1.getQuantite(i));
 		}
-		return delta / getSomme(intersection[0], intersection[1], e2);
+		return (delta / getSomme(intersection[0], intersection[1], e2));
 	}
 	
 	@Override
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
+		journalNegociationCC.ajouter("--> Contre propisiton du vendeur: voici l'echeancier proposée et celui proposée par le vendeur");
 		Echeancier voulu = nouveauxEcheanciersVoulus().get(contrat.getProduit());
+		journalNegociationCC.ajouter("--> " + voulu);
+		journalNegociationCC.ajouter("--> " + contrat.getEcheancier());
 		if (voulu == null) return null;
 		double delta = echenacierDelta(contrat.getEcheancier(), voulu);
-		System.out.println(delta);
-		if (delta <= SEUIL_DELTA_ECHEANCE_PROPOSEE) return contrat.getEcheancier();
+		journalNegociationCC.ajouter("--> Delta de ce qu'on voulait de: " + delta);
+		if (delta != -1.0){ // TODO: Pour l'instant on s'assure juste qu'il n'y a pas de surplus
+			journalNegociationCC.ajouter("--> Nous acceptons son écheancier");
+			return contrat.getEcheancier();
+		}
+		journalNegociationCC.ajouter("Nous refusons son écheancier.");
 		return null;
-
-
-		// if (contrat.getPrix() < 15) {
-		// 	return contrat.getEcheancier();
-		// }
-		// if (contrat.getPrix() < 5) {
-		// 	journalContratCadre.ajouter("Nous acceptons l'échenacier proposé " + contrat.getEcheancier());
-		// 	return contrat.getEcheancier();
-		// }
-		// Echeancier ech = contrat.getEcheancier();
-		// if ((ech.getQuantite(ech.getStepDebut()) < 10000)) {
-		// 	ech.set(ech.getStepDebut(), 10000);
-		// 	ech.set(ech.getStepDebut()+1, 10000);
-		// 	ech.set(ech.getStepDebut()+2, 10000);
-		// }
-		// journalContratCadre.ajouter("Nous faisons une contre proposition pour le contrat" + contrat + ". Le nouvel écheancier est " + ech);
-		// return ech;
 	}
 
 	@Override
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		if (contrat.getPrix() > PRIX_LIMITE * 7.5* facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat())) {
-			return 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+			double res = 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+			journalNegociationCC.ajouter(contrat.getPrix() + " le kilo est trop élevé nous proposons " + res);
+			return res;
 		}
 		else {
+			journalNegociationCC.ajouter("--> Nous acceptons le prix proposé qui est " + contrat.getPrix());
 			return contrat.getPrix();
 		}
-
-		// if (Math.random() < 0.5) {
-		// 	journalContratCadre.ajouter("Nous acceptons le prix proposé pour " + contrat);
-		// 	return contrat.getPrix();
-		// }
-		// journalContratCadre.ajouter("Contre proposition en proposant 0.95 du prix pour " + contrat);
-		// return 0.95*contrat.getPrix();
 	}
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		journalContratCadre.ajouter("Negociation réussie pour le contrat " + contrat);
+		journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "Negociation réussie pour le contrat");
 		this.setPrixVente((ChocolatDeMarque)contrat.getProduit(), contrat.getPrix());
 		this.mesContrats.add(contrat);
 	}
 
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
+		double qteAttendu = contrat.getQuantiteALivrerAuStep();
+		if (quantite != qteAttendu) {
+			journalSuiviCC.ajouter(Color.RED, Color.BLACK, "Il manque " + (qteAttendu - quantite) + "Kg de ce que nous etions censé recevoir de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
+		}
+		else {
+			journalSuiviCC.ajouter("La quantité attendu (" + quantite + ") a été recu de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
+		}
 		this.getNotreStock().addQte((ChocolatDeMarque) produit, quantite);
 		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix());
 	}
@@ -208,7 +197,8 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			Echeancier eChoco = echeancierTotal.get(choco);
 			Echeancier e = createEcheancier(eChoco, Filiere.LA_FILIERE.getEtape()+1, choco);
-			if (e.getQuantiteTotale() >= SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER && e.getQuantiteTotale() > SEUIL_AJOUT_ECHEANCE*attenduNProchainesEtapes(24, choco)*partDuMarcheVoulu(choco.getChocolat())*partCC*getPartMarque(choco)) {// Sinon cela ne sert à rien de faire un nouveau contrat cadre
+			if (e.getQuantiteTotale() >= SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER && e.getQuantiteTotale() > SEUIL_AJOUT_ECHEANCE*attenduNProchainesEtapes(24, choco)*partDuMarcheVoulu(choco.getChocolat())*partCC*getPartMarque(choco)) {
+				// Sinon cela ne sert à rien de faire un nouveau contrat cadre
 				res.put(choco, e);
 			}
 		}
@@ -228,34 +218,21 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
 				Echeancier aAjouterChoco = aAjouter.get(choco);
 				if (aAjouterChoco != null) {
+					journalNegociationCC.ajouter(Color.CYAN, Color.BLACK, "Nouvelle demande de CC avec " + vendeur.getNom() + " pour l'écheancier " + aAjouterChoco);
 					ExemplaireContratCadre ecc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouterChoco, this.cryptogramme, false);
 					if (ecc != null) {
 						mesContrats.add(ecc);
 						aAjouter = nouveauxEcheanciersVoulus();
 						System.out.println(ecc.getPrix());
 						this.setPrixVente(choco, ecc.getPrix());
+						journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "La négociation a abouti");
+					}
+					else {
+						journalNegociationCC.ajouter(Color.RED, Color.BLACK, "La negociation a echouée.");
 					}
 				}
 			}
 		}
-		//nouveauContrat();
-		// this.getNotreStock().getMapStock().forEach((key,value)->{
-		// 	if (value <= 10000) {
-		// 		journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
-		// 		List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
-		// 		if (ListeVendeurs.size() != 0) {
-		// 			IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
-		// 			journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
-		// 			ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,10000), cryptogramme, false);
-		// 			if (CC == null) {
-		// 				journal1.ajouter("-->aboutit au contrat "+ CC);
-		// 			}
-		// 			else {
-		// 				journal1.ajouter("échec des négociations");
-		// 			}
-		// 		}
-		// 	}	
-		// });
 	}
 }
 
