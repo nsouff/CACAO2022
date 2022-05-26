@@ -124,7 +124,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ExemplaireContratCadre ecd : mesContrats) {
 			ChocolatDeMarque cm = (ChocolatDeMarque) ecd.getProduit();
 			Echeancier e = ecd.getEcheancier();
-			int start = (e.getStepDebut() < Filiere.LA_FILIERE.getEtape()) ? Filiere.LA_FILIERE.getEtape() : e.getStepDebut();
+			int start = (e.getStepDebut() < Filiere.LA_FILIERE.getEtape()+1) ? Filiere.LA_FILIERE.getEtape()+1 : e.getStepDebut();
 			for (int i = start; i < e.getStepFin(); i++) {
 				res.get(cm).set(i, res.get(cm).getQuantite(i) + e.getQuantite(i));
 			}
@@ -182,10 +182,12 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		this.suppAnciensContrats();
 		Map<ChocolatDeMarque, Echeancier> aAjouter = nouveauxEcheanciersVoulus();
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
-				supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouter.get(choco), this.cryptogramme, false);
+			Echeancier aAjouterChoco = aAjouter.get(choco);
+			if (aAjouterChoco != null) {
+				for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
+					supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouter.get(choco), this.cryptogramme, false);
+				}
 			}
-
 		}
 		//nouveauContrat();
 		// this.getNotreStock().getMapStock().forEach((key,value)->{
