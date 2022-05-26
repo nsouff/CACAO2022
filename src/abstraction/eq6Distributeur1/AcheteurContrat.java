@@ -14,15 +14,17 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
-	protected Journal jounralContratCadre;
+	protected Journal journalContratCadre;
 	protected List<ExemplaireContratCadre> mesContrats;
 	private final double SEUIL_DELTA_ECHEANCE_PROPOSEE = 0.2;
 	private final double SEUIL_AJOUT_ECHEANCE = 0.3;
+	private final int STEP_INTERSECTION_MIN = 6;
+	private final double PRIX_LIMITE = 1.2;
 	
 	public AcheteurContrat() {
 		super();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
-		jounralContratCadre = new Journal("Journal pour les contrat cadre", this);
+		journalContratCadre = new Journal("Journal pour les contrat cadre", this);
 	}
 
 
@@ -33,7 +35,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	@Override
 	public List<Journal> getJournaux() {
 		List<Journal> l = super.getJournaux();
-		l.add(jounralContratCadre);
+		l.add(journalContratCadre);
 		return l;
 	}
 	/**
@@ -53,44 +55,81 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 				case MQ_O:
 				case HQ:
 				case HQ_BE:
-					jounralContratCadre.ajouter("Nous cherchons à acheter le chocolat " + ((ChocolatDeMarque)produit));
 					return true;
 				default:
-					jounralContratCadre.ajouter("Le chocolat " + ((ChocolatDeMarque)produit) + " ne correspond pas à ce que nous cherchons");
 					return false;
 			}
 		}
 		return false;
 	}
+
+	public int[] interesctionEtapes(Echeancier e1, Echeancier e2) {
+		int[] res = {0, 0};
+		res[0] = (e1.getStepDebut() < e2.getStepDebut()) ? e2.getStepDebut() : e1.getStepDebut();
+		res[1] = (e1.getStepFin() < e2.getStepFin()) ? e1.getStepFin() : e2.getStepFin();
+		if (res[0] > res[1]) {
+			return null;
+		}
+		return res;
+	}
+
+	public double echenacierDelta(Echeancier e1, Echeancier e2) {
+		int[] intersection = interesctionEtapes(e1, e2);
+		if (intersection == null || intersection[1] - intersection[0] < STEP_INTERSECTION_MIN) {
+			return 1.0;
+		}
+		double delta = 0.0;
+		for (int i = intersection[0]; i <= intersection[1]; i++) {
+			delta += e2.getQuantite(i) - e1.getQuantite(i);
+		}
+		return delta / getSomme(intersection[0], intersection[1], e2);
+	}
+	
 	@Override
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
-		if (contrat.getPrix() < 5) {
-			jounralContratCadre.ajouter("Nous acceptons la proposition " + contrat.getEcheancier());
-			return contrat.getEcheancier();
-		}
-		Echeancier ech = contrat.getEcheancier();
-		if ((ech.getQuantite(ech.getStepDebut()) < 10000)) {
-			ech.set(ech.getStepDebut(), 10000);
-			ech.set(ech.getStepDebut()+1, 10000);
-			ech.set(ech.getStepDebut()+2, 10000);
-		}
-		jounralContratCadre.ajouter("Nous faisons une contre proposition pour le contrat" + contrat + ". Le nouvel écheancier est " + ech);
-		return ech;
+		double delta = echenacierDelta(contrat.getEcheancier(), nouveauxEcheanciersVoulus().get(contrat.getProduit()));
+		System.out.println(delta);		
+		if (delta <= SEUIL_DELTA_ECHEANCE_PROPOSEE) return contrat.getEcheancier();
+		return null;
+
+
+		// if (contrat.getPrix() < 15) {
+		// 	return contrat.getEcheancier();
+		// }
+		// if (contrat.getPrix() < 5) {
+		// 	journalContratCadre.ajouter("Nous acceptons l'échenacier proposé " + contrat.getEcheancier());
+		// 	return contrat.getEcheancier();
+		// }
+		// Echeancier ech = contrat.getEcheancier();
+		// if ((ech.getQuantite(ech.getStepDebut()) < 10000)) {
+		// 	ech.set(ech.getStepDebut(), 10000);
+		// 	ech.set(ech.getStepDebut()+1, 10000);
+		// 	ech.set(ech.getStepDebut()+2, 10000);
+		// }
+		// journalContratCadre.ajouter("Nous faisons une contre proposition pour le contrat" + contrat + ". Le nouvel écheancier est " + ech);
+		// return ech;
 	}
 
 	@Override
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		if (Math.random() < 0.5) {
-			jounralContratCadre.ajouter("Nous acceptons le prix proposé pour " + contrat);
+		if (contrat.getPrix() > PRIX_LIMITE * 7.5* facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat())) {
+			return 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+		}
+		else {
 			return contrat.getPrix();
 		}
-		jounralContratCadre.ajouter("Contre proposition en proposant 0.95 du prix pour " + contrat);
-		return 0.95*contrat.getPrix();
+		
+		// if (Math.random() < 0.5) {
+		// 	journalContratCadre.ajouter("Nous acceptons le prix proposé pour " + contrat);
+		// 	return contrat.getPrix();
+		// }
+		// journalContratCadre.ajouter("Contre proposition en proposant 0.95 du prix pour " + contrat);
+		// return 0.95*contrat.getPrix();
 	}
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		jounralContratCadre.ajouter("Negociation réussie pour le contrat " + contrat);
+		journalContratCadre.ajouter("Negociation réussie pour le contrat " + contrat);
 		this.setPrixVente((ChocolatDeMarque)contrat.getProduit(), contrat.getPrix());
 		this.mesContrats.add(contrat);
 	}
