@@ -9,6 +9,7 @@ import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -87,8 +88,10 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	
 	@Override
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
-		double delta = echenacierDelta(contrat.getEcheancier(), nouveauxEcheanciersVoulus().get(contrat.getProduit()));
-		System.out.println(delta);		
+		Echeancier voulu = nouveauxEcheanciersVoulus().get(contrat.getProduit());
+		if (voulu == null) return null;
+		double delta = echenacierDelta(contrat.getEcheancier(), voulu);
+		System.out.println(delta);
 		if (delta <= SEUIL_DELTA_ECHEANCE_PROPOSEE) return contrat.getEcheancier();
 		return null;
 
@@ -118,7 +121,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		else {
 			return contrat.getPrix();
 		}
-		
+
 		// if (Math.random() < 0.5) {
 		// 	journalContratCadre.ajouter("Nous acceptons le prix proposé pour " + contrat);
 		// 	return contrat.getPrix();
@@ -191,7 +194,8 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	private Echeancier createEcheancier(Echeancier aCombler, int stepDebut, ChocolatDeMarque c) {
 		Echeancier e = new Echeancier(stepDebut);
 		for (int i = stepDebut; i < stepDebut + 24; i++) {
-			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, i-24) * partDuMarcheVoulu(c.getChocolat()) - aCombler.getQuantite(i));
+			double aComblerI = (aCombler == null) ? 0 : aCombler.getQuantite(i);
+			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, i-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI);
 		}
 		return e;
 	}
@@ -204,7 +208,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			Echeancier eChoco = echeancierTotal.get(choco);
 			Echeancier e = createEcheancier(eChoco, Filiere.LA_FILIERE.getEtape()+1, choco);
-			if (e.getQuantiteTotale() > SEUIL_AJOUT_ECHEANCE*attenduNProchainesEtapes(24, choco)*partDuMarcheVoulu(choco.getChocolat())*partCC*getPartMarque(choco)) {// Sinon cela ne sert à rien de faire un nouveau contrat cadre
+			if (e.getQuantiteTotale() >= SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER && e.getQuantiteTotale() > SEUIL_AJOUT_ECHEANCE*attenduNProchainesEtapes(24, choco)*partDuMarcheVoulu(choco.getChocolat())*partCC*getPartMarque(choco)) {// Sinon cela ne sert à rien de faire un nouveau contrat cadre
 				res.put(choco, e);
 			}
 		}
@@ -221,10 +225,16 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		this.suppAnciensContrats();
 		Map<ChocolatDeMarque, Echeancier> aAjouter = nouveauxEcheanciersVoulus();
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			Echeancier aAjouterChoco = aAjouter.get(choco);
-			if (aAjouterChoco != null) {
-				for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
-					supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouter.get(choco), this.cryptogramme, false);
+			for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
+				Echeancier aAjouterChoco = aAjouter.get(choco);
+				if (aAjouterChoco != null) {
+					ExemplaireContratCadre ecc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouterChoco, this.cryptogramme, false);
+					if (ecc != null) {
+						mesContrats.add(ecc);
+						aAjouter = nouveauxEcheanciersVoulus();
+						System.out.println(ecc.getPrix());
+						this.setPrixVente(choco, ecc.getPrix());
+					}
 				}
 			}
 		}

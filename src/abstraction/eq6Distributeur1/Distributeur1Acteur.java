@@ -211,7 +211,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * @param quantiteAchete
 	 */
 	public void setPrixVente(ChocolatDeMarque c, double prixAchatKilo) {
-		prixVente.put(c, 2*prixAchatKilo);
+		prixVente.put(c, 1.4*prixAchatKilo);
 	}
 	
 	/**
