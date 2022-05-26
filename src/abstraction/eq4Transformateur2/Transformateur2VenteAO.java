@@ -17,7 +17,7 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
  
  public Transformateur2VenteAO() {
 		super();
-		this.prixMin=5;
+		this.prixMin=7;
 	}
  
 	public void initialiser() {
@@ -39,11 +39,11 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 //		}
 		
 		
-		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 2000kg, on en propose 2000kg.
+		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 50000kg, on en propose 8000kg.
 			super.next();	
 		for(ChocolatDeMarque c :this.getStockchocolatdemarque().getStock().keySet()) {
-					if(this.getStockchocolatdemarque().getStock().get(c)>2000) {
-						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 2000.0, false);
+					if(this.getStockchocolatdemarque().getStock().get(c)>3000) {
+						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 500.0, false);
 						if (retenue!=null) {
 							this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
 							journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
@@ -77,7 +77,8 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 		} else {
 			PropositionAchatAO meilleur_proposition=propositions.get(0);
 			for(PropositionAchatAO p : propositions) {
-				if (p.getPrixKg()>meilleur_proposition.getPrixKg()){
+				//On choisit l'offre la plus cher qui ne nous met pas en négatif de stock de chocolatdemarque
+				if (p.getPrixKg()>meilleur_proposition.getPrixKg() && p.getOffre().getQuantiteKG()<super.getStockchocolatdemarque().getQuantite(p.getOffre().getChocolat())){
 					meilleur_proposition=p;
 				}
 			}
@@ -94,14 +95,14 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 
 //Gabriel
 public double prixVoulu(double prix_achat) { 
-	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + this.getCout()*
+	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + super.coutStockage()*
 			 (this.getStockchocolat().getStocktotal()+ this.getStockfeve().getStocktotal()))
 			 *this.getMarge(); 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
 	 // du cout de stockage, de l'origininalité et de la marge voulue
 }
 public double prixVouluOri(double prix_achat) { 
-	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + this.getCout()*
+	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + super.coutStockage()*
 			 (this.getStockchocolat().getStocktotal()+ this.getStockfeve().getStocktotal())+ Filiere.LA_FILIERE.getParametre("coutOriginal").getValeur())
 			 *this.getMarge(); 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,

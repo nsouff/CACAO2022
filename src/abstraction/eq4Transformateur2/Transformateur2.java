@@ -25,6 +25,8 @@ public class Transformateur2 extends Transformateur2VenteAO{
 	
 	public void next() {
 		super.next();
+		journal.ajouter("Cours Feve Basse : "+Filiere.LA_FILIERE.getIndicateur("BourseCacao cours B").getValeur() +" €/kg");
+		journal.ajouter("Cours Feve Moyenne : "+Filiere.LA_FILIERE.getIndicateur("BourseCacao cours M").getValeur() +" €/kg");
 	}
 	public void initialiser() {
 		super.initialiser();
