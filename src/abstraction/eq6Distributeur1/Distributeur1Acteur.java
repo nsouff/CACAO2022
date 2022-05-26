@@ -14,6 +14,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Chocolat;
 
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
@@ -32,9 +33,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
 	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
 	protected final double partCC = 0.9;
-	// 												 HQ_BE_O  HQ_BE  HQ_O  HQ   MQ_BE_O  MQ_BE  MQ_O   MQ   BQ_O  BQ
-	protected final double[] PART_DU_MARCHE_VOULU = {0.5    , 0.5  , 0.5 , 0.5, 0.5    , 0.5  , 0.5  , 0.5, 0.5 , 0.5};
-	// TODO: mettre les bonnes valeurs voulues.
 	
 	/**
 	 * @return the notreStock
@@ -224,5 +222,21 @@ public class Distributeur1Acteur implements IActeur {
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, (prixAchat.get(key))*2);		
 		});
-	}	
+	}
+
+	public double partDuMarcheVoulu(Chocolat c) {
+		switch(c) {
+			case BQ: return 0.5;
+			case BQ_O: return 0.5;
+			case MQ: return 0.5;
+			case MQ_O: return 0.5;
+			case MQ_BE: return 0.5;
+			case MQ_BE_O: return 0.5;
+			case HQ: return 0.5;
+			case HQ_O: return 0.5;
+			case HQ_BE: return 0.5;
+			case HQ_BE_O: return 0.5;
+			default: return 0.0;
+		}
+	}
 }
