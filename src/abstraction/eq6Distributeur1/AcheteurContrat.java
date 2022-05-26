@@ -152,7 +152,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	private Echeancier createEcheancier(Echeancier aCombler, int stepDebut, ChocolatDeMarque c) {
 		Echeancier e = new Echeancier(stepDebut);
 		for (int i = stepDebut; i < stepDebut + 24; i++) {
-			e.ajouter(this.partCC*Filiere.LA_FILIERE.getVentes(c, i-24)*partDuMarcheVoulu(c.getChocolat()) - aCombler.getQuantite(i));
+			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, i-24) * partDuMarcheVoulu(c.getChocolat()) - aCombler.getQuantite(i));
 		}
 		return e;
 	}
@@ -165,7 +165,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			Echeancier eChoco = echeancierTotal.get(choco);
 			Echeancier e = createEcheancier(eChoco, Filiere.LA_FILIERE.getEtape()+1, choco);
-			if (e.getQuantiteTotale() > SEUIL_AJOUT_ECHEANCE*attenduNProchainesEtapes(24, choco)*partDuMarcheVoulu(choco.getChocolat())*partCC) {// Sinon cela ne sert à rien de faire un nouveau contrat cadre
+			if (e.getQuantiteTotale() > SEUIL_AJOUT_ECHEANCE*attenduNProchainesEtapes(24, choco)*partDuMarcheVoulu(choco.getChocolat())*partCC*getPartMarque(choco)) {// Sinon cela ne sert à rien de faire un nouveau contrat cadre
 				res.put(choco, e);
 			}
 		}

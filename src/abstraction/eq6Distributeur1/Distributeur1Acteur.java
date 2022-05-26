@@ -14,6 +14,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Gamme;
 import abstraction.eq8Romu.produits.Chocolat;
 
 public class Distributeur1Acteur implements IActeur {
@@ -87,6 +88,7 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		NotreStock.initialiser();
 		
 	}
 		
@@ -238,5 +240,37 @@ public class Distributeur1Acteur implements IActeur {
 			case HQ_BE_O: return 0.5;
 			default: return 0.0;
 		}
+	}
+
+
+	public int getNbChocolatProduit(Chocolat c) {
+		int count = 0;
+		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			if (choco.getChocolat() == c) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public double getPartMarque(ChocolatDeMarque choco) {
+		return 1.0/getNbChocolatProduit(choco.getChocolat());
+	}
+
+	protected double facteurPrixChocolat(Chocolat c) {
+		double res = 1.0;
+		if (c.getGamme() == Gamme.MOYENNE) {
+			res *= 1.2;
+		}
+		else if (c.getGamme() == Gamme.HAUTE) {
+			res *= 1.4;
+		}
+		if (c.isBioEquitable()) {
+			res *= 1.2;
+		}
+		if (c.isOriginal()) {
+			res *= 1.2;
+		}
+		return res;
 	}
 }
