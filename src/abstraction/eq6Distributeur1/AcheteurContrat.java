@@ -57,6 +57,21 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		return false;
 	}
 
+	private void negoReussie(ExemplaireContratCadre ecc) {
+		journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "Négociation réussie ! Contrat #" + ecc.getNumero());
+		mesContrats.add(ecc);
+		setPrixVente((ChocolatDeMarque)ecc.getProduit(), ecc.getPrix());
+	}
+	
+	private void nouvelleNego(IVendeurContratCadre vendeur, ChocolatDeMarque choco, Echeancier e, boolean entrante) {
+		String msg = "Nouvelle demande " + ((entrante) ? "entrante" : "sortante") + " de CC pour " + choco + " avec " + vendeur.getNom() + " pour l'écheancier " + e;
+		journalNegociationCC.ajouter(Color.CYAN, Color.BLACK, msg);
+	}
+
+	private void nouvelleNego(ExemplaireContratCadre ecc, boolean entrante) {
+		nouvelleNego(ecc.getVendeur(), (ChocolatDeMarque) ecc.getProduit(), ecc.getEcheancier(), entrante);
+	}
+
 	public int[] interesctionEtapes(Echeancier e1, Echeancier e2) {
 		int[] res = {0, 0};
 		res[0] = (e1.getStepDebut() < e2.getStepDebut()) ? e2.getStepDebut() : e1.getStepDebut();
@@ -84,6 +99,9 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	
 	@Override
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
+		if (contrat.getEcheanciers().size() == 1) {
+			nouvelleNego(contrat, true);
+		}
 		journalNegociationCC.ajouter("--> Contre propisiton du vendeur: voici l'echeancier proposée et celui proposée par le vendeur");
 		Echeancier voulu = nouveauxEcheanciersVoulus().get(contrat.getProduit());
 		journalNegociationCC.ajouter("--> " + voulu);
@@ -95,6 +113,9 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			journalNegociationCC.ajouter("--> Nous acceptons son écheancier");
 			return contrat.getEcheancier();
 		}
+
+		// TODO: On ne fait actuellement aucune negociation
+		
 		journalNegociationCC.ajouter("Nous refusons son écheancier.");
 		return null;
 	}
@@ -110,13 +131,12 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			journalNegociationCC.ajouter("--> Nous acceptons le prix proposé qui est " + contrat.getPrix());
 			return contrat.getPrix();
 		}
+		// TODO: améliorer la manière dont on négocie le prix (prendre en compte les précédentes négocitations du contrat etc)
 	}
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "Negociation réussie pour le contrat");
-		this.setPrixVente((ChocolatDeMarque)contrat.getProduit(), contrat.getPrix());
-		this.mesContrats.add(contrat);
+		negoReussie(contrat);
 	}
 
 	@Override
@@ -184,7 +204,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		Echeancier e = new Echeancier(stepDebut);
 		for (int i = stepDebut; i < stepDebut + 24; i++) {
 			double aComblerI = (aCombler == null) ? 0 : aCombler.getQuantite(i);
-			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, i-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI);
+			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI);
 		}
 		return e;
 	}
@@ -218,14 +238,11 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
 				Echeancier aAjouterChoco = aAjouter.get(choco);
 				if (aAjouterChoco != null) {
-					journalNegociationCC.ajouter(Color.CYAN, Color.BLACK, "Nouvelle demande de CC avec " + vendeur.getNom() + " pour l'écheancier " + aAjouterChoco);
+					nouvelleNego(vendeur, choco, aAjouterChoco, false);
 					ExemplaireContratCadre ecc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouterChoco, this.cryptogramme, false);
 					if (ecc != null) {
-						mesContrats.add(ecc);
+						negoReussie(ecc);
 						aAjouter = nouveauxEcheanciersVoulus();
-						System.out.println(ecc.getPrix());
-						this.setPrixVente(choco, ecc.getPrix());
-						journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "La négociation a abouti");
 					}
 					else {
 						journalNegociationCC.ajouter(Color.RED, Color.BLACK, "La negociation a echouée.");
