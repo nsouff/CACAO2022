@@ -15,7 +15,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur/*,IVendeurBourse*/ {
+public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur /*, IVendeurBours */ {
 	
 	protected int cryptogramme;
 	protected Journal journal;
