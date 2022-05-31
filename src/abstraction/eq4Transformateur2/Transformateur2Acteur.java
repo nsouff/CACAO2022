@@ -59,6 +59,9 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 5000);
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		//ajouter des marques de chocolats
+		
+		
 		this.stockReferenceChocolat=new Stock();
 		this.stockReferenceChocolat.ajouter(c1, 5000);
 		this.stockReferenceChocolat.ajouter(c0, 8000);
