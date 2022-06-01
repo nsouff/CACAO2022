@@ -53,7 +53,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	return Liste;
 	}
 	//egfgyuzegoeuzygf
-	/**
+	/*
 	 * @param transformateur
 	 * @return un classement du transformateur par rapport aux autres par rapport à l'achat de fèves non Bio
 	 */
