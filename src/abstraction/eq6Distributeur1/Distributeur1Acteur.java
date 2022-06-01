@@ -108,7 +108,7 @@ public class Distributeur1Acteur implements IActeur {
 		
 		journal1.ajouter("entrée dans next pour le tour n° " + Compteur);
 		
-		this.suppAnciensContrats();
+		/**this.suppAnciensContrats();
 		this.getNotreStock().getMapStock().forEach((key,value)->{
 			if (value <= 10000) {
 				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
@@ -126,7 +126,7 @@ public class Distributeur1Acteur implements IActeur {
 				}
 			}	
 		});
-		
+		**/
 		/**
 		 *  
 		 * Gestion des compte -> retirer argent :
@@ -210,7 +210,7 @@ public class Distributeur1Acteur implements IActeur {
 	
 	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
-	}
+		}
 
 	public void notificationOperationBancaire(double montant) {
 		journalCompte.ajouter("Une opération vient d'avoir lieu d'un montant de " + montant);
