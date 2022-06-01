@@ -195,7 +195,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE),this.getParc(j));
 			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE),this.getParc(j));
 			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE),this.getParc(j));
-			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE),this.getParc(j));
+		 	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE),this.getParc(j));
 			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE),this.getParc(j));
 
 			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());

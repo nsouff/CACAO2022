@@ -244,6 +244,9 @@ public class Parc {
 		int plantés = 0;
 		int mort_vieillesse = 0;
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
+			if (i==1) {
+				this.getRetourMAJParc().ajouter(this.getArbre(i).getMecontentement()+"");
+			}
 			MilleArbre arbre_i = this.getArbre(i);
 			arbre_i.MAJMaladie();
 			int qualite = arbre_i.getQualite();
