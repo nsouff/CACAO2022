@@ -31,7 +31,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		
 		super.next();
 		NewCap=cap;
-		//this.GetCommandes(mesContratEnTantQueVendeur);
+		this.GetCommandes(mesContratEnTantQueVendeur);
 		//il faut régler les qauntités transformées pour chaque types de fèves
 		
 		//Les transformations non originales courtes
@@ -76,16 +76,17 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	}
 
 	//renvoie une HashMap des chocolats de marques et de la quatité à livrer de ces derniers 
-	//public void GetCommandes(List<ExemplaireContratCadre> CC) {///POUR LA V2
-	//	this.commandes.clear();
-	//	for(ExemplaireContratCadre c:CC) {
+	public void GetCommandes(List<ExemplaireContratCadre> CC) {///POUR LA V2
+		Stock comm=new Stock<ChocolatDeMarque>();
+		for(ExemplaireContratCadre c:CC) {
 			
-	//		this.commandes.ajouter(((ChocolatDeMarque)(c.getProduit())), c.getQuantiteALivrerAuStep());
-	//	}
+			comm.ajouter(((ChocolatDeMarque)(c.getProduit())), c.getQuantiteALivrerAuStep());
+			this.commandes=comm;
+		}
 		
 		
 		
-	//}
+	}
 	
 	
 	//trouve la meilleur combinaison (qui minimise les coûts et si possible a une stratégie)
