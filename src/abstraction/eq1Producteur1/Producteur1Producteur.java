@@ -203,11 +203,12 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 					this.addLot(f, this.recolte.get(f), this.getParc(j));
 				}
 			}
-			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
+			//this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
 			this.getParc(j).MAJGuerre();
 		}
-	
-		this.MAJMecontentement();
+		if (Filiere.LA_FILIERE.getEtape()>0) {
+			this.MAJMecontentement();
+		}
 		
 		
 		double prixTotal = 0 ;
