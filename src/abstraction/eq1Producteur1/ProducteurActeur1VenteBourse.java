@@ -47,7 +47,6 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 					System.out.println("tauxdecroissant :" +tauxdecroit);
 					System.out.println(((0.75-1)/1000000)*this.getStock(f, false));
 					System.out.println(f);
-					System.out.println(this.getClass());
 					System.out.println(this.getStock(f, false));
 					System.out.println("Comparateur "+(this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit);
 					System.out.println("Cours :"+cours);
