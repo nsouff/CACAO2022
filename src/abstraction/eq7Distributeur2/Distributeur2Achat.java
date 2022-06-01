@@ -1,5 +1,6 @@
 package abstraction.eq7Distributeur2;
 
+
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.Color;
@@ -89,6 +90,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	}
 	
 	public double volumeParEtapeMoyenne(ChocolatDeMarque chocProduit,int currentEtape,int nbEtape) {
+		
+		/*
 		double ventes = 0.0;
 		//On ajoute les quantités vendues à chaque étape depuis nbStep
 		
@@ -106,6 +109,17 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		else {
 			return judicieux;
 		}
+		*/
+		
+		double demandeAnnee = 7200000000.0;
+		int nbStepParAn = 52;
+		int nbChocolats = this.chocolats.size();
+		int nbDistributeur = 2;
+		
+		double venteJudicieuse = demandeAnnee/(nbChocolats*nbDistributeur*nbStepParAn);
+		this.journalEtudeVente.ajouter("Quantitée determinée judicieuse pour "+chocProduit+" : "+ venteJudicieuse +" kg");
+		
+		return venteJudicieuse;
 		
 	}
 	
@@ -174,6 +188,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.stock.addProduit((ChocolatDeMarque)produit, quantite);
+		this.journalStock.ajouter("+ "+quantite+" kg -"+produit);
 	}
 
 	@Override
@@ -183,6 +198,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		Echeancier currentEtape = contrat.getEcheancier();
 		ChocolatDeMarque chocProduit = (ChocolatDeMarque) contrat.getProduit();
 		Double q = contrat.getQuantiteTotale();
-		System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + chocProduit + "étalé sur " + currentEtape);
+		this.journalContratCadre.ajouter("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + chocProduit + "étalé sur " + currentEtape);
 	}
 }

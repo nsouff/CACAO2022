@@ -107,15 +107,18 @@ public class Stock { //Emma Humeau
 	//EmmaHumeau
 	//calcule un seuil de sécurité qui renvoie faux si au prochain tour on risque de faire faillite à cause du coût de stockage
 	// il faut arrêter d'acheter durant 1 tour
+	//vrai: seuil atteint, faux: non atteint
 	public boolean seuilSecuFaillite () {
 		if (acteur.getSolde() <= getCoûtStockageTotale()) {
-			return false;}
-		return true;
+			return true;
+		}
+		return false;
 	}
 
 	protected void initialiser() {
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			addQte(choco, acteur.getPartMarque(choco) * acteur.partDuMarcheVoulu(choco.getChocolat()) * Filiere.LA_FILIERE.getVentes(choco, -24));
+			for (int i = 0; i < 4; i++)
+			addQte(choco, acteur.getPartMarque(choco) * acteur.partDuMarcheVoulu(choco.getChocolat()) * Filiere.LA_FILIERE.getVentes(choco, -24+i));
 			acteur.setPrixVente(choco, 7.5*acteur.facteurPrixChocolat(choco.getChocolat()));
 		}
 	}
