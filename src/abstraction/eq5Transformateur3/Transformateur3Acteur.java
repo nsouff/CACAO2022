@@ -104,13 +104,13 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.stockChocolat.ajouter(Chocolat.HQ_BE, s);
 		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, s);
 		
-		this.perempFeves.ajouterQtt(0,Feve.FEVE_MOYENNE_BIO_EQUITABLE,s);
-		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
+		this.perempFeves.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Feve.FEVE_MOYENNE_BIO_EQUITABLE,s);
+		this.perempFeves.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
 		
-		this.stockChocolat.ajouter(Chocolat.MQ_BE, s);
-		this.stockChocolat.ajouter(Chocolat.MQ_BE_O, s);
-		this.stockChocolat.ajouter(Chocolat.HQ_BE, s);
-		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, s);
+		this.perempChocolat.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Chocolat.MQ_BE, s);
+		this.perempChocolat.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Chocolat.MQ_BE_O, s);
+		this.perempChocolat.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Chocolat.HQ_BE, s);
+		this.perempChocolat.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Chocolat.HQ_BE_O, s);
 		
 		this.stockFevesVariableM = new Variable(this.getNom()+"stockFevesMoyennesBio", "stock de feves moyenne qualite bio", this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)  );
 		this.stockFevesVariableH = new Variable(this.getNom()+"stockFevesHautesBio", "stock de feves haute qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)  );

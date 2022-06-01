@@ -13,14 +13,14 @@ public class DicoPeremption<Produit> {
 	public Set<DateProd<Produit>> getDateProd() {
 		return this.peremptions.keySet();
 	}
-	public double getQtt(int date,Produit produit) {	
+	public double getQtt(double date,Produit produit) {	
 		DateProd<Produit>d = new DateProd<Produit>(date,produit) ;
 		return this.peremptions.get(d);
 	}
 	
 
 	
-	public void ajouterQtt(int date,Produit p, Double qtt) {
+	public void ajouterQtt(double date,Produit p, Double qtt) {
 		DateProd<Produit> d =new DateProd<Produit>(date,p);
 		if (qtt > 0) {
 			
@@ -34,7 +34,7 @@ public class DicoPeremption<Produit> {
 			}
 	}
 		
-	public void utiliserQttDate(int date,Produit p, Double qtt) { 
+	public void utiliserQttDate(double date,Produit p, Double qtt) { 
 		/* on vérifiera a l avance que l on peut retirer qtt ie qu il y a assez de stock */
 		
 		DateProd<Produit> d =new DateProd<Produit>(date,p);
@@ -53,7 +53,7 @@ public class DicoPeremption<Produit> {
 		}
 	
 	
-	public void perime(int step) {
+	public void perime(double step) {
 		for (DateProd<Produit> d : this.getDateProd()) {
 			if (d.getDate()<step || this.peremptions.get(d)==0) {
 				this.peremptions.remove(d) ;
@@ -67,12 +67,12 @@ public class DicoPeremption<Produit> {
 		
 		while (qttR>0) {
 			
-			int date = 0;
+			double date = 0;
 			double qC=0;
 			
 		
 			for (DateProd<Produit> d : this.getDateProd()) {
-				int step=d.getDate();
+				double step=d.getDate();
 				if (date==0  || (step<date && d.getProduit()==p) ){
 					date=step;
 					qC=this.getQtt(date, p);
