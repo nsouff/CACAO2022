@@ -64,6 +64,8 @@ public class Distributeur2Acteur implements IActeur{
 		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
 		System.out.println("Liste des chocolats en vente sur le marché : "+chocolats);
 		this.stock = new Stock(this,this.chocolats);
+		this.actualiserIndicateurs();
+		this.journalStock.ajouter("Stock initial: "+this.stock.getQuantiteTotale());
 		
 	}
 	
