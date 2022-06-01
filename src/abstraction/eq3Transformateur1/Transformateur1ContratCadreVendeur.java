@@ -77,6 +77,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 					contrat.getAcheteur().getNom(), 
 					((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
 					contrat.getPrix());
+			journal.ajouter("nouveau contrat cadre vendeur");
 		}
 		
 	}
