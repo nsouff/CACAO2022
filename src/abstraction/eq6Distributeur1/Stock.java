@@ -1,9 +1,11 @@
 package abstraction.eq6Distributeur1;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariablePrivee;
+import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
@@ -105,11 +107,31 @@ public class Stock { //Emma Humeau
 	}
 	
 	//EmmaHumeau
-	//calcule un seuil de sécurité qui renvoie faux si au prochain tour on risque de faire faillite à cause du coût de stockage
+	//calcule un seuil de sécurité qui renvoie faux si au prochain tour on risque de faire faillite à cause du coût de stockage en fonction des ventes des 2 derniers tours
 	// il faut arrêter d'acheter durant 1 tour
 	//vrai: seuil atteint, faux: non atteint
 	public boolean seuilSecuFaillite () {
-		(acteur.getSolde() <= getCoûtStockageTotale());
+		if (acteur.getSolde() <= getCoûtStockageTotale()) {
+			return true;
+		}
+		
+		double ventesPasséesDernierTour = 0;
+		double ventesPasséesAvDernierTour = 0;
+
+		for (Entry<ChocolatDeMarque, VariableReadOnly> m : acteur.HistoChoco.entrySet()) {
+			ventesPasséesDernierTour += ((Variable) m).getValeur(Filiere.LA_FILIERE.getEtape()-1);
+			ventesPasséesAvDernierTour += ((Variable) m).getValeur(Filiere.LA_FILIERE.getEtape()-2);
+		}
+		if (ventesPasséesDernierTour + acteur.getSolde() <= getCoûtStockageTotale()) {
+			return true;
+		}
+		if (ventesPasséesAvDernierTour + acteur.getSolde() <= getCoûtStockageTotale()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 
 	protected void initialiser() {
