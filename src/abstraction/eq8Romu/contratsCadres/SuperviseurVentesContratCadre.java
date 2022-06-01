@@ -43,7 +43,7 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 
 	public List<IVendeurContratCadre> getVendeurs(Object produit) {
 		List<IVendeurContratCadre> vendeurs = new LinkedList<IVendeurContratCadre>();
-		List<IActeur> acteurs = Filiere.LA_FILIERE.getActeurs();
+		List<IActeur> acteurs = Filiere.LA_FILIERE.getActeursSolvables();
 		for (IActeur acteur : acteurs) {
 			if (acteur instanceof IVendeurContratCadre && ((IVendeurContratCadre)acteur).vend(produit)) {
 				vendeurs.add(((IVendeurContratCadre)acteur));
@@ -53,7 +53,7 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 	}
 	public List<IAcheteurContratCadre> getAcheteurs(Object produit) {
 		List<IAcheteurContratCadre> acheteurs = new LinkedList<IAcheteurContratCadre>();
-		List<IActeur> acteurs = Filiere.LA_FILIERE.getActeurs();
+		List<IActeur> acteurs = Filiere.LA_FILIERE.getActeursSolvables();
 		for (IActeur acteur : acteurs) {
 			if (acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(produit)) {
 				acheteurs.add(((IAcheteurContratCadre)acteur));
