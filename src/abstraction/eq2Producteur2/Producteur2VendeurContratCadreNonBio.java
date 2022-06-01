@@ -97,7 +97,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 				return contrat.getEcheancier();
 				}
 			else {
-				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getStepFin(),this.production((Feve)(contrat.getProduit()))  - quantiteTotaleContratEnCours(contrat.getProduit()));    
+				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getStepFin(),this.production((Feve)(contrat.getProduit()))- quantiteTotaleContratEnCours(contrat.getProduit()));    
 				return e;
 			}
 		}	
