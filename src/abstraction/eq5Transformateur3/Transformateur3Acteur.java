@@ -30,6 +30,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Double SeuilMinChocolat; // en kg : Au dessus de ce seuil, on vend du chocolat car stock trop "haut"
 	protected Double achatMaxFeves; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 	protected Double capaciteStockageEQ5; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
+	
+	
 
 	//Paramètres
 	protected Variable seuilTransformation;
