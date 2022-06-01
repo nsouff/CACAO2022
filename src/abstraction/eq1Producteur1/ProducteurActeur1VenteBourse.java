@@ -71,6 +71,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	 */
 	//Auteur : Khéo
 	public HashMap<Feve, Double> getPrixmoyenFeve() {
+		
 		return this.prixmoyenFeve;
 	}
 
