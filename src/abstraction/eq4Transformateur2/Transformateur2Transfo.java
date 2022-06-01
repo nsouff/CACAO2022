@@ -31,28 +31,28 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		//il faut régler les qauntités transformées pour chaque types de fèves
 		
 		//Les transformations non originales courtes
-		this.transfo(0.0*cap, false, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, false, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_HAUTE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations originales courtes
-		this.transfo(0.0*cap, true, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, true, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_HAUTE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations originales longues
-		this.transfo(0.0*cap, true, "longue",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,true,"longue",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,true,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, true, "longue",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,true,"longue",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,true,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations non originales longues
-		this.transfo(0.0*cap, false, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, false, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 				
 	}
