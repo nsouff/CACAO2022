@@ -52,8 +52,8 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 	return Liste;
 	}
-	
-	/**
+	//egfgyuzegoeuzygfz
+	/*
 	 * @param transformateur
 	 * @return un classement du transformateur par rapport aux autres par rapport à l'achat de fèves non Bio
 	 */
@@ -117,17 +117,33 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		 }
 	}
 
+	public Echeancier contrePropositionDuVendeurBio(ExemplaireContratCadre contrat) {
+		if (vend(contrat.getProduit())) {
+			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())) { 
 
+				return contrat.getEcheancier();
+				}
+			else {
+				Echeancier e = contrat.getEcheancier();
+				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				return e;
+			}
+		}	
+		 else {
+			 	return null;// on ne vend pas de ce produit
+		 }
+	}
 	
 	
 	
-	public double propositionPrix(ExemplaireContratCadre contrat) {
+	
+	public double propositionPrixNonBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		return 0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 	}
 
 	
-	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+	public double contrePropositionPrixVendeurNonBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		if (contrat.getQuantiteTotale()>12*(this.production((Feve)contrat.getProduit()))){ // Grosse commande, proposition de prix plus bas
 			if (contrat.getPrix()>0.8 ) {
@@ -141,7 +157,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		return -1.0;
 	}
 
-	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+	public void notificationNouveauContratCadreNonBio(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurNonBio.add(contrat);
 		
 	}
@@ -186,11 +202,23 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		return res;
 	}
 
-	@Override
-	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return null;
+
+	public double propositionPrixBio(ExemplaireContratCadre contrat) {
+		double prix = 1.4*this.getCout((Feve)contrat.getProduit());
+		if (this.getClassementTransformateur( contrat.getAcheteur() )==1){
+			prix = 1.25*this.getCout((Feve)contrat.getProduit());
+		}
+		if (this.getClassementTransformateur(contrat.getAcheteur() )==2){
+			prix = 1.30*this.getCout((Feve)contrat.getProduit());
+		}
+		if (this.getClassementTransformateur( contrat.getAcheteur() )==3){
+			prix = 1.35*this.getCout((Feve)contrat.getProduit());
+		}
+		
+		return prix;
 	}
+
+	
 	
 	public double contrePropositionPrixVendeurBio(ExemplaireContratCadre contrat) {
 		double contrepropositionprix = -1.0;
@@ -219,8 +247,44 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	 return contrepropositionprix;
 	}
+
+
 	
 	
+	public void notificationNouveauContratCadreBio(ExemplaireContratCadre contrat) {
+		this.mesContratEnTantQueVendeurBio.add(contrat);
+
+		
+	}
+
+	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+			return this.contrePropositionDuVendeurBio(contrat);
+		}
+		
+		return this.contrePropositionDuVendeurNonBio(contrat);
+	}
+
+	public double propositionPrix(ExemplaireContratCadre contrat) {
+		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+			return this.propositionPrixBio(contrat);
+		}
+		return this.propositionPrixNonBio(contrat);
+	}
 	
+	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+			return this.contrePropositionPrixVendeurBio(contrat);
+		}
+		return this.contrePropositionPrixVendeurNonBio(contrat);
+	}
+
+	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+			 this.notificationNouveauContratCadreBio(contrat);
+		}
+		this.notificationNouveauContratCadreNonBio(contrat);
+	}
+
 	
 }
