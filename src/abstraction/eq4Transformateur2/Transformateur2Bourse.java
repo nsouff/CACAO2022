@@ -5,6 +5,7 @@ import java.util.List;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleAbsAcheteurBourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.general.Variable;
@@ -77,7 +78,9 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 	public double demande(Feve f, double cours) {
 
 			if(cours<this.getPrixSeuil(f).getValeur()) {
-				double besoin=Math.max(0.1,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+
+				double besoin=Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)){
 					return besoin;
 				}
@@ -101,6 +104,8 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 		//this.journal.ajouter("Aie... je suis blackliste... Nous sommes pauvres... :(");
 		
 	}
+
+
 
 	
 }

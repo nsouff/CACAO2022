@@ -27,6 +27,7 @@ public class CopieFiliereTestContratCadre extends Filiere {
 	};
 
 	private SuperviseurVentesContratCadre superviseurCC;
+	private SuperviseurVentesAO superviseurAO;
 
 	public CopieFiliereTestContratCadre() {
 		super();
@@ -47,11 +48,13 @@ public class CopieFiliereTestContratCadre extends Filiere {
 		this.ajouterActeur(cf);
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
-		this.ajouterActeur(new Transformateur2());
-		this.ajouterActeur(new Transformateur3());
+		//this.ajouterActeur(new Transformateur2());
 		this.ajouterActeur(new Romu());
 		this.superviseurCC=new SuperviseurVentesContratCadre();
 		this.ajouterActeur(this.superviseurCC);
+		this.superviseurAO=new SuperviseurVentesAO();
+		this.ajouterActeur(this.superviseurAO);
+
 
 	}
 }
