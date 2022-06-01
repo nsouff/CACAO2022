@@ -18,13 +18,19 @@ import abstraction.eq8Romu.produits.Gamme;
 public class Transformateur2Bourse extends Transformateur2Transfo implements IAcheteurBourse{
 	
 	private double quantiteEnKg;
+	private double prixseuilBG;
+	private double prixseuilMG;
+	private double minBG;
+	private double minMG;
 	
 
 	public Transformateur2Bourse() {
 		super();
 		this.quantiteEnKg=quantiteEnKg;
-
-
+		this.prixseuilBG=prixseuilBG;
+		this.prixseuilMG=prixseuilMG;
+		this.minBG=minBG;
+		this.minMG=minMG;
 	}
 
 	public void next() {
@@ -45,11 +51,72 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 		this.journal.ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est"+ this.prixMinB.getValeur() + "");
 		this.journal.ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est"+ this.prixMinM.getValeur()+ "");
 	}
+	
 	public void initialiser() {
 		super.initialiser();
 	}
 	
+	
+// Marie 
+	
+/*public double prixSeuilBG(double prixseuilBG, double minBG) {
+	BourseCacao b	=(BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+	if(Filiere.LA_FILIERE.getEtape()<27) {
+		for(int i=0;i<5;i++) {
+			if(b.getCours(Feve.FEVE_BASSE).getMin()<minBG) {
+				this.minBG=b.getCours(Feve.FEVE_BASSE).getMin();
+			}
+			
+		}
+		}else {
+			//prendre le min de la même période de l'année dernière
+		
+	}
+}
+
+public double prixSeuilMG() {
+	BourseCacao b	=(BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+	if(Filiere.LA_FILIERE.getEtape()<27) {
+		for(int i=0;i<5;i++) {
+			if(b.getCours(Feve.FEVE_BASSE).getMin()<minBG) {
+				this.minBG=b.getCours(Feve.FEVE_BASSE).getMin();
+			}
+			
+		}
+		}else {
+			//prendre le min de la même période de l'année dernière
+		
+	}	
+}
+
+
+public double demande(Feve f, double cours) {
+	if ((f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()) && (cours < prixSeuilMG())) {
+			return this.getCapaciteStockageFixe().getValeur()*0.4-this.getStockfeve().getQuantite(f);
+			
+	  }	else if ((f.getGamme().equals(Gamme.BASSE) && !f.isBioEquitable())&& (cours< prixSeuilBG())) {
+			return this.getCapaciteStockageFixe().getValeur()*0.6-this.getStockfeve().getQuantite(f);	
+		}
+			
+	 else {
+		return 0.0;
+	}
+	
+}
+
+
 //Marie et Jad
+
+/*	public double demande(Feve f, double cours) {
+		BourseCacao b	=(BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		b.getCours(Feve.FEVE_BASSE);
+		if (cours < this.getPrixSeuil().getValeur()) {
+			if(f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()) {
+				
+				//On verifie qu'on a la capacite de paiemeent nécessaire, puis on demande
+				if (Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f)))) {
+				return Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f));
+
 //	public double demande(Feve f, double cours) {
 //		if (cours < this.getPrixSeuil().getValeur()) {
 //			if(!f.isBioEquitable()) {
@@ -84,12 +151,18 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)){
 					return besoin;
 				}
+
 			}
 		
 		
-		return 0.00;
-	}
-	
+
+		return 0.0;
+
+		}
+*/
+
+
+
 
 
 //Marie et Jad
@@ -103,6 +176,13 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 	public void notificationBlackList(int dureeEnStep) {
 		//this.journal.ajouter("Aie... je suis blackliste... Nous sommes pauvres... :(");
 		
+	}
+
+
+	@Override
+	public double demande(Feve f, double cours) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

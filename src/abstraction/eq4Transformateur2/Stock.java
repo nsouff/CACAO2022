@@ -3,7 +3,7 @@ package abstraction.eq4Transformateur2;
 import java.util.HashMap;
 
 import abstraction.eq8Romu.filiere.Filiere;
-//auteur Marie
+
 
 public class Stock<I> {
 	

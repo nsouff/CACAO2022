@@ -72,6 +72,4 @@ public interface IAcheteurContratCadre extends IActeur {
 	 */
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat);
 
-	boolean vend(Object produit);
-
 }

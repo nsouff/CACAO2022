@@ -17,8 +17,12 @@ public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 	private Stock<ChocolatDeMarque> stockchocolatdemarque;
 	
 	private double prixstockage;
+	private double notreCapaciteStockage; //elle évolue lorsqu'on achète des new capacités de stockage
 	
-	
+	public Transformateur2Stock(double prixstockage, double notreCapaciteStockage) {
+		this.prixstockage=prixstockage;
+		this.notreCapaciteStockage=notreCapaciteStockage;
+	}
 	
 	public void next() {
 		super.next();
@@ -118,24 +122,33 @@ public double coutStockage() {
 //}	
 
 //Marie
-/*public boolean capaciteMaxAtteinte() {
-	if ((this.capaciteStockage.getValeur()-this.stockfeve-this.stockchocolat)>0 || ) {
+
+public boolean capaciteMaxAtteinte(Stock<Feve> stockfeve,Stock<Chocolat>  stockchocolat ) {
+	if (((Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur())-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()))>500 ) { 
 		return false;	
 	}else {
 		return true;
 	}
 }
 
-public double augmenterCapacite(Variable capaciteStockage) {
-	//condition pour augmenter la capacité (par ex. dès qu'on souhaite acheter et que l'on n'a pas de capcité de stockage suffisante, on augmente notre capacité)
-	if (capaciteMaxAtteinte=true) {
-		capaciteStockage=this.getCapaciteStockage()*1.20;
-		
-		
+// Marie 
+
+public double augmenterCapacite(Stock<Feve> stockfeve,Stock<Chocolat>  stockchocolat,double notreCapaciteStockage ) {
+	//condition pour augmenter la capacité (par ex. dès qu'on souhaite acheter et que l'on n'a pas de capacité de stockage suffisante, on augmente notre capacité)
+	this.notreCapaciteStockage=Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur();
+	if (capaciteMaxAtteinte(stockfeve, stockchocolat)) {
+		Filiere.LA_FILIERE.getParametre("limiteStockage").setValeur(this,Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur() +(1.10*(Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur()-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()+500))));
+		double c =this.notreCapaciteStockage+=1.10*(Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur()-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()+500));
+		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), 1.10*((Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur())-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal())+500)*Filiere.LA_FILIERE.getIndicateur("prixEntrepot").getValeur());
+	return c;
+	}else {
+		return this.notreCapaciteStockage;
 	}
+	
 	//si validé alors on augmente le stock d'une quantité définie 
 	// sinon on garde le même stock
-}*/
+}
+
 
 }
 
