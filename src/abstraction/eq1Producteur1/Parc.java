@@ -231,19 +231,20 @@ public class Parc {
 		}
 	}
 	
-	public void MAJParc() { //Écrit par Antoine
+	
+	public void MAJParc(int mecontentement_basse,int mecontentement_moyenne, int mecontentement_haute) { //Écrit par Antoine
 		int malade5 = 0;
 		int plantés = 0;
 		int mort_vieillesse = 0;
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
 			MilleArbre arbre_i = this.getArbre(i);
 			arbre_i.MAJMaladie();
+			int qualite = arbre_i.getQualite();
+			boolean BE = arbre_i.getBioequitable();
+			boolean cooperative=arbre_i.getCooperative();
+			arbre_i.MAJMecontentement(mecontentement_basse,mecontentement_moyenne,mecontentement_haute);
 			if (arbre_i.getStade_maladie() == 5) { //Si un arbre meurt à cause de maladie, on le remplace immédiatement
 				malade5+=1;
-				int qualite = arbre_i.getQualite();
-				boolean BE = arbre_i.getBioequitable();
-				boolean cooperative=arbre_i.getCooperative();
-				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
 				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
 				plantés+=1;
 				this.getCacaoyers().remove(arbre_i);
@@ -254,9 +255,6 @@ public class Parc {
 				mort_vieillesse+=1;
 			}
 			if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) {
-				int qualite = arbre_i.getQualite();
-				boolean BE = arbre_i.getBioequitable();
-				boolean cooperative=arbre_i.getCooperative();
 				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
 				this.MAJCompteur(arbre_i,1);
 				plantés+=1;
