@@ -189,6 +189,8 @@ public class Distributeur1Acteur implements IActeur {
 	
 	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
+		NotreStock.seuilSecuFaillite();
+		journal1.ajouter("on risque de faire faillite au prochain tour");
 		}
 
 	public void notificationOperationBancaire(double montant) {
@@ -240,16 +242,16 @@ public class Distributeur1Acteur implements IActeur {
 
 	public double partDuMarcheVoulu(Chocolat c) {
 		switch(c) {
-			case BQ: return 0.5;
-			case BQ_O: return 0.5;
+			case BQ: return 0.7;
+			case BQ_O: return 0.7;
 			case MQ: return 0.5;
 			case MQ_O: return 0.5;
 			case MQ_BE: return 0.5;
 			case MQ_BE_O: return 0.5;
-			case HQ: return 0.5;
-			case HQ_O: return 0.5;
-			case HQ_BE: return 0.5;
-			case HQ_BE_O: return 0.5;
+			case HQ: return 0.3;
+			case HQ_O: return 0.3;
+			case HQ_BE: return 0.3;
+			case HQ_BE_O: return 0.3;
 			default: return 0.0;
 		}
 	}
