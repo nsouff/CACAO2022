@@ -257,7 +257,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 			
 			
 			if (Feve.isBioEquitable()) {
-				if (aleaParasiteGlobal <=1) { //Force du parasite
+				if (aleaParasiteGlobal <=0.25) { //Force du parasite
 					double aleaForceParasites = Math.random();
 					if (aleaForceParasites <= 0.70) {
 						// On perd 10% de notre stock
@@ -272,7 +272,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 				}
 				
 			} else { // Pas bio-équitable moins de chance d'avoir un parasite
-				if (aleaParasiteGlobal <=1) {
+				if (aleaParasiteGlobal <=0.15) {
 					double aleaForceParasites = Math.random();
 					if (aleaForceParasites <= 0.70) {
 						// On perd 10% de notre stock
