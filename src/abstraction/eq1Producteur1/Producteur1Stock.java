@@ -100,13 +100,11 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
-		System.out.println(f.name());
+		
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
-			System.out.println(Lot.toString());
-			System.out.println(Lot.getPoids());
 			if (Lot.isAffine() || affinage) {
 				somme = somme + Lot.getPoids() ;
-				System.out.println(somme);
+	
 			}
 		}
 		System.out.println("Somme totale " + somme);
