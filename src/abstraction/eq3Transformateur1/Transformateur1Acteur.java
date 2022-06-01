@@ -14,6 +14,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur1Acteur implements IActeur {
 	protected Journal journal;
+	protected Journal journalCC;
 	protected int cryptogramme;
 	protected DicoFeve stockFeve;               /** Integer --> Double*/
 	protected DicoChoco stockChoco;           /** Integer --> Double*/
@@ -23,7 +24,8 @@ public class Transformateur1Acteur implements IActeur {
 		cryptogramme = 0;
 		stockFeve = new DicoFeve();
 		stockChoco = new DicoChoco();
-		this.journal = new Journal("test",this);
+		this.journal = new Journal("Divers",this);
+		this.journalCC = new Journal("Contrats cadres",this);
 	}
 
 	public void initialiser() {
@@ -97,6 +99,7 @@ public class Transformateur1Acteur implements IActeur {
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		res.add(journal);
+		res.add(journalCC);
 		return res;
 	}
 
