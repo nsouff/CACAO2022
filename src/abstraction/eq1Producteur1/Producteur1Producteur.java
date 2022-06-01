@@ -106,7 +106,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		double pourcentage_nBE_moyenne = 0.27;
 		double pourcentage_nBE_haute = 0;
 		double pourcentage_BE_moyenne = 0.05;
-		// On calcule le nombre d'arbres par parc à répartir en fonction des définis pourcentages au-dessus
+		// On calcule le nombre d'arbres par parc à répartir en fonction des pourcentages définis au-dessus
 		int nombre_arbre_ghana = (int)Math.floor(nombre_arbre_debut*0.62);
 		int nombre_arbre_cote_divoire = (int)Math.floor(nombre_arbre_debut*0.23);
 		int nombre_arbre_nigeria = (int)Math.floor(nombre_arbre_debut*0.07);
@@ -203,7 +203,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 					this.addLot(f, this.recolte.get(f), this.getParc(j));
 				}
 			}
-			//this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
+			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
 			this.getParc(j).MAJGuerre();
 		}
 		if (Filiere.LA_FILIERE.getEtape()>0) {
