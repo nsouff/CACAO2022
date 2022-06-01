@@ -1,4 +1,4 @@
-package abstraction.eq7Distributeur2;
+package abstraction.eq7Distributeur2.tools;
 
 import java.util.List;
 import java.util.HashMap;
@@ -20,6 +20,7 @@ public class Stock implements IStock{
 	private HashMap<ChocolatDeMarque,Variable> seuilRachat;
 	private IActeur acteur;
 	private boolean FONCTIONEL;
+	private double StockInit=100000;
 	
 	/**Méthode constructeur, initialise le stock vide
 	 * @param acteur
@@ -40,7 +41,7 @@ public class Stock implements IStock{
 		
 		//Initialisation des deux à 0
 		for (ChocolatDeMarque choco : listeChocolatsProduits) {
-			reserve.put(choco, new Variable("Stock"+choco.toString(),"Valeur du stock pour "+choco.toString(),acteur,0.,Double.POSITIVE_INFINITY,0));
+			reserve.put(choco, new Variable("Stock"+choco.toString(),"Valeur du stock pour "+choco.toString(),acteur,0.,Double.POSITIVE_INFINITY,StockInit));
 			seuilRachat.put(choco,new Variable("SeuilRachat"+choco.toString(),"Seuil de rachat défini pour "+choco.toString(),acteur,-1.,Double.POSITIVE_INFINITY,0));
 		}
 		this.acteur = acteur;

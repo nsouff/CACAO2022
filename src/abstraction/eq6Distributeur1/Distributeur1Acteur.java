@@ -106,28 +106,7 @@ public class Distributeur1Acteur implements IActeur {
 	
 	public void next() {
 		//leorouppert
-		journal1.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
-		this.getNotreStock().getMapStock().forEach((key,value)->{
-			double moy = 0;
-			if (Filiere.LA_FILIERE.getEtape() > 0) {
-				moy = HistoChoco.get(key).getValeur()/Filiere.LA_FILIERE.getEtape();
-			}
-			if (value <= Math.max(5000.0, moy)) { 
-				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
-				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
-				if (ListeVendeurs.size() != 0) {
-					IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
-					journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
-					ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,10000), cryptogramme, false);
-					if (CC == null) {
-						journal1.ajouter("-->aboutit au contrat "+ CC);
-					}
-					else {
-						journal1.ajouter("échec des négociations");
-					}
-				}
-			}	
-		});	
+
 		journal1.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
 		getChocoTotalTour();
 		/**
@@ -210,7 +189,9 @@ public class Distributeur1Acteur implements IActeur {
 	
 	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
-	}
+		NotreStock.seuilSecuFaillite();
+		journal1.ajouter("on risque de faire faillite au prochain tour");
+		}
 
 	public void notificationOperationBancaire(double montant) {
 		journalCompte.ajouter("Une opération vient d'avoir lieu d'un montant de " + montant);
@@ -261,16 +242,16 @@ public class Distributeur1Acteur implements IActeur {
 
 	public double partDuMarcheVoulu(Chocolat c) {
 		switch(c) {
-			case BQ: return 0.5;
-			case BQ_O: return 0.5;
+			case BQ: return 0.7;
+			case BQ_O: return 0.7;
 			case MQ: return 0.5;
 			case MQ_O: return 0.5;
 			case MQ_BE: return 0.5;
 			case MQ_BE_O: return 0.5;
-			case HQ: return 0.5;
-			case HQ_O: return 0.5;
-			case HQ_BE: return 0.5;
-			case HQ_BE_O: return 0.5;
+			case HQ: return 0.3;
+			case HQ_O: return 0.3;
+			case HQ_BE: return 0.3;
+			case HQ_BE_O: return 0.3;
 			default: return 0.0;
 		}
 	}

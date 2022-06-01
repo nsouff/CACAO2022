@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import abstraction.eq2Producteur2.Producteur2;
 import abstraction.eq8Romu.Romu;
+import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleAcheteurBourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleVendeurBourseCacao;
@@ -30,6 +31,7 @@ public class FiliereTestBourseEq1  extends Filiere {
 
 	private BourseCacao bourse;
 	private SuperviseurVentesContratCadre superviseurCC;
+	private SuperviseurVentesAO superviseurAO;
 
 	public FiliereTestBourseEq1() {
 		super();
@@ -48,19 +50,26 @@ public class FiliereTestBourseEq1  extends Filiere {
 		ClientFinal  cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 
 		this.ajouterActeur(cf);
-		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_MOYENNE, 100000));
-		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_MOYENNE, 300000));
-		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_HAUTE, 200000));
-		this.ajouterActeur(new ExempleVendeurBourseCacao(Feve.FEVE_HAUTE, 400000));
-		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_MOYENNE, 0, 10000));
-		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_MOYENNE, 0, 5000));
-		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 25000));
-		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 17000));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_BASSE));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
+		
 		this.superviseurCC=(new SuperviseurVentesContratCadre());
 		this.ajouterActeur(this.superviseurCC);
-		this.ajouterActeur(new Romu());
+		this.superviseurAO=new SuperviseurVentesAO();
+		this.ajouterActeur(this.superviseurAO);
+		
+		
+		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_BASSE, 0, 100000));
+		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_MOYENNE, 0, 10000));
+		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0, 100000));
+		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE, 0, 25000));
+		this.ajouterActeur(new ExempleAcheteurBourseCacao(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0, 205000));
+		
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_BASSE));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_HAUTE));
+		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		
+		
 		this.ajouterActeur(new Producteur1());
 		this.ajouterActeur(new Producteur2());
 		this.bourse=new BourseCacao();
