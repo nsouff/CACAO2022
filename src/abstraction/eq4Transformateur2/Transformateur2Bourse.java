@@ -15,7 +15,7 @@ import abstraction.eq8Romu.produits.Gamme;
 
 // Marie et JAd
 
-public class Transformateur2Bourse extends Transformateur2Transfo implements IAcheteurBourse{
+public abstract class Transformateur2Bourse extends Transformateur2Transfo implements IAcheteurBourse{
 	
 	private double quantiteEnKg;
 	private double prixseuilBG;

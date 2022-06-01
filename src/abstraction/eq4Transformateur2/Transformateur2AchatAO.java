@@ -18,7 +18,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 
 //Nawfel
-public class Transformateur2AchatAO extends Transformateur2Bourse implements IAcheteurAO {
+public abstract class Transformateur2AchatAO extends Transformateur2Bourse implements IAcheteurAO {
 	
 	protected double prixInit;// Lorsque l'on est acheteur d'une Appel d'Offre
 	protected HashMap<IVendeurAO, Double> prix;

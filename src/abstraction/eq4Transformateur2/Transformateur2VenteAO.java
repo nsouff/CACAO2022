@@ -8,11 +8,12 @@ import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Transformateur2VenteAO extends Transformateur2AchatAO implements IVendeurAO {
+public abstract class Transformateur2VenteAO extends Transformateur2AchatAO implements IVendeurAO {
 	protected SuperviseurVentesAO superviseur;
 	protected double prix_minB ;
 	protected double prix_minM; //Lorsque l'on est vendeur d'une Appel d'Offre
@@ -50,9 +51,9 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 500.0, false);
 						if (retenue!=null) {
 							this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
-							journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
+							this.getJournalVente().ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
 						} else {
-							journal.ajouter("pas d'offre retenue");
+							this.getJournalVente().ajouter("pas d'offre retenue");
 						}
 					}
 				}
@@ -77,7 +78,7 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 	//Vente en AO : comment choisir parmi les offres
 // Gabriel modifications pour prix minimal au kg
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
-		this.journal.ajouter("propositions : "+propositions);
+		this.getJournalVente().ajouter("propositions : "+propositions);
 		if (propositions==null) {
 			return null;
 		} else {
@@ -90,23 +91,23 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 			}
 			
 			PropositionAchatAO retenue = meilleur_proposition;
-			this.journal.ajouter("Prix voulu pour les basses :" + this.prixVouluB());
-			this.journal.ajouter("Prix voulu pour les moyennes :" + this.prixVouluM());
+			this.getJournalVente().ajouter("Prix voulu pour les basses :" + this.prixVouluB());
+			this.getJournalVente().ajouter("Prix voulu pour les moyennes :" + this.prixVouluM());
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(0))) {
 				if (retenue.getPrixKg()>(this.prixVouluB())) {
-					this.journal.ajouter("  --> je choisis "+retenue);
+					this.getJournalVente().ajouter("  --> je choisis "+retenue);
 					return retenue;
 				} else {
-					this.journal.ajouter("  --> je ne retiens rien");
+					this.getJournalVente().ajouter("  --> je ne retiens rien");
 					return null;
 				}
 			}
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(1))) {
 				if (retenue.getPrixKg()>(this.prixVouluM())) {
-					this.journal.ajouter("  --> je choisis "+retenue);
+					this.getJournalVente().ajouter("  --> je choisis "+retenue);
 					return retenue;
 				} else {
-					this.journal.ajouter("  --> je ne retiens rien");
+					this.getJournalVente().ajouter("  --> je ne retiens rien");
 					return null;
 				}
 			}
@@ -151,5 +152,6 @@ public boolean vente() {
  //} 
 
 }
+
 }
 

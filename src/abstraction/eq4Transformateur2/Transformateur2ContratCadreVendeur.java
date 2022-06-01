@@ -11,6 +11,7 @@ import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
@@ -22,6 +23,7 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 	
 	protected SuperviseurVentesContratCadre supCCadre;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeur;
+	private Journal journalVente;
 
 
 	public void next() {
@@ -39,9 +41,9 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 				for (ChocolatDeMarque c : this.getChocolatsProduits()) {
 					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
 						if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
-							journal.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+c+" avec l'acheteur "+acteur);
+							journalVente.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+c+" avec l'acheteur "+acteur);
 							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 500), cryptogramme,false);
-							journal.ajouter("-->aboutit au contrat "+cc);
+							journalVente.ajouter("-->aboutit au contrat "+cc);
 						}
 					}
 				}
@@ -57,6 +59,7 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 	public Transformateur2ContratCadreVendeur() {
 		super();
 		this.mesContratEnTantQueVendeur=new LinkedList<ExemplaireContratCadre>();
+		this.journalVente=new Journal("O'ptites Ventes", this);
 	}
 	
 	
@@ -75,7 +78,7 @@ public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 	
 	if (this.getChocolatsProduits().contains(contrat.getProduit())) {
 		if (contrat.getEcheancier().getQuantiteTotale()<this.getStockchocolat().getStocktotal()) {
-			journal.ajouter("Echeancier accepté");
+			journalVente.ajouter("Echeancier accepté");
 			return contrat.getEcheancier();
 		} else {
 			return null; // on est frileux : on ne s'engage dans un contrat cadre que si on a toute la quantite en stock (on pourrait accepter meme si nous n'avons pas tout car nous pouvons produire/acheter pour tenir les engagements) 
@@ -95,7 +98,7 @@ public double propositionPrix(ExemplaireContratCadre contrat) {
 public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 	// TODO Auto-generated method stub
 	if (contrat.getPrix()<6) {
-		journal.ajouter("Prix trop bas : Rupture du contrat");
+		journalVente.ajouter("Prix trop bas : Rupture du contrat");
 		return 0.0; //On arrete les négociations si son prix au kg
 	} else if(contrat.getPrix()>propositionPrix(contrat)) {
 		return contrat.getPrix();
@@ -108,7 +111,7 @@ public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 	// TODO Auto-generated method stub
 	this.mesContratEnTantQueVendeur.add(contrat);
-	journal.ajouter("Contrat signé avec " +contrat.getAcheteur().getNom()+ ". Livraison prévue de "+contrat.getQuantiteTotale()+" de"+contrat.getProduit());
+	journalVente.ajouter("Contrat signé avec " +contrat.getAcheteur().getNom()+ ". Livraison prévue de "+contrat.getQuantiteTotale()+" de"+contrat.getProduit());
 	
 }
 
@@ -121,5 +124,10 @@ public double livrer(Object produit, double quantite, ExemplaireContratCadre con
 
 public List<ExemplaireContratCadre> getMesContratEnTantQueVendeur() {
 	return mesContratEnTantQueVendeur;
+}
+
+
+public Journal getJournalVente() {
+	return journalVente;
 }
 }

@@ -1,8 +1,10 @@
 package abstraction.eq4Transformateur2;
 
+import java.awt.Color;
 import java.util.HashMap;
 
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -10,11 +12,12 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteur Marie
 
-public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
+public abstract class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 	
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat>  stockchocolat;
 	private Stock<ChocolatDeMarque> stockchocolatdemarque;
+	private Journal journalStock;
 	
 	private double prixstockage;
 	private double notreCapaciteStockage; //elle évolue lorsqu'on achète des new capacités de stockage
@@ -29,12 +32,12 @@ public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 		//ON implemente le journal avec des infos sur nos stocks à chaque tour
 				if (this.stockfeve.getStock().keySet().size()>0) {
 					for (Feve f : this.stockfeve.getStock().keySet()) {
-						this.journal.ajouter("stock de feve "+f+" : "+this.stockfeve.getStock().get(f));
+						this.journalStock.ajouter("stock de feve "+f+" : "+this.stockfeve.getStock().get(f));
 					}
 				}
 				if (this.stockchocolatdemarque.getStock().keySet().size()>0) {
 					for (ChocolatDeMarque c : this.stockchocolatdemarque.getStock().keySet()) {
-						this.journal.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
+						this.journalStock.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
 					}
 				}
 				
@@ -42,7 +45,8 @@ public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 				
 		//On paye le cout de stockage
 				Filiere.LA_FILIERE.getBanque().virer(this, super.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.coutStockage());
-				journal.ajouter("Le stock nous coûte "+this.coutStockage());
+				journalStock.ajouter(Color.red,Color.white,"Le stock nous coûte "+this.coutStockage());
+				journalStock.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------");
 	}
 	
 	public void initialiser() {
@@ -55,6 +59,8 @@ public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 // Marie	
 	public Transformateur2Stock() {
 		
+		this.journalStock=new Journal("O'ptiStock",this);
+		
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
 		this.stockfeve=new Stock();
 		this.stockfeve.ajouter(Feve.FEVE_BASSE, 8000);
@@ -66,9 +72,9 @@ public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
-		ChocolatDeMarque c2=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(2));
-		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(3));
-		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(4));
+		ChocolatDeMarque c2=new ChocolatDeMarque(Chocolat.MQ_BE,this.getMarquesChocolat().get(2));
+		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.HQ,this.getMarquesChocolat().get(3));
+		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
 		
 		this.stockchocolatdemarque=new Stock();
 		this.stockchocolatdemarque.ajouter(c1, 5000);
@@ -100,7 +106,7 @@ public Stock<ChocolatDeMarque> getStockchocolatdemarque(){
 
 //Marie
 public double coutStockage() {
-	return 4*0.01*(this.getStockchocolatdemarque().getStocktotal()+this.getStockfeve().getStocktotal());
+	return 4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()*(this.getStockchocolatdemarque().getStocktotal()+this.getStockfeve().getStocktotal());
 }
 
 
@@ -148,6 +154,12 @@ public double augmenterCapacite(Stock<Feve> stockfeve,Stock<Chocolat>  stockchoc
 	//si validé alors on augmente le stock d'une quantité définie 
 	// sinon on garde le même stock
 }
+
+public Journal getJournalStock() {
+	return journalStock;
+}
+
+
 
 
 }
