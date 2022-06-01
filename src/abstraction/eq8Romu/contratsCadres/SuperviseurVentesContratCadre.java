@@ -287,6 +287,8 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 			} else {
 				this.journal.ajouter("- rien a payer a cette etape");
 			}
+			cc.penaliteLivraison();
+			cc.penalitePaiement();
 		}		
 	}
 
