@@ -7,6 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import abstraction.eq8Romu.filiere.Banque;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
@@ -33,7 +35,6 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<FeveProducteur1>());
 		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<FeveProducteur1>());
 		
-		
 		this.StockBasse_NA= new Variable(this.getNom()+"StockBasse_NA", "Stock de Fèves Basse avec sans Affinage", 
 				this, 0, 1000000000, this.getStock(Feve.FEVE_BASSE, true));
 		this.StockMoyenne_NA= new Variable(this.getNom()+"StockMoyenne_NA", "Stock de Fèves Moyenne avec sans Affinage", 
@@ -59,6 +60,12 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		
 	}
 	
+	
+	
+
+
+
+
 	public abstract LinkedList<Parc> getListeParc();
 	
 	//Auteur : Khéo
@@ -100,17 +107,16 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
-		System.out.println(f.name());
+
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
-			System.out.println(Lot.toString());
-			System.out.println(Lot.getPoids());
 			if (Lot.isAffine() || affinage) {
-			somme = somme + Lot.getPoids() ;
-			System.out.println(somme);
+
+				somme = somme + Lot.getPoids() ;
 			}
 		}
-		System.out.println("Somme totale " + somme);
+
 		return somme ;	
+
 	}
 	
 	
@@ -120,9 +126,9 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		double somme = 0.0 ;
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
 			if (Lot.getProvenance() == provenance) {
-			if (Lot.isAffine() || affinage) {
-			somme = somme + Lot.getPoids() ;
-			}
+				if (Lot.isAffine() || affinage) {
+					somme = somme + Lot.getPoids() ;
+				}
 			}
 		}
 		return somme ;	
