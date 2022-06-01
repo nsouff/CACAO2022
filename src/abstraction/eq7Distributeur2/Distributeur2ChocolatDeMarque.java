@@ -16,8 +16,13 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 	
 	
+	//edgard: prix depend de la marque et du type de choco: Biofour et BE moins cher que le marché
 	public double prix(ChocolatDeMarque choco) {
-		return 10.0;
+		if (choco.getMarque()=="Biofour" && choco.isBioEquitable()) {
+			return 9.0;
+		}else {
+			return 10.0;
+		}
 	}
 
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
@@ -30,12 +35,16 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) {
-		if (crypto!=this.cryptogramme) {
-			journal.ajouter("Quelqu'un essaye de me pirater !");
-			return 0.0;
-		} else {
-			return Math.min(capaciteDeVente, this.stock.getQuantite(choco))/20;
+		if(choco.isBioEquitable()) {
+			if (crypto!=this.cryptogramme) {
+				journal.ajouter("Quelqu'un essaye de me pirater !");
+				return 0.0;
+			} else {
+				return Math.min(capaciteDeVente, this.stock.getQuantite(choco))/20;
 			}
+		}else {
+			return 0.0;
+		}
 	}
 	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
