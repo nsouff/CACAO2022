@@ -80,6 +80,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		//System.out.println(dernierPrixVenteChocoReset.getChocolats());
 		//System.out.println(dernierPrixVenteChocoReset.getPrix(getDescription(), null));
 		
+		/**
 		if (dernierPrixVenteChocoReset.getPrix(
 				contrat.getAcheteur().getNom(), 
 				((ChocolatDeMarque)contrat.getProduit()).getChocolat())
@@ -93,7 +94,8 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 					((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
 					contrat.getPrix());
 			
-		}journalCC.ajouter("nouveau contrat cadre vendeur");
+		} */
+		journalCC.ajouter("nouveau contrat cadre vendeur");
 		
 	}
 
