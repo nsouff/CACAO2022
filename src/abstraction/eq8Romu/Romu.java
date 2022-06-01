@@ -224,7 +224,16 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				}
 			}
 		}
-
+		
+		// Afficher les ventes
+		for (ChocolatDeMarque c : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			
+		String s =c+" -> ";
+			for (int etape=0; etape<=Filiere.LA_FILIERE.getEtape(); etape++) {
+		     s+=Filiere.LA_FILIERE.getVentes(c, etape)+" ";
+		}
+			this.journal.ajouter(s);
+		}
 	}
 
 	public List<String> getNomsFilieresProposees() {
