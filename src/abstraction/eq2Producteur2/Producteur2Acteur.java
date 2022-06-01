@@ -99,7 +99,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		this.GetStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
-		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));		
+		this.GetStockHausse_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));		
 	}
 	
 	public List<String> getNomsFilieresProposees() {
