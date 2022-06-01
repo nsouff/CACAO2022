@@ -114,6 +114,7 @@ public class Stock { //Emma Humeau
 		if (acteur.getSolde() <= getCoûtStockageTotale()) {
 			return true;
 		}
+
 		
 		double ventesPasséesDernierTour = 0;
 		double ventesPasséesAvDernierTour = 0;
@@ -131,7 +132,6 @@ public class Stock { //Emma Humeau
 		else {
 			return false;
 		}
-		
 	}
 
 	protected void initialiser() {

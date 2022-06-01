@@ -22,6 +22,9 @@ public class Distributeur2Acteur implements IActeur{
 	protected List<ChocolatDeMarque> chocolats;
 	
 	//Journaux
+	protected Journal journalContratCadre;
+	protected Journal journalStock;
+	protected Journal journalVente;
 	protected Journal journal;
 	
 	//Indicateurs
@@ -29,7 +32,10 @@ public class Distributeur2Acteur implements IActeur{
 	private Variable stockTotal;
 
 	public Distributeur2Acteur() {
-		this.journal = new Journal(this.getNom()+" activites", this);
+		this.journalContratCadre = new Journal(this.getNom()+" Contrat Cadres", this);
+		this.journalStock = new Journal(this.getNom()+" Stock", this);
+		this.journalVente = new Journal(this.getNom()+" Vente (Client Final)", this);
+		this.journal = new Journal(this.getNom()+" Activité", this);
 		this.initialiserIndicateurs();
 	}
 
@@ -105,6 +111,10 @@ public class Distributeur2Acteur implements IActeur{
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
 		j.add(this.journal);
+		j.add(this.journalContratCadre);
+		j.add(this.journalStock);
+		j.add(this.journalVente);
+		
 		return j;
 	}
 

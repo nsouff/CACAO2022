@@ -63,12 +63,17 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				
 				//On récupère tout les vendeurs actifs
 				List<IVendeurContratCadre> vendeurs = SupVente.getVendeurs(chocProduit);
+				this.journalContratCadre.ajouter("Liste des vendeurs disponnible pour le produit : "+chocProduit+" "+vendeurs);
 				
 				//Pour chaque vendeur
 				for (IVendeurContratCadre vendeur : vendeurs) {
-					journal.ajouter("BioFour propose d'initier un CC avec "+ vendeur +" avec le produit: "+chocProduit);
+					journalContratCadre.ajouter("================================================================================");
+					journalContratCadre.ajouter("BioFour propose d'initier un CC avec "+ vendeur +" avec le produit: "+chocProduit);
 					ExemplaireContratCadre propositionContratCadre = SupVente.demandeAcheteur(this, vendeur, chocProduit, echeancierAchat, cryptogramme,boolTeteGondole);
-					journal.ajouter("Détail du contrat : "+ propositionContratCadre);
+					if (propositionContratCadre == null) {
+						journalContratCadre.ajouter("Le contrat avec "+vendeur+" n'a pas abouti");
+						journalContratCadre.ajouter("================================================================================");
+					}
 				}
 			}
 		}
@@ -130,7 +135,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			return -1;
 		}else {
 			if(Math.abs(prix-EPSILON_PRIX)==PRIX_OK || prix<=PRIX_OK) {
-				this.journal.ajouter("Contrat négocié : " + contrat);
+				this.journalContratCadre.ajouter("Contrat négocié : " + contrat);
+				journalContratCadre.ajouter("================================================================================");
 				return prix;
 			}else {
 				return prix-EPSILON_PRIX;
