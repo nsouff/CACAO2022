@@ -162,10 +162,11 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		
 		int parametre_min_max = 10;
 		
-		HashMap<Feve, Double> prixmoyen = this.getPrixmoyenFeve();
+			HashMap<Feve, Double> prixmoyen = this.getPrixmoyenFeve();
 			for (Feve f : this.getFeves().keySet()) {
 				prixmoyen.replace(f, prixmoyen.get(f)/(Filiere.LA_FILIERE.getEtape()+1));
-			}
+			
+		}
 			
 		if (cours_feve_basse <= bourse.getCours(Feve.FEVE_BASSE).getMin()) {
 			this.setMecontentement_basse(this.getMecontentement_basse()-parametre_min_max);
@@ -189,7 +190,6 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		this.setMecontentement_basse(this.getMecontentement_basse()+(int)Math.floor(100*((cours_feve_basse-prixmoyen.get(Feve.FEVE_BASSE)/prixmoyen.get(Feve.FEVE_BASSE)))));
 		this.setMecontentement_moyenne(this.getMecontentement_moyenne()+(int)Math.floor(100*((cours_feve_moyenne-prixmoyen.get(Feve.FEVE_MOYENNE)/prixmoyen.get(Feve.FEVE_MOYENNE)))));
 		this.setMecontentement_haute(this.getMecontentement_haute()+(int)Math.floor(100*((cours_feve_haute-prixmoyen.get(Feve.FEVE_HAUTE)/prixmoyen.get(Feve.FEVE_HAUTE)))));
-
 	}
 	
 

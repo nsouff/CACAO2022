@@ -224,7 +224,16 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 				}
 			}
 		}
-
+		
+		// Afficher les ventes
+		for (ChocolatDeMarque c : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			
+		String s =c+" -> ";
+			for (int etape=0; etape<=Filiere.LA_FILIERE.getEtape(); etape++) {
+		     s+=Filiere.LA_FILIERE.getVentes(c, etape)+" ";
+		}
+			this.journal.ajouter(s);
+		}
 	}
 
 	public List<String> getNomsFilieresProposees() {
@@ -406,6 +415,9 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	}
 
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
+		if (contrat.getTeteGondole()) {
+			return null;
+		}
 		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : j'accepte l'echeancier "+contrat.getEcheancier());
 		return contrat.getEcheancier();
 	}
@@ -502,6 +514,9 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 	}
 
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+		if (contrat.getTeteGondole()) {
+			return null;
+		}
 		Object produit = contrat.getProduit();
 		double qtok=0;
 		this.journal.ajouter(COLOR_LLGRAY, COLOR_LBLUE, "  CCV : contrepropovend(prod="+produit+"  ech="+contrat.getEcheancier());
