@@ -49,7 +49,7 @@ public class Producteur1StockChocolat extends ProducteurActeur1VenteBourse {
 		}
 
 	public void addLot(Chocolat c, double quantite) {
-		this.getChocolats().get(c).add(new ChocolatProducteur1(quantite));
+		this.getChocolats().get(c).add(new ChocolatProducteur1(quantite, this.getGhana()));
 
 	}
 
@@ -58,6 +58,18 @@ public class Producteur1StockChocolat extends ProducteurActeur1VenteBourse {
 		double somme = 0.0 ;
 		for(ChocolatProducteur1 Lot : this.getChocolats().get(c)) {
 			somme = somme + Lot.getPoids() ;
+		}
+		return somme ;	
+	}
+	
+	
+public double getStockParc(Chocolat c, Parc provenance){
+		
+		double somme = 0.0 ;
+		for(ChocolatProducteur1 Lot : this.getChocolats().get(c)) {
+			if (Lot.getProvenance() == provenance) {
+				somme = somme + Lot.getPoids() ;
+			}
 		}
 		return somme ;	
 	}
