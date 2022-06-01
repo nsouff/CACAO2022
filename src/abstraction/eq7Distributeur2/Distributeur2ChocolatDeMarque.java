@@ -28,6 +28,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			this.journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
+			System.out.println("quantite de "+choco+ " : " + this.stock.getQuantite(choco));
 			return Math.min(capaciteDeVente, this.stock.getQuantite(choco));
 		}
 	}
