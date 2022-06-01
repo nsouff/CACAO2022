@@ -37,26 +37,31 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 			
 			}
 		
-			//On vends en fonction du prix
+			//On vend en fonction du prix
 			if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE
 			if (Filiere.LA_FILIERE.getEtape()>=1) {
 				// Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
 				
 				if (this.getStock(f, false)<1000000) {
-					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 milllion jusqu'à 75 %
-				if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours) {
-					return this.getStock(f, false);
+					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 million jusqu'à 75 %
+					System.out.println("tauxdecroissant :" +tauxdecroit);
+					System.out.println(((0.75-1)/1000000)*this.getStock(f, false));
+					System.out.println(f);
+					System.out.println(this.getClass());
+					System.out.println(this.getStock(f, false));
+					System.out.println("Comparateur "+(this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit);
+					System.out.println("Cours :"+cours);
+					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours) {
+						return this.getStock(f, false);
 					}
-			
 				}
 				else {
 					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*0.75 <= cours) {
-					return this.getStock(f, false);
+						return this.getStock(f, false);
 					}
 				}
 			}
 		}
-		
 		return 0.0 ;
 	}
 
@@ -87,7 +92,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	 * @return quantité de fèves à vendre
 	 */
 	public double offre2(Feve f, double cours) {
-		double coutStockage=0.1; 
+		double coutStockage=Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur(); 
 		double coutProduction=this.getPrixEntretienArbre().getValeur();
 		double coutTotalFeve= coutProduction + coutStockage*this.getFeves().size();
 		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE 
@@ -109,6 +114,5 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		}
 		return 0.0 ; 
 	}
-	//pour commit
 
 }
