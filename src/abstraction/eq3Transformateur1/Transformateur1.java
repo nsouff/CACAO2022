@@ -41,6 +41,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		super();
 		stockFeve = new DicoFeve();
 		stockChoco = new DicoChoco();
+		stockChocoPeremption = new DicoChocoPeremption() ;
 		
 		for (Feve f : Feve.values()) {
 			stockFeve.put(f, 10000.);
@@ -120,7 +121,12 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	 *  (penser à ajouter l'exception si quantitefeve>quantiteStockFeve) 
 	 *  doit modifier le solde pour payer le cout de transfo
 	 *  Alexandre */
+	/** modification pour prendre en compte la péremption en remplissant la hashmap stockchocoperemtion
+	 * on ajoute à la liste de lot le nouveau lot (quantité, tour auquel cette quantité a été produite)
+	 * auteur : Anna */
+	
 	public void transfo(double quantiteFeveTransformee, Feve feve, boolean original) {
+		Lots nouveaulot = new Lots();
 		for (Feve f : stockFeve.keySet()) {
 			if (f == feve) {
 				stockFeve.put(feve, stockFeve.get(feve)-quantiteFeveTransformee);
@@ -131,8 +137,13 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
 					stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
+					nouveaulot.addQuantité(coutQuantiteTransfo.get(1)) ;
+					nouveaulot.addDate(Filiere.LA_FILIERE.getEtape()) ;
+					stockChocoPeremption.get(c).add(nouveaulot);
 				}
 			}
+			
+		
 		}
 		// on paie le cout de transformation
 		if (coutQuantiteTransfo.get(0)>0.) {
