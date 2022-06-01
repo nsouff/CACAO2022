@@ -120,7 +120,9 @@ public class Stock { //Emma Humeau
 		
 		// acteur.HistoChoco.forEach((key,value)->{
 			
+
 		for (Entry<ChocolatDeMarque, VariableReadOnly> m : acteur.HistoChoco.entrySet()) {
+
 			if (Filiere.LA_FILIERE.getEtape() > 2) {
 				ventesPasseesDernierTour += acteur.HistoChoco.get(m.getKey()).getValeur(Filiere.LA_FILIERE.getEtape()-1 - Filiere.LA_FILIERE.getEtape()-2);
 				ventesPasseesAvDernierTour += acteur.HistoChoco.get(m.getKey()).getValeur(Filiere.LA_FILIERE.getEtape()-2 - Filiere.LA_FILIERE.getEtape()-3);
