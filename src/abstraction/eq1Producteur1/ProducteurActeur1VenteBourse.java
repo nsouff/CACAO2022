@@ -44,18 +44,13 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 				
 				if (this.getStock(f, false)<1000000) {
 					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 million jusqu'à 75 %
-					System.out.println("tauxdecroissant :" +tauxdecroit);
-					System.out.println(((0.75-1)/1000000)*this.getStock(f, false));
-					System.out.println(f);
-					System.out.println(this.getStock(f, false));
-					System.out.println("Comparateur "+(this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit);
-					System.out.println("Cours :"+cours);
 					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours) {
 						return this.getStock(f, false);
 					}
 				}
 				else {
 					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*0.75 <= cours) {
+
 						return this.getStock(f, false);
 					}
 				}
