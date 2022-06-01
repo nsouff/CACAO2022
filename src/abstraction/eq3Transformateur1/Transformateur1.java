@@ -68,6 +68,15 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			prixAchatFeve.put(Feve.FEVE_BASSE, Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);	
 			prixAchatFeve.put(Feve.FEVE_MOYENNE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);
 			prixAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ_BE), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ_BE)) - coutTransfo);
+			if (prixAchatFeve.get(Feve.FEVE_BASSE)<=0) {
+				prixAchatFeve.put(Feve.FEVE_BASSE,3.);				
+			}
+			if (prixAchatFeve.get(Feve.FEVE_MOYENNE)<=0) {
+				prixAchatFeve.put(Feve.FEVE_MOYENNE,3.);				
+			}
+			if (prixAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)<=0) {
+				prixAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,3.);				
+			}
 	}
 	
 	/** détermine la quantité de fèves totale qu'on souhaite avoir cette étape ; auteur Julien
@@ -76,6 +85,15 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		quantiteAchatFeve.put(Feve.FEVE_BASSE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2)); 	
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,(quantiteDemandeeChoco.get(Chocolat.MQ_BE)-stockChoco.get(Chocolat.MQ_BE)));
+		if (quantiteAchatFeve.get(Feve.FEVE_BASSE)<=0) {
+			quantiteAchatFeve.put(Feve.FEVE_BASSE,400.);				
+		}
+		if (quantiteAchatFeve.get(Feve.FEVE_MOYENNE)<=0) {
+			quantiteAchatFeve.put(Feve.FEVE_MOYENNE,400.);				
+		}
+		if (quantiteAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)<=0) {
+			quantiteAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,400.);				
+		}
 	}
 	
 	/** _______________________________________________LOT TRANSFORMATION DES FEVES ____________________________________________________________*/
@@ -136,7 +154,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		}
 		// on paie le cout de transformation
 		if (coutQuantiteTransfo.get(0)>0.) {
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), coutQuantiteTransfo.get(0));
+			Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getActeur("Banque"), coutQuantiteTransfo.get(0));
 		}
 	}
 	
@@ -155,7 +173,13 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			cout = cout + stockChoco.get(c)*coutStockage;
 		}
-		journal.ajouter("stock choco "+ stockChoco.get(Chocolat.MQ));
+		journal.ajouter("stock choco BQ"+ stockChoco.get(Chocolat.BQ));
+		journal.ajouter("Notre cout de stockage est "+ cout);
+		journal.ajouter("stock choco MQ"+ stockChoco.get(Chocolat.MQ));
+		journal.ajouter("Notre cout de stockage est "+ cout);
+		journal.ajouter("stock choco MQ_BE"+ stockChoco.get(Chocolat.MQ_BE));
+		journal.ajouter("Notre cout de stockage est "+ cout);
+		journal.ajouter("stock choco MQ_O"+ stockChoco.get(Chocolat.MQ_O));
 		journal.ajouter("Notre cout de stockage est "+ cout);
 		return cout;
 	}
@@ -219,7 +243,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		super.next();
 		
 		/** ____________________MAJ de variabales au debut / Initialisation____________________
-		 *  dernierPrixVenteChoco*/
+		 *  dernierPrixVenteChoco, listeAO*/
 		
 		/** MISE A JOUR DE dernierPrixVenteChoco 
 		 *  doit se faire au debut car elle prend en compte toutes les ventes du tour precedent.
@@ -240,6 +264,11 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		// reset liste des ventes du tour precedent
 		dernierPrixVenteChocoReset = new dernierPrixVenteChoco();
+		
+		/** MISE A JOUR de lsiteAO
+		 * on le reset en debut de tour pour effacer les AO du tour precedent et pouvoir en ajouter de nouvelles lors des AO
+		 */
+		this.listeAO = new ArrayList<PropositionAchatAO>();
 		
 		
 		/** ____________________Choix quantite et prix Feve____________________ */
@@ -366,6 +395,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					if (retenue!=null) {
 						stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());
 						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
+						
 					} else {
 						journal.ajouter("pas d'offre retenue");
 					}
@@ -391,10 +421,17 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			
 			// demande provenant des contrats cadre
 			for (ExemplaireContratCadre cc : mesContratEnTantQueVendeur) {
-				qt = qt + cc.getQuantiteALivrerAuStep();
+				if (((ChocolatDeMarque)cc.getProduit()).getChocolat() == c) {
+					qt = qt + cc.getQuantiteALivrerAuStep();
+				}
 			}
 			
-			// demande provenant des appels d'offres                                          a completer
+			// demande provenant des appels d'offres        
+			for (PropositionAchatAO ao : this.listeAO) {
+				if (ao.getOffre().getChocolat().getChocolat() == c) {
+					qt = qt + ao.getOffre().getQuantiteKG();
+				}
+			}
 			
 			// mise a jour de la qt demandee pour le choco c
 			quantiteDemandeeChoco.put(c, qt);
