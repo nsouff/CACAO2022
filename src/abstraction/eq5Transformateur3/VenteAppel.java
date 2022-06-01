@@ -46,14 +46,14 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 				PropositionAchatAO retenueenTG = 
 					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, true);
 					if (retenueenTG!=null) {
-						this.stockChocolat.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
+						this.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
 						this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c.name() +"  a "+retenueenTG.getAcheteur().getNom()+" en TG");
 					} else {
 						// on essaye sans mettre en TG
 						PropositionAchatAO retenuepasenTG = 
 								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, false);
 						if (retenuepasenTG!=null) {
-							this.stockChocolat.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
+							this.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
 							this.ventes.ajouter("vente par AO de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c.name() +" a "+retenuepasenTG.getAcheteur().getNom());
 						} else {
 							this.ventes.ajouter("pas d'offre retenue");

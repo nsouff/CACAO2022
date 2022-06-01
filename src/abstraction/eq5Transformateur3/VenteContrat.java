@@ -103,7 +103,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		ChocolatDeMarque c = (ChocolatDeMarque)produit;
 		double peutlivrer = Math.min(this.stockChocolat.getstock(c.getChocolat()), quantite);
 		if (peutlivrer>0.0) {
-			this.stockChocolat.utiliser(c.getChocolat(), peutlivrer);
+			this.utiliser(c.getChocolat(), peutlivrer);
 		}
 		this.ventes.ajouter("nous livrons " + peutlivrer + " kg de" + c.toString()+ " à " + contrat.getAcheteur().getNom());
 		return peutlivrer;
