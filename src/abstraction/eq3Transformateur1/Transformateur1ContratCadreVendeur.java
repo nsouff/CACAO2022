@@ -77,7 +77,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 					contrat.getAcheteur().getNom(), 
 					((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
 					contrat.getPrix());
-			journal.ajouter("nouveau contrat cadre vendeur");
+			journalCC.ajouter("nouveau contrat cadre vendeur");
 		}
 		
 	}
@@ -103,7 +103,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
-		journal.ajouter("test ContratCadreVendeur / Les contrats cadres vendeur obsolete ont ete supprime");
+		journalCC.ajouter("test ContratCadreVendeur / Les contrats cadres vendeur obsolete ont ete supprime");
 	}
 	
 	/** 
