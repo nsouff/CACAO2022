@@ -225,6 +225,13 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		//Retirer l'argent 
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotal);
 	}
+
+	/**
+	 * @return the recolte
+	 */
+	public HashMap<Feve, Double> getRecolte() {
+		return recolte;
+	}
 	
 
 }
