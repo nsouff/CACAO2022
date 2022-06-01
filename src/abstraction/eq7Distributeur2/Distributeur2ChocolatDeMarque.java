@@ -1,7 +1,5 @@
 package abstraction.eq7Distributeur2;
 
-import java.util.Map;
-
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -13,6 +11,13 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 
 	public Distributeur2ChocolatDeMarque() {
 		super();
+	}
+	
+	public void next() {
+		super.next();
+		
+		//Affichage état des stocks
+	
 	}
 	
 	
@@ -30,6 +35,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			this.journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
+			System.out.println("quantite de "+choco+ " : " + this.stock.getQuantite(choco));
 			return Math.min(capaciteDeVente, this.stock.getQuantite(choco));
 		}
 	}
@@ -48,16 +54,19 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
+		//Retire la quantité dans les stocks
 		this.stock.remove(choco, quantite);
-		journalVente.ajouter("vente de "+quantite+" "+choco.name()+" a "+client.getNom()+" pour un prix de "+ montant);
 		
+		//Ajout de la quantité vendue
+		this.totalVente.ajouter(this, quantite);
+		
+		//Ajout d'une entrée dans le journal
+		this.journalVente.ajouter("vente de "+quantite+" "+choco.name()+" a "+client.getNom()+" pour un prix de "+ montant);
 	}
 
 	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) {
 		if (crypto!=this.cryptogramme) {
 			journal.ajouter("Quelqu'un essaye de me pirater !");
-		} else {
-			journalStock.ajouter("Rayon vide : "+choco);
-		}
+		} else {}
 	}
 }
