@@ -1,5 +1,7 @@
 package abstraction.eq7Distributeur2;
 
+import java.util.Map;
+
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -7,7 +9,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements IDistributeurChocolatDeMarque  {
 	
-	private double capaciteDeVente;
+	private double capaciteDeVente= Double.MAX_VALUE;;
 
 	public Distributeur2ChocolatDeMarque() {
 		super();
@@ -23,7 +25,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			this.journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
-			return Math.min(capaciteDeVente, this.stock.getQuantite(choco)*(9/10));
+			return Math.min(capaciteDeVente, this.stock.getQuantite(choco));
 		}
 	}
 
@@ -32,7 +34,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
-			return Math.min(capaciteDeVente, this.stock.getQuantite(choco))/10.0;
+			return Math.min(capaciteDeVente, this.stock.getQuantite(choco))/20;
 			}
 	}
 	
@@ -49,6 +51,4 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			journalStock.ajouter("Rayon vide : "+choco);
 		}
 	}
-
-
 }
