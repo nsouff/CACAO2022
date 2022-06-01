@@ -14,11 +14,6 @@ import abstraction.eq8Romu.produits.Feve;
 public class Producteur1Producteur extends Producteur1Stock{
 	private LinkedList<Parc> ListeParc;
 	private Parc ParcAfrique;
-	protected Journal RetourMaladie;
-	protected Journal RetourRécolte;
-	protected Journal RetourGuerre;
-	protected Journal RetourAléas;
-	protected Journal RetourMAJParc;
 	
 	public Producteur1Producteur() {
 		super();
@@ -55,10 +50,11 @@ public class Producteur1Producteur extends Producteur1Stock{
 		return ListeParc.get(i);
 	}
 	
+	public LinkedList<Parc> getListeParc() {
+		return this.ListeParc;
+	}
+	
 	//Écrit par Antoine
-	//Répartition de nos 500 000 000 arbre parmi nos parcs (un unique parc représentant toute l'Afrique pour la V1)
-	//Arbres: 63% de nonBE_basse,27% de  nonBE_moyenne, 5% de BE_moyenne, 5% de BE_haute
-	//Les arbres sont créés de manière à avoir un âge aléatoire compris entre 95 et 135 ut, ceci afin d'avoir une production non-nulle à l'ut initiale et de ne pas avoir tous les arbres initiaux mourant au même moment
 	public void initialiser() {
 		super.initialiser();
 		int nombre_arbre_debut = 600000;
@@ -83,7 +79,7 @@ public class Producteur1Producteur extends Producteur1Stock{
 			int nombre_arbre_nBE_moyenne = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne)*NbArbres.get(j));
 			int nombre_arbre_nBE_haute = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne+pourcentage_nBE_haute)*NbArbres.get(j));
 			int nombre_arbre_BE_moyenne = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne+pourcentage_nBE_haute+pourcentage_BE_moyenne)*NbArbres.get(j));
-			for (int i=0;i<nombre_arbre_debut;i++) {
+			for (int i=0;i<NbArbres.get(j);i++) {
 				int d = (int)Math.random()*écart_moyenne;
 				if (i<nombre_arbre_nBE_basse) {
 					Parc_j.Planter(new MilleArbre(1,false,false,ut_debut-d));
