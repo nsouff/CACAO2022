@@ -221,7 +221,6 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 
 	
 	
-	
 	public double contrePropositionPrixVendeurBio(ExemplaireContratCadre contrat) {
 		double contrepropositionprix = -1.0;
 		if (contrat.getPrix()>0.8*propositionPrix(contrat)) {
@@ -258,7 +257,6 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		
 	}
 
-	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			return this.contrePropositionDuVendeurBio(contrat);
@@ -267,15 +265,13 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		return this.contrePropositionDuVendeurNonBio(contrat);
 	}
 
-	@Override
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			return this.propositionPrixBio(contrat);
 		}
 		return this.propositionPrixNonBio(contrat);
 	}
-
-	@Override
+	
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			return this.contrePropositionPrixVendeurBio(contrat);
@@ -283,7 +279,6 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		return this.contrePropositionPrixVendeurNonBio(contrat);
 	}
 
-	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			 this.notificationNouveauContratCadreBio(contrat);
@@ -291,11 +286,5 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		this.notificationNouveauContratCadreNonBio(contrat);
 	}
 
-	
-	
-
-	
-	
-	
 	
 }
