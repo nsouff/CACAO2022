@@ -59,13 +59,24 @@ public class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 		this.stockfeve=new Stock();
 		this.stockfeve.ajouter(Feve.FEVE_BASSE, 8000);
 		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 5000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 5000);
+		this.stockfeve.ajouter(Feve.FEVE_HAUTE, 5000);
+		this.stockfeve.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 5000);
 		
 		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		ChocolatDeMarque c2=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(2));
+		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(3));
+		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(4));
+		
 		this.stockchocolatdemarque=new Stock();
 		this.stockchocolatdemarque.ajouter(c1, 5000);
 		this.stockchocolatdemarque.ajouter(c0, 8000);
+		this.stockchocolatdemarque.ajouter(c2, 8000);
+		this.stockchocolatdemarque.ajouter(c3, 8000);
+		this.stockchocolatdemarque.ajouter(c4, 8000);
+		
 		this.stockchocolat=new Stock();
 		this.stockchocolat.ajouter(Chocolat.MQ,30000);
 		this.stockchocolat.ajouter(Chocolat.BQ, 20000);
