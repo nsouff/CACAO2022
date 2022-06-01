@@ -138,7 +138,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		return -1.0;
 	}
 
-	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+	public void notificationNouveauContratCadreNonBio(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurNonBio.add(contrat);
 		
 	}
@@ -198,6 +198,12 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
