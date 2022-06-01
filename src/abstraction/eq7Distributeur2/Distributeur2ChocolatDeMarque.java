@@ -13,6 +13,13 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 		super();
 	}
 	
+	public void next() {
+		super.next();
+		
+		//Affichage état des stocks
+	
+	}
+	
 	
 	//edgard: prix depend de la marque et du type de choco: Biofour et BE moins cher que le marché
 	public double prix(ChocolatDeMarque choco) {
@@ -60,8 +67,6 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) {
 		if (crypto!=this.cryptogramme) {
 			journal.ajouter("Quelqu'un essaye de me pirater !");
-		} else {
-			journalStock.ajouter("Rayon vide : "+choco);
-		}
+		} else {}
 	}
 }

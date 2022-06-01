@@ -97,7 +97,15 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			this.journalEtudeVente.ajouter("Vente à l'Etape "+ j + " de chocolat "+ chocProduit+ " : " +ventes);
 		}
 		this.journalEtudeVente.ajouter("==========================================");
-		return ventes/(10*nbEtape);
+		double judicieux = ventes/(10*nbEtape);
+		
+		//En attente de résolution d'un bug de Romu
+		if (judicieux<=1000) {
+			return 1001;
+		}
+		else {
+			return judicieux;
+		}
 		
 	}
 	
