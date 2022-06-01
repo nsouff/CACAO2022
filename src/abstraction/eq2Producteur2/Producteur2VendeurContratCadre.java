@@ -118,16 +118,13 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 
-	
-	
-	
-	public double propositionPrix(ExemplaireContratCadre contrat) {
+	public double propositionPrixNonBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		return 0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 	}
 
 	
-	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {	
+	public double contrePropositionPrixVendeurNonBio(ExemplaireContratCadre contrat) {	
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		if (contrat.getQuantiteTotale()>12*(this.production((Feve)contrat.getProduit()))){ // Grosse commande, proposition de prix plus bas
 			if (contrat.getPrix()>0.8 ) {
@@ -188,8 +185,19 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public double propositionPrix(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	
