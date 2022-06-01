@@ -2,9 +2,7 @@ package abstraction.eq5Transformateur3;
 
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
-import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
-import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurBourse{
