@@ -88,7 +88,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	 * @return quantité de fèves à vendre
 	 */
 	public double offre2(Feve f, double cours) {
-		double coutStockage=0.1; 
+		double coutStockage= Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur(); 
 		double coutProduction=this.getPrixEntretienArbre().getValeur();
 		double coutTotalFeve= coutProduction + coutStockage*this.getFeves().size();
 		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE 

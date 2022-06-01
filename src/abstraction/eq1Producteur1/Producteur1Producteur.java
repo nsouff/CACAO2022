@@ -54,9 +54,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 	public Parc getParc(int i) {
 		return ListeParc.get(i);
 	}
-	public HashMap<Feve, Double> getRecolte(){
-		return this.recolte;
-	}
+
 	public LinkedList<Parc> getListeParc() {
 		return this.ListeParc;
 	}
@@ -193,11 +191,13 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		for (int j=0; j<ListeParc.size();j++) {
 			this.getParc(j).MAJAleas();
 			this.recolte = this.getParc(j).Recolte();
-			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE), this.getParc(j));
-			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE), this.getParc(j));
-			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE), this.getParc(j));
-			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE), this.getParc(j));
-			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE), this.getParc(j));
+			
+			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE),this.getParc(j));
+			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE),this.getParc(j));
+			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE),this.getParc(j));
+			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE),this.getParc(j));
+			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE),this.getParc(j));
+
 			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
 			this.getParc(j).MAJGuerre();
 		}
@@ -226,6 +226,13 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		
 		//Retirer l'argent 
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotal);
+	}
+
+	/**
+	 * @return the recolte
+	 */
+	public HashMap<Feve, Double> getRecolte() {
+		return recolte;
 	}
 	
 

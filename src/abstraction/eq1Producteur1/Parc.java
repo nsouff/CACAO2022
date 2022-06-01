@@ -249,7 +249,7 @@ public class Parc {
 			int qualite = arbre_i.getQualite();
 			boolean BE = arbre_i.getBioequitable();
 			boolean cooperative=arbre_i.getCooperative();
-			arbre_i.MAJMecontentement(mecontentement_basse,mecontentement_moyenne,mecontentement_haute);
+
 			if (arbre_i.getStade_maladie() == 5) { //Si un arbre meurt à cause de maladie, on le remplace immédiatement
 				malade5+=1;
 				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
