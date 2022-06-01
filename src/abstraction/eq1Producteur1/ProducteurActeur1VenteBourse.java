@@ -38,7 +38,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 			}
 		
 			//On vend en fonction du prix
-			if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE
+			if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE && f!=Feve.FEVE_HAUTE) { //Pas de bourse pour le HAUT_BE
 			if (Filiere.LA_FILIERE.getEtape()>=1) {
 				// Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
 				
