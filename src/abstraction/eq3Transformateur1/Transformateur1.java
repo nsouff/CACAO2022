@@ -260,7 +260,9 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				 *  au sinon, on ecrase*/
 				if (Double.compare(dernierPrixVenteChoco.getPrix(distrib, c), 0.) != 0) {
 					journal.ajouter("le dernier prix de vente du chocolat " + c + " au distributeur" + distrib+ " est de " + dernierPrixVenteChoco.getPrix(distrib, c));
+					//System.out.println("if ligne 263");
 					dernierPrixVenteChoco.setPrix(distrib, c, dernierPrixVenteChocoReset.getPrix(distrib, c));
+					//System.out.println("bug 1 l 265 ?");
 				}
 			}
 		}
