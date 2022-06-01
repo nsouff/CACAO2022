@@ -109,6 +109,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 			this.getContratCadre().ajouter("Prix proposé " + this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape() );
 			return this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 		} else {
+
 			return 0.0;
 		}
 		}
