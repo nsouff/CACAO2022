@@ -50,6 +50,14 @@ public class Distributeur2Acteur implements IActeur{
 	public Color getColor() {
 		return new Color(1,81,8); 
 	}
+	
+	public Color getColorSuccess() {
+		return new Color(0,255,0); 
+	}
+	
+	public Color getColorFaillure() {
+		return new Color(255,0,0); 
+	}
 
 
 	public void initialiser() {
