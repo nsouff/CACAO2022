@@ -101,11 +101,12 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 	//Écrit par Antoine
 	public void initialiser() {
 		super.initialiser();
-		int nombre_arbre_debut = 600000;
+		int nombre_arbre_debut = 600000; //Nombre d'arbres total à répartir sur les parcs
 		double pourcentage_nBE_basse = 0.63;
 		double pourcentage_nBE_moyenne = 0.27;
 		double pourcentage_nBE_haute = 0;
 		double pourcentage_BE_moyenne = 0.05;
+		// On calcule le nombre d'arbres par parc à répartir en fonction des définis pourcentages au-dessus
 		int nombre_arbre_ghana = (int)Math.floor(nombre_arbre_debut*0.62);
 		int nombre_arbre_cote_divoire = (int)Math.floor(nombre_arbre_debut*0.23);
 		int nombre_arbre_nigeria = (int)Math.floor(nombre_arbre_debut*0.07);
@@ -119,6 +120,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		int écart_moyenne = 100;
 		for (int j=0;j<ListeParc.size();j++) {
 			Parc Parc_j = this.getParc(j);
+			// On calcule le nombre d'arbres à planter en fonction de leur qualité et de BE ou pas
 			int nombre_arbre_nBE_basse = (int)Math.floor((pourcentage_nBE_basse*NbArbres.get(j)));
 			int nombre_arbre_nBE_moyenne = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne)*NbArbres.get(j));
 			int nombre_arbre_nBE_haute = (int)Math.floor((pourcentage_nBE_basse+pourcentage_nBE_moyenne+pourcentage_nBE_haute)*NbArbres.get(j));
@@ -126,18 +128,23 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 			for (int i=0;i<NbArbres.get(j);i++) {
 				int d = (int)Math.random()*écart_moyenne;
 				if (i<nombre_arbre_nBE_basse) {
-					Parc_j.Planter(new MilleArbre(1,false,false,ut_debut-d));
+					//On plante des arbres de basse qualité, non BE, pas en coopérative
+					Parc_j.Planter(new MilleArbre(1,false,false,ut_debut-d)); 
 				}
 				if ((i>=nombre_arbre_nBE_basse) && (i<nombre_arbre_nBE_moyenne)) {
+					//On plante des arbres de moyenne qualité, non BE, pas en coopérative
 					Parc_j.Planter(new MilleArbre(2,false,false,ut_debut-d));
 				}
 				if ((i>=nombre_arbre_nBE_moyenne) && (i<nombre_arbre_nBE_haute)) {
+					//On plante des arbres de haute qualité, non BE, pas en coopérative
 					Parc_j.Planter(new MilleArbre(3,false,false,ut_debut-d));
 				}
 				if ((i>=nombre_arbre_nBE_haute) && (i<nombre_arbre_BE_moyenne)) {
+					//On plante des arbres de moyenne qualité, BE, en coopérative
 					Parc_j.Planter(new MilleArbre(2,false,true,ut_debut-d));
 				}
 				if ((i>=nombre_arbre_BE_moyenne)) {
+					//Le reste des arbres (s'il y en a, normalement il n'y en a pas) est planté en haute qualité, BE, en coopérative
 					Parc_j.Planter(new MilleArbre(3,false,true,ut_debut-d));
 				}
 			}
@@ -193,18 +200,17 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		for (int j=0; j<ListeParc.size();j++) {
 			this.getParc(j).MAJAleas();
 			this.recolte = this.getParc(j).Recolte();
-			
-			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE),this.getParc(j));
-			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE),this.getParc(j));
-			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE),this.getParc(j));
-			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE),this.getParc(j));
-			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE),this.getParc(j));
-
-			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
+			for (Feve f : this.getFeves().keySet()) {
+				if (this.recolte.get(f) > 0) {
+					this.addLot(f, this.recolte.get(f), this.getParc(j));
+				}
+			}
+			//this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
 			this.getParc(j).MAJGuerre();
 		}
-	
-		this.MAJMecontentement();
+		if (Filiere.LA_FILIERE.getEtape()>0) {
+			this.MAJMecontentement();
+		}
 		
 		
 		double prixTotal = 0 ;
@@ -236,6 +242,4 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 	public HashMap<Feve, Double> getRecolte() {
 		return recolte;
 	}
-	
-
 }
