@@ -10,6 +10,9 @@ public class DicoPeremption<Produit> {
 
 	private HashMap<DateProd<Produit> ,Double> peremptions ;
 	
+	public DicoPeremption(){
+		this.peremptions=new HashMap<DateProd<Produit> ,Double>();
+	}
 	public Set<DateProd<Produit>> getDateProd() {
 		return this.peremptions.keySet();
 	}
@@ -33,7 +36,7 @@ public class DicoPeremption<Produit> {
 				}
 			}
 	}
-		
+	
 	public void utiliserQttDate(double date,Produit p, Double qtt) { 
 		/* on vérifiera a l avance que l on peut retirer qtt ie qu il y a assez de stock */
 		
@@ -60,24 +63,28 @@ public class DicoPeremption<Produit> {
 			}
 		}
 	}
+public double trouverPlusUrgent(Produit p) {
+	double date = 0;
 	
+	for (DateProd<Produit> d : this.getDateProd()) {
+		double step=d.getDate();
+		if ((date==0  || step<date )&& d.getProduit()==p) {
+			date=step;
+			
+	}
+		
+	}
+	return date;
+}
 	public void utiliserQtt(Produit p, double qtt) {
 		
 		double qttR=qtt; // qtt restante
 		
 		while (qttR>0) {
-			
-			double date = 0;
-			double qC=0;
+			double date=this.trouverPlusUrgent(p);
+			double qC=this.getQtt(date, p);
 			
 		
-			for (DateProd<Produit> d : this.getDateProd()) {
-				double step=d.getDate();
-				if (date==0  || (step<date && d.getProduit()==p) ){
-					date=step;
-					qC=this.getQtt(date, p);
-			}
-		}
 			if (qC<=qttR) {
 			utiliserQttDate(date,p,qC);
 			qttR=qttR-qC;
