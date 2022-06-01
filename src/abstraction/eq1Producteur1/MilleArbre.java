@@ -1,5 +1,7 @@
 package abstraction.eq1Producteur1;
 
+import java.util.ArrayList;
+
 import abstraction.eq8Romu.filiere.Filiere;
 
 // Une instance de "MilleArbre" équivaut à 1000 arbres réels
@@ -14,6 +16,7 @@ public class MilleArbre {
 	private boolean transition_bio;
 	private int date_transition;
 	private double productivite_max;
+	private int mecontentement;
 	
 	public MilleArbre() { //Écrit par Maxime
 		this.ut_plantation=0;
@@ -26,6 +29,7 @@ public class MilleArbre {
 		this.transition_bio=false;
 		this.date_transition=0;
 		this.productivite_max=this.Production_max();
+		this.mecontentement=0;
 	}
 	
 	public MilleArbre(int qualite,boolean cooperative, boolean BE,int ut_plantation) { //Écrit par Antoine
@@ -39,6 +43,7 @@ public class MilleArbre {
 		this.transition_bio = false;
 		this.date_transition = 0;
 		this.productivite_max = this.Production_max();
+		this.mecontentement=0;
 	}
 	
 	public void setUt_plantation(int ut_plantation) { //Écrit par Maxime
@@ -71,6 +76,12 @@ public class MilleArbre {
 	public void setProductivite_max(double productivite_max) { //Écrit par Maxime
 		this.productivite_max = productivite_max;
 	}
+	public void setMecontentement(int mecontentement) {
+		this.mecontentement=0;
+		if (mecontentement>=0) {
+			this.mecontentement = mecontentement;
+		}
+	}
 	public int getUt_plantation() { //Écrit par Antoine
 		return this.ut_plantation;
 	}
@@ -101,6 +112,19 @@ public class MilleArbre {
 	public double getProductivite_max() { //Écrit par Antoine
 		return this.productivite_max;
 	}
+	public int getMecontentement() {
+		return this.mecontentement;
+	}
+	public void MAJMecontentement(int mecontentement_basse,int mecontentement_moyenne, int mecontentement_haute) {
+		ArrayList<Integer> mecontentement= new ArrayList<Integer>();
+		mecontentement.add(mecontentement_basse);
+		mecontentement.add(mecontentement_moyenne);
+		mecontentement.add(mecontentement_haute);
+		int qualite = this.getQualite();
+		int maladie = this.getStade_maladie();
+		this.setMecontentement(mecontentement.get(qualite-1)+maladie);
+	}
+	
 	
 	public void MAJMaladie() { //Écrit par Antoine
 		if (this.getStade_maladie() == 0) {
