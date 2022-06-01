@@ -143,6 +143,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		double qteAttendu = contrat.getQuantiteALivrerAuStep();
 		if (quantite != qteAttendu) {
 			journalSuiviCC.ajouter(Color.RED, Color.BLACK, "Il manque " + (qteAttendu - quantite) + "Kg de ce que nous etions censé recevoir de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
+			
 		}
 		else {
 			journalSuiviCC.ajouter("La quantité attendu (" + quantite + ") a été recu de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
@@ -236,7 +237,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
 				Echeancier aAjouterChoco = aAjouter.get(choco);
-				if (aAjouterChoco != null) {
+				if (aAjouterChoco != null && !vendeur.getNom().equals("EQ5")) {
 					nouvelleNego(vendeur, choco, aAjouterChoco, false);
 					ExemplaireContratCadre ecc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouterChoco, this.cryptogramme, false);
 					if (ecc != null) {

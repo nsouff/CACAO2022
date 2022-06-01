@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import abstraction.eq8Romu.clients.ClientFinal;
-import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
@@ -68,7 +67,7 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 
 	@Override
 	public double prix(ChocolatDeMarque choco) { //Emma humeau
-		return facteurPrixChocolat(choco.getChocolat()) * 8;
+		return facteurPrixChocolat(choco.getChocolat()) * 80;
 		// Double res = prixVente.get(choco);
 		// return (res == null) ? 0.0 : res;
 	}

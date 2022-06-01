@@ -120,8 +120,8 @@ public class Stock { //Emma Humeau
 		double ventesPasséesAvDernierTour = 0;
 
 		for (Entry<ChocolatDeMarque, VariableReadOnly> m : acteur.HistoChoco.entrySet()) {
-			ventesPasséesDernierTour += ((Variable) m).getValeur(Filiere.LA_FILIERE.getEtape()-1);
-			ventesPasséesAvDernierTour += ((Variable) m).getValeur(Filiere.LA_FILIERE.getEtape()-2);
+			ventesPasséesDernierTour += ((VariableReadOnly) m).getValeur(Filiere.LA_FILIERE.getEtape()-1);
+			ventesPasséesAvDernierTour += ((VariableReadOnly) m).getValeur(Filiere.LA_FILIERE.getEtape()-2);
 		}
 		if (ventesPasséesDernierTour + acteur.getSolde() <= getCoûtStockageTotale()) {
 			return true;
