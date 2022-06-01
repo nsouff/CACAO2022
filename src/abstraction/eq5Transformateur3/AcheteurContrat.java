@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
@@ -60,21 +61,21 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	}
 
 	// Julien & Karla
+	/* On s'indexe sur la bourse : les contrats sont censés être avantageux 
+	 * donc on accepte si ça l'est et sinon on propose 95% du prix de la bourse
+	 */
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
-		if (prixT < this.seuilMaxAchat) { 
+		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		if (prixT < seuilMax) { 
 			this.achats.ajouter("prix acceptable");
 			return prixT;
 		}
 		else {
-			double nouveauprix = 0.8*prixT;
-			if (nouveauprix< this.seuilMaxAchat) {
-				this.achats.ajouter(" essaie avec nouveau prix");
-				return nouveauprix;
-			}
-			this.achats.ajouter("prix inadapte");
-
-			return 0.0;
+			double nouveauprix = 0.95*seuilMax;
+			this.achats.ajouter(" essaie avec nouveau prix");
+			return nouveauprix;
 		}
 	}
 

@@ -27,7 +27,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Journal transformation;
 	
 	//Karla
-	protected Double seuilMaxAchat; // par kg en dollars, au dessus de ce prix, on n'achète pas de fèves
+
 	protected Double SeuilMinFeves; // en kg : En dessous de ce seuil, on achète des fèves car stock trop "bas"
 	protected Double SeuilMinChocolat; // en kg : Au dessus de ce seuil, on vend du chocolat car stock trop "haut"
 	protected Double achatMaxFeves; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
@@ -82,7 +82,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.stockChocolat = new Stock<Chocolat> ();
 		this.perempChocolat=new DicoPeremption<Chocolat>();
 		this.perempFeves=new DicoPeremption<Feve>() ;
-		this.seuilMaxAchat = 2.500;
+
 		this.SeuilMinFeves = 100000.00;
 		this.SeuilMinChocolat = 500.00;
 		this.achatMaxFeves = 500.00;
