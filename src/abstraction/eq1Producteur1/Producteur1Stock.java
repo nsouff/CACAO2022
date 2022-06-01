@@ -107,7 +107,6 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	
 			}
 		}
-		System.out.println("Somme totale " + somme);
 		return somme ;	
 	}
 	
