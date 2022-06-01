@@ -48,7 +48,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	 */
 	@Override
 	public boolean achete(Object produit) {
-		if (NotreStock.seuilSecuFaillite() == false || ! (produit instanceof ChocolatDeMarque)) {
+		if (NotreStock.seuilSecuFaillite() == true || ! (produit instanceof ChocolatDeMarque)) {
 			return false;
 		}
 		if (partDuMarcheVoulu( ((ChocolatDeMarque)produit).getChocolat()) > 0.0) {
