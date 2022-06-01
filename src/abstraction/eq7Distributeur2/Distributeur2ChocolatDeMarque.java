@@ -1,7 +1,5 @@
 package abstraction.eq7Distributeur2;
 
-import java.util.Map;
-
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
