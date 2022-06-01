@@ -1,6 +1,5 @@
 package abstraction.eq5Transformateur3;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 

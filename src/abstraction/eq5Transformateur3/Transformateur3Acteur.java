@@ -48,6 +48,9 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Variable coutOriginal;
 	protected Stock<Feve> stockFeves;
 	protected Stock<Chocolat> stockChocolat;
+	protected DicoPeremption<Feve> perempFeves;
+	protected DicoPeremption<Chocolat> perempChocolat;
+	
 	
 	// Stock Moyenne et haut de Gamme en variables
 	protected Variable stockFevesVariableM;
@@ -77,6 +80,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.capaciteStockageEQ5 = this.limiteStockage.getValeur();
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
+		this.perempChocolat=new DicoPeremption<Chocolat>();
+		this.perempFeves=new DicoPeremption<Feve>() ;
 		this.seuilMaxAchat = 2.500;
 		this.SeuilMinFeves = 100000.00;
 		this.SeuilMinChocolat = 500.00;
@@ -92,6 +97,14 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		
 		Double s = 1000.00;
 		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, s);
+		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
+		
+		this.stockChocolat.ajouter(Chocolat.MQ_BE, s);
+		this.stockChocolat.ajouter(Chocolat.MQ_BE_O, s);
+		this.stockChocolat.ajouter(Chocolat.HQ_BE, s);
+		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, s);
+		
+		this.perempFeves.ajouterQtt(0,Feve.FEVE_MOYENNE_BIO_EQUITABLE,s);
 		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
 		
 		this.stockChocolat.ajouter(Chocolat.MQ_BE, s);
