@@ -17,6 +17,8 @@ import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariableReadOnly;
+import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur1Acteur implements IActeur {
@@ -24,7 +26,6 @@ public class Distributeur1Acteur implements IActeur {
 	protected SuperviseurVentesContratCadre supCCadre;
 	protected Stock NotreStock;
 	Random ran;
-	protected List<ExemplaireContratCadre> mesContrats;
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
 	protected Journal journal1;
 	protected Journal journalCompte;
@@ -35,7 +36,9 @@ public class Distributeur1Acteur implements IActeur {
 	protected Variable QteChocoMQ;
 	protected Variable QteChocoBq;
 	protected Integer Compteur;	
-			
+	protected Map<ChocolatDeMarque, VariableReadOnly> HistoChoco; // Léo
+	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
+	protected Double TauxTour; // renvoie la part de marché visée par FourAll pour le tour en cours
 	/**
 	 * @return the notreStock
 	 */
@@ -48,18 +51,17 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
+		HistoChoco = new HashMap<ChocolatDeMarque, VariableReadOnly>(); // Léo
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
-		
-		this.Compteur = 0;
-		journal1.ajouter("Compteur initialisé à"+this.Compteur);
+
 		
 		this.prixTotalTour = 100000.0;
 		prix = new ArrayList<Variable>();
 		prixVente = new HashMap<ChocolatDeMarque, Double>();
-		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		ran = new Random();
 		
+		this.ChocoTotalTour = 0.0;
 		
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
@@ -91,42 +93,16 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-	}
-	
-	public void suppAnciensContrats() {//leorouppert
-		List<ExemplaireContratCadre> aSupprimer = new ArrayList<ExemplaireContratCadre>();
-		for (ExemplaireContratCadre contrat : mesContrats) {
-			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
-				aSupprimer.add(contrat);
-			}
+		for (ChocolatDeMarque C : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			HistoChoco.put(C, new VariableReadOnly(C.toString(), this,0));
 		}
-		mesContrats.removeAll(aSupprimer);		
 	}
 	
 	public void next() {
 		//leorouppert
 		
-		journal1.ajouter("entrée dans next pour le tour n° " + Compteur);
-		
-		/**this.suppAnciensContrats();
-		this.getNotreStock().getMapStock().forEach((key,value)->{
-			if (value <= 10000) {
-				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
-				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
-				if (ListeVendeurs.size() != 0) {
-					IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
-					journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
-					ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,10000), cryptogramme, false);
-					if (CC == null) {
-						journal1.ajouter("-->aboutit au contrat "+ CC);
-					}
-					else {
-						journal1.ajouter("échec des négociations");
-					}
-				}
-			}	
-		});
-		**/
+		journal1.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
+		getChocoTotalTour();
 		/**
 		 *  
 		 * Gestion des compte -> retirer argent :
@@ -137,16 +113,13 @@ public class Distributeur1Acteur implements IActeur {
 		
 		journal1.ajouter(getDescription());
 		
-		prixTotalTour = NotreStock.getCoûtStockageTotale() +10.0; 	//+1.0 pour être sur d'avoir un double + virement > 0.
-		
-		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
-		
-		journalCompte.ajouter("le compte a été débité de "+prixTotalTour);
-		journalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
-		
-		//compteur de tour + 1 :
-		this.Compteur +=1;
-		journal1.ajouter("Tour "+ (Compteur-1) +" terminé pour "+ this.getNom() + " ,compteur itéré à : "+ Compteur);
+		prixTotalTour = NotreStock.getCoûtStockageTotale();
+		if (prixTotalTour > 0) {
+			Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
+			journalCompte.ajouter("le compte a été débité de "+prixTotalTour);
+			journalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
+		}		
+		journal1.ajouter("Tour "+ Filiere.LA_FILIERE.getEtape() +" terminé pour "+ this.getNom());
 	
 	}
 	
@@ -179,7 +152,7 @@ public class Distributeur1Acteur implements IActeur {
 	// Renvoie les indicateurs
 	/**
 	 * @author Nolann
-	 * changement : on ne renvoi que la quantité de chocolat de type HQ, MQ, BQ
+	 * changement : on ne renvoie que la quantité de chocolat de type HQ, MQ, BQ
 	 */
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
@@ -221,7 +194,20 @@ public class Distributeur1Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
-
+	
+	/**
+	 * @author Nolann
+	 * renvoie le nombre de kg de chocolats vendus au l'année précédente à la même période  
+	 */
+	public void getChocoTotalTour() {
+		
+		for(ChocolatDeMarque Choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			this.ChocoTotalTour = this.ChocoTotalTour + Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()-24);
+			journal1.ajouter("il y a eu : "+Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()) +" kg de chocolats vendus de type " 
+			+ Choco + " au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
+		}
+		journal1.ajouter("Il y a eu au total : " + this.ChocoTotalTour + "kg de chocolats vendus au total au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
+	}
 	
 	
 
