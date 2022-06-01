@@ -142,7 +142,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		if (lastEcheancier.getStepFin()>ECH_MAX) {
 			return null;
 		}else {
-		//On ne cherche pas trop à négocier pour l'instant
 			return echeancierAchat;
 		}
 	}
