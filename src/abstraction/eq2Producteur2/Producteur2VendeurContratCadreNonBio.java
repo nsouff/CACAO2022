@@ -77,7 +77,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 	@Override
 	public boolean vend(Object produit) {
 		// TODO Auto-generated method stub
-		return ((Feve)(produit)==Feve.FEVE_HAUTE||(Feve)(produit)==Feve.FEVE_MOYENNE||(Feve)(produit)==Feve.FEVE_BASSE);
+		return false;//((Feve)(produit)==Feve.FEVE_HAUTE||(Feve)(produit)==Feve.FEVE_MOYENNE||(Feve)(produit)==Feve.FEVE_BASSE);
 	}
 
 	

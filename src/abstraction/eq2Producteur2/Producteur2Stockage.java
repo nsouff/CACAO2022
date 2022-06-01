@@ -39,6 +39,8 @@ public class Producteur2Stockage extends Producteur2Couts {
 	}
 	public void removeQuantite(double q, Feve f) {
 		LinkedList<Stock> L=this.Stocks.get(f);
+		System.out.println("remove");	
+
 		while (q>0) {
 			int m=0;
 			for (int i=0 ; i<L.size() ; i++) {
@@ -55,6 +57,8 @@ public class Producteur2Stockage extends Producteur2Couts {
 			}
 		
 		}
+		System.out.println("fin remov");	
+
 	}
 	public void addQuantite(double q, Feve f) {
 		this.getStock().get(f).add(new Stock(q));

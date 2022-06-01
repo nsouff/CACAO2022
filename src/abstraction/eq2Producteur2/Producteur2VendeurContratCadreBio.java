@@ -29,7 +29,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 
 	public boolean vend(Object produit) {
-		return ((Feve)(produit)==Feve.FEVE_HAUTE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		return false;//(produit instanceof Feve);
 	}
 
 	public double qtiteTotaleContratEnCours(Object produit) {
@@ -44,7 +44,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	
 
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
-		if (vend(contrat.getProduit())) {
+		if (this.vend(contrat.getProduit())) {
 			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())) { 
 
 				return contrat.getEcheancier();
