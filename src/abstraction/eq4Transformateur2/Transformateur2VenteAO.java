@@ -90,8 +90,6 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 			}
 			
 			PropositionAchatAO retenue = meilleur_proposition;
-			this.journal.ajouter("Produit 1" + this.getChocolatsProduits().get(0));
-			this.journal.ajouter("Produit 1" + retenue.getOffre().getChocolat());
 			this.journal.ajouter("Prix voulu pour les basses :" + this.prixVouluB());
 			this.journal.ajouter("Prix voulu pour les moyennes :" + this.prixVouluM());
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(0))) {
