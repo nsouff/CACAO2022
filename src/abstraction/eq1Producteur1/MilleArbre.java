@@ -8,7 +8,7 @@ public class MilleArbre {
 	private int ut_esperance_vie;
 	private int stade_maladie;
 	private int ut_debut_maladie;
-	private int qualite ;
+	private int qualite ; //1 = basse; 2 = moyenne; 3 = haute
 	private boolean cooperative;
 	private boolean bioequitable;
 	private boolean transition_bio;
