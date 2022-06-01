@@ -100,8 +100,11 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		//return (produit!=null && (produit instanceof ChocolatDeMarque) && this.chocolats.contains(produit));
 	}
 
+	//edgard: On vérifie que l'echeancier nous fournit une quantite > Quantite Min avant de valider le contrat
 	@Override
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat){
+		//On récupère le superviseur des ventes et la quantité min echeancier
+		double QuantiteMinEcheancier= SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER;
 		
 		//On récupère le dernier écheancier négocié
 		Echeancier lastEcheancier = contrat.getEcheancier();
@@ -116,15 +119,19 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		//Retourne le volume le plus judicieux à acheter selon le nombre d'étape sur lequel on reparti le contrat
 		double venteParStep = this.volumeParEtapeMoyenne(chocProduit, currentEtape, 10);
 		int nbStepContrat = 10;
-		
+		double quantiteTotale = venteParStep*nbStepContrat;
+
+		//On ne va pas réaliser de CC si la quantite achetée est < Quantite Min
+		while(quantiteTotale<QuantiteMinEcheancier) {
+			venteParStep+=10;
+		}
 		//On créer un écheancier correspondant à nos besoin
 		Echeancier echeancierAchat = new Echeancier(currentEtape,nbStepContrat,venteParStep);
-		
 		if (lastEcheancier.getStepFin()>ECH_MAX) {
 			return null;
 		}else {
-			//On ne cherche pas trop à négocier pour l'instant
-			return lastEcheancier;
+		//On ne cherche pas trop à négocier pour l'instant
+			return echeancierAchat;
 		}
 	}
 
