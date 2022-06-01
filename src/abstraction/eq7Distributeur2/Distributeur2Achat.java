@@ -1,5 +1,6 @@
 package abstraction.eq7Distributeur2;
 
+
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.Color;

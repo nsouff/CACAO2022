@@ -1,4 +1,4 @@
-package abstraction.eq7Distributeur2;
+package abstraction.eq7Distributeur2.tools;
 
 import java.util.List;
 import java.util.HashMap;

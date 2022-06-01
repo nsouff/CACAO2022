@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import abstraction.eq7Distributeur2.examples.FiliereTestCCBiofour;
+import abstraction.eq7Distributeur2.tools.IStock;
+import abstraction.eq7Distributeur2.tools.Stock;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
