@@ -13,12 +13,20 @@ public class DicoPeremption<Produit> {
 	public DicoPeremption(){
 		this.peremptions=new HashMap<DateProd<Produit> ,Double>();
 	}
+	
 	public Set<DateProd<Produit>> getDateProd() {
 		return this.peremptions.keySet();
 	}
+	
 	public double getQtt(double date,Produit produit) {	
+		
 		DateProd<Produit>d = new DateProd<Produit>(date,produit) ;
+		if (this.getDateProd().contains(d)){
 		return this.peremptions.get(d);
+		}
+		else {
+			return 0.0;
+		}
 	}
 	
 
