@@ -93,7 +93,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	// si la quantité reçue est inférieure à celle prévue : en acheter à la bourse ?
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		Feve f= ((Feve) produit);
-		this.stockFeves.ajouter(f, quantite);		
+		this.ajouter((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()+Filiere.LA_FILIERE.getEtape()),f , quantite);		
 		this.achats.ajouter("On receptionne " + quantite + "de" + produit.toString() + " achete par CC");
 	}
 

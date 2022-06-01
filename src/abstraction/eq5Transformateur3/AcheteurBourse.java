@@ -35,7 +35,7 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 
 	// Karla
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
-		this.stockFeves.ajouter(f, quantiteEnKg);
+		this.ajouter((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()+Filiere.LA_FILIERE.getEtape()),f, quantiteEnKg);
 		this.achats.ajouter("Achat a la bourse de "+ quantiteEnKg +"kg  de " + f + " a "+ coursEnEuroParKg+ " euro par Kg");
 	}
 
