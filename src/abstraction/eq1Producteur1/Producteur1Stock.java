@@ -108,6 +108,22 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		return somme ;	
 	}
 	
+	
+	
+	public double getStockParc(Feve f, boolean affinage, Parc provenance){
+		
+		double somme = 0.0 ;
+		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+			if (Lot.getProvenance() == provenance) {
+			if (Lot.isAffine() || affinage) {
+			somme = somme + Lot.getPoids() ;
+			}
+			}
+		}
+		return somme ;	
+	}
+	
+	
 	//Auteur : Khéo
 	public void addLot(Feve f, double quantite, Parc provenance) {
 		this.getFeves().get(f).add(new FeveProducteur1(quantite,provenance));
