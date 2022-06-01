@@ -68,7 +68,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		this.nb_prop += 1;
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		Double seuilMax = 0.0;
 		if (contrat.getProduit() instanceof ChocolatDeMarque) {
 			if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
 				return 2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
@@ -86,7 +87,8 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	//Yves
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		Double seuilMax = 0.0;
 		if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
 			if (contrat.getPrix()>2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur())){
 				this.ventes.ajouter("nous acceptons "+contrat.getPrix().toString());

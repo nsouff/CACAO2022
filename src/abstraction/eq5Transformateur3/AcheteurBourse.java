@@ -10,9 +10,12 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 	// Karla 
 	public double demande(Feve f, double cours) {
 		
+		
 		/* on calcule notre besoin en la fève f (en partant du principe que l'on fait que des transformations classiques)
 		 * pour honorer nos contrats */
-		Double difference = this.besoinFeves.get(f) - this.dispoFeves.get(f);	
+		//Double difference = this.besoinFeves.get(f) - this.dispoFeves.get(f);	
+		
+		Double difference = 5000.0;
 		
 		/* Si notre stock ne permet pas de répondre au besoin,
 		 * on achète avec une marge de 20% supplémntaire */

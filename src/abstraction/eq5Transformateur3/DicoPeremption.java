@@ -86,24 +86,28 @@ public double trouverPlusUrgent(Produit p) {
 }
 	public void utiliserQtt(Produit p, double qtt) {
 		
-		double qttR=qtt; // qtt restante
+		if (qtt<=0) {} //on ne fait rien;
 		
-		while (qttR>0) {
+		else {
+		
 			double date=this.trouverPlusUrgent(p);
 			double qC=this.getQtt(date, p);
+			if (qC<=0) {
+				DateProd<Produit>d=new DateProd<Produit>(date,p);
+				this.peremptions.remove(d);
+			}
 			
-		
-			if (qC<=qttR) {
+			else {
+			if (qC<=qtt) {
 			utiliserQttDate(date,p,qC);
-			qttR=qttR-qC;
+			utiliserQtt(p,qtt-qC);
+			
 		}
 			else {
-				utiliserQttDate(date,p,qttR);
-				qttR=0;
-				
+				utiliserQttDate(date,p,qtt);
 			}
 		}
 
-		
+		}	
 	}
 }
