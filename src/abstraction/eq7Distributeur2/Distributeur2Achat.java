@@ -2,6 +2,7 @@ package abstraction.eq7Distributeur2;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.awt.Color;
 
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
@@ -9,6 +10,7 @@ import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 //Classe rédigée par Edgar et Matteo
@@ -42,7 +44,15 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		//-------------------------------------NEXT CONTRAT------------------------------------------//
 		//Initialisation du superviseur de vente
 		SuperviseurVentesContratCadre SupVente = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-	
+		
+		//Affichage de la liste des vendeurs actifs pour chaque chocolats
+		for (ChocolatDeMarque chocProduit : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			List<IVendeurContratCadre> vendeurs = SupVente.getVendeurs(chocProduit);
+			this.journalContratCadre.ajouter("Liste des vendeurs disponnible pour le produit : "+chocProduit+" "+vendeurs);
+		}
+		journalContratCadre.ajouter("================================================================================");
+		
+		
 		//Pour chaque chocolat produit sur le marché
 		for (ChocolatDeMarque chocProduit : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			
@@ -63,15 +73,13 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				
 				//On récupère tout les vendeurs actifs
 				List<IVendeurContratCadre> vendeurs = SupVente.getVendeurs(chocProduit);
-				this.journalContratCadre.ajouter("Liste des vendeurs disponnible pour le produit : "+chocProduit+" "+vendeurs);
 				
 				//Pour chaque vendeur
 				for (IVendeurContratCadre vendeur : vendeurs) {
-					journalContratCadre.ajouter("================================================================================");
-					journalContratCadre.ajouter("BioFour propose d'initier un CC avec "+ vendeur +" avec le produit: "+chocProduit);
+					journalContratCadre.ajouter(this.getNom() + " propose d'initier un CC avec "+ Journal.texteColore(vendeur, vendeur.getNom()) +" avec le produit: "+chocProduit);
 					ExemplaireContratCadre propositionContratCadre = SupVente.demandeAcheteur(this, vendeur, chocProduit, echeancierAchat, cryptogramme,boolTeteGondole);
 					if (propositionContratCadre == null) {
-						journalContratCadre.ajouter("Le contrat avec "+vendeur+" n'a pas abouti");
+						journalContratCadre.ajouter(Journal.texteColore(getColorFaillure(), Color.BLACK, "Le contrat avec "+vendeur.getNom()+" n'a pas abouti"));
 						journalContratCadre.ajouter("================================================================================");
 					}
 				}
@@ -142,7 +150,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			return -1;
 		}else {
 			if(Math.abs(prix-EPSILON_PRIX)==PRIX_OK || prix<=PRIX_OK) {
-				this.journalContratCadre.ajouter("Contrat négocié : " + contrat);
+				this.journalContratCadre.ajouter(Journal.texteColore(getColorSuccess(), Color.BLACK, "Contrat négocié : "));
+				this.journalContratCadre.ajouter(contrat.toString());
 				journalContratCadre.ajouter("================================================================================");
 				return prix;
 			}else {
