@@ -115,18 +115,24 @@ public class Stock { //Emma Humeau
 			return true;
 		}
 
+		double ventesPasseesDernierTour = 0;
+		double ventesPasseesAvDernierTour = 0;
 		
-		double ventesPasséesDernierTour = 0;
-		double ventesPasséesAvDernierTour = 0;
-
+		// acteur.HistoChoco.forEach((key,value)->{
+			
 		for (Entry<ChocolatDeMarque, VariableReadOnly> m : acteur.HistoChoco.entrySet()) {
-			ventesPasséesDernierTour += ((VariableReadOnly) m).getValeur(Filiere.LA_FILIERE.getEtape()-1);
-			ventesPasséesAvDernierTour += ((VariableReadOnly) m).getValeur(Filiere.LA_FILIERE.getEtape()-2);
+			ventesPasseesDernierTour += ((VariableReadOnly) m).getValeur(Filiere.LA_FILIERE.getEtape()-1);
+			ventesPasseesAvDernierTour += ((VariableReadOnly) m).getValeur(Filiere.LA_FILIERE.getEtape()-2);
+			
+			if (Filiere.LA_FILIERE.getEtape() > 2) {
+				ventesPasseesDernierTour += acteur.HistoChoco.get(m.getKey()).getValeur(Filiere.LA_FILIERE.getEtape()-1);
+				ventesPasseesAvDernierTour += acteur.HistoChoco.get(m.getKey()).getValeur(Filiere.LA_FILIERE.getEtape()-2);
+			}
 		}
-		if (ventesPasséesDernierTour + acteur.getSolde() <= getCoûtStockageTotale()) {
+		if (ventesPasseesDernierTour + acteur.getSolde() <= getCoûtStockageTotale()) {
 			return true;
 		}
-		if (ventesPasséesAvDernierTour + acteur.getSolde() <= getCoûtStockageTotale()) {
+		if (ventesPasseesAvDernierTour + acteur.getSolde() <= getCoûtStockageTotale()) {
 			return true;
 		}
 		else {
@@ -134,6 +140,7 @@ public class Stock { //Emma Humeau
 		}
 	}
 
+	
 	protected void initialiser() {
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			addQte(choco, acteur.getPartMarque(choco) * acteur.partDuMarcheVoulu(choco.getChocolat()) * Filiere.LA_FILIERE.getVentes(choco, -24));
