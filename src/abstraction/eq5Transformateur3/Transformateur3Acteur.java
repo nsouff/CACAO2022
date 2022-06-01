@@ -104,8 +104,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.stockChocolat.ajouter(Chocolat.HQ_BE, s);
 		this.stockChocolat.ajouter(Chocolat.HQ_BE_O, s);
 		
-		this.perempFeves.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Feve.FEVE_MOYENNE_BIO_EQUITABLE,s);
-		this.perempFeves.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
+		this.perempFeves.ajouterQtt(this.dureePeremption.getValeur(),Feve.FEVE_MOYENNE_BIO_EQUITABLE,s);
+		this.perempFeves.ajouterQtt(this.dureePeremption.getValeur(),Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
 		
 		this.perempChocolat.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Chocolat.MQ_BE, s);
 		this.perempChocolat.ajouterQtt((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()),Chocolat.MQ_BE_O, s);
