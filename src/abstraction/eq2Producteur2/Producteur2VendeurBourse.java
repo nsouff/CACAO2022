@@ -3,7 +3,7 @@ package abstraction.eq2Producteur2;
 import abstraction.eq8Romu.bourseCacao.IVendeurBourse;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2VendeurBourse extends Producteur2VendeurContratCadreBio implements IVendeurBourse {
+public class Producteur2VendeurBourse extends Producteur2VendeurContratCadre implements IVendeurBourse {
 
 	public Producteur2VendeurBourse() {
 		super();

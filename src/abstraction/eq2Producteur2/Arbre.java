@@ -7,12 +7,12 @@ import abstraction.eq8Romu.produits.Feve;
 public enum Arbre {
 	//auteure : Fiona
 	
-	ARBRE_HGB(60, 1/60, 960, 3, Feve.FEVE_HAUTE_BIO_EQUITABLE),
-	ARBRE_HG(75, 1/75, 960, 3, Feve.FEVE_HAUTE),
-	ARBRE_MGB(60, 1/60, 960, 3, Feve.FEVE_MOYENNE_BIO_EQUITABLE),
-	ARBRE_MG(75, 1/75, 960, 3, Feve.FEVE_MOYENNE),
-	ARBRE_BG(75, 1/75, 960, 3, Feve.FEVE_BASSE);
-	
+	ARBRE_HGB(60, 960, 2, 3, Feve.FEVE_HAUTE_BIO_EQUITABLE),
+	ARBRE_HG(75, 960, 2, 3, Feve.FEVE_HAUTE),
+	ARBRE_MGB(60, 960, 2, 3, Feve.FEVE_MOYENNE_BIO_EQUITABLE),
+	ARBRE_MG(75, 960, 2, 3, Feve.FEVE_MOYENNE),
+	ARBRE_BG(75, 960, 2, 3, Feve.FEVE_BASSE);
+
 	private double DureeCroissance;
 	private double DureeVie;
 	private double RendementFinal;

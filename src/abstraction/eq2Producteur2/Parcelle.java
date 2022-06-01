@@ -17,6 +17,7 @@ public class Parcelle {
 	private int StadeTransition;
 	private int DebutMaladie;
 	private int StadeTensionGeopolitique;
+	private double ImpactRendementParasite;
 	
 	
 	
@@ -29,7 +30,8 @@ public class Parcelle {
 		this.setAge(age);
 		this.setRendementProgressif(0.2 + Math.random()*0.5);
 		this.setStadeMaladie(0);
-		this.setNbArbres(100000);
+		this.setNbArbres(10000);
+		this.setImpactRendementParasite(1);
 		
 		
 	}
@@ -37,6 +39,7 @@ public class Parcelle {
 	public void next() {
 		this.MAJMaladie();
 		this.MAJTensionGeopo();
+		this.MAJParasite();
 	}
 
 	public Arbre getTypeArbre() {
@@ -171,6 +174,63 @@ public class Parcelle {
 		}
 	}
 
+	public double MAJParasite() {
+		// auteure : Fiona 
+		
+		// les return ne servent à rien; c'était juste pour sortir des if
+		double proba = Math.random();
+		if (this.getTypeArbre() == Arbre.ARBRE_HGB || this.getTypeArbre() == Arbre.ARBRE_MGB) {
+			if (proba < 0.02) {
+				double proba_impact = Math.random();
+				if (proba_impact<=0.7) {
+					this.setImpactRendementParasite(0.1);
+					return 0.1;
+				}
+				if (proba_impact<0.2) {
+					this.setImpactRendementParasite(0.5);
+					return 0.5;
+				
+				}
+				if (proba_impact<0.1) {
+					this.setImpactRendementParasite(0.8);
+					return 0.8;
+					
+				}
+			}
+		}
+		
+		else {
+			if (proba < 0.1) {
+				double proba_impact = Math.random();
+				if (proba_impact<=0.7) {
+					this.setImpactRendementParasite(0.1);
+					return 0.1;
+				}
+				if (proba_impact<0.2) {
+					this.setImpactRendementParasite(0.5);
+					return 0.5;
+				
+				}
+				if (proba_impact<0.1) {
+					this.setImpactRendementParasite(0.8);
+					return 0.8;
+					
+				}
+			}
+		}
+			return 1;
+		}
+
+	
+
+
+	public double getImpactRendementParasite() {
+		return ImpactRendementParasite;
+	}
+
+	public void setImpactRendementParasite(double impactRendementParasite) {
+		ImpactRendementParasite = impactRendementParasite;
+	}
 	
 
 }
