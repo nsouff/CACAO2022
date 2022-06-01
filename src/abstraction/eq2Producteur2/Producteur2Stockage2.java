@@ -40,7 +40,7 @@ public class Producteur2Stockage2 extends Producteur2Couts {
 			}
 			if ((L.get(m)).getQuantite()>q) {
 				(L.get(m)).removequantite(q);
-				q=0;
+				q=0;//q=000000
 			}else {
 				double r = (L.get(m)).getQuantite();
 				(L.get(m)).removequantite(r);
