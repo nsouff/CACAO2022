@@ -122,10 +122,19 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	public ChocolatDeMarque fevechoco(Feve f) {
 		if(f.getGamme().equals(Gamme.BASSE)) {
 			return new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
-		} else {
-
+		} else if (f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()){
 			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
 		}
+		else if(f.getGamme().equals(Gamme.MOYENNE) && f.isBioEquitable()) {
+			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(2));
+		}
+		else if(f.getGamme().equals(Gamme.HAUTE) && !f.isBioEquitable()) {
+			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(3));
+		}
+		else if(f.getGamme().equals(Gamme.HAUTE) && f.isBioEquitable()) {
+			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(4));
+		}
+		return null;
 	}
 	
 	
@@ -133,10 +142,11 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	public ChocolatDeMarque fevechocoplus(Feve f) {
 		if(f.getGamme().equals(Gamme.BASSE)) {
 			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
-		} else {
-
-			//return new ChocolatDeMarque(Chocolat.HQ,super.getMarquesChocolat().get(2));
-			//il sera nécessaire de mettre à jour la liste de nos marques de chocolat pour que ce code fonctionne
+		} else if (f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()){
+			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(3));			
+		}
+		else if (f.getGamme().equals(Gamme.MOYENNE) && f.isBioEquitable()) {
+			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(4));
 		}
 		return null;
 	}
