@@ -35,18 +35,18 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		//il faut régler les qauntités transformées pour chaque types de fèves
 		
 		//Les transformations non originales courtes
-		this.transfo(0.1*cap, false, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.1*cap,false,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.01*cap, false, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.01*cap,false,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.01*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.01*cap,false,"courte",Feve.FEVE_HAUTE);
+		this.transfo(0.01*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations originales courtes
-		this.transfo(0.1*cap, true, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.1*cap,true,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.01*cap, true, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.01*cap,true,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.01*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.01*cap,true,"courte",Feve.FEVE_HAUTE);
+		this.transfo(0.01*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations originales longues
 		this.transfo(0.1*cap, true, "longue",Feve.FEVE_BASSE);
@@ -54,9 +54,9 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		this.transfo(0.1*cap,true,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations non originales longues
-		this.transfo(0.1*cap, false, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, false, "longue",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,false,"longue",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,false,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 				
 	}
@@ -183,13 +183,13 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
 		}
 		else if(f.getGamme().equals(Gamme.MOYENNE) && f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(2));
+			return new ChocolatDeMarque(Chocolat.MQ_BE,super.getMarquesChocolat().get(2));
 		}
 		else if(f.getGamme().equals(Gamme.HAUTE) && !f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(3));
+			return new ChocolatDeMarque(Chocolat.HQ,super.getMarquesChocolat().get(3));
 		}
 		else if(f.getGamme().equals(Gamme.HAUTE) && f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(4));
+			return new ChocolatDeMarque(Chocolat.HQ_BE,super.getMarquesChocolat().get(4));
 		}
 		return null;
 	}
@@ -200,10 +200,10 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		if(f.getGamme().equals(Gamme.BASSE)) {
 			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
 		} else if (f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()){
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(3));			
+			return new ChocolatDeMarque(Chocolat.HQ,super.getMarquesChocolat().get(3));			
 		}
 		else if (f.getGamme().equals(Gamme.MOYENNE) && f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(4));
+			return new ChocolatDeMarque(Chocolat.HQ_BE,super.getMarquesChocolat().get(4));
 		}
 		return null;
 	}
