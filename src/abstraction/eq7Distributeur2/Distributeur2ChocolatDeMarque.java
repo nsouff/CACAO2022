@@ -1,6 +1,7 @@
 package abstraction.eq7Distributeur2;
 
 import abstraction.eq8Romu.clients.ClientFinal;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
@@ -16,8 +17,14 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	public void next() {
 		super.next();
 		
+		int currentEtape = Filiere.LA_FILIERE.getEtape();
 		//Affichage état des stocks
-		
+		journalStock.ajouter("==========Etape "+currentEtape+"==========================");
+		for (ChocolatDeMarque choco : this.chocolats) {
+			double q = this.stock.getQuantite(choco);
+			journalStock.ajouter(choco+" : "+ q+ " kg en stock");
+		}
+		journalStock.ajouter("===========================================");
 	}
 	
 	
