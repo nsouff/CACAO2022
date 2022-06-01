@@ -8,13 +8,15 @@ public class ChocolatProducteur1 {
 	private int ut_debut; //Plus pratique puisqu'on a pas besoin d'actualiser
 	private boolean perime;
 	private double poids;
+	private Parc provenance;
 	
 	
 //Auteur : Laure ; Modificateur : Khéo
-	public ChocolatProducteur1(double poids) {
+	public ChocolatProducteur1(double poids, Parc provenance) {
 		this.ut_debut = Filiere.LA_FILIERE.getEtape();
 		this.perime = false;
 		this.poids = poids;
+		this.provenance = provenance;
 	}
 
 	/**
@@ -40,6 +42,13 @@ public class ChocolatProducteur1 {
 	 */
 	public int getUt_debut() {
 		return this.ut_debut;
+	}
+
+	/**
+	 * @return the provenance
+	 */
+	public Parc getProvenance() {
+		return provenance;
 	}
 
 	/**
