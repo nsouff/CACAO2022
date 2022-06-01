@@ -117,7 +117,6 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 
 		// TODO: On ne fait actuellement aucune negociation
 		
-		journalNegociationCC.ajouter("Nous refusons son écheancier.");
 		return null;
 	}
 
@@ -159,7 +158,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix());
 	}
 
-	private void suppAnciensContrats() {//leorouppert
+	public void suppAnciensContrats() { // Léo
 		List<ExemplaireContratCadre> aSupprimer = new ArrayList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : mesContrats) {
 			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {

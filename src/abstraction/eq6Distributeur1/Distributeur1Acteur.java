@@ -9,10 +9,16 @@ import java.util.Map;
 import java.util.Random;
 
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.contratsCadres.Echeancier;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
+import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariableReadOnly;
+import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Gamme;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -31,6 +37,8 @@ public class Distributeur1Acteur implements IActeur {
 	protected Variable QteChocoHQ;
 	protected Variable QteChocoMQ;
 	protected Variable QteChocoBq;
+	protected Integer Compteur;	
+	protected Map<ChocolatDeMarque, VariableReadOnly> HistoChoco; // Léo
 	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
 	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
 	protected final double partCC = 0.9;
@@ -47,6 +55,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
+		HistoChoco = new HashMap<ChocolatDeMarque, VariableReadOnly>(); // Léo
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
 
@@ -88,13 +97,39 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		for (ChocolatDeMarque C : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			HistoChoco.put(C, new VariableReadOnly(C.toString(), this,0));
+		}
 		NotreStock.initialiser();
 		
 	}
-		
+	
 	public void next() {
 		//leorouppert
-		
+
+		journal1.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
+		this.getNotreStock().getMapStock().forEach((key,value)->{
+			double moy = 0;
+			if (Filiere.LA_FILIERE.getEtape() > 0) {
+				moy = HistoChoco.get(key).getValeur()/Filiere.LA_FILIERE.getEtape();
+			}
+			if (value <= Math.max(5000.0, moy)) { 
+				journal1.ajouter("Recherche d'un vendeur aupres de qui acheter");
+				List<IVendeurContratCadre> ListeVendeurs = supCCadre.getVendeurs(key);
+				if (ListeVendeurs.size() != 0) {
+					IVendeurContratCadre Vendeur = ListeVendeurs.get(ran.nextInt(ListeVendeurs.size()));
+					journal1.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+key+" avec le vendeur "+Vendeur);
+					ExemplaireContratCadre CC = supCCadre.demandeAcheteur((IAcheteurContratCadre)this,Vendeur, value, new Echeancier(Filiere.LA_FILIERE.getEtape()+1,12,10000), cryptogramme, false);
+					if (CC == null) {
+						journal1.ajouter("-->aboutit au contrat "+ CC);
+					}
+					else {
+						journal1.ajouter("échec des négociations");
+					}
+				}
+			}	
+		});	
+
 		journal1.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
 		getChocoTotalTour();
 		/**
@@ -146,7 +181,7 @@ public class Distributeur1Acteur implements IActeur {
 	// Renvoie les indicateurs
 	/**
 	 * @author Nolann
-	 * changement : on ne renvoi que la quantité de chocolat de type HQ, MQ, BQ
+	 * changement : on ne renvoie que la quantité de chocolat de type HQ, MQ, BQ
 	 */
 	public List<Variable> getIndicateurs() {
 		List<Variable> res = new ArrayList<Variable>();
@@ -177,7 +212,9 @@ public class Distributeur1Acteur implements IActeur {
 	
 	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
-	}
+		NotreStock.seuilSecuFaillite();
+		journal1.ajouter("on risque de faire faillite au prochain tour");
+		}
 
 	public void notificationOperationBancaire(double montant) {
 		journalCompte.ajouter("Une opération vient d'avoir lieu d'un montant de " + montant);
@@ -228,16 +265,16 @@ public class Distributeur1Acteur implements IActeur {
 
 	public double partDuMarcheVoulu(Chocolat c) {
 		switch(c) {
-			case BQ: return 0.5;
-			case BQ_O: return 0.5;
+			case BQ: return 0.7;
+			case BQ_O: return 0.7;
 			case MQ: return 0.5;
 			case MQ_O: return 0.5;
 			case MQ_BE: return 0.5;
 			case MQ_BE_O: return 0.5;
-			case HQ: return 0.5;
-			case HQ_O: return 0.5;
-			case HQ_BE: return 0.5;
-			case HQ_BE_O: return 0.5;
+			case HQ: return 0.3;
+			case HQ_O: return 0.3;
+			case HQ_BE: return 0.3;
+			case HQ_BE_O: return 0.3;
 			default: return 0.0;
 		}
 	}

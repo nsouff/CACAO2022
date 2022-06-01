@@ -27,7 +27,7 @@ public class AcheteurAO extends AcheteurContrat implements IAcheteurAO {
     @Override
     public double proposerPrix(OffreVente offre) {
     	
-    	if (NotreStock.seuilSecuFaillite() == false) {   //EmmaHumeau
+    	if (NotreStock.seuilSecuFaillite() == true) {   //EmmaHumeau
     		return 0.0;
     	}
 
@@ -40,7 +40,7 @@ public class AcheteurAO extends AcheteurContrat implements IAcheteurAO {
         if (offre.enTG()) {
             double res = 5.1;
             journalAO.ajouter("Nous proposons un prix de 5.1 pour l'offre pour " + res + "Kg de " + offre.getChocolat());
-            return res;        
+            return res;
         }
         double res = 7.1;
         journalAO.ajouter("Nous proposons un prix de 7.1 pour l'offre pour " + res + "Kg de " + offre.getChocolat());
