@@ -43,7 +43,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 			return quantiteAchatFeve.get(f)*0.5;
 			}
 			else {
-			journal.ajouter("Le cours est superieur au prix auquel on peut acheter la feve"+ f+", la bourse n'est pas interessante");
+			journal.ajouter("Le cours " + cours + " est superieur au prix "+prixAchatFeve.get(f)+" auquel on peut acheter la feve"+ f+", la bourse n'est pas interessante");
 			return 0.;
 			}	
 	}

@@ -68,6 +68,15 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			prixAchatFeve.put(Feve.FEVE_BASSE, Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);	
 			prixAchatFeve.put(Feve.FEVE_MOYENNE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);
 			prixAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ_BE), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ_BE)) - coutTransfo);
+			if (prixAchatFeve.get(Feve.FEVE_BASSE)<=0) {
+				prixAchatFeve.put(Feve.FEVE_BASSE,3.);				
+			}
+			if (prixAchatFeve.get(Feve.FEVE_MOYENNE)<=0) {
+				prixAchatFeve.put(Feve.FEVE_MOYENNE,3.);				
+			}
+			if (prixAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)<=0) {
+				prixAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,3.);				
+			}
 	}
 	
 	/** détermine la quantité de fèves totale qu'on souhaite avoir cette étape ; auteur Julien
@@ -155,7 +164,13 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			cout = cout + stockChoco.get(c)*coutStockage;
 		}
-		journal.ajouter("stock choco "+ stockChoco.get(Chocolat.MQ));
+		journal.ajouter("stock choco BQ"+ stockChoco.get(Chocolat.BQ));
+		journal.ajouter("Notre cout de stockage est "+ cout);
+		journal.ajouter("stock choco MQ"+ stockChoco.get(Chocolat.MQ));
+		journal.ajouter("Notre cout de stockage est "+ cout);
+		journal.ajouter("stock choco MQ_BE"+ stockChoco.get(Chocolat.MQ_BE));
+		journal.ajouter("Notre cout de stockage est "+ cout);
+		journal.ajouter("stock choco MQ_O"+ stockChoco.get(Chocolat.MQ_O));
 		journal.ajouter("Notre cout de stockage est "+ cout);
 		return cout;
 	}
@@ -244,7 +259,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		/** ____________________Choix quantite et prix Feve____________________ */
 		
-		//this.prixMaxAchat();
+		this.prixMaxAchat();
 		this.determinationQuantiteAchat();
 		
 		
