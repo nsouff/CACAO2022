@@ -276,13 +276,13 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		return cm;
 	}
 	//julien
-	public void ajouter(Object p,double qtt){
+	public void ajouter(double date,Object p,double qtt){
 		if (p instanceof Feve) {
-			this.perempFeves.ajouterQtt(Filiere.LA_FILIERE.getEtape()+Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur(),(Feve) p,qtt);
+			this.perempFeves.ajouterQtt(date,(Feve) p,qtt);
 			this.stockFeves.ajouter((Feve) p, qtt);
 		}
 		if (p instanceof Chocolat) {
-			this.perempChocolat.ajouterQtt(Filiere.LA_FILIERE.getEtape()+Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur(),(Chocolat) p,qtt);
+			this.perempChocolat.ajouterQtt(date,(Chocolat) p,qtt);
 			this.stockChocolat.ajouter((Chocolat) p, qtt);
 			
 			
