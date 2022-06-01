@@ -24,7 +24,6 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 	public Producteur2VendeurContratCadreNonBio() {
 		super();
 		this.mesContratEnTantQueVendeurNonBio = new LinkedList<ExemplaireContratCadre>();
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
@@ -104,14 +103,17 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 	}
 
 	public double propositionPrix(ExemplaireContratCadre contrat) {
+		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		return 0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 	}
 	double production = 15 ; // production de fève (à preciser selon gamme) 
-	BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+	
+	
 	
 	
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {	
-		if (contrat.getQuantiteTotale()>12*production){ // Grosse commande, proposition de prix plus bas
+		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		if (contrat.getQuantiteTotale()>12*(this.production((Feve)contrat.getProduit()))){ // Grosse commande, proposition de prix plus bas
 			if (contrat.getPrix()>0.8 ) {
 				return contrat.getPrix();}
 			else {

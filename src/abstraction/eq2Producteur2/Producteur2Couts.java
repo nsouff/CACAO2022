@@ -11,11 +11,11 @@ import java.util.HashMap;
 
 public class Producteur2Couts extends Producteur2Plantation {
 
-	public static double coutHQ_BE=0.5; //coût par arbre
-	public static double coutMQ_BE=0.4;
-	public static double coutHQ=0.3;
-	public static double coutMQ=0.2;
-	public static double coutBQ=0.1;
+	public static double coutHQ_BE=0.001; //coût par arbre à revoir
+	public static double coutMQ_BE=0.001;
+	public static double coutHQ=0.001;
+	public static double coutMQ=0.001;
+	public static double coutBQ=0.001;
 	public HashMap<Feve,Double> coutParKg;
 
 	public Producteur2Couts() {
