@@ -13,29 +13,26 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 	public double demande(Feve f, double cours) {
 		
 		/* on calcule notre besoin en la fève f (en partant du principe que l'on fait que des transformations classiques)
-		 * pour honorer nos contrats 
-		 * */
-		Double difference = this.besoinFeves.get(f) - this.dispoFeves.get(f);		
-		/* Si notre stock permet de répondre au besoin, on n'achète pas, 
-		 * sinon on achète avec une marge de 20% supplémntaire  
-		 */
+		 * pour honorer nos contrats */
+		Double difference = this.besoinFeves.get(f) - this.dispoFeves.get(f);	
+		
+		/* Si notre stock ne permet pas de répondre au besoin,
+		 * on achète avec une marge de 20% supplémntaire */
 		if (difference > 0.00 ) {
-			difference += 0.20*difference;
-			this.achats.ajouter("demande de" + difference + " kg de feve" + f.getGamme().toString() + "à un cours" + cours );
-			return difference;
+			difference += 0.20*difference;		
 		}
+		
+		/* Sinon on achète "proportionnellement" au cours de la bourse */
 		else {
-		/*	if (this.getFeve().equals(f)) {
+			/* si on a deux fois plus de stock, on n'achète pas  */
+			if (2*this.besoinFeves.get(f) - this.dispoFeves.get(f) > 0) {
 				BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-				double pourcentage = (bourse.getCours(getFeve()).getMax()-bourse.getCours(getFeve()).getValeur())/(bourse.getCours(getFeve()).getMax()-bourse.getCours(getFeve()).getMin());
-				return achatMaxParStep*pourcentage;
+				double pourcentage = (bourse.getCours(f).getMax()-bourse.getCours(f).getValeur())/(bourse.getCours(f).getMax()-bourse.getCours(f).getMin());
+				difference = this.achatMaxFeves * pourcentage;
+			}
 		}
-		*/
-		}
+		this.achats.ajouter("demande de" + difference + " kg de feve" + f.getGamme().toString() + "à un cours" + cours );
 		return difference;
-
-		
-		
 	}
 
 	// Karla
