@@ -50,7 +50,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 				return contrat.getEcheancier();
 				}
 			else {
-				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getStepFin(),this.production((Feve)(contrat.getProduit())) + (this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances()) - qtiteTotaleContratEnCours(contrat.getProduit()));    
+				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getStepFin(),this.production((Feve)(contrat.getProduit())) + (this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())- qtiteTotaleContratEnCours(contrat.getProduit()));    
 				return e;
 			}
 		}	
