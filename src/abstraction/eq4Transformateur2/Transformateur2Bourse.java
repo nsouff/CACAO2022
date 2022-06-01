@@ -62,7 +62,7 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 	public double demande(Feve f, double cours) {
 
 			if(cours<this.getPrixSeuil(f).getValeur()) {
-				double besoin=Math.max(0,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+				double besoin=Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)){
 					return besoin;
 				}

@@ -37,6 +37,7 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		rdt=Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
 		prix_transfo=Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur();
 		prix_ori=Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
+
 	}
 	
 	public Transformateur2Transfo() {

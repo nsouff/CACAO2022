@@ -6,6 +6,7 @@ import java.util.List;
 
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
@@ -32,6 +33,24 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
+		
+		// Proposition d'un contrat a un des achteur choisi aleatoirement
+				journal.ajouter("Recherche d'un acheteur aupres de qui vendre");
+				List<IAcheteurContratCadre> acheteurs = supCCadre.getAcheteurs(this.getChocolatsProduits().get(0));
+				if (acheteurs.contains(this)) {
+					acheteurs.remove(this);
+				}
+				IAcheteurContratCadre acheteur = null;
+				if (acheteurs.size()==1) {
+					acheteur=acheteurs.get(0);
+				} else if (acheteurs.size()>1) {
+					acheteur = acheteurs.get((int)( Math.random()*acheteurs.size()));
+				}
+				if (acheteur!=null) {
+					journal.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+this.getChocolatsProduits().get(0)+" avec l'acheteur "+acheteur);
+					ExemplaireContratCadre cc = supCCadre.demandeVendeur(acheteur, (IVendeurContratCadre)this, this.getChocolatsProduits().get(0), new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER/10), cryptogramme,false);
+					journal.ajouter("-->aboutit au contrat "+cc);
+				}
 	}
 	
 	
@@ -103,5 +122,10 @@ public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 	// TODO Auto-generated method stub
 	return quantite;
+}
+
+
+public List<ExemplaireContratCadre> getMesContratEnTantQueVendeur() {
+	return mesContratEnTantQueVendeur;
 }
 }
