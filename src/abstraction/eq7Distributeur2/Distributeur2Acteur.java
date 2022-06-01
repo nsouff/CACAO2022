@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import abstraction.eq7Distributeur2.examples.FiliereTestCCBiofour;
+import abstraction.eq7Distributeur2.tools.IStock;
+import abstraction.eq7Distributeur2.tools.Stock;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -64,6 +68,8 @@ public class Distributeur2Acteur implements IActeur{
 		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
 		System.out.println("Liste des chocolats en vente sur le marché : "+chocolats);
 		this.stock = new Stock(this,this.chocolats);
+		this.actualiserIndicateurs();
+		this.journalStock.ajouter("Stock initial: "+this.stock.getQuantiteTotale());
 		
 	}
 	
