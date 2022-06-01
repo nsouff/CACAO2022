@@ -89,6 +89,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	}
 	
 	public double volumeParEtapeMoyenne(ChocolatDeMarque chocProduit,int currentEtape,int nbEtape) {
+		
+		/*
 		double ventes = 0.0;
 		//On ajoute les quantités vendues à chaque étape depuis nbStep
 		
@@ -106,6 +108,17 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		else {
 			return judicieux;
 		}
+		*/
+		
+		double demandeAnnee = 7200000000.0;
+		int nbStepParAn = 52;
+		int nbChocolats = this.chocolats.size();
+		int nbDistributeur = 2;
+		
+		double venteJudicieuse = demandeAnnee/(nbChocolats*nbDistributeur*nbStepParAn);
+		this.journalEtudeVente.ajouter("Quantitée determinée judicieuse pour "+chocProduit+" : "+ venteJudicieuse +" kg");
+		
+		return venteJudicieuse;
 		
 	}
 	
