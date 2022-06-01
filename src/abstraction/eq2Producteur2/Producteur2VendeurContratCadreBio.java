@@ -29,7 +29,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 
 	public boolean vend(Object produit) {
-		return true;
+		return ((Feve)(produit)==Feve.FEVE_HAUTE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 	}
 
 	public double qtiteTotaleContratEnCours(Object produit) {
