@@ -16,6 +16,7 @@ import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
+	private int nb_nego;
 	
 	//Karla / Julien
 	/* Initier un contrat */
@@ -73,10 +74,14 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			return prixT;
 		}
 		else {
-			double nouveauprix = 0.95*seuilMax;
-			this.achats.ajouter(" essaie avec nouveau prix");
-			return nouveauprix;
+			double proportion = 0.70+0.05*this.nb_nego;
+			double nouveauprix = proportion*prixT;
+			if (nouveauprix < seuilMax) { 
+				this.achats.ajouter(" essaie avec nouveau prix");
+				return nouveauprix;
+			}
 		}
+		return 0.0;
 	}
 
 	// Julien & Karla
@@ -93,7 +98,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	// si la quantité reçue est inférieure à celle prévue : en acheter à la bourse ?
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		Feve f= ((Feve) produit);
-		this.ajouter((Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()+Filiere.LA_FILIERE.getEtape()),f , quantite);		
+		this.stockFeves.ajouter(f, quantite);		
 		this.achats.ajouter("On receptionne " + quantite + "de" + produit.toString() + " achete par CC");
 	}
 
