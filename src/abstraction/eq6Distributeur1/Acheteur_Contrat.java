@@ -55,10 +55,10 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 			return contrat.getEcheancier();
 		}
 		Echeancier ech = contrat.getEcheancier();
-		if ((ech.getQuantite(ech.getStepDebut()) < 400)) {
-			ech.set(ech.getStepDebut(), ech.getQuantite(ech.getStepDebut())*2);
-			ech.set(ech.getStepDebut()+1, ech.getQuantite(ech.getStepDebut())*2);
-			ech.set(ech.getStepDebut()+2, ech.getQuantite(ech.getStepDebut())*2);
+		if ((ech.getQuantite(ech.getStepDebut()) < 10000)) {
+			ech.set(ech.getStepDebut(), 10000);
+			ech.set(ech.getStepDebut()+1, 10000);
+			ech.set(ech.getStepDebut()+2, 10000);
 		}
 		jounralContratCadre.ajouter("Nous faisons une contre proposition pour le contrat" + contrat + ". Le nouvel écheancier est " + ech);
 		return ech;
@@ -84,7 +84,7 @@ public class Acheteur_Contrat extends DistributeurChocolatDeMarque implements IA
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.getNotreStock().addQte((ChocolatDeMarque) produit, quantite);
-		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix(), contrat.getQuantiteTotale());
+		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix());
 	}
 }
 

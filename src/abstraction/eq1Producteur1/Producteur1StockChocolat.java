@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.Feve;
 
 
-public class Producteur1StockChocolat extends Producteur1ContratCadre {
+public class Producteur1StockChocolat extends ProducteurActeur1VenteBourse {
 	private  HashMap<Chocolat,List<ChocolatProducteur1>> Chocolats;
+	private Variable StockBQ ;
 	
 	
 	public Producteur1StockChocolat() {
+		super();
+		
 		this.Chocolats = new HashMap<Chocolat, List<ChocolatProducteur1>>();
 		Chocolats.put(Chocolat.BQ, new ArrayList<ChocolatProducteur1>());
 		Chocolats.put(Chocolat.BQ_O, new ArrayList<ChocolatProducteur1>());
@@ -23,8 +28,20 @@ public class Producteur1StockChocolat extends Producteur1ContratCadre {
 		Chocolats.put(Chocolat.MQ_BE, new ArrayList<ChocolatProducteur1>());
 		Chocolats.put(Chocolat.MQ_BE_O, new ArrayList<ChocolatProducteur1>());
 		Chocolats.put(Chocolat.MQ_O, new ArrayList<ChocolatProducteur1>());
+		
+		this.StockBQ= new Variable(this.getNom()+"StockCHOCO_BQ", "Stock de Chocolat BQ", 
+				this, 0, 1000000000, this.getStock(Chocolat.BQ));
 	}
 	
+	
+	public void next(){
+		super.next();
+		
+		//Mis à jour Variable
+		this.StockBQ.setValeur(this, this.getStock(Chocolat.BQ));
+		
+		
+	}
 	
 	public void initialiser() {
 		super.initialiser();
@@ -68,5 +85,15 @@ public class Producteur1StockChocolat extends Producteur1ContratCadre {
 	public HashMap<Chocolat, List<ChocolatProducteur1>> getChocolats() {
 		return Chocolats;
 	}
+
+
+	/**
+	 * @return the stockBQ
+	 */
+	public Variable getStockBQ() {
+		return StockBQ;
+	}
+	
+	
 	
 }
