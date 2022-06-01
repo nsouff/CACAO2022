@@ -25,12 +25,15 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 			return difference;
 		}
 		else {
-			if (this.getFeve().equals(f)) {
+		/*	if (this.getFeve().equals(f)) {
 				BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 				double pourcentage = (bourse.getCours(getFeve()).getMax()-bourse.getCours(getFeve()).getValeur())/(bourse.getCours(getFeve()).getMax()-bourse.getCours(getFeve()).getMin());
 				return achatMaxParStep*pourcentage;
 		}
-		
+		*/
+		}
+		return difference;
+
 		
 		
 	}
