@@ -22,7 +22,9 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
 	protected DicoChoco stockChoco;
 	protected DicoFeve stockFeve;
-	
+
+	protected DicoChocoPeremption stockChocoPeremption ;
+
 	// Alexandre
 	public Transformateur1Bourse() {
 		super();
@@ -34,6 +36,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 		prixVenteMin = new DicoChoco();
 		stockChoco = new DicoChoco();
 		stockFeve = new DicoFeve();
+		stockChocoPeremption= new DicoChocoPeremption();
 		
 	}
 	
