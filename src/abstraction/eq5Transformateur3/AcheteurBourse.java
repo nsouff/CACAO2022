@@ -1,32 +1,49 @@
-// julien 27/04
-
 package abstraction.eq5Transformateur3;
 
-import java.util.HashMap;
-
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
-import abstraction.eq8Romu.contratsCadres.ContratCadre;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
-public class AcheteurBourse  extends AcheteurContrat implements IAcheteurBourse{
+public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurBourse{
 
-	@Override
+	// Karla 
 	public double demande(Feve f, double cours) {
-		// TODO Auto-generated method stub
-	return 0;
-				
-	};
+		
+		/* on calcule notre besoin en la fève f (en partant du principe que l'on fait que des transformations classiques)
+		 * pour honorer nos contrats 
+		 * */
+		Double besoin = 0.00;
+		for (ExemplaireContratCadre contrat : this.contratsEnCoursVente) {
+			ChocolatDeMarque choco = (ChocolatDeMarque) contrat.getProduit() ;
+			if (choco.getGamme() == f.getGamme() && choco.isBioEquitable() == f.isBioEquitable() ) {
+				besoin += contrat.getQuantiteALivrerAuStep();
+			}
+		}
+		
+		/* Si notre stock permet de répondre au besoin, on n'achète pas, 
+		 * sinon on achète  
+		 */
+		Double difference = besoin - this.stockFeves.getstock(f) ;
+		if (difference > 0.0 ) {
+			this.achats.ajouter("demande de" + difference + " kg de feve" + f.getGamme().toString() + "à un cours" + cours );
+		}
+		
+		return difference ;
+	}
 
-	@Override
+	// Karla
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
-		// TODO Auto-generated method stub
-		
+		this.stockFeves.ajouter(f, quantiteEnKg);
+		this.achats.ajouter("Achat a la bourse de "+ quantiteEnKg +"kg  de " + f + " a "+ coursEnEuroParKg+ " euro par Kg");
 	}
 
-	@Override
-	public void notificationBlackList(int dureeEnStep) {
-		// TODO Auto-generated method stub
-		
+	// Karla
+	public void notificationBlackList(int dureeEnStep) {	
 	}
 
+	public void next () {
+		super.next();	
+	}
+	
 }
