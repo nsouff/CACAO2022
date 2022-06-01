@@ -275,6 +275,30 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		cm.add(new ChocolatDeMarque(Chocolat.MQ,"CHOCO'riginal"));
 		return cm;
 	}
-	
+	//julien
+	public void ajouter(Object p,double qtt){
+		if (p instanceof Feve) {
+			this.perempFeves.ajouterQtt(Filiere.LA_FILIERE.getEtape()+Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur(),(Feve) p,qtt);
+			this.stockFeves.ajouter((Feve) p, qtt);
+		}
+		if (p instanceof Chocolat) {
+			this.perempChocolat.ajouterQtt(Filiere.LA_FILIERE.getEtape()+Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur(),(Chocolat) p,qtt);
+			this.stockChocolat.ajouter((Chocolat) p, qtt);
+			
+			
+		}
+	}
+	//julien
+	public void utiliser(Object p,double qtt){
+		if (p instanceof Feve) {
+			this.perempFeves.utiliserQtt((Feve) p,qtt);
+			this.stockFeves.utiliser((Feve) p, qtt);
+		}
+		if (p instanceof Chocolat) {
+			this.perempChocolat.utiliserQtt((Chocolat) p,qtt);
+			this.stockChocolat.utiliser((Chocolat) p, qtt);
+}
+
+}
 }
 
