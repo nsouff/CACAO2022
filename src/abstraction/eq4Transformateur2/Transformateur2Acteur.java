@@ -27,7 +27,11 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	
 	
 	
-	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
+	protected Variable prixSeuilMQ; // au dela duquel nous n'achetons pas
+	protected Variable prixSeuilHQ;
+	protected Variable prixSeuilBQ;
+	protected Variable prixSeuilMQBE;
+	protected Variable prixSeuilHQBE;
 	//private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	
 	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
@@ -49,7 +53,11 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	//Nawfel
 	public Transformateur2Acteur() {
 	
-		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilBQ = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilMQ = new Variable("prix seuil moyenne qualité", "<html>Prix Seuil Moyenne Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilMQBE = new Variable("prix seuil moyenne qualité bio", "<html>Prix Seuil Moyenne Qualité BIO</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilHQ = new Variable("prix seuil haute qualité", "<html>Prix Seuil Haute Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilHQBE = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Haute Qualité BIO</html>",this, 0.0, 10000000, 10);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.marge = 1.1;
 		this.journal=new Journal("Opti'Cacao activités", this);
@@ -59,6 +67,9 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 5000);
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		//ajouter des marques de chocolats
+		
+		
 		this.stockReferenceChocolat=new Stock();
 		this.stockReferenceChocolat.ajouter(c1, 5000);
 		this.stockReferenceChocolat.ajouter(c0, 8000);
@@ -71,6 +82,77 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 	}
 	
+	//Jad
+	//renvoie le prix seuil de chaque feves
+	public Variable getPrixSeuil(Feve f) {
+		if(f.equals(Feve.FEVE_BASSE)) {
+			return this.getPrixSeuilBQ();
+		}
+		else if(f.equals(Feve.FEVE_HAUTE)) {
+			return this.getPrixSeuilHQ();
+		}
+		else if(f.equals(Feve.FEVE_HAUTE_BIO_EQUITABLE)) {
+			return this.getPrixSeuilHQBE();
+		}
+		else if (f.equals(Feve.FEVE_MOYENNE)) {
+			return this.getPrixSeuilMQ();
+		}
+		else if (f.equals(Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+			return this.getPrixSeuilMQBE();
+					
+		}
+		return null;
+	}
+
+	public Variable getPrixSeuilMQ() {
+		return prixSeuilMQ;
+	}
+
+
+	public void setPrixSeuilMQ(Variable prixSeuilMQ) {
+		this.prixSeuilMQ = prixSeuilMQ;
+	}
+
+
+	public Variable getPrixSeuilHQ() {
+		return prixSeuilHQ;
+	}
+
+
+	public void setPrixSeuilHQ(Variable prixSeuilHQ) {
+		this.prixSeuilHQ = prixSeuilHQ;
+	}
+
+
+	public Variable getPrixSeuilBQ() {
+		return prixSeuilBQ;
+	}
+
+
+	public void setPrixSeuilBQ(Variable prixSeuilBQ) {
+		this.prixSeuilBQ = prixSeuilBQ;
+	}
+
+
+	public Variable getPrixSeuilMQBE() {
+		return prixSeuilMQBE;
+	}
+
+
+	public void setPrixSeuilMQBE(Variable prixSeuilMQBE) {
+		this.prixSeuilMQBE = prixSeuilMQBE;
+	}
+
+
+	public Variable getPrixSeuilHQBE() {
+		return prixSeuilHQBE;
+	}
+
+
+	public void setPrixSeuilHQBE(Variable prixSeuilHQBE) {
+		this.prixSeuilHQBE = prixSeuilHQBE;
+	}
+
 
 	public void initialiser() {
 		
@@ -162,9 +244,6 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 
 
-	public Variable getPrixSeuil() {
-		return prixSeuil;
-	}
 
 
 
