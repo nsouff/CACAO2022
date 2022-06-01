@@ -76,7 +76,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	//Toute les fèves
 	public boolean vend(Object produit) {
 		// TODO Auto-generated method stub
-		return (produit==Feve.FEVE_HAUTE_BIO_EQUITABLE||produit==Feve.FEVE_MOYENNE_BIO_EQUITABLE||produit==Feve.FEVE_HAUTE||produit==Feve.FEVE_MOYENNE||produit==Feve.FEVE_BASSE);
+		return ((Feve)(produit)==Feve.FEVE_HAUTE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_MOYENNE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_HAUTE||(Feve)(produit)==Feve.FEVE_MOYENNE||(Feve)(produit)==Feve.FEVE_BASSE);
 	}
 	
 	//methode pour le bio
@@ -117,7 +117,23 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		 }
 	}
 
+	public Echeancier contrePropositionDuVendeurBio(ExemplaireContratCadre contrat) {
+		if (vend(contrat.getProduit())) {
+			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())) { 
 
+				return contrat.getEcheancier();
+				}
+			else {
+				Echeancier e = contrat.getEcheancier();
+				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				return e;
+			}
+		}	
+		 else {
+			 	return null;// on ne vend pas de ce produit
+		 }
+	}
+	
 	
 	
 	
@@ -186,24 +202,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		return res;
 	}
 
-	
-	public Echeancier contrePropositionDuVendeurBio(ExemplaireContratCadre contrat) {
-		if (vend(contrat.getProduit())) {
-			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())) { 
 
-				return contrat.getEcheancier();
-				}
-			else {
-				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
-				return e;
-			}
-		}	
-		 else {
-			 	return null;// on ne vend pas de ce produit
-		 }
-	}
-	
 	public double propositionPrixBio(ExemplaireContratCadre contrat) {
 		double prix = 1.4*this.getCout((Feve)contrat.getProduit());
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==1){
@@ -248,6 +247,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	 return contrepropositionprix;
 	}
+
 
 	
 	
