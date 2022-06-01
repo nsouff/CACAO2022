@@ -74,8 +74,13 @@ public class Producteur2Stockage extends Producteur2Couts {
 		super.next();
 		for(Feve feve : Feve.values()) {
 			this.addQuantite(this.production(feve), feve);
-		for (Feve f : Feve.values()) {
-//			for (i=0;i<)
+			
+		for (Feve f : Feve.values()) { 									//On retire des stocks les fèves périmées
+			for (int i=0;i<this.getStock().get(f).size();i++) {
+				if (this.getStock().get(f).get(i).isPerime()==true) {
+					this.getStock().get(f).remove(i);
+				}
+			}
 			
 		}
 
