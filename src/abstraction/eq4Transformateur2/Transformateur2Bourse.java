@@ -28,6 +28,21 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 
 	public void next() {
 		super.next();
+		if(Filiere.LA_FILIERE.getEtape()>2) {
+			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+			double somme1 = 0;
+			for (int i=0; i<3;i++ ) {
+				somme1 = somme1 +  bourse.getCours(Feve.FEVE_BASSE).getValeur(Filiere.LA_FILIERE.getEtape()-3+i);
+			}
+			this.prixMinB.setValeur(superviseur, somme1/3); 
+			double somme2 = 0;
+			for (int i=0; i<3;i++ ) {
+				somme2 = somme2 +  bourse.getCours(Feve.FEVE_MOYENNE).getValeur(Filiere.LA_FILIERE.getEtape()-3+i);
+			}
+			this.prixMinM.setValeur(superviseur, somme2/3);
+		}
+		this.journal.ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est"+ this.prixMinB.getValeur() + "");
+		this.journal.ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est"+ this.prixMinM.getValeur()+ "");
 	}
 	public void initialiser() {
 		super.initialiser();
@@ -62,14 +77,14 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 	public double demande(Feve f, double cours) {
 
 			if(cours<this.getPrixSeuil(f).getValeur()) {
-				double besoin=Math.max(0,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+				double besoin=Math.max(0.1,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)){
 					return besoin;
 				}
 			}
 		
 		
-		return 0.0;
+		return 0.00;
 	}
 	
 
