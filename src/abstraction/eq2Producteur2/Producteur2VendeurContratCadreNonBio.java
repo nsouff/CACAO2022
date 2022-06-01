@@ -10,6 +10,9 @@ import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
 /**
@@ -18,19 +21,19 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur implements IVendeurContratCadre{
 	
-
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
-	
+	private Journal classement;
 	public Producteur2VendeurContratCadreNonBio() {
 		super();
 		this.mesContratEnTantQueVendeurNonBio = new LinkedList<ExemplaireContratCadre>();
+		this.classement=new Journal(this.getNom()+" classement", this);
 	}
 	
 	/**
 	 * @param transformateur
 	 * @return Un nombre de point qui représente la quantité de fèves non Bio achetée par ce transformateur
 	 */
-	public double getPointTransformateur(IAcheteurContratCadre transformateur) {
+	public double getPointTransformateur(IActeur transformateur) {
 		double point=0.000;
 		for (int i=0 ; i<this.mesContratEnTantQueVendeurNonBio.size() ; i++) {
 			if(this.mesContratEnTantQueVendeurNonBio.get(i).getAcheteur().equals(transformateur)) //Selectionne les contrats cadres non bio équitable du transformateurs
@@ -55,7 +58,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 	 * @param transformateur
 	 * @return un classement du transformateur par rapport aux autres par rapport à l'achat de fèves non Bio
 	 */
-	public int getClassementTransformateur(IAcheteurContratCadre transformateur) {
+	public int getClassementTransformateur(IActeur transformateur) {
 		int classement=1;
 		if(!getListeTransformateurContratCadre().contains(transformateur)) {
 			return 4;
@@ -68,6 +71,8 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 		return classement;
 		}
 	}
+	
+	
 	
 	@Override
 	public boolean vend(Object produit) {
@@ -139,6 +144,12 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 			}
 		}
 		this.mesContratEnTantQueVendeurNonBio.removeAll(contratsObsoletes);
+		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
+			if (a instanceof IFabricantChocolatDeMarque) {
+				this.classement.ajouter(a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
+			}
+		}
+	
 	}
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
@@ -156,4 +167,12 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 		return true;
 	}
 
+
+	public List<Journal> getJournaux() {
+		List<Journal> res=new ArrayList<Journal>();
+		res.add(this.classement);
+		res.add(this.journal);
+		return res;
+	}
 }
+	
