@@ -3,6 +3,7 @@ package abstraction.eq1Producteur1;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.filiere.Filiere;
 
 
@@ -11,14 +12,16 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur1Producteur extends Producteur1Stock{
+public abstract class Producteur1Producteur extends Producteur1Stock{
 	private LinkedList<Parc> ListeParc;
-	private Parc ParcAfrique;
+	private HashMap<Feve, Double> recolte;
+	private int mecontentement_global_basse;
+	private int mecontentement_global_moyenne;
+	private int mecontentement_global_haute;
 	
 	public Producteur1Producteur() {
 		super();
 		ListeParc = new LinkedList<Parc>();
-		Parc afrique = new Parc("Afrique", this);
 		Parc ghana = new Parc("Ghana", this);
 		Parc cote_divoire = new Parc ("Côte d'Ivoire", this);
 		Parc nigeria = new Parc("Nigéria", this);
@@ -27,7 +30,9 @@ public class Producteur1Producteur extends Producteur1Stock{
 		ListeParc.add(cote_divoire);
 		ListeParc.add(nigeria);
 		ListeParc.add(cameroun);
-		this.ParcAfrique = afrique;
+		this.mecontentement_global_basse = 0;
+		this.mecontentement_global_moyenne = 0;
+		this.mecontentement_global_haute =0;
 	}
 	
 	public Parc getGhana() {
@@ -49,9 +54,50 @@ public class Producteur1Producteur extends Producteur1Stock{
 	public Parc getParc(int i) {
 		return ListeParc.get(i);
 	}
-	
+	public HashMap<Feve, Double> getRecolte(){
+		return this.recolte;
+	}
 	public LinkedList<Parc> getListeParc() {
 		return this.ListeParc;
+	}
+	
+	public int getMecontentement_basse() {
+		return this.mecontentement_global_basse;
+	}
+	
+	public int getMecontentement_moyenne() {
+		return this.mecontentement_global_moyenne;
+	}
+	
+	public int getMecontentement_haute() {
+		return this.mecontentement_global_haute;
+	}
+	
+	public void setMecontentement_basse(int i) {
+		if (i<0) {
+			this.mecontentement_global_basse = 0;
+		}
+		else {
+			this.mecontentement_global_basse = i;
+		}
+	}
+	
+	public void setMecontentement_moyenne(int i) {
+		if (i<0) {
+			this.mecontentement_global_moyenne = 0;
+		}
+		else {
+			this.mecontentement_global_moyenne = i;
+		}
+	}
+	
+	public void setMecontentement_haute(int i) {
+		if (i<0) {
+			this.mecontentement_global_haute = 0;
+		}
+		else {
+			this.mecontentement_global_haute = i;
+		}
 	}
 	
 	//Écrit par Antoine
@@ -99,22 +145,64 @@ public class Producteur1Producteur extends Producteur1Stock{
 			}
 		}
 	}
+	
+	public abstract HashMap<Feve, Double> getPrixmoyenFeve();
+	
+	public void MAJMecontentement() {
+		//Récupération prix actuels de la bourse
+		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		double cours_feve_basse = bourse.getCours(Feve.FEVE_BASSE).getValeur();
+		double cours_feve_moyenne = bourse.getCours(Feve.FEVE_MOYENNE).getValeur();
+		double cours_feve_haute = bourse.getCours(Feve.FEVE_HAUTE).getValeur();
+		
+		int parametre_min_max = 10;
+		
+		HashMap<Feve, Double> prixmoyen = this.getPrixmoyenFeve();
+			for (Feve f : this.getFeves().keySet()) {
+				prixmoyen.replace(f, prixmoyen.get(f)/(Filiere.LA_FILIERE.getEtape()+1));
+			}
+			
+		if (cours_feve_basse <= bourse.getCours(Feve.FEVE_BASSE).getMin()) {
+			this.setMecontentement_basse(this.getMecontentement_basse()-parametre_min_max);
+		}
+		if (cours_feve_moyenne <= bourse.getCours(Feve.FEVE_MOYENNE).getMin()) {
+			this.setMecontentement_moyenne(this.getMecontentement_moyenne()-parametre_min_max);
+		}
+		if (cours_feve_haute <= bourse.getCours(Feve.FEVE_HAUTE).getMin()) {
+			this.setMecontentement_haute(this.getMecontentement_haute()-parametre_min_max);
+		}
+		if (cours_feve_basse >= bourse.getCours(Feve.FEVE_BASSE).getMax()) {
+			this.setMecontentement_basse(this.getMecontentement_basse()+parametre_min_max);
+		}
+		if (cours_feve_moyenne >= bourse.getCours(Feve.FEVE_MOYENNE).getMax()) {
+			this.setMecontentement_moyenne(this.getMecontentement_moyenne()+parametre_min_max);
+		}
+		if (cours_feve_haute >= bourse.getCours(Feve.FEVE_HAUTE).getMax()) {
+			this.setMecontentement_haute(this.getMecontentement_haute()+parametre_min_max);
+		}
+		
+		this.setMecontentement_basse(this.getMecontentement_basse()+(int)Math.floor(100*((cours_feve_basse-prixmoyen.get(Feve.FEVE_BASSE)/prixmoyen.get(Feve.FEVE_BASSE)))));
+		this.setMecontentement_moyenne(this.getMecontentement_moyenne()+(int)Math.floor(100*((cours_feve_moyenne-prixmoyen.get(Feve.FEVE_MOYENNE)/prixmoyen.get(Feve.FEVE_MOYENNE)))));
+		this.setMecontentement_haute(this.getMecontentement_haute()+(int)Math.floor(100*((cours_feve_haute-prixmoyen.get(Feve.FEVE_HAUTE)/prixmoyen.get(Feve.FEVE_HAUTE)))));
+
+	}
+	
 
 	public void next() { //Écrit par Antoine
 		super.next();
 		for (int j=0; j<ListeParc.size();j++) {
 			this.getParc(j).MAJAleas();
-			HashMap<Feve, Double> recolteAfrique = this.getParc(j).Recolte();
-			this.addLot(Feve.FEVE_BASSE, recolteAfrique.get(Feve.FEVE_BASSE));
-			this.addLot(Feve.FEVE_MOYENNE, recolteAfrique.get(Feve.FEVE_MOYENNE));
-			this.addLot(Feve.FEVE_HAUTE, recolteAfrique.get(Feve.FEVE_HAUTE));
-			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, recolteAfrique.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
-			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, recolteAfrique.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
-			this.getParc(j).MAJParc();
+			this.recolte = this.getParc(j).Recolte();
+			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE), this.getParc(j));
+			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE), this.getParc(j));
+			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE), this.getParc(j));
+			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE), this.getParc(j));
+			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE), this.getParc(j));
+			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
 			this.getParc(j).MAJGuerre();
 		}
 	
-		
+		this.MAJMecontentement();
 		
 		
 		double prixTotal = 0 ;
@@ -125,20 +213,20 @@ public class Producteur1Producteur extends Producteur1Stock{
 		
 		//Calcul Prix Entretien Arbre
 		
-		prixTotal = prixTotal 
-				+ this.getAfrique().getNombre_BE_haute()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur() 
-				+ this.getAfrique().getNombre_non_BE_haute()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1 
-				+ this.getAfrique().getNombre_non_BE_moyenne()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()
-				+ this.getAfrique().getNombre_BE_moyenne()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1 
-				+ this.getAfrique().getNombre_non_BE_basse()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*0.9 ;
+		for (int j=0;j<4;j++) {
+			prixTotal = prixTotal 
+					+ this.getParc(j).getNombre_BE_haute()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur() 
+					+ this.getParc(j).getNombre_non_BE_haute()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1 
+					+ this.getParc(j).getNombre_non_BE_moyenne()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()
+					+ this.getParc(j).getNombre_BE_moyenne()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1 
+					+ this.getParc(j).getNombre_non_BE_basse()*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*0.9 ;
+		}
+		
 		
 		
 		//Retirer l'argent 
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotal);
 	}
 	
-	public Parc getAfrique() {
-		return this.ParcAfrique;
-	}
 
 }

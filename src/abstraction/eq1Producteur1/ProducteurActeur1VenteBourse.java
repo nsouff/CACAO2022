@@ -78,4 +78,38 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		// TODO Auto-generated method stub
 		this.retirerQuantite(f, quantiteEnKg);
 	}
+	
+
+	/**
+	 * offre2 (pour conserver la V1 avant d'être sûr)
+	 * @author laure
+	 * @param f la fève qu'on veut vendre
+	 * @param cours le cours actuel
+	 * @return quantité de fèves à vendre
+	 */
+	public double offre2(Feve f, double cours) {
+		double coutStockage=0.1; 
+		double coutProduction=this.getPrixEntretienArbre().getValeur();
+		double coutTotalFeve= coutProduction + coutStockage*this.getFeves().size();
+		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE 
+			if (Filiere.LA_FILIERE.getEtape()>=1) { // Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
+				if(f==Feve.FEVE_BASSE) {
+					if (cours>coutTotalFeve) {
+						return this.getStock(f, false)*0.3;
+					}
+				} else 	if (f==Feve.FEVE_MOYENNE) {
+					if (cours>coutTotalFeve*1.2) {
+						return this.getStock(f, false)*0.2;
+					}
+				} else if(f==Feve.FEVE_HAUTE) {
+					if (cours>coutTotalFeve*1.5) {
+						return (this.getStock(f, false)*0.2);
+					}
+				}
+			}
+		}
+		return 0.0 ; 
+	}
+	//pour commit
+
 }
