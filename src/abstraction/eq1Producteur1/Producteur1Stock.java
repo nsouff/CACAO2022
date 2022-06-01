@@ -149,7 +149,8 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		}
 	}
 	
-	public void retirerQuantiteParc(Feve f, double quantite) {
+	public void retirerQuantiteParc(Feve f, double quantite, Parc provenance) {
+		if (quantite > this.getStockParc(f, false, provenance)) {
 		while (quantite>0) {
 			double poids = this.getFeves().get(f).get(0).getPoids() ;
 			
@@ -161,6 +162,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 				this.getFeves().get(f).get(0).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
 				quantite = 0 ;
 			}
+		}
 		}
 	}
 	
