@@ -29,6 +29,9 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		ListeParc.add(cote_divoire);
 		ListeParc.add(nigeria);
 		ListeParc.add(cameroun);
+		this.mecontentement_global_basse = 0;
+		this.mecontentement_global_moyenne = 0;
+		this.mecontentement_global_haute =0;
 	}
 	
 	public Parc getGhana() {
