@@ -8,9 +8,11 @@ import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
+import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
-public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implements IVendeurContratCadre {
+public class Producteur1ContratCadre extends Producteur1Transfo implements IVendeurContratCadre {
 	
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeur;
 	private Journal contratCadre;
@@ -27,12 +29,23 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	@Override
 	//Auteur : Khéo
 	public boolean vend(Object produit) {
+		//FEVE
 		if(produit instanceof Feve) {
 			if(this.getStock((Feve)produit, false)>100000) { //On peut initier la vente si on a les bonnes quantités
+				this.getContratCadre().ajouter("Ready to sell " + produit.toString());
 				return true;
 			}
 		}
-		return false; 
+		
+		if(produit instanceof Chocolat) {
+			if(this.getStock((Chocolat)produit)>0) { //On peut initier la vente si on a les bonnes quantités
+				this.getContratCadre().ajouter("Ready to sell CHOCOLAT " + produit.toString());
+				return true;
+			}
+		}
+	
+
+		return false;
 	}
 
 	@Override
@@ -43,6 +56,8 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		this.getContratCadre().ajouter("Premier échéancier " + contrat.getEcheancier());
 		
 		
+		
+		if(contrat.getProduit() instanceof Feve) {
 		if (contrat.getEcheancier().getQuantiteTotale()<this.getStock((Feve)contrat.getProduit(), false)) {
 			if (contrat.getEcheancier().getQuantiteTotale()<100000) {
 				Echeancier newcontrat = contrat.getEcheancier();
@@ -59,23 +74,67 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		} else { //Pas assez de quantité dans le stock présent
 			return null;
 		}
+		}
+		
+		if(contrat.getProduit() instanceof Chocolat) {
+			if (contrat.getEcheancier().getQuantiteTotale()<this.getStock((Chocolat)contrat.getProduit())) {
+				if (contrat.getEcheancier().getQuantiteTotale()<1000) {
+					Echeancier newcontrat = contrat.getEcheancier();
+					newcontrat.ajouter(1000-newcontrat.getQuantiteTotale());
+					this.getContratCadre().ajouter("On ajoute une quantité pour un nouveau contrat");
+					this.getContratCadre().ajouter("Nouvelle échéancier " + newcontrat.toString());
+					return newcontrat;
+				} else { //Quantité demandé acceptable
+					this.getContratCadre().ajouter("Quantité demandé acceptable");
+					this.getContratCadre().ajouter(contrat.getEcheancier().toString());
+					return contrat.getEcheancier(); 
+				}
+				
+			} else { //Pas assez de quantité dans le stock présent
+				return null;
+			}
+			}
+		
+		return null;
+		
 		
 	}
 
 	@Override
 	//Auteur : Khéo
 	public double propositionPrix(ExemplaireContratCadre contrat) {
+		//FEVE
+		if(contrat.getProduit() instanceof Feve) {
 		if (this.getPrixmoyenFeve().keySet().contains(contrat.getProduit())) {
 			this.getContratCadre().ajouter("Prix proposé " + this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape() );
 			return this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 		} else {
 			return 0.0;
 		}
+		}
+		
+		
+		//CHOCOLAT 
+		
+		if(contrat.getProduit() instanceof Chocolat) {
+			
+			if (this.getPrixmoyenFeve().keySet().contains(this.getFev((Chocolat)contrat.getProduit()))) {
+				this.getContratCadre().ajouter("Prix proposé " +3*this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape() );
+				return this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape();
+			} else {
+				return 0.0;
+			}
+			}
+		
+		return 0.0;
+		
 	}
 
 	@Override
 	//Auteur : Khéo
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		//FEVE
+		if (contrat.getProduit() instanceof Feve) {
 		double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 		if(contrat.getPrix()<prixmoyen*0.75) {
 			this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
@@ -85,6 +144,25 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		this.getContratCadre().ajouter("Prix qui passe " + contrat.getPrix().toString());
 		return contrat.getPrix();
 	}
+		
+		
+		
+		//CHOCOLAT
+		if (contrat.getProduit() instanceof Chocolat) {
+			double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
+			if(contrat.getPrix()<prixmoyen*0.75) {
+				this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
+				this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75 );
+				return prixmoyen*0.75;	
+			}
+			this.getContratCadre().ajouter("Prix qui passe " + contrat.getPrix().toString());
+			return contrat.getPrix();
+		}
+		
+		return 0.0;
+	
+	}
+	
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
@@ -97,6 +175,8 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 	@Override
 	//Copié sur le code de l'équipe 8 on veut livrer le plus possible dans tout les cas 
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
+		//FEVE 
+		if (contrat.getProduit() instanceof Feve) {
 		double livre = Math.min(this.getStock((Feve)contrat.getProduit(), false), quantite);
 		if (livre>0.0) {
 			this.retirerQuantite((Feve)contrat.getProduit(), livre);;
@@ -104,6 +184,22 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		this.getContratCadre().ajouter(contrat.getProduit() +" "+contrat.getAcheteur()+ " Livraison faite zebi avec quantité à livrer " + quantite +". Wallah on a livré " + livre 
 				);
 		return livre;
+		}
+		
+		//FEVE 
+		if (contrat.getProduit() instanceof Feve) {
+		double livre = Math.min(this.getStock((Chocolat)contrat.getProduit()), quantite);
+		if (livre>0.0) {
+			this.retirerQuantite((Chocolat)contrat.getProduit(), livre);;
+		}
+		this.getContratCadre().ajouter(contrat.getProduit() +" "+contrat.getAcheteur()+ " Livraison faite zebi avec quantité à livrer " + quantite +". Wallah on a livré " + livre 
+				);
+		return livre;
+		}
+		
+		return 0.0;
+		
+
 		
 	}
 	
@@ -125,4 +221,27 @@ public class Producteur1ContratCadre extends ProducteurActeur1VenteBourse implem
 		return res;
 	}
 
+	
+	
+	public Feve getFev(Chocolat c) {
+		if (c.getGamme() == Gamme.HAUTE) {
+			if (c.isBioEquitable()) {
+				return Feve.FEVE_HAUTE_BIO_EQUITABLE;
+			}
+			return Feve.FEVE_HAUTE;
+		}
+		
+		else if (c.getGamme() == Gamme.MOYENNE) {
+			if (c.isBioEquitable()) {
+				return Feve.FEVE_MOYENNE_BIO_EQUITABLE;
+			}
+			return Feve.FEVE_MOYENNE;
+		}
+		
+		else if (c.getGamme() == Gamme.BASSE) {
+			return Feve.FEVE_BASSE;
+	}
+	
+		return null;
+}
 }
