@@ -20,7 +20,7 @@ public class Producteur1Transfo extends Producteur1StockChocolat {
 	 * @return ChocolatProducteur1 : chocolat produit
 	 */
 	public void nextTransformation(Feve f, boolean original) {
-		double quantiteChoco = this.getStock(f, false)*0.05; //On transforme 10% de notre quantité
+		double quantiteChoco = this.getRecolte().get(f)*0.05; //On transforme 5%% de notre quantité produite sur l'ut
 		
 		this.retirerQuantite(f, quantiteChoco);
 		this.addLot(Chocolat.get(f.getGamme(), f.isBioEquitable(), original), quantiteChoco);

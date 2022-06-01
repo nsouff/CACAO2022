@@ -106,11 +106,11 @@ public class Producteur1Producteur extends Producteur1Stock{
 		for (int j=0; j<ListeParc.size();j++) {
 			this.getParc(j).MAJAleas();
 			this.recolte = this.getParc(j).Recolte();
-			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE));
-			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE));
-			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE));
-			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
-			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE),this.getParc(j));
+			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE),this.getParc(j));
+			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE),this.getParc(j));
+			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE),this.getParc(j));
+			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE),this.getParc(j));
 			this.getParc(j).MAJParc();
 			this.getParc(j).MAJGuerre();
 		}

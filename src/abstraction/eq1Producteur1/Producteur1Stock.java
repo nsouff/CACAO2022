@@ -1,6 +1,7 @@
 package abstraction.eq1Producteur1;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,7 +11,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
 
-public class Producteur1Stock extends Producteur1Acteur {
+public abstract class Producteur1Stock extends Producteur1Acteur {
 	private  HashMap<Feve,List<FeveProducteur1>> Feves;
 	private Variable StockBasse;
 	private Variable StockMoyenne;
@@ -58,12 +59,14 @@ public class Producteur1Stock extends Producteur1Acteur {
 		
 	}
 	
+	public abstract LinkedList<Parc> getListeParc();
+	
 	//Auteur : Khéo
 	public void initialiser() {
-	this.addLot(Feve.FEVE_BASSE, 1000000);
-	this.addLot(Feve.FEVE_MOYENNE, 1000000);
-	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 100000);
-	this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 100000);
+	this.addLot(Feve.FEVE_BASSE, 1000000, this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_MOYENNE, 1000000,this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 100000,this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 100000,this.getListeParc().get(0));
 	}
 	
 	//Auteur : Khéo
@@ -106,8 +109,8 @@ public class Producteur1Stock extends Producteur1Acteur {
 	}
 	
 	//Auteur : Khéo
-	public void addLot(Feve f, double quantite) {
-		this.getFeves().get(f).add(new FeveProducteur1(quantite));
+	public void addLot(Feve f, double quantite, Parc provenance) {
+		this.getFeves().get(f).add(new FeveProducteur1(quantite,provenance));
 
 	}
 	
