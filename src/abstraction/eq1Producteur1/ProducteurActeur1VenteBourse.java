@@ -78,6 +78,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		this.retirerQuantite(f, quantiteEnKg);
 	}
 	
+
 	/**
 	 * offre2 (pour conserver la V1 avant d'être sûr)
 	 * @author laure
@@ -108,4 +109,5 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		}
 		return 0.0 ; 
 	}
+
 }

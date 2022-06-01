@@ -1,6 +1,7 @@
 package abstraction.eq1Producteur1;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,7 +11,7 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
 
-public class Producteur1Stock extends Producteur1Acteur {
+public abstract class Producteur1Stock extends Producteur1Acteur {
 	private  HashMap<Feve,List<FeveProducteur1>> Feves;
 	private Variable StockBasse;
 	private Variable StockMoyenne;
@@ -58,12 +59,14 @@ public class Producteur1Stock extends Producteur1Acteur {
 		
 	}
 	
+	public abstract LinkedList<Parc> getListeParc();
+	
 	//Auteur : Khéo
 	public void initialiser() {
-	this.addLot(Feve.FEVE_BASSE, 1000000);
-	this.addLot(Feve.FEVE_MOYENNE, 1000000);
-	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 100000);
-	this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 100000);
+	this.addLot(Feve.FEVE_BASSE, 1000000, this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_MOYENNE, 1000000,this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 100000,this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 100000,this.getListeParc().get(0));
 	}
 	
 	//Auteur : Khéo
@@ -105,9 +108,25 @@ public class Producteur1Stock extends Producteur1Acteur {
 		return somme ;	
 	}
 	
+	
+	
+	public double getStockParc(Feve f, boolean affinage, Parc provenance){
+		
+		double somme = 0.0 ;
+		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+			if (Lot.getProvenance() == provenance) {
+			if (Lot.isAffine() || affinage) {
+			somme = somme + Lot.getPoids() ;
+			}
+			}
+		}
+		return somme ;	
+	}
+	
+	
 	//Auteur : Khéo
-	public void addLot(Feve f, double quantite) {
-		this.getFeves().get(f).add(new FeveProducteur1(quantite));
+	public void addLot(Feve f, double quantite, Parc provenance) {
+		this.getFeves().get(f).add(new FeveProducteur1(quantite,provenance));
 
 	}
 	
@@ -232,10 +251,13 @@ public class Producteur1Stock extends Producteur1Acteur {
 		// 3 : Perte de 80% de la récolte
 		double aleaParasiteGlobal = 0.0;
 		for(Feve Feve : this.getFeves().keySet()) {
-			aleaParasiteGlobal = Math.random();
+			
+			aleaParasiteGlobal = Math.random(); //Proba d'avoir un parasite
 			double tauxPerteStock = 0.0;
+			
+			
 			if (Feve.isBioEquitable()) {
-				if (aleaParasiteGlobal <=0.25) {
+				if (aleaParasiteGlobal <=1) { //Force du parasite
 					double aleaForceParasites = Math.random();
 					if (aleaForceParasites <= 0.70) {
 						// On perd 10% de notre stock
@@ -248,11 +270,9 @@ public class Producteur1Stock extends Producteur1Acteur {
 						tauxPerteStock = 0.8;
 					}
 				}
-				double stockAvantPar = this.getStock(Feve, true);
-				double perteStock = stockAvantPar*tauxPerteStock;
-				this.retirerQuantite(Feve, perteStock);
-			} else {
-				if (aleaParasiteGlobal <=0.15) {
+				
+			} else { // Pas bio-équitable moins de chance d'avoir un parasite
+				if (aleaParasiteGlobal <=1) {
 					double aleaForceParasites = Math.random();
 					if (aleaForceParasites <= 0.70) {
 						// On perd 10% de notre stock
@@ -264,12 +284,14 @@ public class Producteur1Stock extends Producteur1Acteur {
 						// On perd 80% de notre stock
 						tauxPerteStock = 0.8;
 					}
-					double stockAvantPar = this.getStock(Feve, true);
-					double perteStock = stockAvantPar*tauxPerteStock;
-					this.retirerQuantite(Feve, perteStock);
+
 				}
 				
 			}
+			
+			double stockAvantPar = this.getStock(Feve, true);
+			double perteStock = stockAvantPar*tauxPerteStock;
+			this.retirerQuantite(Feve, perteStock);
 		}
 	}
 }
