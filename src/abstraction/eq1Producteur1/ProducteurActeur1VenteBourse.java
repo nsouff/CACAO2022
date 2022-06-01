@@ -26,7 +26,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 
 
 	//Auteur : Khéo
-	public double offre(Feve f, double cours) {
+	public double offre1(Feve f, double cours) {
 		//On met à jour les prix de la HashMap
 			
 			if (Filiere.LA_FILIERE.getEtape()>=1) { //Petite dijonction de cas pour le premier tour afin d'éviter d'aller chercher dans une hashmap vide
@@ -76,5 +76,35 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
 		this.retirerQuantite(f, quantiteEnKg);
+	}
+	
+	/**
+	 * @author laure
+	 * @param f
+	 * @param cours
+	 * @return quantité de fèves à vendre
+	 */
+	public double offre(Feve f, double cours) {
+		double coutStockage=0.1; 
+		double coutProduction=1;
+		double coutTotalFeve= coutProduction + coutStockage*this.getFeves().size();
+		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE 
+			if (Filiere.LA_FILIERE.getEtape()>=1) { // Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
+				if(f==Feve.FEVE_BASSE) {
+					if (cours>coutTotalFeve) {
+						return this.getStock(f, false)*0.3;
+					}
+				} else 	if (f==Feve.FEVE_MOYENNE) {
+					if (cours>coutTotalFeve*1.2) {
+						return this.getStock(f, false)*0.2;
+					}
+				} else if(f==Feve.FEVE_HAUTE) {
+					if (cours>coutTotalFeve*1.5) {
+						return (this.getStock(f, false)*0.2);
+					}
+				}
+			}
+		}
+		return 0.0 ; 
 	}
 }
