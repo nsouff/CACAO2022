@@ -34,6 +34,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Double capaciteStockageEQ5; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 	
 	protected HashMap<Feve, Double> besoinFeves; //Quantité nécéssaire pour satisfaire le besoin des cc en cours pour chaque feve
+	protected HashMap<Feve, Double> dispoFeves; //Quantité de fèves disponible au tour courant pour grace au cc en cours et aux stocks
+
 	
 
 	//Paramètres
@@ -54,6 +56,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	
 	//karla
 	protected LinkedList<ExemplaireContratCadre> contratsEnCoursVente;
+	protected LinkedList<ExemplaireContratCadre> contratsEnCoursAchat;
+
 	
 	
 	//Karla
@@ -66,6 +70,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.prixEntrepot = new VariableReadOnly ("prixEntrepot", "prix d'un entrepot qui a une capacite de stockage de limiteStockage", this, 0, 100000000, 9000000);
 
 		this.contratsEnCoursVente = new LinkedList <ExemplaireContratCadre>();
+		this.contratsEnCoursAchat = new LinkedList <ExemplaireContratCadre>();
+
 		this.capaciteStockageEQ5 = this.limiteStockage.getValeur();
 		this.stockFeves = new Stock<Feve> ();
 		this.stockChocolat = new Stock<Chocolat> ();
@@ -76,7 +82,10 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.achats= new Journal ("Achats", this);
 		this.ventes= new Journal ("Ventes", this);
 		this.transformation= new Journal ("Transfo", this);
+		
 		this.besoinFeves = new HashMap <Feve, Double>();
+		this.dispoFeves = new HashMap <Feve, Double>();
+
 
 		
 		Double s = 1000.00;
@@ -114,6 +123,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		//Initialiser le dictionnaire du besoin en feve
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			this.besoinFeves.put(f, 0.00);
+			this.dispoFeves.put(f, this.stockFeves.getstock(f));
 		}
 	}
 
@@ -209,7 +219,20 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 			boolean isBioequitable = ((ChocolatDeMarque)contrat.getProduit()).isBioEquitable();
 			for (Feve f : this.besoinFeves.keySet()) {
 				if (f.getGamme() == gamme && f.isBioEquitable() == isBioequitable) {
-					this.besoinFeves.put(f, this.besoinFeves.get(f)+contrat.getQuantiteALivrerAuStep());	
+					this.besoinFeves.put(f, contrat.getQuantiteALivrerAuStep());	
+				}
+				this.dispoFeves.put(f, this.stockFeves.getstock(f)+contrat.getQuantiteALivrerAuStep());	
+
+			}
+		}
+		
+		/* Maj des disponibilités pour le tour courant */
+		for (ExemplaireContratCadre contrat : this.contratsEnCoursAchat) {
+			Gamme gamme = ((Feve)contrat.getProduit()).getGamme();
+			boolean isBioequitable = ((Feve)contrat.getProduit()).isBioEquitable();
+			for (Feve f : this.dispoFeves.keySet()) {
+				if (f.getGamme() == gamme && f.isBioEquitable() == isBioequitable) {
+					this.dispoFeves.put(f, this.stockFeves.getstock(f)+contrat.getQuantiteALivrerAuStep());	
 				}
 			}
 		}

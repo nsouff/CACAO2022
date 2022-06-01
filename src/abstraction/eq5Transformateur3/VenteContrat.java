@@ -109,16 +109,6 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		return peutlivrer;
 	}
 	
-	//Karla
-	public LinkedList <ExemplaireContratCadre> majCC(LinkedList <ExemplaireContratCadre> L) {
-		for (ExemplaireContratCadre contrat : this.contratsEnCoursVente) {
-			if (contrat.getEcheancier().getStepFin() < Filiere.LA_FILIERE.getEtape()) {
-				L.remove(contrat);
-			}
-		}
-		return L ;
-	}
-	
 	//Karla & Yves
 	/* on regarde l etat de nos stocks et on lance la procédure */
 	public void next() {
