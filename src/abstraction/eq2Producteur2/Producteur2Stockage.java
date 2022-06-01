@@ -88,4 +88,5 @@ public class Producteur2Stockage extends Producteur2Couts {
 	}
 	
 	
+	
 }
