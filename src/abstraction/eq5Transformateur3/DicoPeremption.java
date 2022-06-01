@@ -52,10 +52,10 @@ public class DicoPeremption<Produit> {
 		if (qtt >= 0) {
 
 				
-				if (this.getDateProd().contains(d)&& qtt*(-1)<this.getQtt(date,p) ) {	
+				if (this.getDateProd().contains(d)&& qtt<this.getQtt(date,p) ) {	
 					this.peremptions.put(d, this.getQtt(date,p)-qtt);
 					}
-				if (this.getDateProd().contains(d)&& qtt*(-1)==this.getQtt(date,p) ) {	
+				if (this.getDateProd().contains(d)&& qtt>=this.getQtt(date,p) ) {	
 					this.peremptions.remove(d);
 				
 			}
