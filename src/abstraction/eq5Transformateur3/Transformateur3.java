@@ -1,7 +1,10 @@
 package abstraction.eq5Transformateur3;
 
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
 public class Transformateur3 extends VenteAppel {
 	
@@ -18,6 +21,9 @@ public class Transformateur3 extends VenteAppel {
 		this.stockFevesVariableH.setValeur(this, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.stockChocolatVariableM.setValeur(this, this.stockChocolat.getstock(Chocolat.MQ_BE)+this.stockChocolat.getstock(Chocolat.MQ_BE_O));
 		this.stockChocolatVariableH.setValeur(this, this.stockChocolat.getstock(Chocolat.HQ_BE)+this.stockChocolat.getstock(Chocolat.HQ_BE_O));
+		
+
 	}
+
 	
 }

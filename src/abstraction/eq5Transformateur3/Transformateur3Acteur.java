@@ -2,6 +2,7 @@ package abstraction.eq5Transformateur3;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
 public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabricantChocolatDeMarque{
 	
@@ -31,6 +33,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected Double achatMaxFeves; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 	protected Double capaciteStockageEQ5; // en kg, quantité de fèves max qu'on peut acheter en 1 tour
 	
+	protected HashMap<Feve, Double> besoinFeves; //Quantité nécéssaire pour satisfaire le besoin des cc en cours pour chaque feve
 	
 
 	//Paramètres
@@ -73,6 +76,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.achats= new Journal ("Achats", this);
 		this.ventes= new Journal ("Ventes", this);
 		this.transformation= new Journal ("Transfo", this);
+		this.besoinFeves = new HashMap <Feve, Double>();
 
 		
 		Double s = 1000.00;
@@ -107,7 +111,10 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 
 
 	public void initialiser() {
-		
+		//Initialiser le dictionnaire du besoin en feve
+		for (Feve f : this.stockFeves.getProduitsEnStock()) {
+			this.besoinFeves.put(f, 0.00);
+		}
 	}
 
 	
@@ -194,6 +201,17 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		double montant= prixStockage();
 		if (montant >0) {
 		 Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
+		}
+		
+		/* Maj des besoins pour le tour courant */
+		for (ExemplaireContratCadre contrat : this.contratsEnCoursVente) {
+			Gamme gamme = ((ChocolatDeMarque)contrat.getProduit()).getGamme();
+			boolean isBioequitable = ((ChocolatDeMarque)contrat.getProduit()).isBioEquitable();
+			for (Feve f : this.besoinFeves.keySet()) {
+				if (f.getGamme() == gamme && f.isBioEquitable() == isBioequitable) {
+					this.besoinFeves.put(f, this.besoinFeves.get(f)+contrat.getQuantiteALivrerAuStep());	
+				}
+			}
 		}
 	}
 
