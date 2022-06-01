@@ -5,6 +5,7 @@ import java.util.List;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleAbsAcheteurBourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.general.Variable;
@@ -86,6 +87,8 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 		//this.journal.ajouter("Aie... je suis blackliste... Nous sommes pauvres... :(");
 		
 	}
+
+
 
 	
 }
