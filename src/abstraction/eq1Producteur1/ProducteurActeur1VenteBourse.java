@@ -43,7 +43,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 				// Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
 				
 				if (this.getStock(f, false)<1000000) {
-					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 milllion jusqu'à 75 %
+					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 million jusqu'à 75 %
 				if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours) {
 					return this.getStock(f, false);
 					}
@@ -67,6 +67,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	 */
 	//Auteur : Khéo
 	public HashMap<Feve, Double> getPrixmoyenFeve() {
+		
 		return this.prixmoyenFeve;
 	}
 
