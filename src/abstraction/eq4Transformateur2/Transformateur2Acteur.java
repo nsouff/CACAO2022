@@ -23,28 +23,26 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
+public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
 	
-	//pas sur de celles ci, mais je les laisse au cas ou...
-	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
-	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
+	
+	
+	protected Variable prixSeuilMQ; // au dela duquel nous n'achetons pas
+	protected Variable prixSeuilHQ;
+	protected Variable prixSeuilBQ;
+	protected Variable prixSeuilMQBE;
+	protected Variable prixSeuilHQBE;
+	//private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
+	
+	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
+	private Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
 	private double marge;
-
-	
-	// variables pour les Appel d'Offres
-	
 	
 	protected SuperviseurVentesAO superviseur;
-	
-	
-	
-	
 	protected Journal journal;
-
-	
-	//autres
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
+	
 
 
 
@@ -53,13 +51,30 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	
 	
 	//Nawfel
-	public Transformateur2Acteur() { //valeurs des min, max, et init (3 derniers parametres) à changer plus tard.
+	public Transformateur2Acteur() {
 	
-		//pas sur de celles ci, mais je les laisse au cas ou...
-		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 1000);
-		this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 10.0, 150000.0);
+		this.prixSeuilBQ = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilMQ = new Variable("prix seuil moyenne qualité", "<html>Prix Seuil Moyenne Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilMQBE = new Variable("prix seuil moyenne qualité bio", "<html>Prix Seuil Moyenne Qualité BIO</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilHQ = new Variable("prix seuil haute qualité", "<html>Prix Seuil Haute Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilHQBE = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Haute Qualité BIO</html>",this, 0.0, 10000000, 10);
+		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.marge = 1.1;
 		this.journal=new Journal("Opti'Cacao activités", this);
+		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
+		this.stockReferenceFeve=new Stock();
+		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 8000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 5000);
+		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		//ajouter des marques de chocolats
+		
+		
+		this.stockReferenceChocolat=new Stock();
+		this.stockReferenceChocolat.ajouter(c1, 5000);
+		this.stockReferenceChocolat.ajouter(c0, 8000);
+		
+		
 		
 		
 
@@ -67,8 +82,80 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 
 	}
 	
+	//Jad
+	//renvoie le prix seuil de chaque feves
+	public Variable getPrixSeuil(Feve f) {
+		if(f.equals(Feve.FEVE_BASSE)) {
+			return this.getPrixSeuilBQ();
+		}
+		else if(f.equals(Feve.FEVE_HAUTE)) {
+			return this.getPrixSeuilHQ();
+		}
+		else if(f.equals(Feve.FEVE_HAUTE_BIO_EQUITABLE)) {
+			return this.getPrixSeuilHQBE();
+		}
+		else if (f.equals(Feve.FEVE_MOYENNE)) {
+			return this.getPrixSeuilMQ();
+		}
+		else if (f.equals(Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+			return this.getPrixSeuilMQBE();
+					
+		}
+		return null;
+	}
+
+	public Variable getPrixSeuilMQ() {
+		return prixSeuilMQ;
+	}
+
+
+	public void setPrixSeuilMQ(Variable prixSeuilMQ) {
+		this.prixSeuilMQ = prixSeuilMQ;
+	}
+
+
+	public Variable getPrixSeuilHQ() {
+		return prixSeuilHQ;
+	}
+
+
+	public void setPrixSeuilHQ(Variable prixSeuilHQ) {
+		this.prixSeuilHQ = prixSeuilHQ;
+	}
+
+
+	public Variable getPrixSeuilBQ() {
+		return prixSeuilBQ;
+	}
+
+
+	public void setPrixSeuilBQ(Variable prixSeuilBQ) {
+		this.prixSeuilBQ = prixSeuilBQ;
+	}
+
+
+	public Variable getPrixSeuilMQBE() {
+		return prixSeuilMQBE;
+	}
+
+
+	public void setPrixSeuilMQBE(Variable prixSeuilMQBE) {
+		this.prixSeuilMQBE = prixSeuilMQBE;
+	}
+
+
+	public Variable getPrixSeuilHQBE() {
+		return prixSeuilHQBE;
+	}
+
+
+	public void setPrixSeuilHQBE(Variable prixSeuilHQBE) {
+		this.prixSeuilHQBE = prixSeuilHQBE;
+	}
+
 
 	public void initialiser() {
+		
 		
 	}
 	
@@ -97,12 +184,14 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filiere = new ArrayList<String>();
 		filiere.add("TESTAOOPTI'CACAO");  
+		filiere.add("TESTCCOPTI'CACAO"); 
 		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
 		case "TESTAOOPTI'CACAO" : return new CopieFiliereTestAO();
+		case "TESTCCOPTI'CACAO" : return new CopieFiliereTestContratCadre();
 	    default : return null;
 		}
 	}
@@ -155,17 +244,12 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 
 
 
-	public Variable getPrixSeuil() {
-		return prixSeuil;
-	}
 
 
 
 
 
-	public Variable getCapaciteStockageFixe() {
-		return capaciteStockageFixe;
-	}
+
 
 
 
@@ -187,6 +271,16 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		res.add(c0);
 		res.add(c1);
 		return res;
+	}
+
+
+	public Stock<Feve> getStockReferenceFeve() {
+		return stockReferenceFeve;
+	}
+
+
+	public Stock<ChocolatDeMarque> getStockReferenceChocolat() {
+		return stockReferenceChocolat;
 	}
 
 }

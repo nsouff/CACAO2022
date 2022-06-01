@@ -86,8 +86,9 @@ public double demande(Feve f, double cours) {
 	
 }
 
-*/	
+
 //Marie et Jad
+
 /*	public double demande(Feve f, double cours) {
 		BourseCacao b	=(BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		b.getCours(Feve.FEVE_BASSE);
@@ -97,30 +98,56 @@ public double demande(Feve f, double cours) {
 				//On verifie qu'on a la capacite de paiemeent nécessaire, puis on demande
 				if (Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f)))) {
 				return Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f));
+
+//	public double demande(Feve f, double cours) {
+//		if (cours < this.getPrixSeuil().getValeur()) {
+//			if(!f.isBioEquitable()) {
+//				
+//				//On verifie qu'on a la capacite de paiemeent nécessaire, puis on demande
+//				if (Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f)))) {
+//				return Math.max(0,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+//			}
+//				else { 
+//					return 0.0;}}
+//			
+//		} 
+//		else {
+//			return 0.0;
+//		}
+//		return 0.0;
+//		}
+	
+//Jad
+	//déroulement :
+
+	//1)comparaison cours et prix seuil pour la feve
+	//2)vérifiaction des besoins
+	//3)vérification des capacités de paiement
+	//4)achat si totu est validé
+	public double demande(Feve f, double cours) {
+
+			if(cours<this.getPrixSeuil(f).getValeur()) {
+				double besoin=Math.max(0,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)){
+					return besoin;
+				}
+
 			}
-				else { 
-					return 0.0;}}
-			else if (f.getGamme().equals(Gamme.BASSE) && !f.isBioEquitable()) {
-					if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f)))) {
-						return Math.max(0,this.getCapaciteStockageFixe().getValeur()-this.getStockfeve().getQuantite(f));}
-					else
-						return 0.0;
-			}
-			
 		
-		} 
-		else {
-			return 0.0;
-		}
+		
 		return 0.0;
+
 		}
 */
+
+
+
 
 //Marie et Jad
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		this.getStockfeve().ajouter(f,quantiteEnKg);
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coursEnEuroParKg*quantiteEnKg);
-		this.journal.ajouter("Achat de "+quantiteEnKg+" kg de fèves "+f+" pour "+coursEnEuroParKg);
+		this.journal.ajouter("Achat de "+quantiteEnKg+" kg de fèves "+f+" pour "+coursEnEuroParKg +" €/kg");
 	}
 
 //Marie et Jad
