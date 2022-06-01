@@ -68,18 +68,20 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 
 	@Override
 	public double prix(ChocolatDeMarque choco) { //Emma humeau
-		Double res = prixVente.get(choco);
-		return (res == null) ? 0.0 : res;
+		return facteurPrixChocolat(choco.getChocolat()) * 8;
+		// Double res = prixVente.get(choco);
+		// return (res == null) ? 0.0 : res;
 	}
 
 	@Override
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau, Nathan
 		double qte =  NotreStock.getStock(choco);
-		if (qte > 200) {
-			qte *= 0.9;
-		}
-		journalVente.ajouter("Nous mettons en vente " + qte + " pour " + choco);
 		return qte;
+		// if (qte > 200) {
+		// 	qte *= 0.9;
+		// }
+		// journalVente.ajouter("Nous mettons en vente " + qte + " pour " + choco);
+		// return qte;
 	}
 
 	@Override

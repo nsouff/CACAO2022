@@ -20,6 +20,8 @@ import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Gamme;
+import abstraction.eq8Romu.produits.Chocolat;
 
 public class Distributeur1Acteur implements IActeur {
 	protected int cryptogramme;
@@ -38,7 +40,9 @@ public class Distributeur1Acteur implements IActeur {
 	protected Integer Compteur;	
 	protected Map<ChocolatDeMarque, VariableReadOnly> HistoChoco; // Léo
 	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
-	protected Double TauxTour; // renvoie la part de marché visée par FourAll pour le tour en cours
+	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
+	protected final double partCC = 0.9;
+	
 	/**
 	 * @return the notreStock
 	 */
@@ -96,6 +100,8 @@ public class Distributeur1Acteur implements IActeur {
 		for (ChocolatDeMarque C : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			HistoChoco.put(C, new VariableReadOnly(C.toString(), this,0));
 		}
+		NotreStock.initialiser();
+		
 	}
 	
 	public void next() {
@@ -237,7 +243,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * @param quantiteAchete
 	 */
 	public void setPrixVente(ChocolatDeMarque c, double prixAchatKilo) {
-		prixVente.put(c, 2*prixAchatKilo);
+		prixVente.put(c, 1.4*prixAchatKilo);
 	}
 	
 	/**
@@ -250,5 +256,53 @@ public class Distributeur1Acteur implements IActeur {
 		prixAchat.forEach((key,value)->{
 			prixVente.put(key, (prixAchat.get(key))*2);		
 		});
-	}	
+	}
+
+	public double partDuMarcheVoulu(Chocolat c) {
+		switch(c) {
+			case BQ: return 0.5;
+			case BQ_O: return 0.5;
+			case MQ: return 0.5;
+			case MQ_O: return 0.5;
+			case MQ_BE: return 0.5;
+			case MQ_BE_O: return 0.5;
+			case HQ: return 0.5;
+			case HQ_O: return 0.5;
+			case HQ_BE: return 0.5;
+			case HQ_BE_O: return 0.5;
+			default: return 0.0;
+		}
+	}
+
+
+	public int getNbChocolatProduit(Chocolat c) {
+		int count = 0;
+		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			if (choco.getChocolat() == c) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public double getPartMarque(ChocolatDeMarque choco) {
+		return 1.0/getNbChocolatProduit(choco.getChocolat());
+	}
+
+	protected double facteurPrixChocolat(Chocolat c) {
+		double res = 1.0;
+		if (c.getGamme() == Gamme.MOYENNE) {
+			res *= 1.2;
+		}
+		else if (c.getGamme() == Gamme.HAUTE) {
+			res *= 1.4;
+		}
+		if (c.isBioEquitable()) {
+			res *= 1.2;
+		}
+		if (c.isOriginal()) {
+			res *= 1.2;
+		}
+		return res;
+	}
 }

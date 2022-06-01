@@ -112,4 +112,11 @@ public class Stock { //Emma Humeau
 			return false;}
 		return true;
 	}
+
+	protected void initialiser() {
+		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			addQte(choco, acteur.getPartMarque(choco) * acteur.partDuMarcheVoulu(choco.getChocolat()) * Filiere.LA_FILIERE.getVentes(choco, -24));
+			acteur.setPrixVente(choco, 7.5*acteur.facteurPrixChocolat(choco.getChocolat()));
+		}
+	}
 }
