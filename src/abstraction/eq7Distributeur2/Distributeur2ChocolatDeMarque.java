@@ -1,5 +1,7 @@
 package abstraction.eq7Distributeur2;
 
+import java.util.Map;
+
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -7,20 +9,25 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements IDistributeurChocolatDeMarque  {
 	
-	private double capaciteDeVente;
+	private double capaciteDeVente= Double.MAX_VALUE;;
 
 	public Distributeur2ChocolatDeMarque() {
 		super();
 	}
 	
 	
+	//edgard: prix depend de la marque et du type de choco: Biofour et BE moins cher que le marché
 	public double prix(ChocolatDeMarque choco) {
-		return 10.0;
+		if (choco.getMarque()=="Biofour" && choco.isBioEquitable()) {
+			return 9.0;
+		}else {
+			return 10.0;
+		}
 	}
 
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
 		if (crypto!=this.cryptogramme) {
-			journal.ajouter("Quelqu'un essaye de me pirater !");
+			this.journal.ajouter("Quelqu'un essaye de me pirater !");
 			return 0.0;
 		} else {
 			return Math.min(capaciteDeVente, this.stock.getQuantite(choco));
@@ -28,16 +35,21 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 
 	public double quantiteEnVenteTG(ChocolatDeMarque choco, int crypto) {
-		if (crypto!=this.cryptogramme) {
-			journal.ajouter("Quelqu'un essaye de me pirater !");
-			return 0.0;
-		} else {
-			return Math.min(capaciteDeVente, this.stock.getQuantite(choco))/10.0;
+		if(choco.isBioEquitable()) {
+			if (crypto!=this.cryptogramme) {
+				journal.ajouter("Quelqu'un essaye de me pirater !");
+				return 0.0;
+			} else {
+				return Math.min(capaciteDeVente, this.stock.getQuantite(choco))/20;
 			}
+		}else {
+			return 0.0;
+		}
 	}
 	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
 		this.stock.remove(choco, quantite);
+		journalVente.ajouter("vente de "+quantite+" "+choco.name()+" a "+client.getNom()+" pour un prix de "+ montant);
 		
 	}
 
@@ -45,9 +57,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 		if (crypto!=this.cryptogramme) {
 			journal.ajouter("Quelqu'un essaye de me pirater !");
 		} else {
-			journal.ajouter("Rayon vide : "+choco);
+			journalStock.ajouter("Rayon vide : "+choco);
 		}
 	}
-
-
 }

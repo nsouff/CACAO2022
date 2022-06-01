@@ -94,8 +94,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 		journal.ajouter("Stock Feve Basse : "+this.getStock(Feve.FEVE_BASSE)+", Production Feve Basse : "+this.production(Feve.FEVE_BASSE)+", Nombre d'arbre Basse : "+this.getNbArbre(Feve.FEVE_BASSE)+"");
 		journal.ajouter("Stock Feve Haute BE : "+this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE)+", Production Feve Haute BE : "+this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE)+", Nombre d'arbre Haute BE : "+this.getNbArbre(Feve.FEVE_HAUTE_BIO_EQUITABLE)+"");
 		journal.ajouter("Stock Feve Moyenne BE : "+this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+", Production Feve Moyenne BE : "+this.production(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+", Nombre d'arbre Moyenne BE : "+this.getNbArbre(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+"");
-		
-	// Auteur Clément	
+
 		this.GetStockHaute().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
 		this.GetStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
