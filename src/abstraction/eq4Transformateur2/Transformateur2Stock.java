@@ -112,13 +112,13 @@ public double coutStockage() {
 
 //Marie
 
-public boolean capaciteMaxAtteinte() {
+/*public boolean capaciteMaxAtteinte() {
 	if (((this.capaciteStockage.getValeur())-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()))>0 ) { 
 		return false;	
 	}else {
 		return true;
 	}
-}
+}*/
 // Marie 
 
 /*public double augmenterCapacite(Variable capaciteStockage) {

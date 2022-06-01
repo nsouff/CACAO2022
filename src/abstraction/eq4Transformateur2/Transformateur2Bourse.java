@@ -46,14 +46,12 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 	if(Filiere.LA_FILIERE.getEtape()<27) {
 		for(int i=0;i<5;i++) {
 			if(b.getCours(Feve.FEVE_BASSE).getMin()<minBG) {
-				this.minBG=
+				this.minBG=b.getCours(Feve.FEVE_BASSE).getMin();
 			}
 			
 		}
-		prixseuilBG= prixseuilBG + b.getCours(Feve.FEVE_BASSE).getMin();	
-		Filiere.LA_FILIERE.getEtape()
-		bourse.getCours(getFeve()).getMin()
 		}else {
+			//prendre le min de la même période de l'année dernière
 		
 	}
 }
@@ -61,11 +59,18 @@ public class Transformateur2Bourse extends Transformateur2Transfo implements IAc
 public double prixSeuilMG() {
 	BourseCacao b	=(BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 	if(Filiere.LA_FILIERE.getEtape()<27) {
-		b.getCours(Feve.FEVE_MOYENNE);
-	}
-	
-	
+		for(int i=0;i<5;i++) {
+			if(b.getCours(Feve.FEVE_BASSE).getMin()<minBG) {
+				this.minBG=b.getCours(Feve.FEVE_BASSE).getMin();
+			}
+			
+		}
+		}else {
+			//prendre le min de la même période de l'année dernière
+		
+	}	
 }
+
 
 public double demande(Feve f, double cours) {
 	if ((f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()) && (cours < prixSeuilMG())) {
@@ -80,8 +85,8 @@ public double demande(Feve f, double cours) {
 	}
 	
 }
-*/
-	
+
+*/	
 //Marie et Jad
 /*	public double demande(Feve f, double cours) {
 		BourseCacao b	=(BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
