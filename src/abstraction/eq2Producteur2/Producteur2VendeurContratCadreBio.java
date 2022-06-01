@@ -75,7 +75,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 		
 		return prix;
 	}
-//BE
+//BioEq
 	@Override
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		double contrepropositionprix = -1.0;
