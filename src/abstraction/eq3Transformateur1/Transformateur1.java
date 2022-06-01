@@ -85,6 +85,15 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		quantiteAchatFeve.put(Feve.FEVE_BASSE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2)); 	
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE,((quantiteDemandeeChoco.get(Chocolat.MQ)-stockChoco.get(Chocolat.MQ))/2));
 		quantiteAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,(quantiteDemandeeChoco.get(Chocolat.MQ_BE)-stockChoco.get(Chocolat.MQ_BE)));
+		if (quantiteAchatFeve.get(Feve.FEVE_BASSE)<=0) {
+			quantiteAchatFeve.put(Feve.FEVE_BASSE,400.);				
+		}
+		if (quantiteAchatFeve.get(Feve.FEVE_MOYENNE)<=0) {
+			quantiteAchatFeve.put(Feve.FEVE_MOYENNE,400.);				
+		}
+		if (quantiteAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)<=0) {
+			quantiteAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,400.);				
+		}
 	}
 	
 	/** _______________________________________________LOT TRANSFORMATION DES FEVES ____________________________________________________________*/

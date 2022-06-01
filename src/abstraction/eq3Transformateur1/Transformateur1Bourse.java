@@ -40,6 +40,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 * Pas de prise en compte pour l'instant des contrats */
 	public double demande(Feve f, double cours) {
 		if (cours<prixAchatFeve.get(f)) {
+			journal.ajouter("quantiteAchtFeve : " + quantiteAchatFeve.get(f));
 			return quantiteAchatFeve.get(f)*0.5;
 			}
 			else {
