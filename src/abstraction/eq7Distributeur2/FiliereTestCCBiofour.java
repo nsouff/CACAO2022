@@ -3,6 +3,8 @@ package abstraction.eq7Distributeur2;
 import java.util.HashMap;
 
 import abstraction.eq8Romu.Romu;
+import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
@@ -22,7 +24,10 @@ public class FiliereTestCCBiofour extends Filiere {
 			{ 3.0, 3.0,11.0, 3.0, 3.0, 3.0, 3.0, 3.0,13.0, 3.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 3.0, 3.0,10.0, 3.0, 3.0,11.0,10.0, },			
 	};
 
+	private ClientFinal cf;
 	private SuperviseurVentesContratCadre superviseurCC;
+	private BourseCacao bourse;
+	private SuperviseurVentesAO superviseurAO;
 
 	public FiliereTestCCBiofour() {
 		super();
@@ -38,13 +43,18 @@ public class FiliereTestCCBiofour extends Filiere {
 		repartitionInitiale.put(Chocolat.BQ_O,   15.0); // Basse Qualite  ,pas Bio-Equitable, Original
 		repartitionInitiale.put(Chocolat.BQ,     25.0); // Basse Qualite  ,pas Bio-Equitable, pas Original 
 
-		ClientFinal  cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
+		this.cf = new ClientFinal(7200000000.0 , repartitionInitiale, DISTRIBUTIONS_ANNUELLES);
 		this.ajouterActeur(cf);
 		this.ajouterActeur(new Distributeur2());
 		this.ajouterActeur(new ExempleTransfo(new ChocolatDeMarque(Chocolat.HQ_BE_O,"Biofour")));
+		
 		this.ajouterActeur(new Romu());
 		this.superviseurCC=new SuperviseurVentesContratCadre();
 		this.ajouterActeur(this.superviseurCC);
+		this.bourse=new BourseCacao();
+		this.ajouterActeur(this.bourse);
+		this.superviseurAO=new SuperviseurVentesAO();
+		this.ajouterActeur(this.superviseurAO);
 
 	}
 }

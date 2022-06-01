@@ -158,18 +158,24 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		}
 	}
 	
-	public void retirerQuantiteParc(Feve f, double quantite) {
+	public void retirerQuantiteParc(Feve f, double quantite, Parc provenance) {
+		if (quantite > this.getStockParc(f, false, provenance)) {
+			int i = 0 ;
 		while (quantite>0) {
-			double poids = this.getFeves().get(f).get(0).getPoids() ;
+			double poids = this.getFeves().get(f).get(i).getPoids() ;
 			
+			if (this.getFeves().get(f).get(i).getProvenance() == provenance) {
 			if (quantite >= poids) { //On regarde en fonction de la quantite qui reste dans le lot. Si il y'a plus on enlève le lot
 				quantite = quantite - poids ;
-				this.getFeves().get(f).remove(0);
+				this.getFeves().get(f).remove(i);
 			}
 			else {
-				this.getFeves().get(f).get(0).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
+				this.getFeves().get(f).get(i).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
 				quantite = 0 ;
 			}
+			}
+		i += 1 ;
+		}
 		}
 	}
 	

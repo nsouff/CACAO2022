@@ -75,7 +75,9 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	//Auteur : Khéo
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
+		if (this.getStock(f, false)>quantiteEnKg) {
 		this.retirerQuantite(f, quantiteEnKg);
+		}
 	}
 	
 
