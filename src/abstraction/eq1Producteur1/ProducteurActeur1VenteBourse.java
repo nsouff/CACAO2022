@@ -109,5 +109,6 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		}
 		return 0.0 ; 
 	}
+	//pour commit
 
 }
