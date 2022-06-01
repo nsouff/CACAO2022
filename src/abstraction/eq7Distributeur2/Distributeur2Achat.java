@@ -77,6 +77,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				//Pour chaque vendeur
 				for (IVendeurContratCadre vendeur : vendeurs) {
 					journalContratCadre.ajouter(this.getNom() + " propose d'initier un CC avec "+ Journal.texteColore(vendeur, vendeur.getNom()) +" avec le produit: "+chocProduit);
+					journalContratCadre.ajouter("Echeancier : "+echeancierAchat.toString());
 					ExemplaireContratCadre propositionContratCadre = SupVente.demandeAcheteur(this, vendeur, chocProduit, echeancierAchat, cryptogramme,boolTeteGondole);
 					if (propositionContratCadre == null) {
 						journalContratCadre.ajouter(Journal.texteColore(getColorFaillure(), Color.BLACK, "Le contrat avec "+vendeur.getNom()+" n'a pas abouti"));
