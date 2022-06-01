@@ -191,7 +191,7 @@ public class ContratCadre {
 		if (step<=this.getEcheancier().getStepFin()) {
 			return this.previsionnelPaiements.getQuantiteJusquA(step) -(this.paiements==null ? 0.0 : this.paiements.getQuantiteJusquA(step))-prixDePasLivre;
 		} else {
-			return this.montantRestantARegler-prixDePasLivre;
+			return this.montantRestantARegler-prixDePasLivre; 
 		}
 	}
 
