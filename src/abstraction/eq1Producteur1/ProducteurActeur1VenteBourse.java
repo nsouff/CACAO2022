@@ -26,7 +26,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 
 
 	//Auteur : Khéo
-	public double offre1(Feve f, double cours) {
+	public double offre(Feve f, double cours) {
 		//On met à jour les prix de la HashMap
 			
 			if (Filiere.LA_FILIERE.getEtape()>=1) { //Petite dijonction de cas pour le premier tour afin d'éviter d'aller chercher dans une hashmap vide
@@ -79,14 +79,15 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	}
 	
 	/**
+	 * offre2 (pour conserver la V1 avant d'être sûr)
 	 * @author laure
-	 * @param f
-	 * @param cours
+	 * @param f la fève qu'on veut vendre
+	 * @param cours le cours actuel
 	 * @return quantité de fèves à vendre
 	 */
-	public double offre(Feve f, double cours) {
+	public double offre2(Feve f, double cours) {
 		double coutStockage=0.1; 
-		double coutProduction=1;
+		double coutProduction=this.getPrixEntretienArbre().getValeur();
 		double coutTotalFeve= coutProduction + coutStockage*this.getFeves().size();
 		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE 
 			if (Filiere.LA_FILIERE.getEtape()>=1) { // Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
