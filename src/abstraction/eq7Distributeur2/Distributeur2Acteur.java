@@ -31,13 +31,10 @@ public class Distributeur2Acteur implements IActeur{
 	//Indicateurs
 	private List<Variable> listeIndicateur;
 	private Variable stockTotal;
+	protected Variable totalVente;
 
 	public Distributeur2Acteur() {
-		this.journalContratCadre = new Journal(this.getNom()+" Contrat Cadres", this);
-		this.journalStock = new Journal(this.getNom()+" Stock", this);
-		this.journalVente = new Journal(this.getNom()+" Vente (Client Final)", this);
-		this.journalEtudeVente = new Journal(this.getNom()+" Etude des ventes (Marché)", this);
-		this.journal = new Journal(this.getNom()+" Activité", this);
+		this.initialiserJournaux();
 		this.initialiserIndicateurs();
 	}
 
@@ -89,27 +86,28 @@ public class Distributeur2Acteur implements IActeur{
 	    default : return null;
 		}
 	}
-
-	// Renvoie les indicateurs
-	public List<Variable> getIndicateurs() {
-		List<Variable> res = new ArrayList<Variable>();
-		res.add(stockTotal);
-		return res;
-	}
 	
 	//-----------------------------INDICATEURS-------------------------------------------
 
 	public void initialiserIndicateurs() {
-		this.listeIndicateur = new LinkedList<Variable>();
-		this.stockTotal = new Variable("Stock total",this,0);
-		this.listeIndicateur.add(stockTotal);
+		this.stockTotal = new Variable("Biofour : Stock total",this,0);
+		this.totalVente = new Variable("Biofour : Total des ventes", this, 0);
 	}
 	
 	public void actualiserIndicateurs() {
 		this.stockTotal.setValeur(this,this.stock.getQuantiteTotale());
-	
 	}
+	
+	// Renvoie les indicateurs
+	public List<Variable> getIndicateurs() {
+		this.listeIndicateur = new LinkedList<Variable>();
 		
+		this.listeIndicateur.add(stockTotal);
+		this.listeIndicateur.add(totalVente);	
+		return listeIndicateur;
+	}
+	
+	//-----------------------------PARAMETRES-------------------------------------------
 
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
@@ -117,6 +115,16 @@ public class Distributeur2Acteur implements IActeur{
 		return res;
 	}
 
+	//-----------------------------JOURNAUX-------------------------------------------
+	
+	public void initialiserJournaux() {
+		this.journalContratCadre = new Journal(this.getNom()+" Contrat Cadres", this);
+		this.journalStock = new Journal(this.getNom()+" Stock", this);
+		this.journalVente = new Journal(this.getNom()+" Vente (Client Final)", this);
+		this.journalEtudeVente = new Journal(this.getNom()+" Etude des ventes (Marché)", this);
+		this.journal = new Journal(this.getNom()+" Activité", this);
+	}
+	
 	// Renvoie les journaux
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
@@ -128,6 +136,8 @@ public class Distributeur2Acteur implements IActeur{
 		
 		return j;
 	}
+
+	//-----------------------------MISC-------------------------------------------
 
 
 	public void setCryptogramme(Integer crypto) {

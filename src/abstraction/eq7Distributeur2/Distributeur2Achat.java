@@ -69,7 +69,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				double venteParStep = this.volumeParEtapeMoyenne(chocProduit, currentEtape, nbStepContrat);
 				
 				//On créer un écheancier correspondant à nos besoin
-				Echeancier echeancierAchat = new Echeancier(currentEtape,nbStepContrat,venteParStep);
+				Echeancier echeancierAchat = new Echeancier(currentEtape+1,nbStepContrat,venteParStep);
 				
 				//On récupère tout les vendeurs actifs
 				List<IVendeurContratCadre> vendeurs = SupVente.getVendeurs(chocProduit);
@@ -92,7 +92,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		double ventes = 0.0;
 		//On ajoute les quantités vendues à chaque étape depuis nbStep
 		
-		for (int j=currentEtape - nbEtape; j<=currentEtape; j++) {
+		for (int j=currentEtape - nbEtape; j<currentEtape; j++) {
 			ventes+=Filiere.LA_FILIERE.getVentes(chocProduit, j);
 			this.journalEtudeVente.ajouter("Vente à l'Etape "+ j + " de chocolat "+ chocProduit+ " : " +ventes);
 		}

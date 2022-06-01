@@ -48,9 +48,14 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
+		//Retire la quantité dans les stocks
 		this.stock.remove(choco, quantite);
-		journalVente.ajouter("vente de "+quantite+" "+choco.name()+" a "+client.getNom()+" pour un prix de "+ montant);
 		
+		//Ajout de la quantité vendue
+		this.totalVente.ajouter(this, quantite);
+		
+		//Ajout d'une entrée dans le journal
+		this.journalVente.ajouter("vente de "+quantite+" "+choco.name()+" a "+client.getNom()+" pour un prix de "+ montant);
 	}
 
 	public void notificationRayonVide(ChocolatDeMarque choco, int crypto) {
