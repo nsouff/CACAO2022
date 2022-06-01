@@ -275,7 +275,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		cm.add(new ChocolatDeMarque(Chocolat.MQ,"CHOCO'riginal"));
 		return cm;
 	}
-	//julien
+	//julien fction générale qui met à jour les stocks et les peremptions
+	// on a besoin d'une date qui correspond au step auquel le produit sera détruit car périmé
 	public void ajouter(double date,Object p,double qtt){
 		if (p instanceof Feve) {
 			this.perempFeves.ajouterQtt(date,(Feve) p,qtt);
@@ -288,7 +289,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 			
 		}
 	}
-	//julien
+	//julien fction générale qui met à jour les stocks et les peremptions
 	public void utiliser(Object p,double qtt){
 		if (p instanceof Feve) {
 			this.perempFeves.utiliserQtt((Feve) p,qtt);
