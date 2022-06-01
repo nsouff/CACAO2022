@@ -40,7 +40,6 @@ public class Stock implements IStock{
 		
 		//Initialisation des deux à 0
 		for (ChocolatDeMarque choco : listeChocolatsProduits) {
-			System.out.println(choco);
 			reserve.put(choco, new Variable("Stock"+choco.toString(),"Valeur du stock pour "+choco.toString(),acteur,0.,Double.POSITIVE_INFINITY,0));
 			seuilRachat.put(choco,new Variable("SeuilRachat"+choco.toString(),"Seuil de rachat défini pour "+choco.toString(),acteur,-1.,Double.POSITIVE_INFINITY,0));
 		}
