@@ -36,7 +36,7 @@ public class Producteur2Plantation{
 		
 		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
 		
-		// 1 parcelle = 100 000 arbres 
+		// 1 parcelle = 10 000 arbres 
 		
 		
 		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
@@ -82,7 +82,6 @@ public class Producteur2Plantation{
 	
 	public void next() {
 		this.renouvellement();
-		
 	}
 	
 	
@@ -92,7 +91,7 @@ public class Producteur2Plantation{
 		// faire vieillir les arbres à chaque UT 
 		
 		
-		
+	
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
@@ -160,37 +159,38 @@ public class Producteur2Plantation{
 	public int RendementParcelle(Parcelle p) {
 		if (p.getStadeMaladie() == 1 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=2) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.85);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.85);
 			} 		
 		}
 		
 		else if (p.getStadeMaladie() == 2 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=5) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.85);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.85);
 			} 		
 		}
 		
 		else if (p.getStadeMaladie() == 3 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=4) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.8);
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.8);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.8);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.8);
 			} 		
 		}
 		
 		else if (p.getStadeMaladie() == 4 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=4) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.85);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.85);
 			} 		
 		}
 		
@@ -198,16 +198,16 @@ public class Producteur2Plantation{
 			return 0; 		
 		}
 		
-		else if (p.getStadeTensionGeopolitique() != 0) {
+		else if (p.getImpactRendementParasite()*p.getStadeTensionGeopolitique() != 0) {
 			return 0;
 		}
 		
 		else {
 				if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-					return (int) (p.getTypeArbre().getRendementFinal());
+					return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal());
 				}
 				else {
-					return (int) (p.getRendementProgressif());
+					return (int) (p.getImpactRendementParasite()*p.getRendementProgressif());
 				} 		
 			}
 		}
@@ -221,7 +221,6 @@ public class Producteur2Plantation{
 		
 	
 	
-	//Problème sur cette méthode
 	public double production(Feve typefeve) {
 		//auteure : Fiona
 		
