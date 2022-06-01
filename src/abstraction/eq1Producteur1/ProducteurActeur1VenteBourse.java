@@ -77,4 +77,12 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		// TODO Auto-generated method stub
 		this.retirerQuantite(f, quantiteEnKg);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
