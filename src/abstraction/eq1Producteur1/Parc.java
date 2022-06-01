@@ -212,7 +212,7 @@ public class Parc {
 		}
 		if (	(Filiere.LA_FILIERE.getEtape()>=this.getUt_debut_guerre()) 
 				&& (Filiere.LA_FILIERE.getEtape()<this.getUt_fin_guerre())) {
-			this.getRetourGuerre().ajouter("Attends 2 secondes poupée, je finis de massacrer this.getProducteurNuls()");
+			this.getRetourGuerre().ajouter("Attends 2 secondes poupée, je finis de massacrer this.getProducteurNul()");
 		}
 		if ((Filiere.LA_FILIERE.getEtape()<this.getUt_fin_guerre()+Math.ceil((this.getUt_fin_guerre()-this.getUt_debut_guerre())*1.5)) && (this.getGuerre()==false)) {
 			this.getRetourGuerre().ajouter("C'est la période de paix frérot, on cherche pas les embrouilles");
@@ -227,7 +227,7 @@ public class Parc {
 			}
 		int temps = (int)Math.ceil((aléa_durée_aléas+1)*2);
 		this.setfin_aleas((int)(Filiere.LA_FILIERE.getEtape()+temps));
-		this.getRetourAléas().ajouter("Cette année (ut :"+Filiere.LA_FILIERE.getEtape()+"), les aléas climatiques vont durer"+temps+"ut" );
+		this.getRetourAléas().ajouter("Cette année, les aléas climatiques vont durer"+temps+" ut" );
 		}
 	}
 	
@@ -263,7 +263,7 @@ public class Parc {
 			}
 		}
 		this.getRetourMAJParc().ajouter(mort_vieillesse+" MilleArbres sont mort de vieillesse, vive les arbres");
-		this.getRetourMAJParc().ajouter(plantés+" bébes MilleArbres sont nés, je pense les appeler Groot1, Groot2...");
+		this.getRetourMAJParc().ajouter(plantés+" bébés MilleArbres sont nés, je pense les appeler Groot1, Groot2...");
 		this.getRetourMaladie().ajouter(malade5+" MilleArbres sont morts de maladie");
 	}
 	

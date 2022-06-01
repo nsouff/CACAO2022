@@ -213,11 +213,14 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	public List<Journal> getJournaux() {
 		List<Journal> res=new ArrayList<Journal>();
 		res.add(this.getContratCadre());
-		res.add(this.getAfrique().getRetourMAJParc());
-		res.add(this.getAfrique().getRetourRécolte());
-		res.add(this.getAfrique().getRetourGuerre());
-		res.add(this.getAfrique().getRetourAléas());
-		res.add(this.getAfrique().getRetourMaladie());
+		for (int j=0;j<4;j++) {
+			Parc Parc_j = this.getParc(j);
+			res.add(Parc_j.getRetourMAJParc());
+			res.add(Parc_j.getRetourRécolte());
+			res.add(Parc_j.getRetourGuerre());
+			res.add(Parc_j.getRetourAléas());
+			res.add(Parc_j.getRetourMaladie());
+		}
 		return res;
 	}
 
