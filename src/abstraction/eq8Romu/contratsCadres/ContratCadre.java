@@ -188,7 +188,8 @@ public class ContratCadre {
 		}
 		int step = Filiere.LA_FILIERE.getEtape();
 		if (step<=this.getEcheancier().getStepFin()) {
-			return this.previsionnelPaiements.getQuantiteJusquA(step) -(this.paiements==null ? 0.0 : this.paiements.getQuantiteJusquA(step));
+			double prixDePasLivre = getQuantiteALivrerAuStep()*this.getPrix();
+			return this.previsionnelPaiements.getQuantiteJusquA(step) -(this.paiements==null ? 0.0 : this.paiements.getQuantiteJusquA(step))-prixDePasLivre;
 		} else {
 			return this.montantRestantARegler;
 		}
@@ -272,7 +273,8 @@ public class ContratCadre {
 	public void penalitePaiement() {
 		int step = Filiere.LA_FILIERE.getEtape();
 		if (step<=this.getEcheancier().getStepFin()) {
-			double nonPaye = this.previsionnelPaiements.getQuantiteJusquA(step)- (this.paiements==null ? 0.0 : this.paiements.getQuantiteJusquA(step));
+			double prixDePasLivre = getQuantiteALivrerAuStep()*this.getPrix();
+			double nonPaye = this.previsionnelPaiements.getQuantiteJusquA(step)- (this.paiements==null ? 0.0 : this.paiements.getQuantiteJusquA(step))-prixDePasLivre;
 			this.montantRestantARegler += nonPaye*PENALITE_PAIEMENT;
 		} else {
 			this.montantRestantARegler *= (1.0+PENALITE_PAIEMENT);

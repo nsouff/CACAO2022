@@ -112,9 +112,9 @@ public class FiliereTestDistributeur1 extends Filiere {
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_MOYENNE));
 		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(Feve.FEVE_HAUTE));
 
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.BQ, "bas choco")));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.MQ, "moyen choco")));
-		this.ajouterActeur(new ExempleTransformateurContratCadreVendeurAcheteur(new ChocolatDeMarque(Chocolat.HQ, "bon choco")));
+		this.ajouterActeur(new ExempleTransformateurVendeurContratCadre(new ChocolatDeMarque(Chocolat.BQ, "chocoTest Bas")));
+		this.ajouterActeur(new ExempleTransformateurVendeurContratCadre(new ChocolatDeMarque(Chocolat.MQ, "chocoTest Moyen")));
+		this.ajouterActeur(new ExempleTransformateurVendeurContratCadre(new ChocolatDeMarque(Chocolat.HQ, "chocoTest Haut")));
 
 		
 		this.ajouterActeur(new Distributeur1());
