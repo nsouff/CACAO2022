@@ -124,12 +124,10 @@ public class Producteur2Plantation{
 					ParcellesASupprimer.add(p);	
 				}
 			}
-			System.out.println("supp parcell");
 			for (int i=0; i < ParcellesASupprimer.size(); i++) {
 				this.NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
 				this.NbParcelles.get(a).add(new Parcelle(a, 0));
-			}						
-			System.out.println("fin supp");	
+			}							
 
 	}
 		
@@ -265,7 +263,7 @@ public class Producteur2Plantation{
 		
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		ArrayList<Integer> qt = ListeQt(4);
-		System.out.println("toto");	
+		
 
 		for (int i=0; i<arbres.length; i++) {
 			for (int j=0; j<qt.get(i); j++) {
@@ -273,8 +271,7 @@ public class Producteur2Plantation{
 			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
 		
 				}
-			}
-		System.out.println("fin toto");	
+			}	
 
 	}
 }		
