@@ -86,9 +86,9 @@ public double trouverPlusUrgent(Produit p) {
 }
 	public void utiliserQtt(Produit p, double qtt) {
 		
-		if (qtt<=0) {} //on ne fait rien;
 		
-		else {
+		
+		if (qtt>0) {
 		
 			double date=this.trouverPlusUrgent(p);
 			double qC=this.getQtt(date, p);
