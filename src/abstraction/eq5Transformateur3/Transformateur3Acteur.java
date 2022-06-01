@@ -70,7 +70,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
 		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 1);
 		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par kg", this, 0, 100, 1);
-		this.limiteStockage = new VariableReadOnly ("limiteStockage", "quantité maximale que l'on peut stocker", this, 0, 100000000, 10000000);
+		this.limiteStockage = new VariableReadOnly ("limiteStockage", "quantité maximale que l'on peut stocker", this, 0, 1000000000, 250000000);
 		this.prixEntrepot = new VariableReadOnly ("prixEntrepot", "prix d'un entrepot qui a une capacite de stockage de limiteStockage", this, 0, 100000000, 9000000);
 		this.dureePeremption = new VariableReadOnly ("dureePeremption", "nombre de tour avant qu'un produit soit périmé", this, 0, 50, 12);
 

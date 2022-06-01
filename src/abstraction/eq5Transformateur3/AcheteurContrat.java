@@ -44,9 +44,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 		if  (!( produit instanceof Feve) ) {
 			return false;
 		}
-		if (( (Feve) produit).isBioEquitable() && 
-				(( (Feve) produit).getGamme()==Gamme.MOYENNE ||
-						( (Feve) produit).getGamme()==Gamme.HAUTE)) {
+		if (this.stockFeves.getProduitsEnStock().contains((Feve) produit)) {
 			return true;
 		}
 		return false;
@@ -69,7 +67,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			return prixT;
 		}
 		else {
-			double nouveauprix = 0.1*prixT;
+			double nouveauprix = 0.8*prixT;
 			if (nouveauprix< this.seuilMaxAchat) {
 				this.achats.ajouter(" essaie avec nouveau prix");
 				return nouveauprix;
