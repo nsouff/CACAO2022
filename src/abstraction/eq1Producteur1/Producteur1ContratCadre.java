@@ -29,17 +29,16 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	@Override
 	//Auteur : Khéo
 	public boolean vend(Object produit) {
+		
 		//FEVE
 		if(produit instanceof Feve) {
 			if(this.getStock((Feve)produit, false)>100000) { //On peut initier la vente si on a les bonnes quantités
-				this.getContratCadre().ajouter("Ready to sell " + produit.toString());
 				return true;
 			}
 		}
 		
 		if(produit instanceof Chocolat) {
 			if(this.getStock((Chocolat)produit)>0) { //On peut initier la vente si on a les bonnes quantités
-				this.getContratCadre().ajouter("Ready to sell CHOCOLAT " + produit.toString());
 				return true;
 			}
 		}
@@ -52,8 +51,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	//Auteur : Khéo
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		this.getContratCadre().ajouter("============================================");
-		this.getContratCadre().ajouter("L'acheteur est " + contrat.getAcheteur().toString() + " pour du " + contrat.getProduit().toString());
-		this.getContratCadre().ajouter("Premier échéancier " + contrat.getEcheancier());
+		this.getContratCadre().ajouter("ACHETEUR " + contrat.getAcheteur().getNom().toString() + " // PRODUIT " + contrat.getProduit().toString());
+		this.getContratCadre().ajouter("Premier échéancier proposée " + contrat.getEcheancier());
 		
 		
 		
@@ -67,11 +66,12 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 				return newcontrat;
 			} else { //Quantité demandé acceptable
 				this.getContratCadre().ajouter("Quantité demandé acceptable");
-				this.getContratCadre().ajouter(contrat.getEcheancier().toString());
+				this.getContratCadre().ajouter("L'échéancier du contrat est " + contrat.getEcheancier().toString());
 				return contrat.getEcheancier(); 
 			}
 			
 		} else { //Pas assez de quantité dans le stock présent
+			this.getContratCadre().ajouter("Pas assez de quantité dans le stock présent de " + contrat.getProduit().toString());
 			return null;
 		}
 		}
@@ -86,15 +86,17 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 					return newcontrat;
 				} else { //Quantité demandé acceptable
 					this.getContratCadre().ajouter("Quantité demandé acceptable");
-					this.getContratCadre().ajouter(contrat.getEcheancier().toString());
+					this.getContratCadre().ajouter("L'échéancier du contrat est " + contrat.getEcheancier().toString());
 					return contrat.getEcheancier(); 
 				}
 				
 			} else { //Pas assez de quantité dans le stock présent
+				this.getContratCadre().ajouter("Pas assez de quantité dans le stock présent de " + contrat.getProduit().toString());
 				return null;
 			}
 			}
 		
+		this.getContratCadre().ajouter("On ne propose pas ce produit");
 		return null;
 		
 		
@@ -167,8 +169,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.getContratCadre().ajouter(contrat.getProduit().toString() + " Mashallah ce nouveau contrat avec "  + contrat.getAcheteur().getNom()
-				+ " pour " + contrat.getPrix());
+		this.getContratCadre().ajouter( " NOUVEAU CONTRAT " + contrat.getProduit().toString()+ " "  + contrat.getAcheteur().getNom()
+				+ " PRIX : " + contrat.getPrix());
 	}
 
 
@@ -182,7 +184,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		if (livre>0.0) {
 			this.retirerQuantite((Feve)contrat.getProduit(), livre);;
 		}
-		this.getContratCadre().ajouter(contrat.getProduit() +" "+contrat.getAcheteur()+ " Livraison faite zebi avec quantité à livrer " + quantite +". Wallah on a livré " + livre 
+		this.getContratCadre().ajouter("============================================");
+		this.getContratCadre().ajouter("LIVRAISON " + contrat.getProduit() +" "+ contrat.getAcheteur().getNom()+ " Quantité demandée " + quantite +" Livré " + livre 
 				);
 		return livre;
 		}
@@ -193,7 +196,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		if (livre>0.0) {
 			this.retirerQuantite((Chocolat)contrat.getProduit(), livre);;
 		}
-		this.getContratCadre().ajouter(contrat.getProduit() +" "+contrat.getAcheteur()+ " Livraison faite zebi avec quantité à livrer " + quantite +". Wallah on a livré " + livre 
+		this.getContratCadre().ajouter("============================================");
+		this.getContratCadre().ajouter("LIVRAISON " + contrat.getProduit() +" "+contrat.getAcheteur().getNom()+ " Quantité demandée " + quantite +" Livré " + livre
 				);
 		return livre;
 		}
