@@ -15,17 +15,16 @@ import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
-/**
- * @author Jules DORE
- */
+public class Producteur2VendeurContratCadre extends Producteur2Acteur implements IVendeurContratCadre{
 
-public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur implements IVendeurContratCadre{
-	
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
+	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 	private Journal classement;
-	public Producteur2VendeurContratCadreNonBio() {
+	
+	public Producteur2VendeurContratCadre() {
 		super();
 		this.mesContratEnTantQueVendeurNonBio = new LinkedList<ExemplaireContratCadre>();
+		this.mesContratEnTantQueVendeurBio = new LinkedList<ExemplaireContratCadre>();
 		this.classement=new Journal(this.getNom()+" classement", this);
 	}
 	
@@ -74,14 +73,25 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 	
 	
 	
-	@Override
+	//Toute les fèves
 	public boolean vend(Object produit) {
 		// TODO Auto-generated method stub
-		return ((Feve)(produit)==Feve.FEVE_HAUTE||(Feve)(produit)==Feve.FEVE_MOYENNE||(Feve)(produit)==Feve.FEVE_BASSE);
+		return ((Feve)(produit)==Feve.FEVE_HAUTE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_MOYENNE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_HAUTE||(Feve)(produit)==Feve.FEVE_MOYENNE||(Feve)(produit)==Feve.FEVE_BASSE);
 	}
-
 	
-			public double quantiteTotaleContratEnCours(Object produit) {
+	//methode pour le bio
+	public double qtiteTotaleContratEnCours(Object produit) {
+		double qtiteTotaleContratEnCours = 0;
+		for ( int i=0; i<mesContratEnTantQueVendeurBio.size();i++) {
+			if(mesContratEnTantQueVendeurBio.get(i).getProduit()==produit) {
+			qtiteTotaleContratEnCours=mesContratEnTantQueVendeurBio.get(i).getQuantiteTotale()/mesContratEnTantQueVendeurBio.get(i).getEcheancier().getNbEcheances();
+			}
+		}	
+		return qtiteTotaleContratEnCours;
+	}
+	
+	//methode pour le non bio 
+	public double quantiteTotaleContratEnCours(Object produit) {
 		double quantiteTotaleContratEnCours = 0;
 		for ( int i=0; i<mesContratEnTantQueVendeurNonBio.size();i++) {
 			if (mesContratEnTantQueVendeurNonBio.get(i).getProduit()==produit) {
@@ -90,8 +100,8 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 		}
 		return quantiteTotaleContratEnCours;
 	}
-	@Override
-	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+	//non bio
+	public Echeancier contrePropositionDuVendeurNonBio(ExemplaireContratCadre contrat) {
 		if (vend(contrat.getProduit())) {
 			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < this.production((Feve)(contrat.getProduit()))) { 
 				return contrat.getEcheancier();
@@ -107,16 +117,14 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 		 }
 	}
 
-	public double propositionPrix(ExemplaireContratCadre contrat) {
+
+	public double propositionPrixNonBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		return 0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 	}
-	double production = 15 ; // production de fève (à preciser selon gamme) 
+
 	
-	
-	
-	
-	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {	
+	public double contrePropositionPrixVendeurNonBio(ExemplaireContratCadre contrat) {	
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		if (contrat.getQuantiteTotale()>12*(this.production((Feve)contrat.getProduit()))){ // Grosse commande, proposition de prix plus bas
 			if (contrat.getPrix()>0.8 ) {
@@ -130,7 +138,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 		return -1.0;
 	}
 
-	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+	public void notificationNouveauContratCadreNonBio(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurNonBio.add(contrat);
 		
 	}
@@ -174,5 +182,33 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 		res.add(this.journal);
 		return res;
 	}
-}
+
+	@Override
+	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+		return null;
+	}
+
+	@Override
+	public double propositionPrix(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
+		
+	}
 	
+	
+	
+	
+	
+	
+}
