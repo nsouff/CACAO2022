@@ -79,6 +79,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur,I
 			coutProduction = coutProduction + this.coutParKg.get(f)*this.production(f);
 		}
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutProduction);
+		
 		// Cout de stockage, Jules DORE
 		
 		double coutStockage = 0.0 ;
