@@ -118,13 +118,16 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 
-	public double propositionPrixNonBio(ExemplaireContratCadre contrat) {
+	
+	
+	
+	public double propositionPrix(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		return 0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 	}
 
 	
-	public double contrePropositionPrixVendeurNonBio(ExemplaireContratCadre contrat) {	
+	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		if (contrat.getQuantiteTotale()>12*(this.production((Feve)contrat.getProduit()))){ // Grosse commande, proposition de prix plus bas
 			if (contrat.getPrix()>0.8 ) {
@@ -138,7 +141,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		return -1.0;
 	}
 
-	public void notificationNouveauContratCadreNonBio(ExemplaireContratCadre contrat) {
+	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurNonBio.add(contrat);
 		
 	}
@@ -185,28 +188,37 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 
 	@Override
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public double propositionPrix(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		// TODO Auto-generated method stub
-		
-	}
 	
+	public double contrePropositionPrixVendeurBio(ExemplaireContratCadre contrat) {
+		double contrepropositionprix = -1.0;
+		if (contrat.getPrix()>0.8*propositionPrix(contrat)) {
+			if (getClassementTransformateur( contrat.getAcheteur() )==1){
+				if (Math.random()<0.65) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 60% des cas
+				}
+			}
+			if (getClassementTransformateur( contrat.getAcheteur() )==2){
+				if (Math.random()<0.5) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 40% des cas
+				}
+			}	
+			if (getClassementTransformateur( contrat.getAcheteur() )==3){
+				if (Math.random()<0.3) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 20% des cas
+				}
+			}
+			if (getClassementTransformateur( contrat.getAcheteur() )==4){
+				if (Math.random()<0.1) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 10% des cas
+				}
+			}
+		}
 	
+	 return contrepropositionprix;
+	}
 	
 	
 	
