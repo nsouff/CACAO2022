@@ -107,12 +107,20 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
+		System.out.println(f.name());
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+			System.out.println(Lot.toString());
+			System.out.println(Lot.getPoids());
 			if (Lot.isAffine() || affinage) {
-				somme = somme + Lot.getPoids() ;
+			somme = somme + Lot.getPoids() ;
+			System.out.println(somme);
+
 			}
 		}
-		return somme ;
+
+		System.out.println("Somme totale " + somme);
+		return somme ;	
+
 	}
 	
 	
@@ -140,6 +148,21 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	
 	//Auteur : Khéo
 	public void retirerQuantite(Feve f, double quantite) {
+		while (quantite>0) {
+			double poids = this.getFeves().get(f).get(0).getPoids() ;
+			
+			if (quantite >= poids) { //On regarde en fonction de la quantite qui reste dans le lot. Si il y'a plus on enlève le lot
+				quantite = quantite - poids ;
+				this.getFeves().get(f).remove(0);
+			}
+			else {
+				this.getFeves().get(f).get(0).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
+				quantite = 0 ;
+			}
+		}
+	}
+	
+	public void retirerQuantiteParc(Feve f, double quantite) {
 		while (quantite>0) {
 			double poids = this.getFeves().get(f).get(0).getPoids() ;
 			
