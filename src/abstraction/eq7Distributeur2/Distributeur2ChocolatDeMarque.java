@@ -1,14 +1,16 @@
 package abstraction.eq7Distributeur2;
 
+
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Gamme;
 
 
 public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements IDistributeurChocolatDeMarque  {
 	
-	private double capaciteDeVente= Double.MAX_VALUE;;
+	private double capaciteDeVente= Double.MAX_VALUE;
 
 	public Distributeur2ChocolatDeMarque() {
 		super();
@@ -27,16 +29,41 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 		journalStock.ajouter("===========================================");
 	}
 	
-	
-	//edgard: prix depend de la marque et du type de choco: Biofour et BE moins cher que le marché
+	//edgard: prix depend de la marque et du type de choco
 	public double prix(ChocolatDeMarque choco) {
-		if (choco.getMarque()=="Biofour" && choco.isBioEquitable()) {
-			return 9.0;
-		}else {
-			return 10.0;
+		if(choco.getGamme()==Gamme.HAUTE && choco.isBioEquitable() && choco.isOriginal()) {
+			return 15.0;
 		}
+		if(choco.getGamme()==Gamme.HAUTE && choco.isBioEquitable()) {
+			return 14.0;
+		}
+		if(choco.getGamme()==Gamme.HAUTE && choco.isOriginal()) {
+			return 13.0;
+		}
+		if(choco.getGamme()==Gamme.HAUTE) {
+			return 12.5;
+		}
+		if(choco.getGamme()==Gamme.MOYENNE && choco.isBioEquitable() && choco.isOriginal()) {
+			return 11.5;
+		}
+		if(choco.getGamme()==Gamme.MOYENNE && choco.isBioEquitable()) {
+			return 10.5;
+		}
+		if(choco.getGamme()==Gamme.MOYENNE && choco.isOriginal()) {
+			return 9.5;
+		}
+		if(choco.getGamme()==Gamme.MOYENNE) {
+			return 9.0;
+		}
+		if(choco.getGamme()==Gamme.BASSE && choco.isOriginal()) {
+			return 8.0;
+		}
+		if(choco.getGamme()==Gamme.BASSE) {
+			return 7.5;
+		}
+		return 0.0;
 	}
-
+	
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
 		if (crypto!=this.cryptogramme) {
 			this.journal.ajouter("Quelqu'un essaye de me pirater !");

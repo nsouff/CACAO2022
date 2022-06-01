@@ -174,6 +174,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.stock.addProduit((ChocolatDeMarque)produit, quantite);
+		this.journalStock.ajouter("+ "+quantite+" kg -"+produit);
 	}
 
 	@Override
@@ -183,6 +184,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		Echeancier currentEtape = contrat.getEcheancier();
 		ChocolatDeMarque chocProduit = (ChocolatDeMarque) contrat.getProduit();
 		Double q = contrat.getQuantiteTotale();
-		System.out.println("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + chocProduit + "étalé sur " + currentEtape);
+		this.journalContratCadre.ajouter("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + chocProduit + "étalé sur " + currentEtape);
 	}
 }
