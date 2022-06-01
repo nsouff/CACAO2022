@@ -23,12 +23,15 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	private final double SEUIL_AJOUT_ECHEANCE = 0.3;
 	private final int STEP_INTERSECTION_MIN = 6;
 	private final double PRIX_LIMITE = 1.2;
+	private final int MIN_NEGO = 5;
+	Map<Long, Boolean> enRetard;
 	
 	public AcheteurContrat() {
 		super();
 		mesContrats = new ArrayList<ExemplaireContratCadre>();
 		journalNegociationCC = new Journal("Negociations CC", this);
 		journalSuiviCC = new Journal("Suivi des livraisons des CC", this);
+		enRetard = new HashMap<Long, Boolean>();
 	}
 
 
@@ -60,6 +63,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	private void negoReussie(ExemplaireContratCadre ecc) {
 		journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "Négociation réussie ! Contrat #" + ecc.getNumero());
 		mesContrats.add(ecc);
+		enRetard.put(ecc.getNumero(),  false);
 		setPrixVente((ChocolatDeMarque)ecc.getProduit(), ecc.getPrix());
 	}
 	
@@ -121,16 +125,22 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 
 	@Override
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
+		double espere = 5.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+		int nbNego = contrat.getListePrix().size();
 		if (contrat.getPrix() > PRIX_LIMITE * 7.5* facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat())) {
 			double res = 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
-			journalNegociationCC.ajouter(contrat.getPrix() + " le kilo est trop élevé nous proposons " + res);
+			journalNegociationCC.ajouter("--> " + contrat.getPrix() + " le kilo est trop élevé nous proposons " + res);
 			return res;
 		}
 		else {
+			if (nbNego < MIN_NEGO+3) {
+				double prop = 0.0;
+				prop = (contrat.getPrix() + espere)/2;
+				journalNegociationCC.ajouter("--> Nous negocions un prix de " + prop);
+			}
 			journalNegociationCC.ajouter("--> Nous acceptons le prix proposé qui est " + contrat.getPrix());
 			return contrat.getPrix();
 		}
-		// TODO: améliorer la manière dont on négocie le prix (prendre en compte les précédentes négocitations du contrat etc)
 	}
 
 	@Override
@@ -142,11 +152,13 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		double qteAttendu = contrat.getQuantiteALivrerAuStep();
 		if (quantite != qteAttendu) {
+			enRetard.put(contrat.getNumero(), true);
 			journalSuiviCC.ajouter(Color.RED, Color.BLACK, "Il manque " + (qteAttendu - quantite) + "Kg de ce que nous etions censé recevoir de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
 			
 		}
 		else {
 			journalSuiviCC.ajouter("La quantité attendu (" + quantite + ") a été recu de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
+			enRetard.put(contrat.getNumero(), false);
 		}
 		this.getNotreStock().addQte((ChocolatDeMarque) produit, quantite);
 		this.setPrixVente((ChocolatDeMarque) produit, contrat.getPrix());
@@ -157,6 +169,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ExemplaireContratCadre contrat : mesContrats) {
 			if (contrat.getQuantiteRestantALivrer() == 0.0 && contrat.getMontantRestantARegler() == 0.0) {
 				aSupprimer.add(contrat);
+				enRetard.remove(contrat.getNumero());
 			}
 		}
 		mesContrats.removeAll(aSupprimer);		
@@ -167,12 +180,15 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	 * Permet d'avoir un echenacier additionnant tous les echeancier d'un chocolat 
 	 * @return un echeancier de ce qu'il manque à fournir dans nos prévision
 	 */
-	public Map<ChocolatDeMarque, Echeancier> getEchenaceParChoco() {
+	public Map<ChocolatDeMarque, Echeancier> getEcheanceParChoco() {
 		Map<ChocolatDeMarque, Echeancier> res = new HashMap<ChocolatDeMarque, Echeancier>();
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			res.put(choco, new Echeancier());
 		}
 		for (ExemplaireContratCadre ecd : mesContrats) {
+			if (enRetard.get(ecd.getNumero())) {
+				continue;
+			}
 			ChocolatDeMarque cm = (ChocolatDeMarque) ecd.getProduit();
 			Echeancier e = ecd.getEcheancier();
 			int start = (e.getStepDebut() < Filiere.LA_FILIERE.getEtape()+1) ? Filiere.LA_FILIERE.getEtape()+1 : e.getStepDebut();
@@ -213,7 +229,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 
 	public Map<ChocolatDeMarque, Echeancier> nouveauxEcheanciersVoulus() {
 		Map<ChocolatDeMarque, Echeancier> res = new HashMap<ChocolatDeMarque, Echeancier>();
-		Map<ChocolatDeMarque, Echeancier> echeancierTotal = getEchenaceParChoco();
+		Map<ChocolatDeMarque, Echeancier> echeancierTotal = getEcheanceParChoco();
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			Echeancier eChoco = echeancierTotal.get(choco);
 			Echeancier e = createEcheancier(eChoco, Filiere.LA_FILIERE.getEtape()+1, choco);

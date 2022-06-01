@@ -99,10 +99,19 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre par l'acheteur "+acheteur.getNom()+" avec tg==true alors que l'acheteur n'est pas un distributeur (seuls les distributeurs peuvent s'engager a vendre en tete de gondole)");
 		}
 		if (echeancier.getQuantiteTotale()<QUANTITE_MIN_ECHEANCIER) {
-			System.out.println("!!! "+acheteur.getNom()+" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
-			Filiere.LA_FILIERE.getBanque().faireFaillite(acheteur);
+			if (Filiere.LA_FILIERE.getActeursSolvables().contains(acheteur)) {
+				System.out.println("!!! "+acheteur.getNom()+" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
+				Filiere.LA_FILIERE.getBanque().faireFaillite(acheteur);
+			}
 			return null;
 			//			throw new IllegalArgumentException(" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
+		}
+		if (echeancier.getStepDebut()<=Filiere.LA_FILIERE.getEtape()) {
+			if (Filiere.LA_FILIERE.getActeursSolvables().contains(acheteur)) {
+				System.out.println("!!! "+acheteur.getNom()+" appel de demandeAcheteur(...) de SuperViseurVentesContratCadre avec un echeancier commencant a l'etape "+echeancier.getStepDebut()+" a l'etape "+Filiere.LA_FILIERE.getEtape());
+				Filiere.LA_FILIERE.getBanque().faireFaillite(acheteur);
+			}
+			return null;			
 		}
 		ContratCadre contrat = new ContratCadre(acheteur, vendeur, produit, echeancier, cryptogramme, tg);
 		return negociations(acheteur, vendeur, produit, echeancier, cryptogramme, tg, contrat,acheteur);
@@ -136,6 +145,13 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 		if (echeancier.getQuantiteTotale()<QUANTITE_MIN_ECHEANCIER) {
 			throw new IllegalArgumentException(" appel de demandeVendeur(...) de SuperViseurVentesContratCadre avec un echeancier d'un volume total de moins de "+QUANTITE_MIN_ECHEANCIER+" kg");
 		}
+		if (echeancier.getStepDebut()<=Filiere.LA_FILIERE.getEtape()) {
+			if (Filiere.LA_FILIERE.getActeursSolvables().contains(vendeur)) {
+				System.out.println("!!! "+acheteur.getNom()+" appel de demandeVendeur(...) de SuperViseurVentesContratCadre avec un echeancier commencant a l'etape "+echeancier.getStepDebut()+" a l'etape "+Filiere.LA_FILIERE.getEtape());
+				Filiere.LA_FILIERE.getBanque().faireFaillite(vendeur);
+			}
+			return null;			
+		}		
 		if (acheteur==vendeur) {
 			throw new IllegalArgumentException(" appel de demandeVendeur(...) de SuperViseurVentesContratCadre avec vendeur==acheteur. On ne peut pas faire un contrat cadre avec soi meme");
 		}
@@ -287,6 +303,8 @@ public class SuperviseurVentesContratCadre implements IActeur, IAssermente {
 			} else {
 				this.journal.ajouter("- rien a payer a cette etape");
 			}
+			cc.penaliteLivraison();
+			cc.penalitePaiement();
 		}		
 	}
 
