@@ -23,6 +23,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	private final double SEUIL_AJOUT_ECHEANCE = 0.3;
 	private final int STEP_INTERSECTION_MIN = 6;
 	private final double PRIX_LIMITE = 1.2;
+	private final int MIN_NEGO = 5;
 	
 	public AcheteurContrat() {
 		super();
@@ -122,16 +123,22 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 
 	@Override
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
+		double espere = 5.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+		int nbNego = contrat.getListePrix().size();
 		if (contrat.getPrix() > PRIX_LIMITE * 7.5* facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat())) {
 			double res = 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
-			journalNegociationCC.ajouter(contrat.getPrix() + " le kilo est trop élevé nous proposons " + res);
+			journalNegociationCC.ajouter("--> " + contrat.getPrix() + " le kilo est trop élevé nous proposons " + res);
 			return res;
 		}
 		else {
+			if (nbNego < MIN_NEGO+3) {
+				double prop = 0.0;
+				prop = (contrat.getPrix() + espere)/2;
+				journalNegociationCC.ajouter("--> Nous negocions un prix de " + prop);
+			}
 			journalNegociationCC.ajouter("--> Nous acceptons le prix proposé qui est " + contrat.getPrix());
 			return contrat.getPrix();
 		}
-		// TODO: améliorer la manière dont on négocie le prix (prendre en compte les précédentes négocitations du contrat etc)
 	}
 
 	@Override
