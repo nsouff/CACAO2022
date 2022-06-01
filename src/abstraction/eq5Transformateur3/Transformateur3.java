@@ -1,10 +1,7 @@
 package abstraction.eq5Transformateur3;
 
-import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.produits.Chocolat;
-import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
-import abstraction.eq8Romu.produits.Gamme;
 
 public class Transformateur3 extends VenteAppel {
 	
