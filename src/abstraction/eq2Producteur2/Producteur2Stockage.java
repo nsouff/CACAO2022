@@ -74,6 +74,10 @@ public class Producteur2Stockage extends Producteur2Couts {
 		super.next();
 		for(Feve feve : Feve.values()) {
 			this.addQuantite(this.production(feve), feve);
+		for (Feve f : Feve.values()) {
+//			for (i=0;i<)
+			
+		}
 
 //			this.getStockTot().put(feve, SommeQuantite(this.getStock().get(feve)));
 		}

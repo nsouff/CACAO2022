@@ -174,5 +174,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 		res.add(this.journal);
 		return res;
 	}
+
+
 }
 	
