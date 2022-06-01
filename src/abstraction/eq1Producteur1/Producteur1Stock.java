@@ -107,6 +107,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
+
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
 			if (Lot.isAffine() || affinage) {
 
