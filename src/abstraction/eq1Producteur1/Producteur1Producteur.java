@@ -14,6 +14,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 public abstract class Producteur1Producteur extends Producteur1Stock{
 	private LinkedList<Parc> ListeParc;
+	private HashMap<Feve, Double> recolte;
 	private int mecontentement_global_basse;
 	private int mecontentement_global_moyenne;
 	private int mecontentement_global_haute;
@@ -189,12 +190,12 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		super.next();
 		for (int j=0; j<ListeParc.size();j++) {
 			this.getParc(j).MAJAleas();
-			HashMap<Feve, Double> recolte = this.getParc(j).Recolte();
-			this.addLot(Feve.FEVE_BASSE, recolte.get(Feve.FEVE_BASSE));
-			this.addLot(Feve.FEVE_MOYENNE, recolte.get(Feve.FEVE_MOYENNE));
-			this.addLot(Feve.FEVE_HAUTE, recolte.get(Feve.FEVE_HAUTE));
-			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
-			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+			this.recolte = this.getParc(j).Recolte();
+			this.addLot(Feve.FEVE_BASSE, this.recolte.get(Feve.FEVE_BASSE));
+			this.addLot(Feve.FEVE_MOYENNE, this.recolte.get(Feve.FEVE_MOYENNE));
+			this.addLot(Feve.FEVE_HAUTE, this.recolte.get(Feve.FEVE_HAUTE));
+			this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+			this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.recolte.get(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
 			this.getParc(j).MAJGuerre();
 		}
