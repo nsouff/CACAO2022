@@ -54,8 +54,13 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	/** Prix initial = 1.4 x prixVenteMin 
 	 *  Alexandre*/
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		journalCC.ajouter("ça négocie dur les prix");
+		journalCC.ajouter("proposition prix");
+		if (!( contrat.getProduit() instanceof ChocolatDeMarque)) {
+			journalCC.ajouter("________________" + contrat.getAcheteur() +" "+ contrat.getProduit());
+			return 0.;
+		}
 		return this.prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())*1.4;
+		
 	}
 
 	// négocie une contreproposition du prix; auteur Julien */
