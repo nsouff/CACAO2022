@@ -2,21 +2,24 @@ package abstraction.eq4Transformateur2;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
+import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 //auteur Jad
-public abstract class Transformateur2Transfo extends Transformateur2Stock {
+public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	
 //	protected double rdt=Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
 //	protected double prix_transfo= Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur();
 //	protected double prix_ori=Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
 //	protected double cap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
 	
-	
+	private Stock<ChocolatDeMarque> commandes;
 	protected double rdt;
 	protected double prix_transfo;
 	protected double prix_ori;
@@ -25,34 +28,35 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 	
 	
 	public void next() {//EN V1 on ne transforme que de façon arbitraire
+		
 		super.next();
 		NewCap=cap;
-		
+		this.GetCommandes(mesContratEnTantQueVendeur);
 		//il faut régler les qauntités transformées pour chaque types de fèves
 		
 		//Les transformations non originales courtes
-		this.transfo(0.0*cap, false, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, false, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_HAUTE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations originales courtes
-		this.transfo(0.0*cap, true, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.0*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, true, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_HAUTE);
+		this.transfo(0.1*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations originales longues
-		this.transfo(0.0*cap, true, "longue",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,true,"longue",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,true,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, true, "longue",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,true,"longue",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,true,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations non originales longues
-		this.transfo(0.0*cap, false, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.0*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(0.1*cap, false, "courte",Feve.FEVE_BASSE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(0.1*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 				
 	}
@@ -62,38 +66,66 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		rdt=Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
 		prix_transfo=Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur();
 		prix_ori=Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
+		
 	}
 	
 	public Transformateur2Transfo() {
 		super();
-		
+		this.commandes = new Stock<ChocolatDeMarque>();
 		
 	}
 
-	
-	public void GetCommandes() {///POUR LA V2
-		int current =Filiere.LA_FILIERE.getEtape();
-		int previous =Filiere.LA_FILIERE.getEtape()-1;
-		int comming =Filiere.LA_FILIERE.getEtape()+1;
-		//List commandes=new List<()>;
-		//List HistoCommandes="".getCommandes();
-		//for (javatuples c in commandes){
-		//if(c.getValue3()){
-		//commandes.add(c);
-		//}
-		//}
-		//return(commandes)
+	//renvoie une HashMap des chocolats de marques et de la quatité à livrer de ces derniers 
+	public void GetCommandes(List<ExemplaireContratCadre> CC) {///POUR LA V2
+		Stock comm=new Stock<ChocolatDeMarque>();
+		for(ExemplaireContratCadre c:CC) {
+			
+			comm.ajouter(((ChocolatDeMarque)(c.getProduit())), c.getQuantiteALivrerAuStep());
+			this.commandes=comm;
+		}
 		
 		
 		
 	}
 	
-	public void bestCombi() {//POUR LA V2
+	
 	//trouve la meilleur combinaison (qui minimise les coûts et si possible a une stratégie)
 	//de transformation (types de fèves et de tranfos)
 	//pour honorer les commandes
 	//Commence par remplir less commandes les plus anciennes
 	//honnore les commande par date croissante jusqu'à que ce ne soit plus possible (stock ou capacité de production)
+
+	public void bestCombi(String fev) {//POUR LA V2
+	//initialisation des variables:
+		//transformations courtes originales
+		double COBQ=0.0;
+		double COMQ=0.0;
+		double COMQBE=0.0;
+		double COHQ=0.0;
+		double COHQBE=0.0;
+		//transformations courtes non originales
+		double CBQ=0.0;
+		double CMQ=0.0;
+		double CMQBE=0.0;
+		double CHQ=0.0;
+		double CHQBE=0.0;
+		//transformations longues originales
+		double LOBQ=0.0;
+		double LOMQ=0.0;
+		double LOMQBE=0.0;
+		//transformations longues non originales
+		double LBQ=0.0;
+		double LMQ=0.0;
+		double LMQBE=0.0;
+		
+		
+		
+		
+		
+
+		
+		
+		
 		
 		
 	}
@@ -116,8 +148,8 @@ public abstract class Transformateur2Transfo extends Transformateur2Stock {
 		
 		if (trans.equals("longue")){//dans le cas d'une transformation longue
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, (1/rdt)*qt*(prix_transfo+prix_ori*s))) {//(1/rdt)*qt est la quantité de fève nécessaire pour obtenir qt de chocolat
-					if(super.getStockfeve().getStocktotal()>(1/rdt)*qt) {//s'il y a assez de fèves
-						if(NewCap>=qt) {//assez de capacité de stockage
+					if(this.getStockfeve().getQuantite(f)>(1/rdt)*qt) {//s'il y a assez de fèves
+						if(NewCap>=(1/rdt)*qt) {//assez de capacité de stockage
 							NewCap-=(1/rdt)*qt;//mise à jour de la capacité de production
 							this.getStockfeve().enlever(f,(1/rdt)*qt);//baisse le stock de feves	
 							this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), (1/rdt)*qt);//augmente le stock de chocolat de marque
