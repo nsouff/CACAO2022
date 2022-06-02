@@ -81,26 +81,27 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		mesContratEnTantQueVendeur.add(contrat);
 		
-		//System.out.println(dernierPrixVenteChocoReset.getDistributeurs());
-		//System.out.println(dernierPrixVenteChocoReset.getChocolats());
-		//System.out.println(dernierPrixVenteChocoReset.getPrix(getDescription(), null));
+		//System.out.println("notif new CC");
+		//System.out.println("dsitrib : "+ dernierPrixVenteChocoReset.getDistributeurs() + ", choco : " + dernierPrixVenteChocoReset.getChocolats() );
 		
-		/**
-		if (dernierPrixVenteChocoReset.getPrix(
-				contrat.getAcheteur().getNom(), 
-				((ChocolatDeMarque)contrat.getProduit()).getChocolat())
-				> contrat.getPrix() 
-				&& dernierPrixVenteChocoReset.getPrix(
-						contrat.getAcheteur().getNom(), 
-						((ChocolatDeMarque)contrat.getProduit()).getChocolat()) 
-				!= 0) { // on garde le prix minimum negocie avec les vendeurs
-			dernierPrixVenteChocoReset.setPrix(
+		if (contrat.getAcheteur().getNom() != "EQ8") {
+			if (dernierPrixVenteChocoReset.getPrix(
 					contrat.getAcheteur().getNom(), 
-					((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
-					contrat.getPrix());
-			
-		} */
-		journalCC.ajouter("nouveau contrat cadre vendeur");
+					((ChocolatDeMarque)contrat.getProduit()).getChocolat())
+					> contrat.getPrix() 
+					&& dernierPrixVenteChocoReset.getPrix(
+							contrat.getAcheteur().getNom(), 
+							((ChocolatDeMarque)contrat.getProduit()).getChocolat()) 
+					!= 0) { // on garde le prix minimum negocie avec les vendeurs
+				dernierPrixVenteChocoReset.setPrix(
+						contrat.getAcheteur().getNom(), 
+						((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 
+						contrat.getPrix());
+				
+			}
+		}
+		 
+		journalCC.ajouter("nouveau contrat cadre vendeur signé");
 		
 	}
 

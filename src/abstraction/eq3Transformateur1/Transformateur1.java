@@ -64,11 +64,23 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		return this.dernierPrixVenteChoco;
 	}
 
-	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  */
-	public void prixMaxAchat() {		
-			prixAchatFeve.put(Feve.FEVE_BASSE, Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);	
-			prixAchatFeve.put(Feve.FEVE_MOYENNE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ)) - coutTransfo);
-			prixAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,Math.min(dernierPrixVenteChoco.getPrix("distributeur1", Chocolat.MQ_BE), dernierPrixVenteChoco.getPrix("distributeur2", Chocolat.MQ_BE)) - coutTransfo);
+	/** détermine le prix d'achat max; pas de prise en compte du rendement auteur Julien  
+	 *  Adaptation de la fonction avec la modification des cles de dernierPrixVentechoco (on ne pouvait plus juste mettre "distrib 1") - Alexandre*/
+	public void prixMaxAchat() {
+		double prix = 100000000000000000.;
+		for (Feve f : Feve.values())
+			if (f.equals(Feve.FEVE_BASSE) || f.equals(Feve.FEVE_MOYENNE)) {
+				for (String d : dernierPrixVenteChoco.getDistributeurs()) {
+					prix = Math.min(prix, dernierPrixVenteChoco.getPrix(d, Chocolat.MQ));
+				}
+				prixAchatFeve.put(f, prix - coutTransfo);	
+			} else if (f.equals(Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+				for (String d : dernierPrixVenteChoco.getDistributeurs()) {
+					prix = Math.min(prix, dernierPrixVenteChoco.getPrix(d, Chocolat.MQ_BE));
+				}
+				prixAchatFeve.put(f, prix - coutTransfo);
+			}
+			
 			if (prixAchatFeve.get(Feve.FEVE_BASSE)<=0) {
 				prixAchatFeve.put(Feve.FEVE_BASSE,3.);				
 			}
@@ -147,7 +159,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	 * auteur : Anna */
 	
 	public void transfo(double quantiteFeveTransformee, Feve feve, boolean original) {
-		Lots nouveaulot = new Lots();
+		//Lots nouveaulot = new Lots();
 		for (Feve f : stockFeve.keySet()) {
 			if (f == feve) {
 				stockFeve.put(feve, stockFeve.get(feve)-quantiteFeveTransformee);
@@ -157,10 +169,10 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
-		stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
-					nouveaulot.addQuantité(coutQuantiteTransfo.get(1)) ;
-					nouveaulot.addDate(Filiere.LA_FILIERE.getEtape()) ;
-					stockChocoPeremption.get(c).add(nouveaulot);
+					stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
+					//nouveaulot.addQuantité(coutQuantiteTransfo.get(1)) ;
+					//nouveaulot.addDate(Filiere.LA_FILIERE.getEtape()) ;
+					//stockChocoPeremption.get(c).add(nouveaulot);
 
 				}
 			}
@@ -272,7 +284,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				 *  au sinon, on ecrase*/
 				if (Double.compare(dernierPrixVenteChoco.getPrix(distrib, c), 0.) != 0) {
 					journal.ajouter("le dernier prix de vente du chocolat " + c + " au distributeur" + distrib+ " est de " + dernierPrixVenteChoco.getPrix(distrib, c));
-					//System.out.println("if ligne 263");
+					System.out.println("if ligne 263");
 					dernierPrixVenteChoco.setPrix(distrib, c, dernierPrixVenteChocoReset.getPrix(distrib, c));
 					//System.out.println("bug 1 l 265 ?");
 				}
@@ -280,7 +292,9 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		}
 		
 		// reset liste des ventes du tour precedent
+		journalCC.ajouter("reset cc");
 		dernierPrixVenteChocoReset = new dernierPrixVenteChoco();
+		dernierPrixVenteChocoReset.initialiser();
 		
 		/** MISE A JOUR de lsiteAO
 		 * on le reset en debut de tour pour effacer les AO du tour precedent et pouvoir en ajouter de nouvelles lors des AO

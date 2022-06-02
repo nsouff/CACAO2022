@@ -72,6 +72,8 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	public void initialiser( ) {
 		super.initialiser();
 		prixAchatFeve.put(Feve.FEVE_BASSE, 10000.);
+		dernierPrixVenteChoco.initialiser();
+		dernierPrixVenteChocoReset.initialiser();
 	}
 	
 	/** 
