@@ -20,6 +20,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 //	protected double cap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
 	
 	private Stock<ChocolatDeMarque> commandes;
+	private Stock<ChocolatDeMarque> commandes_retard;
 	protected double rdt;
 	protected double prix_transfo;
 	protected double prix_ori;
@@ -57,6 +58,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		this.transfo(0.1*cap, false, "longue",Feve.FEVE_BASSE);
 		this.transfo(0.1*cap,false,"longue",Feve.FEVE_MOYENNE);
 		this.transfo(0.1*cap,false,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		
+		Stock<ChocolatDeMarque> s=this.commandes;
 		
 				
 	}
@@ -122,6 +125,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		
 		
 		
+		
 
 		
 		
@@ -130,7 +134,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		
 	}
 	
-	
+	//Dans cette seconde version la transformation ne fonctionne plus en mode tout/rien mais fait le maximum possible
 	public void transfo(double qt,boolean ori, String trans,Feve f){//qt est la quantité de CHOCOLAT voulue
 		//Vérifie quel type de transformation
 		//Vérifie la capacité bancaire
@@ -147,30 +151,61 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		}
 		
 		if (trans.equals("longue")){//dans le cas d'une transformation longue
-				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, (1/rdt)*qt*(prix_transfo+prix_ori*s))) {//(1/rdt)*qt est la quantité de fève nécessaire pour obtenir qt de chocolat
-					if(this.getStockfeve().getQuantite(f)>(1/rdt)*qt) {//s'il y a assez de fèves
-						if(NewCap>=(1/rdt)*qt) {//assez de capacité de stockage
+			double max_feves=Math.min(this.getStockfeve().getQuantite(f), (1/rdt)*qt);//Récupération du max de fèves que l'on peut utilisé
+			double max_prod=Math.min(max_feves, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
+
+			
+			if(max_prod>0) {
+				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, max_prod*(prix_transfo+prix_ori*s))) {//(1/rdt)*qt est la quantité de fève nécessaire pour obtenir qt de chocolat
+							
 							NewCap-=(1/rdt)*qt;//mise à jour de la capacité de production
-							this.getStockfeve().enlever(f,(1/rdt)*qt);//baisse le stock de feves	
-							this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), (1/rdt)*qt);//augmente le stock de chocolat de marque
-							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), (1/rdt)*qt*(prix_transfo+s*prix_ori*s));//paye
-							this.journal.ajouter("Transformation longue de " +(1/rdt)*qt+" kg de "+f+" en "+qt+"kg de"+this.fevechoco(f).toString()+ " pour "+(1/rdt)*qt*(prix_transfo+prix_ori*s)+"€");
-						}
-					}
+							this.getStockfeve().enlever(f,max_prod);//baisse le stock de feves	
+							this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), max_prod);//augmente le stock de chocolat de marque
+							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
+							this.journal.ajouter("Transformation longue de " +max_prod+" kg de "+f+" en "+qt+"kg de"+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
+						
+					}	
+				else if(this.getMaxPayable(trans, ori)>0 && max_prod>0) {//On récupère le maximum qu'on puisse payer
+					double max_paybale=this.getMaxPayable(trans, ori);
+					NewCap-=max_paybale;//mise à jour de la capacité de production
+					this.getStockfeve().enlever(f,max_paybale);//baisse le stock de feves
+					this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_paybale);//augmente le stock de chocolat
+					this.journal.ajouter("Transformation Courte de " +max_paybale+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
+					Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_paybale*(prix_transfo+s*prix_ori*s));//paye
+				
 				}
+				}
+				
 		}
 		if (trans.equals("courte")) {
-			if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, qt*(prix_transfo+prix_ori*s))) {//qt est la quantité de fève nécessaire pour obtenir qt de chocolat
-				if(this.getStockfeve().getQuantite(f)>qt) {//s'il y a assez de fèves
-					if(NewCap>=qt) {//assez de capacité de production
-						NewCap-=qt;//mise à jour de la capacité de production
-						this.getStockfeve().enlever(f,qt);//baisse le stock de feves
-						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), qt);//augmente le stock de chocolat
-						this.journal.ajouter("Transformation Courte de " +qt+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+qt*(prix_transfo+prix_ori*s)+"€");
-						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), qt*(prix_transfo+s*prix_ori*s));//paye
+			double max_feves=Math.min(this.getStockfeve().getQuantite(f), qt);//Récupération du max de fèves que l'on peut utilisé
+			double max_prod=Math.min(max_feves, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
+				
+			if(max_prod>0 ) {
+					
+				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, max_prod*(prix_transfo+prix_ori*s))) {//max prod est le maximum capable d'être produit pour lequel on peut payer
+						NewCap-=max_prod;//mise à jour de la capacité de production
+						this.getStockfeve().enlever(f,max_prod);//baisse le stock de feves
+						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_prod);//augmente le stock de chocolat
+						this.journal.ajouter("Transformation Courte de " +max_prod+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
+						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
+					
+						
+						
+						
 					}
+				else if(this.getMaxPayable(trans, ori)>0) {//On récupère le maximum qu'on puisse payer
+					double max_paybale=this.getMaxPayable(trans, ori);
+					NewCap-=max_paybale;//mise à jour de la capacité de production
+					this.getStockfeve().enlever(f,max_paybale);//baisse le stock de feves
+					this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_paybale);//augmente le stock de chocolat
+					this.journal.ajouter("Transformation Courte de " +max_paybale+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
+					Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_paybale*(prix_transfo+s*prix_ori*s));//paye
+				
 				}
 			}
+					
+					
 	}
 		}
 		
@@ -206,6 +241,22 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 			return new ChocolatDeMarque(Chocolat.HQ_BE,super.getMarquesChocolat().get(4));
 		}
 		return null;
+	}
+	
+	
+	
+	public double getMaxPayable(String trans,boolean b) {
+		double s=0;
+		if(b) {
+			s=1;
+		}
+		if(trans.equals("court")) {
+			return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme)/(prix_transfo+s*prix_ori);
+		}
+		else if (trans.equals("longue")) {
+			return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme)/((prix_transfo+s*prix_ori)*rdt);
+		}
+		return 0.0;
 	}
 		
 		
