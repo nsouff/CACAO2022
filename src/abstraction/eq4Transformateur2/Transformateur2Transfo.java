@@ -6,6 +6,7 @@ import java.util.List;
 
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
@@ -19,6 +20,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 //	protected double prix_ori=Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
 //	protected double cap=Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
 	
+	private Journal journalTransfo;
 	private Stock<ChocolatDeMarque> commandes;
 	protected double rdt;
 	protected double prix_transfo;
@@ -71,6 +73,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	
 	public Transformateur2Transfo() {
 		super();
+		this.journalTransfo=new Journal("O'ptites Transformations",this);
 		this.commandes = new Stock<ChocolatDeMarque>();
 		
 	}
@@ -154,7 +157,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 							this.getStockfeve().enlever(f,(1/rdt)*qt);//baisse le stock de feves	
 							this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), (1/rdt)*qt);//augmente le stock de chocolat de marque
 							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), (1/rdt)*qt*(prix_transfo+s*prix_ori*s));//paye
-							this.journal.ajouter("Transformation longue de " +(1/rdt)*qt+" kg de "+f+" en "+qt+"kg de"+this.fevechoco(f).toString()+ " pour "+(1/rdt)*qt*(prix_transfo+prix_ori*s)+"€");
+							journalTransfo.ajouter("Transformation longue de " +(1/rdt)*qt+" kg de "+f+" en "+qt+"kg de"+this.fevechoco(f).toString()+ " pour "+(1/rdt)*qt*(prix_transfo+prix_ori*s)+"€");
 						}
 					}
 				}
@@ -166,7 +169,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 						NewCap-=qt;//mise à jour de la capacité de production
 						this.getStockfeve().enlever(f,qt);//baisse le stock de feves
 						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), qt);//augmente le stock de chocolat
-						this.journal.ajouter("Transformation Courte de " +qt+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+qt*(prix_transfo+prix_ori*s)+"€");
+						journalTransfo.ajouter("Transformation Courte de " +qt+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+qt*(prix_transfo+prix_ori*s)+"€");
 						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), qt*(prix_transfo+s*prix_ori*s));//paye
 					}
 				}
@@ -206,6 +209,9 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 			return new ChocolatDeMarque(Chocolat.HQ_BE,super.getMarquesChocolat().get(4));
 		}
 		return null;
+	}
+	public Journal getJournalTransfo() {
+		return journalTransfo;
 	}
 		
 		

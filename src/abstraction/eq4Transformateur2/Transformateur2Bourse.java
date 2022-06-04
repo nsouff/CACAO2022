@@ -8,6 +8,7 @@ import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
@@ -17,6 +18,7 @@ import abstraction.eq8Romu.produits.Gamme;
 
 public abstract class Transformateur2Bourse extends Transformateur2Transfo implements IAcheteurBourse{
 	
+	private Journal journalAchat;
 	private double quantiteEnKg;
 	private double prixseuilBG;
 	private double prixseuilMG;
@@ -26,6 +28,7 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 
 	public Transformateur2Bourse() {
 		super();
+		this.journalAchat=new Journal("O'ptits Achats",this);
 		this.quantiteEnKg=quantiteEnKg;
 		this.prixseuilBG=prixseuilBG;
 		this.prixseuilMG=prixseuilMG;
@@ -48,8 +51,8 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 			}
 			this.prixMinM.setValeur(superviseur, somme2/3);
 		}
-		this.journal.ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est"+ this.prixMinB.getValeur() + "");
-		this.journal.ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est"+ this.prixMinM.getValeur()+ "");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est"+ this.prixMinB.getValeur() + "");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est"+ this.prixMinM.getValeur()+ "");
 	}
 	
 	public void initialiser() {
@@ -169,7 +172,7 @@ public double demande(Feve f, double cours) {
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		this.getStockfeve().ajouter(f,quantiteEnKg);
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coursEnEuroParKg*quantiteEnKg);
-		this.journal.ajouter("Achat de "+quantiteEnKg+" kg de fèves "+f+" pour "+coursEnEuroParKg +" €/kg");
+		this.getJournalAchat().ajouter("Achat de "+quantiteEnKg+" kg de fèves "+f+" pour "+coursEnEuroParKg +" €/kg");
 	}
 
 //Marie et Jad
@@ -183,6 +186,10 @@ public double demande(Feve f, double cours) {
 	public double demande(Feve f, double cours) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public Journal getJournalAchat() {
+		return journalAchat;
 	}
 
 

@@ -40,7 +40,6 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	protected double marge;
 	
 	protected SuperviseurVentesAO superviseur;
-	protected Journal journal;
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
 	
@@ -63,7 +62,6 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.prixMinM = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.marge = 1.2;
-		this.journal=new Journal("Opti'Cacao activités", this);
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
 		this.stockReferenceFeve=new Stock();
 		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 8000);
@@ -215,13 +213,16 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	public abstract Journal getJournalcours();
 	public abstract Journal getJournalVente();
 	public abstract Journal getJournalStock();
+	public abstract Journal getJournalTransfo();
+	public abstract Journal getJournalAchat();
 	
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
-		j.add(this.journal);
 		j.add(this.getJournalcours());
 		j.add(this.getJournalVente());
 		j.add(this.getJournalStock());
+		j.add(this.getJournalTransfo());
+		j.add(this.getJournalAchat());
 		return j;
 	}
 	
