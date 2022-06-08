@@ -1,10 +1,12 @@
 package abstraction.eq4Transformateur2;
 
+import java.util.HashMap;
 import java.util.List;
 
 import abstraction.eq8Romu.appelsOffres.IVendeurAO;
 import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
@@ -12,18 +14,20 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class Transformateur2VenteAO extends Transformateur2AchatAO implements IVendeurAO {
 	protected SuperviseurVentesAO superviseur;
-	protected double prixMin; //Lorsque l'on est vendeur d'une Appel d'Offre
+	protected double prix_minB ;
+	protected double prix_minM; //Lorsque l'on est vendeur d'une Appel d'Offre
  
  
  public Transformateur2VenteAO() {
 		super();
-		this.prixMin=5;
+		this.prix_minB= 4;
+		this.prix_minM = 5;
 	}
  
 	public void initialiser() {
 		super.initialiser();
 		this.superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
-		journal.ajouter("PrixMin=="+this.prixMin);
+		//journal.ajouter("PrixMin=="+this.prixMin);
 
 	}
 	public void next() {
@@ -39,11 +43,11 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 //		}
 		
 		
-		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 2000kg, on en propose 2000kg.
+		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 50000kg, on en propose 8000kg.
 			super.next();	
 		for(ChocolatDeMarque c :this.getStockchocolatdemarque().getStock().keySet()) {
-					if(this.getStockchocolatdemarque().getStock().get(c)>2000) {
-						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 2000.0, false);
+					if(this.getStockchocolatdemarque().getStock().get(c)>3000) {
+						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 500.0, false);
 						if (retenue!=null) {
 							this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
 							journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
@@ -52,6 +56,7 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 						}
 					}
 				}
+		
 	}
 @Override
 //public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
@@ -70,6 +75,7 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 
 //Nawfel
 	//Vente en AO : comment choisir parmi les offres
+// Gabriel modifications pour prix minimal au kg
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 		this.journal.ajouter("propositions : "+propositions);
 		if (propositions==null) {
@@ -77,31 +83,49 @@ public class Transformateur2VenteAO extends Transformateur2AchatAO implements IV
 		} else {
 			PropositionAchatAO meilleur_proposition=propositions.get(0);
 			for(PropositionAchatAO p : propositions) {
-				if (p.getPrixKg()>meilleur_proposition.getPrixKg()){
+				//On choisit l'offre la plus cher qui ne nous met pas en négatif de stock de chocolatdemarque
+				if (p.getPrixKg()>meilleur_proposition.getPrixKg() && p.getOffre().getQuantiteKG()<super.getStockchocolatdemarque().getQuantite(p.getOffre().getChocolat())){
 					meilleur_proposition=p;
 				}
 			}
+			
 			PropositionAchatAO retenue = meilleur_proposition;
-			if (retenue.getPrixKg()>this.prixMin) {
-				this.journal.ajouter("  --> je choisis "+retenue);
-				return retenue;
-			} else {
-				this.journal.ajouter("  --> je ne retiens rien");
-				return null;
+			this.journal.ajouter("Prix voulu pour les basses :" + this.prixVouluB());
+			this.journal.ajouter("Prix voulu pour les moyennes :" + this.prixVouluM());
+			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(0))) {
+				if (retenue.getPrixKg()>(this.prixVouluB())) {
+					this.journal.ajouter("  --> je choisis "+retenue);
+					return retenue;
+				} else {
+					this.journal.ajouter("  --> je ne retiens rien");
+					return null;
+				}
 			}
+			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(1))) {
+				if (retenue.getPrixKg()>(this.prixVouluM())) {
+					this.journal.ajouter("  --> je choisis "+retenue);
+					return retenue;
+				} else {
+					this.journal.ajouter("  --> je ne retiens rien");
+					return null;
+				}
+			}
+			}
+		return null;
 		}
-	}
+
 
 //Gabriel
-public double prixVoulu(double prix_achat) { 
-	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + this.getCout()*
-			 (this.getStockchocolat().getStocktotal()+ this.getStockfeve().getStocktotal()))
-			 *this.getMarge(); 
-	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
-	 // du cout de stockage, de l'origininalité et de la marge voulue
+public double prixVouluB() { 
+	 return (this.prixMinB.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge; 
+	 // Calcul du prix de vente voulu pour un chocolat de basse 
+	 //qualité en fonction du prix des fèves en bourse, du prix de transformationet du cout de stockage
+}
+public double prixVouluM() { 
+	 return (this.prixMinM.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
 }
 public double prixVouluOri(double prix_achat) { 
-	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + this.getCout()*
+	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + super.coutStockage()*
 			 (this.getStockchocolat().getStocktotal()+ this.getStockfeve().getStocktotal())+ Filiere.LA_FILIERE.getParametre("coutOriginal").getValeur())
 			 *this.getMarge(); 
 	 // Calcul du prix de vente voulu en fonction du prix d'achat précédent, du prix de transformation,
@@ -112,10 +136,8 @@ public boolean StockDispo() {
 	 return false; // getStock() - quantitéVoulue > 0
 
 }
-// Gabriel
-public boolean prixAcceptable(double prix_demande, double prix_achat) {
-	 return (prix_demande - this.prixVoulu(prix_achat)>0); // Prix d'achat du distributeur - prix_voulu > 0
-}
+
+
 // Gabriel
 public boolean vente() {
 	 return false;//this.StockDispo() & this.prixAcceptable(prix_ori, prix_ori);

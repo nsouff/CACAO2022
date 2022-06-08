@@ -23,36 +23,27 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
+public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabricantChocolatDeMarque {
 	
-	//pas sur de celles ci, mais je les laisse au cas ou...
-	private Variable coutStockage;
-	protected Variable prixSeuil; // au dela duquel nous n'achetons pas
-	private Variable rendementTransfoLongue;
-	private Variable prixTransformation; // a renseigner (0? On considere juste le rendement pour le pb des transfolongue, ainsi, un seul parametre à gerer.)
-	private Variable TransformationSeuil;
-	private Variable prixChocoOriginal;
-	protected Variable capaciteStockage;
-	private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
-	private Variable expirationFeve; //a considerer dans une v1 ?
-	private Variable expirationChoco;//a considerer dans une v1?
-	private double marge;
-
 	
-	// variables pour les Appel d'Offres
 	
+	protected Variable prixSeuilMQ; // au dela duquel nous n'achetons pas
+	protected Variable prixSeuilHQ;
+	protected Variable prixSeuilBQ;
+	protected Variable prixSeuilMQBE;
+	protected Variable prixSeuilHQBE;
+	//private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
+	protected Variable prixMinB;
+	protected Variable prixMinM;
+	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
+	private Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
+	protected double marge;
 	
 	protected SuperviseurVentesAO superviseur;
-	
-	
-	
-	
 	protected Journal journal;
-
-	
-	//autres
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
+	
 
 
 
@@ -61,34 +52,113 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	
 	
 	//Nawfel
-	public Transformateur2Acteur() { //valeurs des min, max, et init (3 derniers parametres) à changer plus tard.
+	public Transformateur2Acteur() {
 	
-		//pas sur de celles ci, mais je les laisse au cas ou...
-		this.coutStockage = new Variable("cout stockage", "<html>Cout de stockage</html>",this, 0.0, 10.0, 3.0);
-		this.prixSeuil = new Variable("prix seuil", "<html>Prix Seuil</html>",this, 0.0, 10.0, 3.0);
-		this.rendementTransfoLongue=new Variable("rendement transfo longue", "<html>Rendement d'une transformation longue</html>",this, 0.0, 10.0, 3.0);
-		this.prixTransformation = new Variable("prix transfo", "<html>Cout d'une transformation longue</html>",this, 0.0, 10.0, 3.0);
-		this.TransformationSeuil=new Variable("sddsqfqs", "<html>Cout pour passer à la gamme original</html>",this, 0.0, 10.0, 3.0);
-		this.prixChocoOriginal=new Variable("cout passage original", "<html>Cout pour passer à la gamme original</html>",this, 0.0, 10.0, 3.0);
-		this.capaciteStockage=new Variable("capacite stockage", "<html>Capacite max de stockage</html>",this, 0.0, 10.0, 3.0);
-		this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 10.0, 3.0);
-		this.expirationFeve=new Variable("expiration feve", "<html>Duree avant expiration d'une feve</html>",this, 0.0, 10.0, 3.0);
-		this.expirationChoco=new Variable("expiration choco", "<html>Duree avant expiration du chocolat</html>",this, 0.0, 10.0, 3.0);
-		this.marge = 1.1;
+		this.prixSeuilBQ = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilMQ = new Variable("prix seuil moyenne qualité", "<html>Prix Seuil Moyenne Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilMQBE = new Variable("prix seuil moyenne qualité bio", "<html>Prix Seuil Moyenne Qualité BIO</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilHQ = new Variable("prix seuil haute qualité", "<html>Prix Seuil Haute Qualité</html>",this, 0.0, 10000000, 10);
+		this.prixSeuilHQBE = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Haute Qualité BIO</html>",this, 0.0, 10000000, 10);
+		this.prixMinB = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 4);
+		this.prixMinM = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
+		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
+		this.marge = 1.2;
 		this.journal=new Journal("Opti'Cacao activités", this);
+		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
+		this.stockReferenceFeve=new Stock();
+		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 8000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 5000);
+		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		//ajouter des marques de chocolats
+		
+		
+		this.stockReferenceChocolat=new Stock();
+		this.stockReferenceChocolat.ajouter(c1, 5000);
+		this.stockReferenceChocolat.ajouter(c0, 8000);
+		
+		
 		
 		
 
-		
-		
-		
-		
-		this.NewCap=this.TransformationSeuil.getValeur();
+
 
 	}
 	
+	//Jad
+	//renvoie le prix seuil de chaque feves
+	public Variable getPrixSeuil(Feve f) {
+		if(f.equals(Feve.FEVE_BASSE)) {
+			return this.getPrixSeuilBQ();
+		}
+		else if(f.equals(Feve.FEVE_HAUTE)) {
+			return this.getPrixSeuilHQ();
+		}
+		else if(f.equals(Feve.FEVE_HAUTE_BIO_EQUITABLE)) {
+			return this.getPrixSeuilHQBE();
+		}
+		else if (f.equals(Feve.FEVE_MOYENNE)) {
+			return this.getPrixSeuilMQ();
+		}
+		else if (f.equals(Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
+			return this.getPrixSeuilMQBE();
+					
+		}
+		return null;
+	}
+
+	public Variable getPrixSeuilMQ() {
+		return prixSeuilMQ;
+	}
+
+
+	public void setPrixSeuilMQ(Variable prixSeuilMQ) {
+		this.prixSeuilMQ = prixSeuilMQ;
+	}
+
+
+	public Variable getPrixSeuilHQ() {
+		return prixSeuilHQ;
+	}
+
+
+	public void setPrixSeuilHQ(Variable prixSeuilHQ) {
+		this.prixSeuilHQ = prixSeuilHQ;
+	}
+
+
+	public Variable getPrixSeuilBQ() {
+		return prixSeuilBQ;
+	}
+
+
+	public void setPrixSeuilBQ(Variable prixSeuilBQ) {
+		this.prixSeuilBQ = prixSeuilBQ;
+	}
+
+
+	public Variable getPrixSeuilMQBE() {
+		return prixSeuilMQBE;
+	}
+
+
+	public void setPrixSeuilMQBE(Variable prixSeuilMQBE) {
+		this.prixSeuilMQBE = prixSeuilMQBE;
+	}
+
+
+	public Variable getPrixSeuilHQBE() {
+		return prixSeuilHQBE;
+	}
+
+
+	public void setPrixSeuilHQBE(Variable prixSeuilHQBE) {
+		this.prixSeuilHQBE = prixSeuilHQBE;
+	}
+
 
 	public void initialiser() {
+		
 		
 	}
 	
@@ -117,12 +187,14 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	public List<String> getNomsFilieresProposees() {
 		ArrayList<String> filiere = new ArrayList<String>();
 		filiere.add("TESTAOOPTI'CACAO");  
+		filiere.add("TESTCCOPTI'CACAO"); 
 		return filiere;
 	}
 
 	public Filiere getFiliere(String nom) {
 		switch (nom) { 
 		case "TESTAOOPTI'CACAO" : return new CopieFiliereTestAO();
+		case "TESTCCOPTI'CACAO" : return new CopieFiliereTestContratCadre();
 	    default : return null;
 		}
 	}
@@ -145,9 +217,7 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		j.add(this.journal);
 		return j;
 	}
-	public double getCout() {
-		return this.coutStockage.getValeur();
-	}
+	
 
 	public void notificationFaillite(IActeur acteur) {
 		if (this==acteur) {
@@ -165,6 +235,7 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
 
+
 	public double getMarge() {
 		return this.marge;
 	}
@@ -175,53 +246,15 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 	}
 
 
-	public Variable getCoutStockage() {
-		return coutStockage;
-	}
 
 
-	public Variable getPrixSeuil() {
-		return prixSeuil;
-	}
 
 
-	public Variable getRendementTransfoLongue() {
-		return rendementTransfoLongue;
-	}
 
 
-	public Variable getPrixTransformation() {
-		return prixTransformation;
-	}
 
 
-	public Variable getPrixChocoOriginal() {
-		return prixChocoOriginal;
-	}
 
-
-	public Variable getCapaciteStockage() {
-		return capaciteStockage;
-	}
-
-
-	public Variable getCapaciteStockageFixe() {
-		return capaciteStockageFixe;
-	}
-
-
-	public Variable getExpirationFeve() {
-		return expirationFeve;
-	}
-
-
-	public Variable getExpirationChoco() {
-		return expirationChoco;
-	}
-
-	public Variable getTransformationSeuil() {
-		return TransformationSeuil;
-	}
 
 	@Override
 	public LinkedList<String> getMarquesChocolat() {
@@ -232,15 +265,31 @@ public class Transformateur2Acteur implements IActeur,IMarqueChocolat, IFabrican
 		return this.getMarquesChocolat();
 	}
 
+
 	@Override
 	public LinkedList<ChocolatDeMarque> getChocolatsProduits() {
 		LinkedList<ChocolatDeMarque> res= new LinkedList<ChocolatDeMarque>();
-		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c2=new ChocolatDeMarque(Chocolat.MQ_BE,this.getMarquesChocolat().get(2));
+		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.HQ,this.getMarquesChocolat().get(3));
+		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
 		res.add(c0);
 		res.add(c1);
+		res.add(c2);
+		res.add(c3);
+		res.add(c4);
 		return res;
 	}
 
+
+	public Stock<Feve> getStockReferenceFeve() {
+		return stockReferenceFeve;
+	}
+
+
+	public Stock<ChocolatDeMarque> getStockReferenceChocolat() {
+		return stockReferenceChocolat;
+	}
 
 }

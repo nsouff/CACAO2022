@@ -25,6 +25,8 @@ public class Transformateur2 extends Transformateur2VenteAO{
 	
 	public void next() {
 		super.next();
+		journal.ajouter("Cours Feve Basse : "+Filiere.LA_FILIERE.getIndicateur("BourseCacao cours B").getValeur() +" €/kg");
+		journal.ajouter("Cours Feve Moyenne : "+Filiere.LA_FILIERE.getIndicateur("BourseCacao cours M").getValeur() +" €/kg");
 	}
 	public void initialiser() {
 		super.initialiser();
@@ -39,9 +41,11 @@ public class Transformateur2 extends Transformateur2VenteAO{
 
 	public LinkedList<String> getMarquesChocolat() {
 		LinkedList<String> res = new LinkedList<String>();
-		res.add("O'ptella");
-		res.add("O'max");
-//		res.add("O'max");
+		res.add("O'ptella");//bas de gamme
+		res.add("O'max");//moyen de gamme
+		res.add("O'lait");//moyen de gamme bio
+		res.add("O'Chock");//haut de gamme 
+		res.add("O'vert");//haut de gamme bio
 		return res;
 	}
 
