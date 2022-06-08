@@ -162,19 +162,21 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		double cours_feve_basse = bourse.getCours(Feve.FEVE_BASSE).getValeur();
 		double cours_feve_moyenne = bourse.getCours(Feve.FEVE_MOYENNE).getValeur();
 		double cours_feve_haute = bourse.getCours(Feve.FEVE_HAUTE).getValeur();
+		int parametre_min_max = 5;
+
+		HashMap<Feve, Double> prixmoyen = new HashMap<Feve, Double>();
 		
-		int parametre_min_max = 10; // paramètre : de combien augmente/diminue le mécontentement si on dépasse le prix minimum/maximum
-		
-			HashMap<Feve, Double> prixmoyen = this.getPrixmoyenFeve();
-			for (Feve f : this.getFeves().keySet()) {
-				prixmoyen.replace(f, prixmoyen.get(f)/(Filiere.LA_FILIERE.getEtape()+1));
-			
+
+		for (Feve f : this.getFeves().keySet()) {
+			prixmoyen.put(f, this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()));
 		}
 		
-		this.setMecontentement_basse((int)Math.floor(100*((cours_feve_basse-prixmoyen.get(Feve.FEVE_BASSE)/prixmoyen.get(Feve.FEVE_BASSE)))));
-		this.setMecontentement_moyenne((int)Math.floor(100*((cours_feve_moyenne-prixmoyen.get(Feve.FEVE_MOYENNE)/prixmoyen.get(Feve.FEVE_MOYENNE)))));
-		this.setMecontentement_haute((int)Math.floor(100*((cours_feve_haute-prixmoyen.get(Feve.FEVE_HAUTE)/prixmoyen.get(Feve.FEVE_HAUTE)))));
-		
+
+		this.setMecontentement_basse((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE))));
+		this.setMecontentement_moyenne((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_MOYENNE)-cours_feve_moyenne)/prixmoyen.get(Feve.FEVE_MOYENNE))));
+		this.setMecontentement_haute((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_HAUTE)-cours_feve_haute)/prixmoyen.get(Feve.FEVE_HAUTE))));
+		//System.out.println(cours_feve_basse + "   " + prixmoyen.get(Feve.FEVE_BASSE) + "   " + 10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE)));
+
 		if (cours_feve_basse <= bourse.getCours(Feve.FEVE_BASSE).getMin()) {
 			this.setMecontentement_basse(this.getMecontentement_basse()+parametre_min_max);
 		}
