@@ -42,5 +42,10 @@ public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
 			}			
 		}		
 	}
+	
+	public void supprimeLot(int etape) {
+		
+	}
+	
 }
 
