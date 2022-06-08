@@ -1,5 +1,6 @@
 package abstraction.eq4Transformateur2;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import abstraction.eq8Romu.appelsOffres.IVendeurAO;
 import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -45,20 +47,43 @@ public abstract class Transformateur2VenteAO extends Transformateur2AchatAO impl
 		
 		
 		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 50000kg, on en propose 8000kg.
-			super.next();	
+		super.next();
+		this.getJournalVente().ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
+		this.getJournalVente().ajouter(Color.black,Color.white,"----------------------------------APPELS D'OFFRES DU STEP------------------------------------------------------");
+		this.getJournalVente().ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
+		double onDoitLivrer = 0;
 		for(ChocolatDeMarque c :this.getStockchocolatdemarque().getStock().keySet()) {
-					if(this.getStockchocolatdemarque().getStock().get(c)>3000) {
-						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 500.0, false);
-						if (retenue!=null) {
-							this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
-							this.getJournalVente().ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
-						} else {
-							this.getJournalVente().ajouter("pas d'offre retenue");
-						}
-					}
+			for ( ExemplaireContratCadre i : this.mesContratEnTantQueVendeur) {
+				if(i.getProduit().equals(c)) {
+					onDoitLivrer = onDoitLivrer+ i.getQuantiteALivrerAuStep();
 				}
-		
+			
+			}
+		double q = 0.8*(this.getStockchocolatdemarque().getQuantite(c))-onDoitLivrer;
+		if(q>250) {
+			PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, q, false);
+		if (retenue!=null) {
+			this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
+			this.getJournalVente().ajouter("Merci à "+retenue.getAcheteur().getNom()+ " ! Faites bon usage de vos "+ retenue.getOffre().getQuantiteKG()+" kg.");
+			this.getJournalVente().ajouter(Color.white,Color.red,"-----------------------------------------------------------------------------------------------------------------");
+		} 
+		else {
+			this.getJournalVente().ajouter("Nous ne concluerons pas d'affaire aujourd'hui ! Peut-être la prochaine fois ;)");
+			this.getJournalVente().ajouter(Color.white,Color.red,"-----------------------------------------------------------------------------------------------------------------");
+	
+			}
+		}
 	}
+		
+		this.getJournalVente().ajouter("");
+		this.getJournalVente().ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
+		this.getJournalVente().ajouter(Color.black,Color.white,"--------------------------------------FIN DU STEP--------------------------------------------------------------");
+		this.getJournalVente().ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
+		this.getJournalVente().ajouter("");
+		this.getJournalVente().ajouter("");
+		}
+		
+
 @Override
 //public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 //	// TODO Auto-generated method stub
@@ -78,36 +103,73 @@ public abstract class Transformateur2VenteAO extends Transformateur2AchatAO impl
 	//Vente en AO : comment choisir parmi les offres
 // Gabriel modifications pour prix minimal au kg
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
-		this.getJournalVente().ajouter("propositions : "+propositions);
 		if (propositions==null) {
 			return null;
 		} else {
+			
+			this.getJournalVente().ajouter("Oyé Oyé, nous vendons "+propositions.get(0).getOffre().getQuantiteKG()+" kg de "+propositions.get(0).getOffre().getChocolat()+" !");
+			this.getJournalVente().ajouter("Nous avons reçu un total de " + (propositions.size()) + " proposition(s) pour notre offre.");
+			this.getJournalVente().ajouter("Les prix vont de "+ propositions.get(propositions.size()-1).getPrixKg() +"€ à "+ propositions.get(0).getPrixKg()+ "€ au kg !");
 			PropositionAchatAO meilleur_proposition=propositions.get(0);
 			for(PropositionAchatAO p : propositions) {
 				//On choisit l'offre la plus cher qui ne nous met pas en négatif de stock de chocolatdemarque
-				if (p.getPrixKg()>meilleur_proposition.getPrixKg() && p.getOffre().getQuantiteKG()<super.getStockchocolatdemarque().getQuantite(p.getOffre().getChocolat())){
-					meilleur_proposition=p;
-				}
+				//if (p.getPrixKg()>meilleur_proposition.getPrixKg() && p.getOffre().getQuantiteKG()<super.getStockchocolatdemarque().getQuantite(p.getOffre().getChocolat())){
+				//	meilleur_proposition=p;
+				//}
 			}
 			
 			PropositionAchatAO retenue = meilleur_proposition;
-			this.getJournalVente().ajouter("Prix voulu pour les basses :" + this.prixVouluB());
-			this.getJournalVente().ajouter("Prix voulu pour les moyennes :" + this.prixVouluM());
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(0))) {
 				if (retenue.getPrixKg()>(this.prixVouluB())) {
-					this.getJournalVente().ajouter("  --> je choisis "+retenue);
+					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					
 					return retenue;
 				} else {
-					this.getJournalVente().ajouter("  --> je ne retiens rien");
+					
 					return null;
 				}
 			}
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(1))) {
 				if (retenue.getPrixKg()>(this.prixVouluM())) {
-					this.getJournalVente().ajouter("  --> je choisis "+retenue);
+					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					
+					return retenue;
+				} else {
+					
+					
+					return null;
+				}
+			}
+			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(2))) {
+				if (retenue.getPrixKg()>(this.prixVouluMb())) {
+					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					
+					return retenue;
+				} else {
+					
+					
+					return null;
+				}
+			}
+			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(3))) {
+				if (retenue.getPrixKg()>(this.prixVouluH())) {
+					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					
 					return retenue;
 				} else {
 					this.getJournalVente().ajouter("  --> je ne retiens rien");
+					
+					return null;
+				}
+			}
+			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(4))) {
+				if (retenue.getPrixKg()>(this.prixVouluHb())) {
+					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					
+					return retenue;
+				} else {
+					this.getJournalVente().ajouter("  --> je ne retiens rien");
+					
 					return null;
 				}
 			}
@@ -124,6 +186,15 @@ public double prixVouluB() {
 }
 public double prixVouluM() { 
 	 return (this.prixMinM.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+}
+public double prixVouluMb() { 
+	 return (this.prixMinMb.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+}
+public double prixVouluH() { 
+	 return (this.prixMinH.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+}
+public double prixVouluHb() { 
+	 return (this.prixMinHb.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
 }
 public double prixVouluOri(double prix_achat) { 
 	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + super.coutStockage()*

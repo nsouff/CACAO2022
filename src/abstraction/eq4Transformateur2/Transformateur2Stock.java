@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteur Marie
 
-public abstract class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
+public abstract class Transformateur2Stock extends DictionnairePeremptionTransfo2 {
 	
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat>  stockchocolat;
@@ -20,45 +20,10 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 	private Journal journalStock;
 	
 	private double prixstockage;
-	private double notreCapaciteStockage; //elle évolue lorsqu'on achète des new capacités de stockage
+	protected double notreCapaciteStockage; //elle évolue lorsqu'on achète des new capacités de stockage
 	
-	public Transformateur2Stock(double prixstockage, double notreCapaciteStockage) {
-		this.prixstockage=prixstockage;
-		this.setNotreCapaciteStockage(notreCapaciteStockage);
-	}
-	
-	public void next() {
-		super.next();
-		//ON implemente le journal avec des infos sur nos stocks à chaque tour
-				if (this.stockfeve.getStock().keySet().size()>0) {
-					for (Feve f : this.stockfeve.getStock().keySet()) {
-						this.journalStock.ajouter("stock de feve "+f+" : "+this.stockfeve.getStock().get(f));
-					}
-				}
-				if (this.stockchocolatdemarque.getStock().keySet().size()>0) {
-					for (ChocolatDeMarque c : this.stockchocolatdemarque.getStock().keySet()) {
-						this.journalStock.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
-					}
-				}
-				
-				
-				
-		//On paye le cout de stockage
-				Filiere.LA_FILIERE.getBanque().virer(this, super.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.coutStockage());
-				journalStock.ajouter(Color.red,Color.white,"Le stock nous coûte "+this.coutStockage());
-				journalStock.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------");
-	}
-	
-	public void initialiser() {
-		//double prixstockage=Filiere.LA_FILIERE.getIndicateur("prixstockage").getValeur();
-		super.initialiser();
-		
-	}
-
-	
-// Marie	
 	public Transformateur2Stock() {
-		
+				
 		this.journalStock=new Journal("O'ptiStock",this);
 		
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
@@ -86,15 +51,47 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		this.stockchocolat=new Stock();
 		this.stockchocolat.ajouter(Chocolat.MQ,30000);
 		this.stockchocolat.ajouter(Chocolat.BQ, 20000);
-		
 	}
+	
+	public void next() {
+		super.next();
+		//ON implemente le journal avec des infos sur nos stocks à chaque tour
+				if (this.stockfeve.getStock().keySet().size()>0) {
+					for (Feve f : this.stockfeve.getStock().keySet()) {
+						this.journalStock.ajouter("stock de feve "+f+" : "+this.stockfeve.getStock().get(f));
+					}
+				}
+				if (this.stockchocolatdemarque.getStock().keySet().size()>0) {
+					for (ChocolatDeMarque c : this.stockchocolatdemarque.getStock().keySet()) {
+						this.journalStock.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
+					}
+				}
+				
+				
+				
+		//On paye le cout de stockage
+				Filiere.LA_FILIERE.getBanque().virer(this, super.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.coutStockage());
+				journalStock.ajouter(Color.red,Color.white,"Le stock nous coûte "+this.coutStockage());
+				journalStock.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------");
+	}
+	
+	public void initialiser() {
+		//double prixstockage=Filiere.LA_FILIERE.getIndicateur("prixstockage").getValeur();
+		super.initialiser();	
+		this.prixstockage=Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();
+		this.notreCapaciteStockage=Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur();
+
+	}
+
+	
 	
 public Stock<Feve> getStockfeve(){
 	return this.stockfeve;
 }
-public Stock<Chocolat> getStockchocolat(){
+/*public Stock<Chocolat> getStockchocolat(){
 	return this.stockchocolat;
-}
+  }*/
+
 public Stock<ChocolatDeMarque> getStockchocolatdemarque(){
 	return this.stockchocolatdemarque;
 }

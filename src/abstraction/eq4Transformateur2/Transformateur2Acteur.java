@@ -35,6 +35,9 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	//private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	protected Variable prixMinB;
 	protected Variable prixMinM;
+	protected Variable prixMinMb;
+	protected Variable prixMinH;
+	protected Variable prixMinHb;
 	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
 	private Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
 	protected double marge;
@@ -59,7 +62,10 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.prixSeuilHQ = new Variable("prix seuil haute qualité", "<html>Prix Seuil Haute Qualité</html>",this, 0.0, 10000000, 10);
 		this.prixSeuilHQBE = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Haute Qualité BIO</html>",this, 0.0, 10000000, 10);
 		this.prixMinB = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 4);
-		this.prixMinM = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
+		this.prixMinM = new Variable("prix seuil moyenne qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
+		this.prixMinMb = new Variable("prix seuil moyenne qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 4);
+		this.prixMinH = new Variable("prix seuil haute qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
+		this.prixMinHb = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.marge = 1.2;
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
