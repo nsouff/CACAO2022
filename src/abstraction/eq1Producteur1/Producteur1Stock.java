@@ -162,7 +162,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		
 		
 		int i = 0 ;
-		while (quantite>0 && this.getStockParc(f, false, provenance)>0) {
+		while (quantite>0 && this.getStockParc(f, false, provenance)>0 && i < this.getFeves().get(f).size()) {
 			double poids = this.getFeves().get(f).get(i).getPoids() ;
 			
 			if (this.getFeves().get(f).get(i).getProvenance() == provenance) {
