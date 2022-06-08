@@ -117,10 +117,9 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			journalNegociationCC.ajouter("--> Nous acceptons son écheancier");
 			return contrat.getEcheancier();
 		}
-
-		// TODO: On ne fait actuellement aucune negociation
-		
-		return null;
+		else {
+			return voulu;
+		}
 	}
 
 	@Override
@@ -220,7 +219,10 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		Echeancier e = new Echeancier(stepDebut);
 		for (int i = stepDebut; i < stepDebut + 24; i++) {
 			double aComblerI = (aCombler == null) ? 0 : aCombler.getQuantite(i);
-			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI);
+			double aAjouter = getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI;
+			if (aAjouter > 0) {
+				e.ajouter(aAjouter);
+			}
 		}
 		return e;
 	}

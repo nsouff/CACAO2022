@@ -281,7 +281,13 @@ public class Distributeur1Acteur implements IActeur {
 	}
 	
 	public double getPartMarque(ChocolatDeMarque choco) {
-		return 1.0/getNbChocolatProduit(choco.getChocolat());
+		double qualitePercuTotal = 0.0;
+		for (ChocolatDeMarque c : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			if (c.getChocolat() == choco.getChocolat()) {
+				qualitePercuTotal += Filiere.LA_FILIERE.qualitePercueMarque(c.getMarque());
+			}
+		}
+		return Filiere.LA_FILIERE.qualitePercueMarque(choco.getMarque())/qualitePercuTotal;
 	}
 
 	protected double facteurPrixChocolat(Chocolat c) {
