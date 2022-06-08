@@ -59,11 +59,7 @@ public class Transformateur2 extends Transformateur2VenteAO{
 	public Journal getJournalcours() {
 		return journalcours;
 	}
-	@Override
-	public Stock<Chocolat> getStockchocolat() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }
 	

@@ -18,9 +18,9 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 //Marie
 
-public abstract class Transformateur2ContratCadreVendeur extends Transformateur2Acteur implements IVendeurContratCadre {
+public abstract class Transformateur2ContratCadreVendeur extends Transformateur2Acteur implements IVendeurContratCadre{
 	
-	public abstract Stock<Chocolat> getStockchocolat();
+	public abstract Stock<ChocolatDeMarque> getStockchocolatdemarque();
 	
 	protected SuperviseurVentesContratCadre supCCadre;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeur;
@@ -39,6 +39,19 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
+//<<<<<<< HEAD
+//		
+////		// Proposition d'un nouveau contrat a tous les acheteurs possibles pour tous nos produits (40Millions de kg de choco à chaque step)
+////				for (ChocolatDeMarque c : this.getChocolatsProduits()) {
+////					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
+////						if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
+////							journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
+////							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 500000), cryptogramme,false);
+////							journalVente.ajouter("-->aboutit au contrat "+cc);
+////						}
+////					}
+////				}
+//=======
 
 				for (ChocolatDeMarque c : this.getChocolatsProduits()) {
 					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
@@ -51,6 +64,7 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 					}
 				}
 			
+
 	}
 	
 	
@@ -82,7 +96,7 @@ public boolean vend(Object produit) {
 public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 	
 	if (this.getChocolatsProduits().contains(contrat.getProduit())) {
-		if (contrat.getEcheancier().getQuantiteTotale()<this.getStockchocolat().getStocktotal()) {
+		if (contrat.getEcheancier().getQuantiteTotale()<this.getStockchocolatdemarque().getStocktotal()) {
 			journalVente.ajouter("Echeancier accepté");
 			return contrat.getEcheancier();
 		} else {
@@ -136,4 +150,7 @@ public List<ExemplaireContratCadre> getMesContratEnTantQueVendeur() {
 public Journal getJournalVente() {
 	return journalVente;
 }
+
+
+
 }

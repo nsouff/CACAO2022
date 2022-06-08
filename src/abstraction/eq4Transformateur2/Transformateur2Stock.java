@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteur Marie
 
-public abstract class Transformateur2Stock extends DictionnairePeremptionTransfo2 {
+public abstract class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
 	
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat>  stockchocolat;
@@ -23,7 +23,6 @@ public abstract class Transformateur2Stock extends DictionnairePeremptionTransfo
 	protected double notreCapaciteStockage; //elle évolue lorsqu'on achète des new capacités de stockage
 	
 	public Transformateur2Stock() {
-				
 		this.journalStock=new Journal("O'ptiStock",this);
 		
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
