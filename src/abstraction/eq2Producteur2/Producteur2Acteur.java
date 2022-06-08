@@ -71,6 +71,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 
 	public void next() {
 		super.next();
+		
 		// Cout de production, Jules DORE
 		this.setCoutParKg();
 		double coutProduction = 0.0;
