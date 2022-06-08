@@ -64,16 +64,25 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.marge = 1.2;
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
 		this.stockReferenceFeve=new Stock();
-		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 8000);
-		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 5000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 20000000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 20000000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 2500000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_HAUTE, 5000000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 2500000);
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		ChocolatDeMarque c2=new ChocolatDeMarque(Chocolat.MQ_BE,this.getMarquesChocolat().get(2));
+		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.HQ,this.getMarquesChocolat().get(3));
+		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
 		//ajouter des marques de chocolats
 		
 		
 		this.stockReferenceChocolat=new Stock();
-		this.stockReferenceChocolat.ajouter(c1, 5000);
-		this.stockReferenceChocolat.ajouter(c0, 8000);
+		this.stockReferenceChocolat.ajouter(c1, 20000000);
+		this.stockReferenceChocolat.ajouter(c0, 20000000);
+		this.stockReferenceChocolat.ajouter(c2, 2500000);
+		this.stockReferenceChocolat.ajouter(c3, 5000000);
+		this.stockReferenceChocolat.ajouter(c4, 5000000);
 		
 		
 		
