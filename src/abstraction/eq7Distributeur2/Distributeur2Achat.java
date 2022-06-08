@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.Color;
 
+import abstraction.eq7Distributeur2.tools.Demande;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
@@ -22,11 +23,14 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	public static final Double PRIX_OK=50.0;
 	public static final Double EPSILON_PRIX=5.0;
 	
+	public Demande demande;
+	
 	protected List<ExemplaireContratCadre> mesContratEnTantQuAcheteur;
 	
 	public Distributeur2Achat() {
 		super();
 		this.mesContratEnTantQuAcheteur = new LinkedList<ExemplaireContratCadre>();
+		this.demande = new Demande(this.chocolats);
 	}
 	
 	
@@ -41,6 +45,17 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	@Override
 	public void next() {
 		super.next();
+		
+		//Nombre de step sur lequel on gère nos contrat
+		int nbStepContrat = 10;
+		
+		int currentEtape = Filiere.LA_FILIERE.getEtape();
+		
+		//Pour chaque chocolat produit sur le marché on défini la demande
+		for (ChocolatDeMarque chocProduit : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			double valeur = this.volumeParEtapeMoyenne(chocProduit, currentEtape, nbStepContrat);
+			this.demande.set(chocProduit, valeur);
+		}
 		
 		//-------------------------------------NEXT CONTRAT------------------------------------------//
 		//Initialisation du superviseur de vente
@@ -60,14 +75,12 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			//On pose le chocolat en tête de gondole si il est bio et équitable
 			boolean boolTeteGondole = chocProduit.isBioEquitable();
 			
-			int currentEtape = Filiere.LA_FILIERE.getEtape();
-			
 			//Si la quantite du chocolat en question est inférieure au seuil auquel on a décidé d'en racheter, alors on va en racheter
 			if (stock.getQuantite(chocProduit)<=stock.getSeuilRachat(chocProduit)) {
 				
-				int nbStepContrat = 10;
-				//Retourne le volume le plus judicieux à acheter selon le nombre d'étape sur lequel on reparti le contrat
-				double venteParStep = this.volumeParEtapeMoyenne(chocProduit, currentEtape, nbStepContrat);
+				
+				//Retourne le volume restant à acheter
+				double venteParStep = demande.get(chocProduit);
 				
 				//On créer un écheancier correspondant à nos besoin
 				Echeancier echeancierAchat = new Echeancier(currentEtape+1,nbStepContrat,venteParStep);
