@@ -1,6 +1,7 @@
 package abstraction.eq7Distributeur2;
 
 
+import abstraction.eq7Distributeur2.tools.VenteTracker;
 import abstraction.eq8Romu.clients.ClientFinal;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
@@ -11,6 +12,7 @@ import abstraction.eq8Romu.produits.Gamme;
 public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements IDistributeurChocolatDeMarque  {
 	
 	private double capaciteDeVente= Double.MAX_VALUE;
+	
 
 //edgard: 
 //======fixation des prix minimaux pour chaque chocolat en vue de potentielles réduction en fonction de la demande=======
@@ -140,6 +142,8 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	}
 	
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) {
+		
+		
 		//Retire la quantité dans les stocks
 		this.stock.remove(choco, quantite);
 		

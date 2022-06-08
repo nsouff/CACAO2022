@@ -1,5 +1,6 @@
 package abstraction.eq7Distributeur2.tools;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,35 +8,65 @@ import abstraction.eq7Distributeur2.Distributeur2ChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class VenteTracker extends Distributeur2ChocolatDeMarque{
-	private HashMap<ChocolatDeMarque,Double> previousVentes;
-	private HashMap<ChocolatDeMarque,List<Double>> ventes;
+	private HashMap<ChocolatDeMarque,Double> previousVentesQuantite;
+	private HashMap<ChocolatDeMarque,Double> previousVentesPrix;
+	
+	private HashMap<ChocolatDeMarque,List<Double>> ventesQuantite;
+	private HashMap<ChocolatDeMarque,List<Double>> ventesPrix;
 	
 	public VenteTracker(List<ChocolatDeMarque> listeChocolatsProduits) {
-		super();
-		ventes = new HashMap<ChocolatDeMarque,List<Double>>();
-		previousVentes = new HashMap<ChocolatDeMarque,Double>();
+		ventesQuantite = new HashMap<ChocolatDeMarque,List<Double>>();
+		previousVentesQuantite = new HashMap<ChocolatDeMarque,Double>();
+		
+		ventesPrix = new HashMap<ChocolatDeMarque,List<Double>>();
+		previousVentesPrix = new HashMap<ChocolatDeMarque,Double>();
 		
 		for (ChocolatDeMarque choc : listeChocolatsProduits) {
+			ventesQuantite.put(choc, new ArrayList<Double>());
+			previousVentesQuantite.put(choc, 0.0);
 			
+			ventesPrix.put(choc, new ArrayList<Double>());
+			previousVentesPrix.put(choc, 0.0);
 		}
-		
 	}
 	
-	//chaque vente d'un type de chocolat est ajouté à la HashMap
-	public void trackVentes(ChocolatDeMarque choco, Double quantite){
-		List<Double> quantites = ventes.get(choco);
+	//chaque quantite vendue d'un type de chocolat est ajouté à la HashMap
+	public void trackVentesQuantite(ChocolatDeMarque choco, Double quantite){
+		List<Double> quantites = ventesQuantite.get(choco);
 		quantites.add(quantite);
-		ventes.put(choco, quantites);
+		ventesQuantite.put(choco,quantites);
 	}
 	
-	public Double getPreviousVente(ChocolatDeMarque choco) {
-		List<Double> quantites = ventes.get(choco);
+	//chaque prix de vente d'un type de chocolat est ajouté à la HashMap
+	public void trackVentePrix(ChocolatDeMarque choco, Double prix){
+		List<Double> prixDeVente = ventesPrix.get(choco);
+		prixDeVente.add(prix);
+		ventesPrix.put(choco,prixDeVente);
+	}
+	
+	//retourne la quantite de la dernière vente du chocolat choco
+	public Double getPreviousVenteQuantite(ChocolatDeMarque choco) {
+		List<Double> quantites = ventesQuantite.get(choco);
 		Double lastQuantite = quantites.get(quantites.size()-1);
-		previousVentes.replace(choco, lastQuantite);
-		return previousVentes.get(choco);
+		previousVentesQuantite.replace(choco, lastQuantite);
+		return previousVentesQuantite.get(choco);
 	}
 	
-	public HashMap<ChocolatDeMarque,List<Double>> getVentes(){
-		return this.ventes;
+	//retourne le prix de la dernière vente du chocolat choco
+	public Double getPreviousVentePrix(ChocolatDeMarque choco) {
+		List<Double> quantites = ventesPrix.get(choco);
+		Double lastQuantite = quantites.get(quantites.size()-1);
+		previousVentesPrix.replace(choco, lastQuantite);
+		return previousVentesPrix.get(choco);
 	}
+	
+	//retourne la HashMap de toutes les quantites vendues (historique)
+	public HashMap<ChocolatDeMarque,List<Double>> getVentesQuantite(){
+		return this.ventesQuantite;
+	}
+	
+	//retourne la HashMap de tous les prix de vente (historique)
+		public HashMap<ChocolatDeMarque,List<Double>> getVentesPrix(){
+			return this.ventesPrix;
+		}
 }
