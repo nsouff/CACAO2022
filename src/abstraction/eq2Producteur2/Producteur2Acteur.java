@@ -13,6 +13,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.general.VariableReadOnly;
+import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
@@ -24,6 +25,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	private Variable StockFeveMoyenne_BE;
 	private Variable StockFeveHaute;
 	private Variable StockFeveHaute_BE; 
+	private Variable StockChocoHQ;
 
 	private Variable prixstockage ;
 //	private Variable dureeaffinageBQ ;
@@ -44,6 +46,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 		this.StockFeveMoyenne_BE= new Variable("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.StockFeveHaute= new Variable("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE));
 		this.StockFeveHaute_BE= new Variable("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+//		this.StockChocoHQ = new Variable("StockChocoHQ","Stock de chocolat issue de fève de haute qualité", this, 0.0, 1000000000, this.getStockChoco(Chocolat.HQ_BE);
 		
 	}
 
@@ -71,7 +74,6 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 
 	public void next() {
 		super.next();
-		System.out.println("debut");
 		// Cout de production, Jules DORE
 		this.setCoutParKg();
 		double coutProduction = 0.0;
@@ -101,7 +103,6 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 		this.GetStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
 		this.GetStockHausse_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));	
-		System.out.println("fin");
 	}
 	
 	public List<String> getNomsFilieresProposees() {
