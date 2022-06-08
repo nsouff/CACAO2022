@@ -81,7 +81,10 @@ public double trouverPlusUrgent(Produit p) {
 	
 	for (DateProd<Produit> d : this.getDateProd()) {
 		double step=d.getDate();
-		if ((date==0  || step<date )&& d.getProduit()==p) {
+		if (this.peremptions.get(d)<=0) {
+			this.peremptions.remove(d);
+		}
+		if ((date==0  || step<date )&& d.getProduit()==p &&this.peremptions.get(d)>0) {
 			date=step;
 			
 	}
@@ -97,9 +100,11 @@ public double trouverPlusUrgent(Produit p) {
 		
 			double date=this.trouverPlusUrgent(p);
 			double qC=this.getQtt(date, p);
-			if (qC<=0) {
+			if (qC<=0) { //alors le stock est vide 
 				DateProd<Produit>d=new DateProd<Produit>(date,p);
 				this.peremptions.remove(d);
+				
+				
 			}
 			
 			else {
