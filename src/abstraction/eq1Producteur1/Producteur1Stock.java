@@ -1,16 +1,19 @@
 package abstraction.eq1Producteur1;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import abstraction.eq8Romu.filiere.Banque;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.filiere.IActeur;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.Feve;
 
 
-public class Producteur1Stock extends Producteur1Acteur {
+public abstract class Producteur1Stock extends Producteur1Acteur {
 	private  HashMap<Feve,List<FeveProducteur1>> Feves;
 	private Variable StockBasse;
 	private Variable StockMoyenne;
@@ -20,7 +23,6 @@ public class Producteur1Stock extends Producteur1Acteur {
 	private Variable StockMoyenne_NA;
 	private Variable StockHaut_BE_NA;
 	private Variable StockMoyenne_BE_NA;
-	
 	private Variable PrixEntretienArbre;
 	
 	
@@ -32,7 +34,6 @@ public class Producteur1Stock extends Producteur1Acteur {
 		Feves.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, new ArrayList<FeveProducteur1>());
 		Feves.put(Feve.FEVE_MOYENNE, new ArrayList<FeveProducteur1>());
 		Feves.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, new ArrayList<FeveProducteur1>());
-		
 		
 		this.StockBasse_NA= new Variable(this.getNom()+"StockBasse_NA", "Stock de Fèves Basse avec sans Affinage", 
 				this, 0, 1000000000, this.getStock(Feve.FEVE_BASSE, true));
@@ -59,12 +60,20 @@ public class Producteur1Stock extends Producteur1Acteur {
 		
 	}
 	
+	
+	
+
+
+
+
+	public abstract LinkedList<Parc> getListeParc();
+	
 	//Auteur : Khéo
 	public void initialiser() {
-	this.addLot(Feve.FEVE_BASSE, 1000000);
-	this.addLot(Feve.FEVE_MOYENNE, 1000000);
-	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 100000);
-	this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 100000);
+	this.addLot(Feve.FEVE_BASSE, 1000000, this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_MOYENNE, 1000000,this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 100000,this.getListeParc().get(0));
+	this.addLot(Feve.FEVE_HAUTE_BIO_EQUITABLE, 100000,this.getListeParc().get(0));
 	}
 	
 	//Auteur : Khéo
@@ -73,7 +82,8 @@ public class Producteur1Stock extends Producteur1Acteur {
 		
 		
 		this.MAJStock();
-		
+		this.nextParasites();	
+
 		for (Feve f : this.getFeves().keySet()) {
 			for(FeveProducteur1 Lot : this.getFeves().get(f)) {
 				Lot.MAJAffinage(f);
@@ -97,17 +107,37 @@ public class Producteur1Stock extends Producteur1Acteur {
 	public double getStock(Feve f, boolean affinage){
 		
 		double somme = 0.0 ;
+
 		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
 			if (Lot.isAffine() || affinage) {
-			somme = somme + Lot.getPoids() ;
+
+				somme = somme + Lot.getPoids() ;
+			}
+		}
+
+		return somme ;	
+
+	}
+	
+	
+	
+	public double getStockParc(Feve f, boolean affinage, Parc provenance){
+		
+		double somme = 0.0 ;
+		for(FeveProducteur1 Lot : this.getFeves().get(f)) {
+			if (Lot.getProvenance() == provenance) {
+				if (Lot.isAffine() || affinage) {
+					somme = somme + Lot.getPoids() ;
+				}
 			}
 		}
 		return somme ;	
 	}
 	
+	
 	//Auteur : Khéo
-	public void addLot(Feve f, double quantite) {
-		this.getFeves().get(f).add(new FeveProducteur1(quantite));
+	public void addLot(Feve f, double quantite, Parc provenance) {
+		this.getFeves().get(f).add(new FeveProducteur1(quantite,provenance));
 
 	}
 	
@@ -128,6 +158,27 @@ public class Producteur1Stock extends Producteur1Acteur {
 		}
 	}
 	
+	public void retirerQuantiteParc(Feve f, double quantite, Parc provenance) {
+		if (quantite > this.getStockParc(f, false, provenance)) {
+			int i = 0 ;
+		while (quantite>0) {
+			double poids = this.getFeves().get(f).get(i).getPoids() ;
+			
+			if (this.getFeves().get(f).get(i).getProvenance() == provenance) {
+			if (quantite >= poids) { //On regarde en fonction de la quantite qui reste dans le lot. Si il y'a plus on enlève le lot
+				quantite = quantite - poids ;
+				this.getFeves().get(f).remove(i);
+			}
+			else {
+				this.getFeves().get(f).get(i).setPoids(poids-quantite); //Si non, on ajuste le poids du lot
+				quantite = 0 ;
+			}
+			}
+		i += 1 ;
+		}
+		}
+	}
+	
 	//Auteur : Khéo
 	public void MAJStock() {
 		
@@ -139,7 +190,6 @@ public class Producteur1Stock extends Producteur1Acteur {
 					this.getFeves().get(Feve).remove(i);
 				}
 			}
-			
 		}
 	}
 	
@@ -151,69 +201,129 @@ public class Producteur1Stock extends Producteur1Acteur {
 	}
 	
 	//Auteur : Khéo
-		/**
-		 * @return the stockBasse
-		 */
-		public Variable getStockBasse() {
-			return StockBasse;
-		}
+	/**
+	 * @return the stockBasse
+	 */
+	public Variable getStockBasse() {
+		return StockBasse;
+	}
 
-		/**
-		 * @return the stockMoyenne
-		 */
-		public Variable getStockMoyenne() {
-			return StockMoyenne;
-		}
+	/**
+	 * @return the stockMoyenne
+	 */
+	public Variable getStockMoyenne() {
+		return StockMoyenne;
+	}
 
-		/**
-		 * @return the stockHaut_BE
-		 */
-		public Variable getStockHaut_BE() {
-			return StockHaut_BE;
-		}
+	/**
+	 * @return the stockHaut_BE
+	 */
+	public Variable getStockHaut_BE() {
+		return StockHaut_BE;
+	}
 		
-		/**
-		 * @return the stockMoyenne_BE
-		 */
-		public Variable getStockMoyenne_BE() {
-			return StockMoyenne_BE;
-		}
+	/**
+	 * @return the stockMoyenne_BE
+	 */
+	public Variable getStockMoyenne_BE() {
+		return StockMoyenne_BE;
+	}
 		
-		/**
-		 * @return the prixEntretienArbre
-		 */
-		public Variable getPrixEntretienArbre() {
-			return PrixEntretienArbre;
+	/**
+	 * @return the prixEntretienArbre
+	 */
+	public Variable getPrixEntretienArbre() {
+		return PrixEntretienArbre;
+	}
+
+
+
+	/**
+	 * @return the stockBasse_NA
+	 */
+	public Variable getStockBasse_NA() {
+		return StockBasse_NA;
+	}
+
+	/**
+	 * @return the stockMoyenne_NA
+	 */
+	public Variable getStockMoyenne_NA() {
+		return StockMoyenne_NA;
+	}
+
+	/**
+	 * @return the stockHaut_BE_NA
+	 */
+	public Variable getStockHaut_BE_NA() {
+		return StockHaut_BE_NA;
+	}
+
+	/**
+	 * @return the stockMoyenne_BE_NA
+	 */
+	public Variable getStockMoyenne_BE_NA() {
+		return StockMoyenne_BE_NA;
+	}
+		
+	/**
+	 * Auteur : Laure
+	 * met à jour le stock après des parasites
+	 */
+	public void nextParasites() {
+		// Differentiation entre gammes / bio :
+		// bio : 25% par UT
+		// non bio : 15% par UT
+		// 3 niveaux de parasites
+		// 1 : 70 %
+		// 2 : 25%
+		// 3 : 5%
+		// 1 : Perte de 10% de la récolte
+		// 2 : Perte de 50% de la récolte
+		// 3 : Perte de 80% de la récolte
+		double aleaParasiteGlobal = 0.0;
+		for(Feve Feve : this.getFeves().keySet()) {
+			
+			aleaParasiteGlobal = Math.random(); //Proba d'avoir un parasite
+			double tauxPerteStock = 0.0;
+			
+			
+			if (Feve.isBioEquitable()) {
+				if (aleaParasiteGlobal <=0.25) { //Force du parasite
+					double aleaForceParasites = Math.random();
+					if (aleaForceParasites <= 0.70) {
+						// On perd 10% de notre stock
+						tauxPerteStock = 0.1;
+					} else if (aleaForceParasites <=0.95) {
+						// On perd 50% de notre stock
+						tauxPerteStock = 0.5;
+					} else {
+						// On perd 80% de notre stock
+						tauxPerteStock = 0.8;
+					}
+				}
+				
+			} else { // Pas bio-équitable moins de chance d'avoir un parasite
+				if (aleaParasiteGlobal <=0.15) {
+					double aleaForceParasites = Math.random();
+					if (aleaForceParasites <= 0.70) {
+						// On perd 10% de notre stock
+						tauxPerteStock = 0.1;
+					} else if (aleaForceParasites <=0.95) {
+						// On perd 50% de notre stock
+						tauxPerteStock = 0.5;
+					} else {
+						// On perd 80% de notre stock
+						tauxPerteStock = 0.8;
+					}
+
+				}
+				
+			}
+			
+			double stockAvantPar = this.getStock(Feve, true);
+			double perteStock = stockAvantPar*tauxPerteStock;
+			this.retirerQuantite(Feve, perteStock);
 		}
-
-
-
-		/**
-		 * @return the stockBasse_NA
-		 */
-		public Variable getStockBasse_NA() {
-			return StockBasse_NA;
-		}
-
-		/**
-		 * @return the stockMoyenne_NA
-		 */
-		public Variable getStockMoyenne_NA() {
-			return StockMoyenne_NA;
-		}
-
-		/**
-		 * @return the stockHaut_BE_NA
-		 */
-		public Variable getStockHaut_BE_NA() {
-			return StockHaut_BE_NA;
-		}
-
-		/**
-		 * @return the stockMoyenne_BE_NA
-		 */
-		public Variable getStockMoyenne_BE_NA() {
-			return StockMoyenne_BE_NA;
-		}
-
+	}
 }

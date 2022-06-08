@@ -1,7 +1,8 @@
-package abstraction.eq7Distributeur2;
+package abstraction.eq7Distributeur2.examples;
 
 import java.util.HashMap;
 
+import abstraction.eq7Distributeur2.Distributeur2;
 import abstraction.eq8Romu.Romu;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
