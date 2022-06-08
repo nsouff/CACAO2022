@@ -1,6 +1,7 @@
 package abstraction.eq2Producteur2;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,9 +24,10 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	public Producteur2VendeurContratCadreBio() {
 		super();
 		this.mesContratEnTantQueVendeurBio = new LinkedList<ExemplaireContratCadre>();
+		this.journalCC = new Journal("Cacao Doré Contrats Cadres", this);
 	}
 
-
+	protected Journal journalCC;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 
 	public boolean vend(Object produit) {
@@ -107,6 +109,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurBio.add(contrat);
+		this.journalCC.ajouter("Nouveaux CC avec "+contrat.getAcheteur()+" pour un totale de "+contrat.getQuantiteTotale()+" au prix de "+contrat.getPrix());
 
 		
 	}
@@ -131,8 +134,18 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 			}
 		}
 		this.mesContratEnTantQueVendeurBio.removeAll(contratsObsoletes);
+		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 	}
 
+	public List<Journal> getJournaux() {
+		List<Journal> resu=new ArrayList<Journal>();
+		resu.add(this.classement);
+		resu.add(this.journalCC);
+		return resu;
+	}
+	
+	
 	public void initialiser() {
 		super.initialiser();
 	}
