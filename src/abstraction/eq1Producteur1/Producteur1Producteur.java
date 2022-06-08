@@ -2,6 +2,7 @@ package abstraction.eq1Producteur1;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.filiere.Filiere;
@@ -10,7 +11,9 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
 public abstract class Producteur1Producteur extends Producteur1Stock{
 	private LinkedList<Parc> ListeParc;
@@ -144,7 +147,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 					Parc_j.Planter(new MilleArbre(2,false,true,ut_debut-d));
 				}
 				if ((i>=nombre_arbre_BE_moyenne)) {
-					//Le reste des arbres (s'il y en a, normalement il n'y en a pas) est planté en haute qualité, BE, en coopérative
+					//On plante des arbres de haute qualité, BE, en coopérative
 					Parc_j.Planter(new MilleArbre(3,false,true,ut_debut-d));
 				}
 			}
@@ -153,7 +156,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 	
 	public abstract HashMap<Feve, Double> getPrixmoyenFeve();
 	
-	public void MAJMecontentement() {
+	public void MAJMecontentement() { //A changer : on ne sait pas si on vend ou pas, on change juste le mécontentement sur le cours actuel -> paramétrer avec feve f ou un booléen de vente en entrée?
 		//Récupération prix actuels de la bourse
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		double cours_feve_basse = bourse.getCours(Feve.FEVE_BASSE).getValeur();
@@ -163,14 +166,17 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 
 		HashMap<Feve, Double> prixmoyen = new HashMap<Feve, Double>();
 		
+
 		for (Feve f : this.getFeves().keySet()) {
 			prixmoyen.put(f, this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()));
 		}
 		
+
 		this.setMecontentement_basse((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE))));
 		this.setMecontentement_moyenne((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_MOYENNE)-cours_feve_moyenne)/prixmoyen.get(Feve.FEVE_MOYENNE))));
 		this.setMecontentement_haute((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_HAUTE)-cours_feve_haute)/prixmoyen.get(Feve.FEVE_HAUTE))));
 		//System.out.println(cours_feve_basse + "   " + prixmoyen.get(Feve.FEVE_BASSE) + "   " + 10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE)));
+
 		if (cours_feve_basse <= bourse.getCours(Feve.FEVE_BASSE).getMin()) {
 			this.setMecontentement_basse(this.getMecontentement_basse()+parametre_min_max);
 		}
@@ -189,13 +195,56 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		if (cours_feve_haute >= bourse.getCours(Feve.FEVE_HAUTE).getMax()) {
 			this.setMecontentement_haute(this.getMecontentement_haute()-parametre_min_max);
 		}
-	
 	}
 	
-	
+	public HashMap<Feve, Double> getVenteChoco(boolean en_pourcentage) { //Écrit par Antoine
+		List<ChocolatDeMarque> chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
+		HashMap<Feve, Double> dicoVente = new HashMap<Feve, Double>();
+		dicoVente.put(Feve.FEVE_BASSE, 0.0);
+		dicoVente.put(Feve.FEVE_MOYENNE, 0.0);
+		dicoVente.put(Feve.FEVE_HAUTE, 0.0);
+		dicoVente.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0.0);
+		dicoVente.put(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0.0);
+		for (int i=0; i<chocolats.size();i++) {
+			ChocolatDeMarque chocolat_i = chocolats.get(i);
+			Gamme gamme = chocolat_i.getGamme();
+			boolean BE = chocolat_i.isBioEquitable();
+			double vente = Filiere.LA_FILIERE.getVentes(chocolat_i, Filiere.LA_FILIERE.getEtape()-1);
+			if ((gamme==Gamme.BASSE) && (BE==false)) {
+				dicoVente.replace(Feve.FEVE_BASSE, dicoVente.get(Feve.FEVE_BASSE) + vente);
+			}
+			if ((gamme==Gamme.MOYENNE) && (BE==false)) {
+				dicoVente.replace(Feve.FEVE_MOYENNE, dicoVente.get(Feve.FEVE_MOYENNE) + vente);
+			}
+			if ((gamme==Gamme.MOYENNE) && (BE)) {
+				dicoVente.replace(Feve.FEVE_MOYENNE_BIO_EQUITABLE, dicoVente.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE) + vente);
+			}
+			if ((gamme==Gamme.HAUTE) && (BE==false)) {
+				dicoVente.replace(Feve.FEVE_HAUTE, dicoVente.get(Feve.FEVE_HAUTE) + vente);
+			}
+			if ((gamme==Gamme.HAUTE) && (BE)) {
+				dicoVente.replace(Feve.FEVE_HAUTE_BIO_EQUITABLE, dicoVente.get(Feve.FEVE_HAUTE_BIO_EQUITABLE) + vente);
+			}
+		}
+		
+		if (en_pourcentage) {
+			double ventes_totales = 0.0;
+			for (Feve f : this.getFeves().keySet()) {
+				ventes_totales += dicoVente.get(f);
+			}
+			for (Feve f : this.getFeves().keySet()) {
+				dicoVente.replace(f, dicoVente.get(f)/ventes_totales);
+			}
+			return dicoVente;
+		}
+		else {
+			return dicoVente;
+		}
+	}
 
 	public void next() { //Écrit par Antoine
 		super.next();
+		HashMap<Feve, Double> venteChoco = this.getVenteChoco(true);
 		for (int j=0; j<ListeParc.size();j++) {
 			this.getParc(j).MAJAleas();
 			this.recolte = this.getParc(j).Recolte();
@@ -204,7 +253,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 					this.addLot(f, this.recolte.get(f), this.getParc(j));
 				}
 			}
-			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute());
+			this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute(),venteChoco);
 			this.getParc(j).MAJGuerre();
 		}
 		if (Filiere.LA_FILIERE.getEtape()>0) {

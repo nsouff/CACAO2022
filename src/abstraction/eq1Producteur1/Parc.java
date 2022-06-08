@@ -1,17 +1,21 @@
 package abstraction.eq1Producteur1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 import abstraction.eq8Romu.filiere.IActeur;
 
 public class Parc {
-	private ArrayList<MilleArbre> cacaoyers;
+	private HashMap<Feve, ArrayList<MilleArbre>> cacaoyers;
 	private String nom;
 	private int nombre_BE_moyenne;
 	private int nombre_BE_haute;
@@ -30,7 +34,11 @@ public class Parc {
 
 	
 	public Parc(String nom, Object producteur) { //Écrit par Antoine
-		this.cacaoyers = new ArrayList<MilleArbre>();
+		HashMap<Feve, ArrayList<MilleArbre>> m = new HashMap<Feve ,ArrayList<MilleArbre>>();
+		for (Feve f : Feve.values()) {
+			m.put(f, new ArrayList<MilleArbre>());
+		}
+		this.cacaoyers = m;
 		this.nom = nom;
 		this.nombre_BE_moyenne = 0;
 		this.nombre_BE_haute = 0;
@@ -50,7 +58,7 @@ public class Parc {
 
 	}
 	
-	public List<MilleArbre> getCacaoyers() { //Écrit par Antoine
+	public HashMap<Feve, ArrayList<MilleArbre>> getCacaoyers() { //Écrit par Antoine
 		return this.cacaoyers;
 	}
 	
@@ -155,13 +163,37 @@ public class Parc {
 	}
 	
 
-	public MilleArbre getArbre(int i) { //Écrit par Antoine
-		return this.getCacaoyers().get(i);
+	public MilleArbre getArbre(Feve f,int i) { //Écrit par Antoine
+		return this.getCacaoyers().get(f).get(i);
+	}
+
+	
+	public ArrayList<MilleArbre> getListeArbre(Feve f) { //Écrit par Antoine
+		return this.getCacaoyers().get(f);
 	}
 	
+	public Feve ConversionFeve(int qualite, boolean BE) {
+		if ((qualite==0) && (BE==false)) {
+			return Feve.FEVE_BASSE;
+		}
+		if ((qualite==1) && (BE==false)) {
+			return Feve.FEVE_MOYENNE;
+		}
+		if ((qualite==2) && (BE==false)) {
+			return Feve.FEVE_HAUTE;
+		}
+		if ((qualite==1) && (BE)) {
+			return Feve.FEVE_MOYENNE_BIO_EQUITABLE;
+		}
+		else {
+			return Feve.FEVE_HAUTE_BIO_EQUITABLE;
+		}
+	} 
+	
 	public void Planter(MilleArbre a) { //Écrit par Antoine
-			this.getCacaoyers().add(a);
-			MAJCompteur(a,1);
+		Feve f = ConversionFeve(a.getQualite(),a.getBioequitable());
+		this.getListeArbre(f).add(a);
+		MAJCompteur(a,1);
 	}
 	
 	public void MAJCompteur(MilleArbre a, int i) { //Écrit par Antoine
@@ -188,6 +220,36 @@ public class Parc {
 		}
 	}
 	
+
+	
+	public MilleArbre FuturePlantation(HashMap<Feve, Double> venteChoco,boolean cooperative) {
+		double nb_arbre = this.getNombre_non_BE_basse()+this.getNombre_non_BE_moyenne()+this.getNombre_non_BE_haute()+this.getNombre_BE_moyenne()*0.8+this.getNombre_BE_haute()*0.8; //on pondère avec la production pour le BE
+		LinkedList<Double> ecart_demande = new LinkedList<Double>(Arrays.asList(venteChoco.get(Feve.FEVE_BASSE)-this.getNombre_non_BE_basse()/nb_arbre,venteChoco.get(Feve.FEVE_MOYENNE)-this.getNombre_non_BE_moyenne()/nb_arbre,venteChoco.get(Feve.FEVE_HAUTE)-this.getNombre_non_BE_haute()/nb_arbre,venteChoco.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)-this.getNombre_BE_moyenne()*0.8/nb_arbre,venteChoco.get(Feve.FEVE_HAUTE_BIO_EQUITABLE)-this.getNombre_BE_haute()*0.8/nb_arbre));
+		double max = ecart_demande.get(0);
+		int indice = 0;
+		for (int i=1;i<ecart_demande.size();i++) {
+			if (ecart_demande.get(i)>max) {
+				max = ecart_demande.get(i);
+				indice = i;
+			}
+		}
+		if (indice==0) {
+			return new MilleArbre(0,cooperative,false,Filiere.LA_FILIERE.getEtape());
+		}
+		if (indice==1) {
+			return new MilleArbre(1,cooperative,false,Filiere.LA_FILIERE.getEtape());
+		}
+		if (indice==2) {
+			return new MilleArbre(2,cooperative,false,Filiere.LA_FILIERE.getEtape());
+		}
+		if (indice==3) {
+			return new MilleArbre(1,cooperative,true,Filiere.LA_FILIERE.getEtape());
+		}
+		else {
+			return new MilleArbre(2,cooperative,true,Filiere.LA_FILIERE.getEtape());
+		}
+	}
+	
 	public void MAJGuerre() { //Écrit par Antoine
 		if (this.getGuerre()==true) {
 			if (Filiere.LA_FILIERE.getEtape()>=this.getUt_fin_guerre()) {
@@ -197,7 +259,7 @@ public class Parc {
 		}
 		if (Filiere.LA_FILIERE.getEtape()>=this.getUt_fin_guerre()+Math.ceil((this.getUt_fin_guerre()-this.getUt_debut_guerre())*1.5)) {
 				double chance_guerre = Math.random();
-				if (chance_guerre<=0.05) { //Changement Guerre de 15% à 5%
+				if (chance_guerre<=0.15) {
 					this.setGuerre(true);
 					this.setUt_debut_guerre(Filiere.LA_FILIERE.getEtape());
 					double aléa_durée_guerre = Math.random();
@@ -234,35 +296,39 @@ public class Parc {
 	}
 
 	
-	public void MAJParc(int mecontentement_basse,int mecontentement_moyenne, int mecontentement_haute) { //Écrit par Antoine
+	public void MAJParc(int mecontentement_basse,int mecontentement_moyenne, int mecontentement_haute, HashMap<Feve, Double> venteChoco) { //Écrit par Antoine
 		int malade5 = 0;
 		int plantés = 0;
 		int mort_vieillesse = 0;
-		for (int i=0; i<this.getCacaoyers().size(); i++) {
-			if (i==1) {
-				this.getRetourMAJParc().ajouter(this.getArbre(i).getMecontentement()+"   "+this.getArbre(i).getStade_maladie());
-			}
-			MilleArbre arbre_i = this.getArbre(i);
-			arbre_i.MAJMaladie();
-			int qualite = arbre_i.getQualite();
-			boolean BE = arbre_i.getBioequitable();
-			boolean cooperative=arbre_i.getCooperative();
-			arbre_i.MAJMecontentement(mecontentement_basse,mecontentement_moyenne,mecontentement_haute);
-			if (arbre_i.getStade_maladie() == 5) { //Si un arbre meurt à cause de maladie, on le remplace immédiatement
-				malade5+=1;
-				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
-				plantés+=1;
-				this.getCacaoyers().remove(arbre_i);
-			}
-			if (arbre_i.Age() == arbre_i.getUt_esperance_vie()) {
-				this.getCacaoyers().remove(arbre_i);
-				this.MAJCompteur(arbre_i,-1);
-				mort_vieillesse+=1;
-			}
-			if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) {
-				this.Planter(new MilleArbre(qualite,cooperative,BE,Filiere.LA_FILIERE.getEtape()));
-				this.MAJCompteur(arbre_i,1);
-				plantés+=1;
+		for (Feve f : this.getCacaoyers().keySet()) {
+			ArrayList<MilleArbre> liste_arbres = this.getListeArbre(f);
+			for (int i=0; i<this.getListeArbre(f).size(); i++) {
+				MilleArbre arbre_i = liste_arbres.get(i);
+				int qualite = arbre_i.getQualite();
+				boolean BE = arbre_i.getBioequitable();
+				boolean cooperative=arbre_i.getCooperative();
+				arbre_i.MAJMaladie();
+				//arbre_i.MAJMecontentement(mecontentement_basse,mecontentement_moyenne,mecontentement_haute);
+				if (arbre_i.getStade_maladie() == 5) { //Quand un arbre meurt de maladie on le remplace en fonction de la demande
+					malade5+=1;
+					MilleArbre nouvel_arbre = FuturePlantation(venteChoco,cooperative); 
+					this.Planter(nouvel_arbre);
+					this.MAJCompteur(nouvel_arbre, 1);
+					plantés+=1;
+					liste_arbres.remove(arbre_i);
+					this.MAJCompteur(arbre_i, -1);
+				}
+				if (arbre_i.Age() == arbre_i.getUt_esperance_vie()) { //Quand un arbre meurt de vieillesse on l'enlève du parc
+					liste_arbres.remove(arbre_i);
+					this.MAJCompteur(arbre_i,-1);
+					mort_vieillesse+=1;
+				}
+				if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) { //5ans avant qu'un arbre meurt de vieilesse, on plante un nouvel arbre pour répondre à la demande
+					MilleArbre nouvel_arbre = FuturePlantation(venteChoco,cooperative);
+					this.Planter(nouvel_arbre);
+					this.MAJCompteur(nouvel_arbre,1);
+					plantés+=1;
+				}
 			}
 		}
 		this.getRetourMAJParc().ajouter(mort_vieillesse+" MilleArbres sont mort de vieillesse, vive les arbres");
@@ -325,39 +391,42 @@ public class Parc {
 		HashMap<Feve, Double> dicorecolte = new HashMap<Feve, Double>();
 		if (Filiere.LA_FILIERE.getEtape()>=this.fin_aleas) {
 			this.getRetourAléas().ajouter("OKLM le ciel est dégagé, la saison est bonne il est temps de récolter et d'se faire du blé");
-			for (int i=0; i<this.getCacaoyers().size(); i++) {
-				MilleArbre arbre_i = this.getArbre(i);
-				boolean isBE = arbre_i.getBioequitable();
-				int qualite = arbre_i.getQualite();
-				int maladie = arbre_i.getStade_maladie();
-				if (maladie==1) {
-					malade1+=1;
-				}
-				if (maladie==2) { 
-					malade2+=1;
-				}
-				if (maladie==3) {
-					malade3+=1;
-				}
-				if (maladie==4) {
-					malade4+=1;
-				}
-				double recolte = arbre_i.Recolte();
-				if ((isBE) && (qualite==2)) {
-					BE_moyenne+=recolte;
-				}
-				if ((isBE) && (qualite==3)) {
-					BE_haute+=recolte;
-				}
-				if (isBE==false) {
-					if (qualite==1) {
-						non_BE_basse+=recolte;
+			for (Feve f : this.getCacaoyers().keySet()) {
+				ArrayList<MilleArbre> liste_arbres = this.getListeArbre(f);
+				for (int i=0; i<liste_arbres.size(); i++) {
+					MilleArbre arbre_i = liste_arbres.get(i);
+					boolean isBE = arbre_i.getBioequitable();
+					int qualite = arbre_i.getQualite();
+					int maladie = arbre_i.getStade_maladie();
+					if (maladie==1) {
+						malade1+=1;
 					}
-					if (qualite==2) {
-						non_BE_moyenne+=recolte;
+					if (maladie==2) { 
+						malade2+=1;
 					}
-					if (qualite==3) {
-						non_BE_haute+=recolte;
+					if (maladie==3) {
+						malade3+=1;
+					}
+					if (maladie==4) {
+						malade4+=1;
+					}
+					double recolte = arbre_i.Recolte();
+					if ((isBE) && (qualite==2)) {
+						BE_moyenne+=recolte;
+					}
+					if ((isBE) && (qualite==3)) {
+						BE_haute+=recolte;
+					}
+					if (isBE==false) {
+						if (qualite==1) {
+							non_BE_basse+=recolte;
+						}
+						if (qualite==2) {
+							non_BE_moyenne+=recolte;
+						}
+						if (qualite==3) {
+							non_BE_haute+=recolte;
+						}
 					}
 				}
 			}
