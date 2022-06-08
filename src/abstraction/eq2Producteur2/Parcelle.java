@@ -22,6 +22,7 @@ public class Parcelle {
 	private double ImpactRendementParasite;
 	private boolean AleaClimatique;
 	private int DebutAleaClimatique; 
+	private int mecontentement;
 
 	
 	
@@ -37,6 +38,10 @@ public class Parcelle {
 		this.setStadeMaladie(0);
 		this.setNbArbres(10000);
 		this.setImpactRendementParasite(1);
+		
+		// Attention : pour le moment on a 40 millions d'arbres et pas 400 millions car 1 parcelle = 10 000 arbres
+		// A voir si on peut augmenter le nombre d'arbres dans 1 parcelle si on arrive à vendre car 
+		// pour le moment (08 juin), on n'arrive plus à faire des bénéfices 
 		
 		
 	}
@@ -255,7 +260,7 @@ public class Parcelle {
 	
 	public void MAJAleaClimatique() {
 		double dureeAleaClim = 0;
-		if (Filiere.LA_FILIERE.getEtape() >= 8 && this.AleaClimatique == false) {
+		if (Filiere.LA_FILIERE.getEtape()%24==8) {
 			double proba_duree = Math.random();
 			if ( proba_duree <= 0.33) {
 				dureeAleaClim = 1;
@@ -272,12 +277,20 @@ public class Parcelle {
 				this.setDebutAleaClimatique(Filiere.LA_FILIERE.getEtape());
 				this.setAleaClimatique(true);
 		}
-		if (Filiere.LA_FILIERE.getEtape() >= 8 && this.AleaClimatique == true) {
+		if (this.AleaClimatique == true) {
 			while (Filiere.LA_FILIERE.getEtape() - this.getDebutAleaClimatique() <= dureeAleaClim) {
 				dureeAleaClim = dureeAleaClim - 1; 
 			}
 		}
 
 		}
+	}
+
+	public int getMecontentement() {
+		return mecontentement;
+	}
+
+	public void setMecontentement(int mecontentement) {
+		this.mecontentement = mecontentement;
 	}
 }

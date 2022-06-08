@@ -63,7 +63,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	private void negoReussie(ExemplaireContratCadre ecc) {
 		journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "Négociation réussie ! Contrat #" + ecc.getNumero());
 		mesContrats.add(ecc);
-		enRetard.put(ecc.getNumero(),  false);
+		enRetard.put(ecc.getNumero(), false);
 		setPrixVente((ChocolatDeMarque)ecc.getProduit(), ecc.getPrix());
 	}
 	
