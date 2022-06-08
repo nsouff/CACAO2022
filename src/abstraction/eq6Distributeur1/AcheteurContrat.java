@@ -117,8 +117,9 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			journalNegociationCC.ajouter("--> Nous acceptons son écheancier");
 			return contrat.getEcheancier();
 		}
-		// TODO: On ne fait actuellement aucune negociation
-		return null;
+		else {
+			return voulu;
+		}
 	}
 
 	@Override
@@ -218,7 +219,10 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		Echeancier e = new Echeancier(stepDebut);
 		for (int i = stepDebut; i < stepDebut + 24; i++) {
 			double aComblerI = (aCombler == null) ? 0 : aCombler.getQuantite(i);
-			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI);
+			double aAjouter = getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI;
+			if (aAjouter > 0) {
+				e.ajouter(aAjouter);
+			}
 		}
 		return e;
 	}
@@ -251,7 +255,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
 				Echeancier aAjouterChoco = aAjouter.get(choco);
-				if (aAjouterChoco != null && !vendeur.getNom().equals("EQ5")) {
+				if (aAjouterChoco != null) {
 					nouvelleNego(vendeur, choco, aAjouterChoco, false);
 					ExemplaireContratCadre ecc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouterChoco, this.cryptogramme, false);
 					if (ecc != null) {
