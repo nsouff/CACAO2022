@@ -43,6 +43,9 @@ public class Stock {
 	public void removequantite(double q) {
 		this.quantite = this.quantite - q;
 	}
+	public void pertetaux(double t) {
+		this.quantite=this.quantite*(1-t);
+	}
 	public int getAge() {
 		return (Filiere.LA_FILIERE.getEtape()- this.getStep_arrivee());
 	}
@@ -56,7 +59,7 @@ public class Stock {
 	}
 	
 	public void Peremption() {
-		if(this.getAge()>48) {
+		if(this.getAge()>Filiere.LA_FILIERE.getParametre("dureePeremption").getValeur()) {
 			this.setPerime(true);
 		}
 	}	
