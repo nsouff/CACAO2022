@@ -34,7 +34,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		
 		super.next();
 		NewCap=cap;
-		this.GetCommandes(mesContratEnTantQueVendeur);
+		//this.GetCommandes(mesContratEnTantQueVendeur);
 		//il faut régler les qauntités transformées pour chaque types de fèves
 		
 		//Les transformations non originales courtes
