@@ -292,10 +292,10 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 			 this.notificationNouveauContratCadreBio(contrat);
 			 this.journalCC.ajouter("Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix() );
 
-		}
+		} else {
 		this.notificationNouveauContratCadreNonBio(contrat);
 		this.journalCC.ajouter("Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix() );
-
+		}
 	}
 
 	
