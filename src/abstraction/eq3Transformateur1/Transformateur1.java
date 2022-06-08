@@ -334,11 +334,11 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 							echeancier, 
 							cryptogramme, 
 							false);
-					journalCC.ajouter("__________________________new CC_______________________");
-					journalCC.ajouter("contrat avant if is null ?");
+					journalCCA.ajouter("__________________________new CC_______________________");
+					journalCCA.ajouter("contrat avant if is null ?");
 					System.out.println(contrat);
 					if (contrat != null) {
-						journalCC.ajouter("contrat non null");
+						journalCCA.ajouter("contrat non null");
 						mesContratEnTantQueAcheteur.add(contrat);
 					}
 				}
