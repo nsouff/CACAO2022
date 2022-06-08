@@ -12,7 +12,7 @@ import abstraction.eq8Romu.general.Journal;
 /**
  * @author Nathan
  */
-public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
+public class AcheteurAO extends AcheteurContrat implements IAcheteurAO {
 
     private Journal journalAO;
     
@@ -26,18 +26,24 @@ public class AcheteurAO extends Acheteur_Contrat implements IAcheteurAO {
      */
     @Override
     public double proposerPrix(OffreVente offre) {
+    	
+    	if (NotreStock.seuilSecuFaillite() == true) {   //EmmaHumeau
+    		return 0.0;
+    	}
 
-        if (this.getNotreStock().getStock(offre.getChocolat()) > 100) {
+
+        if (this.getNotreStock().getStock(offre.getChocolat()) > 5000) {
+
             journalAO.ajouter("Nous refusons proposition: " + offre + " car nous avons déjà " + this.getNotreStock().getStock(offre.getChocolat())) ;
             return 0.0;
         }
         if (offre.enTG()) {
-            double res = 8*offre.getQuantiteKG();
-            journalAO.ajouter("Nous proposons un prix de 80 pour l'offre pour " + res + "Kg de " + offre.getChocolat());
-            return res;        
+            double res = 5.1;
+            journalAO.ajouter("Nous proposons un prix de 5.1 pour l'offre pour " + res + "Kg de " + offre.getChocolat());
+            return res;
         }
-        double res = 10*offre.getQuantiteKG();
-        journalAO.ajouter("Nous proposons un prix de 80 pour l'offre pour " + res + "Kg de " + offre.getChocolat());
+        double res = 7.1;
+        journalAO.ajouter("Nous proposons un prix de 7.1 pour l'offre pour " + res + "Kg de " + offre.getChocolat());
         return res;
     }
 

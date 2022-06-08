@@ -1,4 +1,4 @@
-package abstraction.eq7Distributeur2;
+package abstraction.eq7Distributeur2.examples;
 
 import java.awt.Color;
 import java.util.ArrayList;
