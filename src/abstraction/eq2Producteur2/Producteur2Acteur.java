@@ -71,7 +71,6 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 
 	public void next() {
 		super.next();
-		System.out.println("debut");
 		// Cout de production, Jules DORE
 		this.setCoutParKg();
 		double coutProduction = 0.0;
@@ -101,7 +100,6 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 		this.GetStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.GetStockBasse().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
 		this.GetStockHausse_BE().setValeur(this, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));	
-		System.out.println("fin");
 	}
 	
 	public List<String> getNomsFilieresProposees() {
