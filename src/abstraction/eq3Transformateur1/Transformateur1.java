@@ -312,17 +312,31 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		double quantiteFeveContrat = 0. ;
 		for (Feve f : Feve.values()) {
+			quantiteFeveContrat = 0.;
+
 			
-			// calcul de la quantite de feves qui proviennent de contrat deja existant
-			for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) { 
-				if (f == c.getProduit()) {
-					quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
-					journal.ajouter("La quantite de feve provenant de contrat cadre est de "+ quantiteFeveContrat+ "kg");
-				}
-			}
 			// choisit le producteur de feve selon le type de feve desire
 			if (f == Feve.FEVE_BASSE || f == Feve.FEVE_MOYENNE) {  // B et M => prod1
+				//System.out.println("_______________________________________________________________________________________");
+				
+				// calcul de la quantite de feves qui proviennent de contrat deja existant
+				for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) { 
+					if (f == c.getProduit()) {
+						//System.out.println(Filiere.LA_FILIERE.getEtape());
+						//System.out.println("contrat next()");
+						//System.out.println(c+ "  restealivrer "+c.getQuantiteRestantALivrer());
+						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
+						journal.ajouter("La quantite de feve provenant de contrat cadre est de "+ quantiteFeveContrat+ "kg ");
+						//System.out.println("qtFeveContrat du next() "+quantiteFeveContrat);
+					}
+				}
+				
+				System.out.println("qtFeveContrat totale du next() "+quantiteFeveContrat);
+				//System.out.println("mes CC acheteurs");
+				//System.out.println(mesContratEnTantQueAcheteur);
+				
 				// desire t on un CC ?
+				
 				if (this.achete(f)) {
 					// creation de l'echeancier
 					Echeancier echeancier = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 5, this.quantiteAchatFeve.get(f)*0.5-quantiteFeveContrat);
@@ -334,7 +348,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 							echeancier, 
 							cryptogramme, 
 							false);
-					System.out.println(contrat);
+
 					if (contrat != null) {
 						journalCCA.ajouter("Un nouveau contrat cadre acheteur vient d'être signé.");
 						mesContratEnTantQueAcheteur.add(contrat);

@@ -81,12 +81,16 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		// supprime les contrats d'achats obsolètes; auteur Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueAcheteur) {
+			//System.out.println(contrat + "qtRestantALivrer " + contrat.getQuantiteRestantALivrer() + "Montant "+ contrat.getMontantRestantARegler());
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				//System.out.println("ajouté");
 				contratsObsoletes.add(contrat);
 			}
 		}
 		this.mesContratEnTantQueAcheteur.removeAll(contratsObsoletes);
+
 		journalCCA.ajouter("Les contrats cadres acheteur obsoletes ont ete supprimes");
+
 	}
 
 }
