@@ -77,9 +77,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	//Toute les fèves
 	public boolean vend(Object produit) {
-		// TODO Auto-generated method stub
-		return ((Feve)(produit)==Feve.FEVE_HAUTE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_MOYENNE_BIO_EQUITABLE||(Feve)(produit)==Feve.FEVE_HAUTE||(Feve)(produit)==Feve.FEVE_MOYENNE||(Feve)(produit)==Feve.FEVE_BASSE);
+		return (produit instanceof Feve);//(produit instanceof Feve);
 	}
+
 	
 	//methode pour le bio
 	public double qtiteTotaleContratEnCours(Object produit) {
