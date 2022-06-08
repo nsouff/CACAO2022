@@ -13,6 +13,7 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Feve;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
@@ -75,7 +76,9 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		this.nb_prop += 1;
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
-		Double seuilMax = 0.0;
+		Double seuilMax = 2.0;
+		this.achats.ajouter(seuilMax.toString());
+
 		if (contrat.getProduit() instanceof ChocolatDeMarque) {
 			if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
 				return 2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
@@ -94,7 +97,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
-		Double seuilMax = 0.0;
+		Double seuilMax = 2.0;
 		if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
 			if (contrat.getPrix()>2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur())){
 				this.ventes.ajouter("nous acceptons "+contrat.getPrix().toString());

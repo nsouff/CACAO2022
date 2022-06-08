@@ -52,7 +52,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	protected DicoPeremption<Chocolat> perempChocolat;
 	
 	
-	// Stock Moyenne et haut de Gamme en variables
+	// Stock Moyenne et haut de Gamme en variables BE et non BE
 	protected Variable stockFevesVariableM;
 	protected Variable stockFevesVariableH;
 	protected Variable stockChocolatVariableM;
@@ -66,7 +66,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 	
 	//Karla
 	public Transformateur3Acteur() {
-		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en kg", this,  0, 100000, 1000);
+		this.seuilTransformation = new VariableReadOnly ("seuiTransformation", "seuil de transformation par etape en kg", this,  0, 250000000, 100000000);
 		this.rendement = new VariableReadOnly ("rendement", "rendement de la transformation longue", this,  0, 0.99, 0.7);
 		this.coutTransformation = new VariableReadOnly ("coutTransformation", "cout de transformation en milliers de dollars par etape par kg", this,  0, 1000, 1);
 		this.coutOriginal = new VariableReadOnly ("coutOriginal", "cout supplementaire pour un produire un chocolat orginal en milliers de dollars par etape par kg", this, 0, 100, 1);
@@ -112,8 +112,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.perempChocolat.ajouterQtt(this.dureePeremption.getValeur(),Chocolat.HQ_BE, s);
 		this.perempChocolat.ajouterQtt(this.dureePeremption.getValeur(),Chocolat.HQ_BE_O, s);
 		
-		this.stockFevesVariableM = new Variable(this.getNom()+"stockFevesMoyennesBio", "stock de feves moyenne qualite bio", this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)  );
-		this.stockFevesVariableH = new Variable(this.getNom()+"stockFevesHautesBio", "stock de feves haute qualite bio",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)  );
+		this.stockFevesVariableM = new Variable(this.getNom()+"stockFevesMoyennes", "stock de feves moyenne qualite BE + non BE", this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE) + this.stockFeves.getstock(Feve.FEVE_MOYENNE) );
+		this.stockFevesVariableH = new Variable(this.getNom()+"stockFevesHautes", "stock de feves haute qualite BE + non BE",this,  0, 100000000, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE) + this.stockFeves.getstock(Feve.FEVE_HAUTE) );
 		this.stockChocolatVariableM = new Variable(this.getNom()+"stockChocolatMoyen", "stock de chocolat moyenne qualite",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.MQ_BE)+this.stockChocolat.getstock(Chocolat.MQ_BE_O)  );
 		this.stockChocolatVariableH = new Variable(this.getNom()+"stockChocolatHaut", "stock de chocolat huate qualite ",this,  0, 100000000, this.stockChocolat.getstock(Chocolat.HQ_BE)+this.stockChocolat.getstock(Chocolat.HQ_BE_O)  );
 
@@ -260,7 +260,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.perempFeves.perime(Filiere.LA_FILIERE.getEtape());
 		
 		//System.out.println(this.contratsEnCoursAchat.size());
-		System.out.println(this.contratsEnCoursVente.size());
+		//System.out.println(this.contratsEnCoursVente.size());
 
 	}
 
