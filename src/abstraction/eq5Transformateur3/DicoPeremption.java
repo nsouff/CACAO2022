@@ -66,7 +66,7 @@ public class DicoPeremption<Produit> {
 	
 	public void perime(double step) {
 		for (DateProd<Produit> d : this.getDateProd()) {
-			if (d.getDate()<step || this.peremptions.get(d)==0) {
+			if (d.getDate()<step || this.peremptions.get(d)<=0) {
 				this.peremptions.remove(d) ;
 			}
 		}

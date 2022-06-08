@@ -240,6 +240,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 				this.dispoFeves.put(f, this.stockFeves.getstock(f)+contrat.getQuantiteALivrerAuStep());	
 
 			}
+			
 		}
 		
 		/* Maj des disponibilités pour le tour courant */
@@ -252,6 +253,8 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 				}
 			}
 		}
+		this.perempChocolat.perime(Filiere.LA_FILIERE.getEtape());
+		this.perempFeves.perime(Filiere.LA_FILIERE.getEtape());
 	}
 
 	//juju & Yves
