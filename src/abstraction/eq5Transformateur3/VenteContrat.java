@@ -24,7 +24,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	//chgmt 
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
-		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 100); //100 kg de chocolat sur 10 steps
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 10000); //10000 kg de chocolat sur 10 steps
 		List<IAcheteurContratCadre>L2 = new LinkedList<IAcheteurContratCadre>();
 		this.nb_prop = 0;
 		for (IAcheteurContratCadre a : L) {
@@ -157,13 +157,21 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		
 		/* Lancer des CC */
 		for (Chocolat c : this.stockChocolat.getProduitsEnStock()) {
-			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat && c.isBioEquitable() == true) {
-				ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
-				lanceruncontratVendeur(choco);
-			}
-			if (this.stockChocolat.getstock(c) > this.SeuilMinChocolat && c.isBioEquitable() == false) {
-				ChocolatDeMarque choco = new ChocolatDeMarque(c,"CHOCO'riginal");
-				lanceruncontratVendeur(choco);
+			Gamme g = c.getGamme();
+			boolean be = c.isBioEquitable();
+			for (Feve f : this.stockFeves.getProduitsEnStock()) {
+				if (f.getGamme() == g && f.isBioEquitable() == be) {
+					if (this.stockChocolat.getstock(c) > this.besoinFeves.get(f)) {
+						if (be == true) {
+							ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
+							lanceruncontratVendeur(choco);	
+							}
+						else {
+							ChocolatDeMarque choco = new ChocolatDeMarque(c,"CHOCO'riginal");
+							lanceruncontratVendeur(choco);
+						}
+					}
+				}
 			}
 		}
 	}

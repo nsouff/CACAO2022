@@ -95,7 +95,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 
 
 		
-		Double s = 1000.00;
+		Double s = 1000000.00;
 		this.stockFeves.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, s);
 		this.stockFeves.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, s);
 		
