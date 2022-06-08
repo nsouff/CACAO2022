@@ -224,6 +224,10 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		this.achats.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
 		this.ventes.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
 		this.transformation.ajouter("Etape = "+Filiere.LA_FILIERE.getEtape());
+		this.achats.ajouter("taille perempChoco"+this.perempChocolat.getDateProd().size());
+		this.achats.ajouter("taille perempFeve"+this.perempFeves.getDateProd().size());
+		this.achats.ajouter("nb CCA"+this.contratsEnCoursAchat.size());
+		this.achats.ajouter("nb CCV"+this.contratsEnCoursVente.size());
 		double montant= prixStockage();
 		if (montant >0) {
 		 Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
