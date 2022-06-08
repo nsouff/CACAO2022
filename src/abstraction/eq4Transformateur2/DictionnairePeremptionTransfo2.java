@@ -10,7 +10,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 //Marie
-public class DictionnairePeremptionTransfo2<Produit> extends Transformateur2ContratCadreVendeur{
+public class DictionnairePeremptionTransfo2<Produit>{
 	
 	private HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
 	
