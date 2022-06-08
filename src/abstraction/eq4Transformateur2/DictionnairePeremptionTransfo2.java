@@ -5,6 +5,7 @@ import java.util.Set;
 
 import abstraction.eq5Transformateur3.DateProd;
 
+//Marie
 public class DictionnairePeremptionTransfo2<Produit>{
 	
 	private HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
@@ -40,6 +41,8 @@ public class DictionnairePeremptionTransfo2<Produit>{
 			}
 		}
 
+double step=12;
+	
 	public void perime(double step) {
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			if(d.getDate()<step||this.peremption.get(d)==0) {
