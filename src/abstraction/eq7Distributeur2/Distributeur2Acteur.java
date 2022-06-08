@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import abstraction.eq7Distributeur2.examples.FiliereTestCCBiofour;
+import abstraction.eq7Distributeur2.tools.IStock;
+import abstraction.eq7Distributeur2.tools.Stock;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
@@ -25,17 +29,16 @@ public class Distributeur2Acteur implements IActeur{
 	protected Journal journalContratCadre;
 	protected Journal journalStock;
 	protected Journal journalVente;
+	protected Journal journalEtudeVente;
 	protected Journal journal;
 	
 	//Indicateurs
 	private List<Variable> listeIndicateur;
 	private Variable stockTotal;
+	protected Variable totalVente;
 
 	public Distributeur2Acteur() {
-		this.journalContratCadre = new Journal(this.getNom()+" Contrat Cadres", this);
-		this.journalStock = new Journal(this.getNom()+" Stock", this);
-		this.journalVente = new Journal(this.getNom()+" Vente (Client Final)", this);
-		this.journal = new Journal(this.getNom()+" Activité", this);
+		this.initialiserJournaux();
 		this.initialiserIndicateurs();
 	}
 
@@ -50,6 +53,14 @@ public class Distributeur2Acteur implements IActeur{
 	public Color getColor() {
 		return new Color(1,81,8); 
 	}
+	
+	public Color getColorSuccess() {
+		return new Color(0,255,0); 
+	}
+	
+	public Color getColorFaillure() {
+		return new Color(255,0,0); 
+	}
 
 
 	public void initialiser() {
@@ -57,6 +68,8 @@ public class Distributeur2Acteur implements IActeur{
 		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
 		System.out.println("Liste des chocolats en vente sur le marché : "+chocolats);
 		this.stock = new Stock(this,this.chocolats);
+		this.actualiserIndicateurs();
+		this.journalStock.ajouter("Stock initial: "+this.stock.getQuantiteTotale());
 		
 	}
 	
@@ -79,27 +92,28 @@ public class Distributeur2Acteur implements IActeur{
 	    default : return null;
 		}
 	}
-
-	// Renvoie les indicateurs
-	public List<Variable> getIndicateurs() {
-		List<Variable> res = new ArrayList<Variable>();
-		res.add(stockTotal);
-		return res;
-	}
 	
 	//-----------------------------INDICATEURS-------------------------------------------
 
 	public void initialiserIndicateurs() {
-		this.listeIndicateur = new LinkedList<Variable>();
-		this.stockTotal = new Variable("Stock total",this,0);
-		this.listeIndicateur.add(stockTotal);
+		this.stockTotal = new Variable("Biofour : Stock total",this,0);
+		this.totalVente = new Variable("Biofour : Total des ventes", this, 0);
 	}
 	
 	public void actualiserIndicateurs() {
 		this.stockTotal.setValeur(this,this.stock.getQuantiteTotale());
-	
 	}
+	
+	// Renvoie les indicateurs
+	public List<Variable> getIndicateurs() {
+		this.listeIndicateur = new LinkedList<Variable>();
 		
+		this.listeIndicateur.add(stockTotal);
+		this.listeIndicateur.add(totalVente);	
+		return listeIndicateur;
+	}
+	
+	//-----------------------------PARAMETRES-------------------------------------------
 
 	// Renvoie les paramètres
 	public List<Variable> getParametres() {
@@ -107,16 +121,29 @@ public class Distributeur2Acteur implements IActeur{
 		return res;
 	}
 
+	//-----------------------------JOURNAUX-------------------------------------------
+	
+	public void initialiserJournaux() {
+		this.journalContratCadre = new Journal(this.getNom()+" Contrat Cadres", this);
+		this.journalStock = new Journal(this.getNom()+" Stock", this);
+		this.journalVente = new Journal(this.getNom()+" Vente (Client Final)", this);
+		this.journalEtudeVente = new Journal(this.getNom()+" Etude des ventes (Marché)", this);
+		this.journal = new Journal(this.getNom()+" Activité", this);
+	}
+	
 	// Renvoie les journaux
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
 		j.add(this.journal);
 		j.add(this.journalContratCadre);
 		j.add(this.journalStock);
+		j.add(this.journalEtudeVente);
 		j.add(this.journalVente);
 		
 		return j;
 	}
+
+	//-----------------------------MISC-------------------------------------------
 
 
 	public void setCryptogramme(Integer crypto) {

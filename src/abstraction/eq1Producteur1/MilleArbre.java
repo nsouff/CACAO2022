@@ -1,5 +1,7 @@
 package abstraction.eq1Producteur1;
 
+import java.util.ArrayList;
+
 import abstraction.eq8Romu.filiere.Filiere;
 
 // Une instance de "MilleArbre" équivaut à 1000 arbres réels
@@ -8,11 +10,13 @@ public class MilleArbre {
 	private int ut_esperance_vie;
 	private int stade_maladie;
 	private int ut_debut_maladie;
-	private int qualite ;
+	private int qualite ; //1 = basse; 2 = moyenne; 3 = haute
+	private boolean cooperative;
 	private boolean bioequitable;
 	private boolean transition_bio;
 	private int date_transition;
 	private double productivite_max;
+	private int mecontentement;
 	
 	public MilleArbre() { //Écrit par Maxime
 		this.ut_plantation=0;
@@ -20,22 +24,26 @@ public class MilleArbre {
 		this.stade_maladie=0;
 		this.ut_debut_maladie = 0;
 		this.qualite=1;
+		this.cooperative=false;
 		this.bioequitable=false;
 		this.transition_bio=false;
 		this.date_transition=0;
 		this.productivite_max=this.Production_max();
+		this.mecontentement=0;
 	}
 	
-	public MilleArbre(int qualite, boolean BE,int ut_plantation) { //Écrit par Antoine
+	public MilleArbre(int qualite,boolean cooperative, boolean BE,int ut_plantation) { //Écrit par Antoine
 		this.ut_plantation = ut_plantation;
 		this.ut_esperance_vie = Esperance_vie();
 		this.stade_maladie = 0;
 		this.ut_debut_maladie = 0;
+		this.cooperative= cooperative;
 		this.qualite = qualite;
 		this.bioequitable = BE;
 		this.transition_bio = false;
 		this.date_transition = 0;
 		this.productivite_max = this.Production_max();
+		this.mecontentement=0;
 	}
 	
 	public void setUt_plantation(int ut_plantation) { //Écrit par Maxime
@@ -53,6 +61,9 @@ public class MilleArbre {
 	public void setQualite(int qualite) { //Écrit par Maxime
 		this.qualite=qualite;
 	}
+	public void setCooperative(boolean cooperative) {
+		this.cooperative=cooperative;
+	}
 	public void setBioequitable(boolean bioequitable) { //Écrit par Maxime
 		this.bioequitable= bioequitable;
 	}
@@ -64,6 +75,12 @@ public class MilleArbre {
 	}
 	public void setProductivite_max(double productivite_max) { //Écrit par Maxime
 		this.productivite_max = productivite_max;
+	}
+	public void setMecontentement(int mecontentement) {
+		this.mecontentement=0;
+		if (mecontentement>=0) {
+			this.mecontentement = mecontentement;
+		}
 	}
 	public int getUt_plantation() { //Écrit par Antoine
 		return this.ut_plantation;
@@ -80,6 +97,9 @@ public class MilleArbre {
 	public int getQualite() { //Écrit par Antoine
 		return this.qualite;
 	}
+	public boolean getCooperative() { //Écrit par Antoine
+		return this.cooperative;
+	}
 	public boolean getBioequitable() { //Écrit par Antoine
 		return this.bioequitable;
 	}
@@ -92,6 +112,19 @@ public class MilleArbre {
 	public double getProductivite_max() { //Écrit par Antoine
 		return this.productivite_max;
 	}
+	public int getMecontentement() {
+		return this.mecontentement;
+	}
+	public void MAJMecontentement(int mecontentement_basse,int mecontentement_moyenne, int mecontentement_haute) {
+		ArrayList<Integer> mecontentement= new ArrayList<Integer>();
+		mecontentement.add(mecontentement_basse);
+		mecontentement.add(mecontentement_moyenne);
+		mecontentement.add(mecontentement_haute);
+		int qualite = this.getQualite();
+		int maladie = this.getStade_maladie();
+		this.setMecontentement(this.getMecontentement() + mecontentement.get(qualite-1)+maladie);
+	}
+	
 	
 	public void MAJMaladie() { //Écrit par Antoine
 		if (this.getStade_maladie() == 0) {
@@ -244,5 +277,8 @@ public class MilleArbre {
 			this.setTransition_bio(false);
 		}
 		
+	}
+	public void Regrouper() {
+		this.setCooperative(true);
 	}
 }

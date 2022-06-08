@@ -4,28 +4,26 @@ import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
-public class FeveProducteur1 {
+public class ChocolatProducteur1 {
 	private int ut_debut; //Plus pratique puisqu'on a pas besoin d'actualiser
 	private boolean perime;
 	private double poids;
-	private boolean affine;
 	private Parc provenance;
 	
 	
 //Auteur : Laure ; Modificateur : Khéo
-	public FeveProducteur1(double poids, Parc provenance) {
+	public ChocolatProducteur1(double poids, Parc provenance) {
 		this.ut_debut = Filiere.LA_FILIERE.getEtape();
 		this.perime = false;
 		this.poids = poids;
-		this.affine=false;
-		this.provenance=provenance;
+		this.provenance = provenance;
 	}
 
 	/**
 	 * @param age
 	 * @param perime
 	 */
-	public FeveProducteur1(int ut_debut, boolean perime,double poids) { 
+	public ChocolatProducteur1(int ut_debut, boolean perime,double poids) { 
 		this.ut_debut = ut_debut;
 		this.perime = perime;
 		this.poids = poids;
@@ -45,7 +43,6 @@ public class FeveProducteur1 {
 	public int getUt_debut() {
 		return this.ut_debut;
 	}
-	
 
 	/**
 	 * @return the provenance
@@ -83,47 +80,17 @@ public class FeveProducteur1 {
 		this.perime = perime;
 	}
 	
-	public boolean isAffine() {
-		return this.affine;
-	}
-	
-	//Auteur : Khéo
-
-	public void MAJAffinage(Feve f) {
-		if (f.getGamme().equals(Gamme.HAUTE)) {
-			if (this.getAge()>3) {
-				this.setAffine(true);
-			}
-		}
-		
-		if (f.getGamme().equals(Gamme.MOYENNE)) {
-			if (this.getAge()>2) {
-				this.setAffine(true);
-			}
-		}
-		
-		if (f.getGamme().equals(Gamme.BASSE)) {
-			if (this.getAge()>1) {
-				this.setAffine(true);
-			}
-		}
-	}
 	
 	
 	//Auteur : Khéo
 	//Modifié par : Antoine 
 	//La durée de péremption des fèves est de 2 ans
 	public void MajPeremption() {  
-		if (this.getAge()>48) {
+		if (this.getAge()>Filiere.LA_FILIERE.getParametre("dureePremption").getValeur()) {
 			this.setPerime(true);
 		}
 	}
 	
-	/**
-	 * @param affine the affine to set
-	 */
-	public void setAffine(boolean affine) {
-		this.affine = affine;
-	}
+
 	
 }
