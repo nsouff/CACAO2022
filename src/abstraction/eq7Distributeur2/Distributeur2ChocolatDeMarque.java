@@ -63,31 +63,55 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 		if (quantiteVendue/quantiteTotale >= 0.75) {
 			if (choco.isBioEquitable()) {
 				if (choco.getGamme()==Gamme.HAUTE) {
-					return prix_precedent*0.95;
+					double prix = prix_precedent*0.95;
+					if (prix < this.prixMinHQ_B) {
+						prix = this.prixMinHQ_B;
+					}
+					return prix;
 				}
 				if (choco.getGamme()==Gamme.MOYENNE) {
-					return prix_precedent*0.9;
+					double prix = prix_precedent*0.9;
+					if (prix < this.prixMinMQ_B) {
+						prix = this.prixMinMQ_B;
+					}
+					return prix;
 				}
 				else {
-					return prix_precedent*0.85;
+					double prix = prix_precedent*0.95;
+					if (prix < this.prixMinHQ_B_O) {
+						prix = this.prixMinMQ_B_O;
+					}
+					return prix;
 				}
 			}
 			else {
 				if (choco.getGamme()==Gamme.HAUTE) {
-					return prix_precedent*1.15;
+					double prix = prix_precedent*1.15;
+					if (prix < this.prixMinHQ_B) {
+						prix = this.prixMinHQ_B;
+					}
+					return prix;
 				}
 				if (choco.getGamme()==Gamme.MOYENNE) {
-					return prix_precedent*1.1;
+					double prix = prix_precedent*1.1;
+					if (prix < this.prixMinMQ) {
+						prix = this.prixMinMQ;
+					}
+					return prix;
 				}
 				else {
-					return prix_precedent*1.05;
+					double prix = prix_precedent*1.05;
+					if (prix < this.prixMinBQ) {
+						prix = this.prixMinBQ;
+					}
+					return prix;
 				}
 			}
 		}
 		else {
 			return venteTracker.getPreviousVentePrix(choco); 
 		}	
-		}
+	}
 		else {
 			if(choco.getGamme()==Gamme.HAUTE && choco.isBioEquitable() && choco.isOriginal()) {
 				return 15.0;
