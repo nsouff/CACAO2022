@@ -59,7 +59,7 @@ public class Stock {
 	}
 	
 	public void Peremption() {
-		if(this.getAge()>13) {
+		if(this.getAge()>Filiere.LA_FILIERE.getParametre("dureePeremption").getValeur()) {
 			this.setPerime(true);
 		}
 	}	
