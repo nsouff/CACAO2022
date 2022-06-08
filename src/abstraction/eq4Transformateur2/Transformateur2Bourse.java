@@ -53,7 +53,8 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 		}
 		this.getJournalcours().ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est"+ this.prixMinB.getValeur() + "");
 		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est"+ this.prixMinM.getValeur()+ "");
-	}
+		this.journalAchat.ajouter("---------------------------------------------------------------------------------------------------------------");
+		}
 	
 	public void initialiser() {
 		super.initialiser();
@@ -145,6 +146,8 @@ public double demande(Feve f, double cours) {
 	//2)vérifiaction des besoins
 	//3)vérification des capacités de paiement
 	//4)achat si totu est validé
+	 
+	 */
 	public double demande(Feve f, double cours) {
 
 			if(cours<this.getPrixSeuil(f).getValeur()) {
@@ -162,7 +165,6 @@ public double demande(Feve f, double cours) {
 		return 0.0;
 
 		}
-*/
 
 
 
@@ -183,10 +185,10 @@ public double demande(Feve f, double cours) {
 
 
 	@Override
-	public double demande(Feve f, double cours) {
+	//public double demande(Feve f, double cours) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
+	///	return 0;
+	//}
 
 	public Journal getJournalAchat() {
 		return journalAchat;
