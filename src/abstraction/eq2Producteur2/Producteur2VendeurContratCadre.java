@@ -206,6 +206,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		List<Journal> res=new ArrayList<Journal>();
 		res.add(this.classement);
 		res.add(this.journal);
+		res.add(this.journalCC);
 		return res;
 	}
 
@@ -293,7 +294,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 			 
 		}
 		this.notificationNouveauContratCadreNonBio(contrat);
-		 this.journalCC.ajouter("Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Prix : " + contrat.getPrix() );
+		this.journalCC.ajouter("Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Prix : " + contrat.getPrix() );
 		 
 	}
 
