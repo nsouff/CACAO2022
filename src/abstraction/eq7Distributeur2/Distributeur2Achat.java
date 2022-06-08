@@ -186,7 +186,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		double quantiteTotale = venteParStep*this.nbStepContrat;
 
 		//On ne va pas réaliser de CC si la quantite achetée est < Quantite Min
-		while(quantiteTotale<QuantiteMinEcheancier) {
+		while(contrat.getQuantiteTotale()<QuantiteMinEcheancier) {
 			venteParStep+=10;
 		}
 		//On créer un écheancier correspondant à nos besoin
