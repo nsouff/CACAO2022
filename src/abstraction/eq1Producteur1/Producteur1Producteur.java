@@ -170,7 +170,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		this.setMecontentement_basse((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE))));
 		this.setMecontentement_moyenne((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_MOYENNE)-cours_feve_moyenne)/prixmoyen.get(Feve.FEVE_MOYENNE))));
 		this.setMecontentement_haute((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_HAUTE)-cours_feve_haute)/prixmoyen.get(Feve.FEVE_HAUTE))));
-		System.out.println(cours_feve_basse + "   " + prixmoyen.get(Feve.FEVE_BASSE) + "   " + 10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE)));
+		//System.out.println(cours_feve_basse + "   " + prixmoyen.get(Feve.FEVE_BASSE) + "   " + 10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE)));
 		if (cours_feve_basse <= bourse.getCours(Feve.FEVE_BASSE).getMin()) {
 			this.setMecontentement_basse(this.getMecontentement_basse()+parametre_min_max);
 		}
