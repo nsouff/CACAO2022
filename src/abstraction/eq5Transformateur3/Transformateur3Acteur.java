@@ -237,8 +237,6 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 				if (f.getGamme() == gamme && f.isBioEquitable() == isBioequitable) {
 					this.besoinFeves.put(f, contrat.getQuantiteALivrerAuStep());	
 				}
-				this.dispoFeves.put(f, this.stockFeves.getstock(f)+contrat.getQuantiteALivrerAuStep());	
-
 			}
 			
 		}
@@ -253,8 +251,13 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 				}
 			}
 		}
+		
 		this.perempChocolat.perime(Filiere.LA_FILIERE.getEtape());
 		this.perempFeves.perime(Filiere.LA_FILIERE.getEtape());
+		
+		//System.out.println(this.contratsEnCoursAchat.size());
+		System.out.println(this.contratsEnCoursVente.size());
+
 	}
 
 	//juju & Yves
@@ -278,6 +281,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		cm.add(new ChocolatDeMarque(Chocolat.MQ,"CHOCO'riginal"));
 		return cm;
 	}
+	
 	//julien fction générale qui met à jour les stocks et les peremptions
 	// on a besoin d'une date qui correspond au step auquel le produit sera détruit car périmé
 	public void ajouter(double date,Object p,double qtt){
@@ -287,11 +291,10 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		}
 		if (p instanceof Chocolat) {
 			this.perempChocolat.ajouterQtt(date,(Chocolat) p,qtt);
-			this.stockChocolat.ajouter((Chocolat) p, qtt);
-			
-			
+			this.stockChocolat.ajouter((Chocolat) p, qtt);	
 		}
 	}
+	
 	//julien fction générale qui met à jour les stocks et les peremptions
 	public void utiliser(Object p,double qtt){
 		if (p instanceof Feve) {
@@ -301,8 +304,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		if (p instanceof Chocolat) {
 			this.perempChocolat.utiliserQtt((Chocolat) p,qtt);
 			this.stockChocolat.utiliser((Chocolat) p, qtt);
-}
-
-}
+			}
+	}
 }
 
