@@ -12,6 +12,20 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	
 	private double capaciteDeVente= Double.MAX_VALUE;
 
+//edgard: 
+//======fixation des prix minimaux pour chaque chocolat en vue de potentielles réduction en fonction de la demande=======
+	private double prixMinBQ = 7.0;
+	private double prixMinBQ_O = 7.5;
+	private double prixMinMQ = 8;
+	private double prixMinMQ_O = 8.5;
+	private double prixMinMQ_B = 9.5;
+	private double prixMinMQ_B_O = 10.5;
+	private double prixMinHQ = 11.5;
+	private double prixMinHQ_O = 12;
+	private double prixMinHQ_B = 13;
+	private double prixMinHQ_B_O = 14;
+	
+
 	public Distributeur2ChocolatDeMarque() {
 		super();
 	}
