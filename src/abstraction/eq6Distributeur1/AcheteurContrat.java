@@ -125,7 +125,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 
 	@Override
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		double espere = 5.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+		double espere = 4 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
 		int nbNego = contrat.getListePrix().size();
 		if (contrat.getPrix() > PRIX_LIMITE * 7.5* facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat())) {
 			double res = 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
@@ -253,7 +253,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			for (IVendeurContratCadre vendeur : supCCadre.getVendeurs(choco)) {
 				Echeancier aAjouterChoco = aAjouter.get(choco);
-				if (aAjouterChoco != null && !vendeur.getNom().equals("EQ5")) {
+				if (aAjouterChoco != null) {
 					nouvelleNego(vendeur, choco, aAjouterChoco, false);
 					ExemplaireContratCadre ecc = supCCadre.demandeAcheteur((IAcheteurContratCadre)this, vendeur, choco, aAjouterChoco, this.cryptogramme, false);
 					if (ecc != null) {
