@@ -186,7 +186,9 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		HashMap<Parc, Double> repartition = this.getRepartitionGuerre();
 		double livre = Math.min(this.getStock((Feve)contrat.getProduit(), false), quantite);
 		if (livre>0.0) {
+			if (repartition != null) {
 			this.venteGuerre(repartition, livre, (Feve)contrat.getProduit());
+			}
 		}
 		this.getContratCadre().ajouter("============================================");
 		this.getContratCadre().ajouter("LIVRAISON " + contrat.getProduit() +" "+ contrat.getAcheteur().getNom()+ " Quantité demandée " + quantite +" Livré " + livre 
