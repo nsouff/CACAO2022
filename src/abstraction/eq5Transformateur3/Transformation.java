@@ -87,11 +87,11 @@ public class Transformation extends AcheteurContrat {
 		}
 		if (somme <= this.seuilTransformation.getValeur()) {
 			this.transformation.ajouter("Transformation BIO : ");
-			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0.3*this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE), false); //60% du stock --> BIO
-			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0.3*this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE), false);
+			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE), false); //60% du stock --> BIO
+			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE), false);
 			this.transformation.ajouter("Transformation non BIO : ");
-			transformationClassique(Feve.FEVE_MOYENNE, 0.15*this.stockFeves.getstock(Feve.FEVE_MOYENNE), false);
-			transformationClassique(Feve.FEVE_HAUTE, 0.15*this.stockFeves.getstock(Feve.FEVE_HAUTE), false);// 30% du stock --> non BIO
+			transformationClassique(Feve.FEVE_MOYENNE, this.stockFeves.getstock(Feve.FEVE_MOYENNE), false);
+			transformationClassique(Feve.FEVE_HAUTE, this.stockFeves.getstock(Feve.FEVE_HAUTE), false);// 30% du stock --> non BIO
 		}
 		else {
 			this.transformation.ajouter("Transformation BIO : ");
