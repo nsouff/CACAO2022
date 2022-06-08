@@ -290,11 +290,11 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			 this.notificationNouveauContratCadreBio(contrat);
-			 this.journalCC.ajouter("Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Prix : " + contrat.getPrix() );
+			 this.journalCC.ajouter("Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix() );
 			 
 		}
 		this.notificationNouveauContratCadreNonBio(contrat);
-		this.journalCC.ajouter("Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Prix : " + contrat.getPrix() );
+		this.journalCC.ajouter("Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix() );
 		 
 	}
 
