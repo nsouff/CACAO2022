@@ -77,6 +77,27 @@ public class Distributeur2Acteur implements IActeur{
 	public Color getColorFaillure() {
 		return new Color(255,0,0); 
 	}
+	
+	public Color getColorYellow() {
+		return new Color(240,230,140); 
+	}
+	
+	public String getColoredName(IActeur v) {
+		if (v == this) {return Journal.texteColore(getColor(), getColorYellow(), v.getNom());}
+		return Journal.texteColore(v, v.getNom());
+	}
+	
+	public String yellow(String s) {
+		return Journal.texteColore(getColorYellow(), Color.BLACK,s);
+	}
+	
+	public String red(String s) {
+		return Journal.texteColore(getColorFaillure(), Color.BLACK,s);
+	}
+	
+	public String green(String s) {
+		return Journal.texteColore(getColorSuccess(), Color.BLACK,s);
+	}
 
 
 	public void initialiser() {

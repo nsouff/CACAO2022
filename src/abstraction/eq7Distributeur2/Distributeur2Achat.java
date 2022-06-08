@@ -99,11 +99,11 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				
 				//Pour chaque vendeur
 				for (IVendeurContratCadre vendeur : vendeurs) {
-					journalContratCadre.ajouter(this.getNom() + " propose d'initier un CC avec "+ Journal.texteColore(vendeur, vendeur.getNom()) +" avec le produit: "+chocProduit);
+					journalContratCadre.ajouter(this.getColoredName(this) + " propose d'initier un CC avec "+ this.getColoredName(vendeur) +" avec le produit: "+chocProduit);
 					journalContratCadre.ajouter("Echeancier : "+echeancierAchat.toString());
 					ExemplaireContratCadre propositionContratCadre = SupVente.demandeAcheteur(this, vendeur, chocProduit, echeancierAchat, cryptogramme,boolTeteGondole);
 					if (propositionContratCadre == null) {
-						journalContratCadre.ajouter(Journal.texteColore(getColorFaillure(), Color.BLACK, "Le contrat avec "+vendeur.getNom()+" n'a pas abouti"));
+						journalContratCadre.ajouter(red("Le contrat avec "+vendeur.getNom()+" n'a pas abouti"));
 						journalContratCadre.ajouter("================================================================================");
 					}
 				}
@@ -189,26 +189,26 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		//Si jamais on atteint la fin des négociations
 		if (lastEcheancier.getStepFin()>ECH_MAX) {
 			if (contrat.getQuantiteTotale() < quantiteTotale) {
-				journalNegociationContratCadre.ajouter("Acceptation sur la quantite avec " + contrat.getVendeur().getNom() + " pour dépassement du delai de négociation, quantite :"+contrat.getQuantiteTotale());
+				journalNegociationContratCadre.ajouter("Acceptation sur la quantite avec " + this.getColoredName(contrat.getVendeur()) + " pour dépassement du delai de négociation, quantite :"+contrat.getQuantiteTotale());
 				return contrat.getEcheancier();
 			}
-			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour dépassement du delai de négociation");
+			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + this.getColoredName(contrat.getVendeur()) + " pour dépassement du delai de négociation");
 			return null;
 		}
 		//Si la quantité totale proposée dans le contrat est plus petite que la quantite minimale
 		if (contrat.getQuantiteTotale()<=QuantiteMinEcheancier) {
-			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité reproposée en dessous du seuil de quantite minimale : contrat.getQuantiteTotale() : "+ contrat.getQuantiteTotale());
+			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + this.getColoredName(contrat.getVendeur()) + " pour quantité reproposée en dessous du seuil de quantite minimale : contrat.getQuantiteTotale() : "+ contrat.getQuantiteTotale());
 			return null;
 		}
 		//Si jamais la quantiteTotale du nouveau contrat est plus petite que 1000kg
 		if (quantiteTotale<=QuantiteMinEcheancier) {
-			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité determinée en dessous du seuil de quantite minimale : quantiteTotale : "+ quantiteTotale);
+			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + this.getColoredName(contrat.getVendeur()) + " pour quantité determinée en dessous du seuil de quantite minimale : quantiteTotale : "+ quantiteTotale);
 			return null;
 		}
 		if (Math.abs(contrat.getQuantiteTotale()-quantiteTotale)<=DELTA_QUANTITE) {
 			return contrat.getEcheancier();
 		}
-		journalNegociationContratCadre.ajouter("Reproposition d'un contrat avec " + contrat.getVendeur().getNom() + " pour une quantité totale de : "+ quantiteTotale + " (quantite contrat = "+contrat.getQuantiteTotale()+")");
+		//journalNegociationContratCadre.ajouter("Reproposition d'un contrat avec " + this.getColoredName(contrat.getVendeur()) + " pour une quantité totale de : "+ quantiteTotale + " (quantite contrat = "+contrat.getQuantiteTotale()+")");
 		return echeancierAchat;
 	}
 
@@ -220,8 +220,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			return -1;
 		}else {
 			if(Math.abs(prix-EPSILON_PRIX)==PRIX_OK || prix<=PRIX_OK) {
-				this.journalContratCadre.ajouter(Journal.texteColore(getColorSuccess(), Color.BLACK, "Contrat négocié : "));
-				this.journalContratCadre.ajouter(contrat.toString());
+				this.journalContratCadre.ajouter(this.green("Contrat négocié :")+ " Vendeur "+ this.getColoredName(contrat.getVendeur())+ "; Acheteur "+ this.getColoredName(contrat.getAcheteur()));
+				this.journalContratCadre.ajouter("Quantite Totale " + contrat.getQuantiteTotale() + "; Produit : " + contrat.getProduit() + "; Prix : "+contrat.getPrix());
 				journalContratCadre.ajouter("================================================================================");
 				return prix;
 			}else {
@@ -243,6 +243,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		Echeancier currentEtape = contrat.getEcheancier();
 		ChocolatDeMarque chocProduit = (ChocolatDeMarque) contrat.getProduit();
 		Double q = contrat.getQuantiteTotale();
-		this.journalContratCadre.ajouter("Nouveau contrat cadre entre "+ Journal.texteColore(v, v.getNom()) + " et "+ Journal.texteColore(a, a.getNom()) + "pour une quantitée " + q + " de " + chocProduit + " étalé sur " + currentEtape);
 	}
+
 }
