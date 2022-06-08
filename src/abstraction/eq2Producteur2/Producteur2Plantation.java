@@ -83,6 +83,7 @@ public class Producteur2Plantation{
 	
 	public void next() {
 		this.renouvellement();
+		this.proportionBio();
 	}
 	
 	
@@ -90,7 +91,6 @@ public class Producteur2Plantation{
 		//auteure : Fiona
 		
 		// faire vieillir les arbres à chaque UT 
-		
 		
 	
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
@@ -103,6 +103,27 @@ public class Producteur2Plantation{
 			
 		}	
 		
+	}
+	
+	public int proportionBio() {
+		// auteure : Fiona
+		int total = 0;
+		int bio = 0;
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		for (Arbre a: arbres) {
+			
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
+			for (Parcelle p : ListeParcelles) {
+				total += 1 ;
+				
+				if (a.equals(Arbre.ARBRE_HGB) || a.equals(Arbre.ARBRE_MGB)) {
+					bio += 1 ;
+				}
+			}
+			
+		}
+		return (bio/total);
+
 	}
 	
 	
@@ -128,8 +149,9 @@ public class Producteur2Plantation{
 				this.NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
 				this.NbParcelles.get(a).add(new Parcelle(a, 0));
 			}							
-
-	}
+			
+		}
+		
 		
 	}	
 	
@@ -159,7 +181,10 @@ public class Producteur2Plantation{
 	}
 	
 	public int RendementParcelle(Parcelle p) {
-		if (p.getStadeMaladie() == 1 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=2) {
+		if (p.isAleaClimatique() == true) {
+			return 0;
+		}
+		else if  (p.getStadeMaladie() == 1 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=2) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
 
 				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.85);
@@ -212,6 +237,7 @@ public class Producteur2Plantation{
 					return (int) (p.getImpactRendementParasite()*p.getRendementProgressif());
 				} 		
 			}
+		
 		}
 		
 		
@@ -239,21 +265,19 @@ public class Producteur2Plantation{
 			ProductionFinale = ProductionFinale + RendementParcelle(p)*p.getNbArbres();
 		}
 		return ProductionFinale;
+
 	}
 	
 	public int getNbArbre(Feve feve) {
 		//auteure : Fiona
 		
 		Arbre arbre = conversion(feve);
-		return this.NbParcelles.get(arbre).size()*1000000 ;
+		return this.NbParcelles.get(arbre).size()*10000 ;
 	}
 
 	
 	public void initialiser() {
 		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
-		
-		// 1 parcelle = 100 000 arbres 
-		
 		
 		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
 		this.NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
