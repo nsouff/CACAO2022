@@ -51,7 +51,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	 */
 	@Override
 	public boolean achete(Object produit) {
-		if (NotreStock.seuilSecuFaillite() == false || ! (produit instanceof ChocolatDeMarque)) {
+		if (NotreStock.seuilSecuFaillite() == true || ! (produit instanceof ChocolatDeMarque)) {
 			return false;
 		}
 		if (partDuMarcheVoulu( ((ChocolatDeMarque)produit).getChocolat()) > 0.0) {
@@ -117,15 +117,14 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			journalNegociationCC.ajouter("--> Nous acceptons son écheancier");
 			return contrat.getEcheancier();
 		}
-
-		// TODO: On ne fait actuellement aucune negociation
-		
-		return null;
+		else {
+			return voulu;
+		}
 	}
 
 	@Override
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		double espere = 5.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+		double espere = 4 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
 		int nbNego = contrat.getListePrix().size();
 		if (contrat.getPrix() > PRIX_LIMITE * 7.5* facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat())) {
 			double res = 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
@@ -154,6 +153,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		if (quantite != qteAttendu) {
 			enRetard.put(contrat.getNumero(), true);
 			journalSuiviCC.ajouter(Color.RED, Color.BLACK, "Il manque " + (qteAttendu - quantite) + "Kg de ce que nous etions censé recevoir de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
+			
 		}
 		else {
 			journalSuiviCC.ajouter("La quantité attendu (" + quantite + ") a été recu de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
@@ -219,7 +219,10 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		Echeancier e = new Echeancier(stepDebut);
 		for (int i = stepDebut; i < stepDebut + 24; i++) {
 			double aComblerI = (aCombler == null) ? 0 : aCombler.getQuantite(i);
-			e.ajouter(getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI);
+			double aAjouter = getPartMarque(c) * partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI;
+			if (aAjouter > 0) {
+				e.ajouter(aAjouter);
+			}
 		}
 		return e;
 	}

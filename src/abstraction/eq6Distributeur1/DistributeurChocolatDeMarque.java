@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import abstraction.eq8Romu.clients.ClientFinal;
-import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
@@ -77,11 +76,6 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau, Nathan
 		double qte =  NotreStock.getStock(choco);
 		return qte;
-		// if (qte > 200) {
-		// 	qte *= 0.9;
-		// }
-		// journalVente.ajouter("Nous mettons en vente " + qte + " pour " + choco);
-		// return qte;
 	}
 
 	@Override
