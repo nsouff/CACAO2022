@@ -14,7 +14,7 @@ import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
-public abstract class Transformateur2VenteAO extends Transformateur2AchatAO implements IVendeurAO {
+public abstract class Transformateur2VenteAO extends Transformateur2Bourse implements IVendeurAO {
 	protected SuperviseurVentesAO superviseur;
 	protected double prix_minB ;
 	protected double prix_minM; //Lorsque l'on est vendeur d'une Appel d'Offre

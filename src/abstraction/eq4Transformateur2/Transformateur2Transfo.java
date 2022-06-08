@@ -110,10 +110,10 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		double COHQ=0.01;
 		double COHQBE=0.01;
 		//transformations courtes non originales
-		double CBQ=0.01;
-		double CMQ=0.01;
-		double CMQBE=0.01;
-		double CHQ=0.01;
+		double CBQ=0.3;
+		double CMQ=0.3;
+		double CMQBE=0.05;
+		double CHQ=0.1;
 		double CHQBE=0.01;
 		//transformations longues originales
 		double LOBQ=0.01;

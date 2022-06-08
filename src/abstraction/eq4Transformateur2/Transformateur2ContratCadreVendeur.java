@@ -17,7 +17,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 //Marie
 
-public abstract class Transformateur2ContratCadreVendeur extends Transformateur2Acteur implements IVendeurContratCadre {
+public abstract class Transformateur2ContratCadreVendeur extends Transformateur2Acteur implements IVendeurContratCadre{
 	
 	public abstract Stock<Chocolat> getStockchocolat();
 	
@@ -42,7 +42,7 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
 						if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
 							journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
-							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 40000), cryptogramme,false);
+							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 2000000), cryptogramme,false);
 							journalVente.ajouter("-->aboutit au contrat "+cc);
 						}
 					}
@@ -131,4 +131,7 @@ public List<ExemplaireContratCadre> getMesContratEnTantQueVendeur() {
 public Journal getJournalVente() {
 	return journalVente;
 }
+
+
+
 }
