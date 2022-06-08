@@ -50,9 +50,27 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 				somme2 = somme2 +  bourse.getCours(Feve.FEVE_MOYENNE).getValeur(Filiere.LA_FILIERE.getEtape()-3+i);
 			}
 			this.prixMinM.setValeur(superviseur, somme2/3);
+			double somme3 = 0;
+			for (int i=0; i<3;i++ ) {
+				somme3 = somme3 +  bourse.getCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE).getValeur(Filiere.LA_FILIERE.getEtape()-3+i);
+			}
+			this.prixMinMb.setValeur(superviseur, somme3/3);
+			double somme4 = 0;
+			for (int i=0; i<3;i++ ) {
+				somme4 = somme4 +  bourse.getCours(Feve.FEVE_HAUTE).getValeur(Filiere.LA_FILIERE.getEtape()-3+i);
+			}
+			this.prixMinH.setValeur(superviseur, somme4/3);
+			double somme5 = 0;
+			for (int i=0; i<3;i++ ) {
+				somme5 = somme5 +  bourse.getCours(Feve.FEVE_HAUTE_BIO_EQUITABLE).getValeur(Filiere.LA_FILIERE.getEtape()-3+i);
+			}
+			this.prixMinHb.setValeur(superviseur, somme5/3);
 		}
 		this.getJournalcours().ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est"+ this.prixMinB.getValeur() + "");
 		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est"+ this.prixMinM.getValeur()+ "");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne bioéquitable sur les trois derniers mois est"+ this.prixMinMb.getValeur()+ "");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute sur les trois derniers mois est"+ this.prixMinH.getValeur()+ "");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute bioéquitable sur les trois derniers mois est"+ this.prixMinHb.getValeur()+ "");
 		this.journalAchat.ajouter("---------------------------------------------------------------------------------------------------------------");
 		}
 	

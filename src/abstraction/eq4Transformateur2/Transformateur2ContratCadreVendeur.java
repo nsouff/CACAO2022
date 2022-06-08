@@ -1,6 +1,7 @@
 package abstraction.eq4Transformateur2;
 
 
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +29,9 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 
 	public void next() {
 		super.next();
-		
+		journalVente.ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
+		journalVente.ajouter(Color.black,Color.white,"----------------------------------CONTRATS CADRES DU STEP------------------------------------------------------");
+		journalVente.ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -36,7 +39,6 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
-		
 		// Proposition d'un nouveau contrat a tous les acheteurs possibles pour tous nos produits
 				for (ChocolatDeMarque c : this.getChocolatsProduits()) {
 					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
@@ -44,14 +46,17 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 							journalVente.ajouter("Demande au superviseur de debuter les negociations pour un contrat cadre de "+c+" avec l'acheteur "+acteur);
 							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 500), cryptogramme,false);
 							journalVente.ajouter("-->aboutit au contrat "+cc);
+							journalVente.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------------------");
 						}
 					}
 				}
+			
 	}
 	
 	
 	public void initialiser() {
 		super.initialiser();
+	
 		this.supCCadre = (SuperviseurVentesContratCadre) (Filiere.LA_FILIERE.getActeur("Sup.CCadre"));
 	}
 	
