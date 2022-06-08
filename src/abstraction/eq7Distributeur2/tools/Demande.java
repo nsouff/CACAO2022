@@ -3,10 +3,13 @@ package abstraction.eq7Distributeur2.tools;
 import java.util.HashMap;
 import java.util.List;
 
-import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
+//Classe développée par Matteo
 public class Demande implements IDemande {
+	/*
+	 * Représente la demande par étape pour chaque chocolat
+	 */
 
 	private HashMap<ChocolatDeMarque,Double> demandeRestante;
 	private boolean FONCTIONEL;
