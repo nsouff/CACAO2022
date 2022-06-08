@@ -68,6 +68,8 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 	@Override
 	public double prix(ChocolatDeMarque choco) { //Emma humeau
 		return facteurPrixChocolat(choco.getChocolat()) * 80;
+
+		//return facteurPrixChocolat(choco.getChocolat()) * 10;
 		// Double res = prixVente.get(choco);
 		// return (res == null) ? 0.0 : res;
 	}

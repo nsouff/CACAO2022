@@ -78,12 +78,14 @@ public class Stock<I> {
 
 
 
-
+	
 	public HashMap<I, Double> getStock() {
 		return stock;
 	}
 
-
+	public void clear() {
+		this.clear();
+	}
 
 
 	/*public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
