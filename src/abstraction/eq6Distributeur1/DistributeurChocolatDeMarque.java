@@ -76,11 +76,6 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau, Nathan
 		double qte =  NotreStock.getStock(choco);
 		return qte;
-		// if (qte > 200) {
-		// 	qte *= 0.9;
-		// }
-		// journalVente.ajouter("Nous mettons en vente " + qte + " pour " + choco);
-		// return qte;
 	}
 
 	@Override
