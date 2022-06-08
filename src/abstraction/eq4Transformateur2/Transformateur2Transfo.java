@@ -22,7 +22,9 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	
 	private Journal journalTransfo;
 	private Stock<ChocolatDeMarque> commandes;
+	private Stock<ChocolatDeMarque> commandes_step;
 	private Stock<ChocolatDeMarque> commandes_retard;
+
 	protected double rdt;
 	protected double prix_transfo;
 	protected double prix_ori;
@@ -30,11 +32,22 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	
 	
 	
+	
+	
 	public void next() {//EN V1 on ne transforme que de façon arbitraire
 		
+		for(ChocolatDeMarque c : this.commandes_step.keySet()) {
+			if(this.commandes_step.getQuantite(c)>=0) {
+			this.commandes_retard.ajouter(c, this.commandes_step.getQuantite(c));
+		}
+		}
+		
+		
+		this.commandes_step= new Stock<ChocolatDeMarque>();
 		super.next();
 		NewCap=cap;
-		//this.GetCommandes(mesContratEnTantQueVendeur);
+		this.commandes=this.GetCommandes(mesContratEnTantQueVendeur);
+		this.commandes_step=this.GetCommandes(mesContratEnTantQueVendeur);
 		//il faut régler les qauntités transformées pour chaque types de fèves
 		
 		//Les transformations non originales courtes
@@ -61,7 +74,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		this.transfo(this.bestCombi("LMQ")*cap,false,"longue",Feve.FEVE_MOYENNE);
 		this.transfo(this.bestCombi("LMQBE")*cap,false,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
-		Stock<ChocolatDeMarque> s=this.commandes;
+		//Stock<ChocolatDeMarque> s=this.commandes;
 		
 				
 	}
@@ -78,17 +91,23 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		super();
 		this.journalTransfo=new Journal("O'ptites Transformations",this);
 		this.commandes = new Stock<ChocolatDeMarque>();
+		this.commandes_step = new Stock<ChocolatDeMarque>();
+		this.commandes_retard= new Stock<ChocolatDeMarque>();
 		
 	}
 
 	//renvoie une HashMap des chocolats de marques et de la quatité à livrer de ces derniers 
-	public void GetCommandes(List<ExemplaireContratCadre> CC) {///POUR LA V2
+	public Stock<ChocolatDeMarque> GetCommandes(List<ExemplaireContratCadre> CC) {///POUR LA V2
 		Stock comm=new Stock<ChocolatDeMarque>();
 		for(ExemplaireContratCadre c:CC) {
+			if( c.getQuantiteALivrerAuStep()>0) {
 			
 			comm.ajouter(((ChocolatDeMarque)(c.getProduit())), c.getQuantiteALivrerAuStep());
-			this.commandes=comm;
+			
 		}
+		}
+		
+		return comm;
 		
 		
 		
@@ -103,69 +122,123 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 
 	public double bestCombi(String fev) {//POUR LA V2
 	//initialisation des variables:
+		double cap_stock_retard=(this.commandes_retard.getStocktotal()+this.commandes_retard.getStocktotal());
+		double cap_stock=(this.commandes.getStocktotal()+this.commandes.getStocktotal());
+		double cap_retard=this.commandes_retard.getStocktotal()/(cap_stock);
+		double cap_step=1-cap_retard;
+		//Proportions des différents chocolats en retard
+		double RBG=this.commandes_retard.getQuantite(this.getChocolatsProduits().get(0))/(cap_stock_retard);
+		double RMG=this.commandes_retard.getQuantite(this.getChocolatsProduits().get(1))/(cap_stock_retard);
+		double RMGB=this.commandes_retard.getQuantite(this.getChocolatsProduits().get(2))/(cap_stock_retard);
+		double RHG=this.commandes_retard.getQuantite(this.getChocolatsProduits().get(3))/(cap_stock_retard);
+		double RHGB=this.commandes_retard.getQuantite(this.getChocolatsProduits().get(4))/(cap_stock_retard);
+		
+		//proportions des différents chocolats du step
+		double SBG= this.commandes.getQuantite(this.getChocolatsProduits().get(0))/cap_stock;
+		double SMG=this.commandes.getQuantite(this.getChocolatsProduits().get(1))/cap_stock;
+		double SMGB=this.commandes.getQuantite(this.getChocolatsProduits().get(2))/cap_stock;
+		double SHG=this.commandes.getQuantite(this.getChocolatsProduits().get(3))/cap_stock;
+		double SHGB=this.commandes.getQuantite(this.getChocolatsProduits().get(4))/cap_stock;
+		
+		
+		//Variables de quantité (%) :
 		//transformations courtes originales
-		double COBQ=0.01;
-		double COMQ=0.01;
-		double COMQBE=0.01;
-		double COHQ=0.01;
-		double COHQBE=0.01;
+		double COBQ=0.00;
+		double COMQ=0.00;
+		double COMQBE=0.00;
+		double COHQ=0.00;
+		double COHQBE=0.00;
 		//transformations courtes non originales
-		double CBQ=0.3;
-		double CMQ=0.3;
-		double CMQBE=0.05;
-		double CHQ=0.1;
-		double CHQBE=0.01;
+
+		double CBQ=0.00;
+		double CMQ=0.00;
+		double CMQBE=0.00;
+		double CHQ=0.00;
+		double CHQBE=0.00;
+
 		//transformations longues originales
-		double LOBQ=0.01;
-		double LOMQ=0.01;
-		double LOMQBE=0.01;
+		double LOBQ=0.00;
+		double LOMQ=0.00;
+		double LOMQBE=0.00;
 		//transformations longues non originales
-		double LBQ=0.01;
-		double LMQ=0.01;
-		double LMQBE=0.01;
+		double LBQ=0.00;
+		double LMQ=0.00;
+		double LMQBE=0.00;
 		
-		//Calcul des valeurs optimales
-		
+		//Calcul des quantité (%):
+		CBQ=RBG*cap_retard+SBG*cap_step;
+		CMQ=0.8*(RMG*cap_retard+SMG*cap_step);
+		LBQ=0.2*(RMG*cap_retard+SMG*cap_step);
+		CMQBE=(RMGB*cap_retard+SMGB*cap_step);
+		CHQ=0.8*(RHG*cap_retard+SHG*cap_step);
+		LMQ=0.2*(RHG*cap_retard+SHG*cap_step);
+		CHQBE=0.8*(RHGB*cap_retard+SHGB*cap_step);
+		LMQBE=0.2*(RHGB*cap_retard+SHGB*cap_step);
 		
 		
 		///
 		
+		
+		//mise à jour des commandes en retard
+		
+		//Dans la fonction transfo 
+		
+		////
+		
 		//retour des valeurs
 		if(fev.equals("COBQ")) {
-			return COBQ;
+			if(COBQ>0) {
+			return COBQ;}
 		}
 		if(fev.equals("COMQ")) {
-			return COMQ;
+			if(COMQ>0) {
+			return COMQ;}
 		}if(fev.equals("COMQBE")) {
+			if(COMQBE>0) {
 			return COMQBE;
+			}
 		}if(fev.equals("COHQ")) {
-			return COHQ;
+			if(COHQ>0) {
+			return COHQ;}
+			
 		}if(fev.equals("COHQBE")) {
-			return COHQBE;
+			if(COHQBE>0) {
+			return COHQBE;}
+			
 		}if(fev.equals("CBQ")) {
-			return CBQ;
+			if(CBQ>0) {
+			return CBQ;}
 		}if(fev.equals("CMQ")) {
-			return CMQ;
+			if(CMQ>0) {
+			return CMQ;}
 		}if(fev.equals("CMQBE")) {
-			return CMQBE;
+			if(CMQBE>0) {
+			return CMQBE;}
 		}if(fev.equals("CHQ")) {
-			return CHQ;
+			if(CHQ>0) {
+			return CHQ;}
 		}if(fev.equals("CHQBE")) {
-			return CHQBE;
+			if(CHQBE>0) {
+			return CHQBE;}
 		}if(fev.equals("LOMQ")) {
-			return LOMQ;
+			if(LOMQ>0) {
+			return LOMQ;}
 		}if(fev.equals("LOMQBE")) {
-			return LOMQBE;
+			if(LOMQBE>0) {
+			return LOMQBE;}
 		}if(fev.equals("LBQ")) {
-			return LBQ;
+			if(LBQ>0) {
+			return LBQ;}
 		}if(fev.equals("LMQ")) {
-			return LMQ;
+			if(LMQ>0) {
+			return LMQ;}
 		}if(fev.equals("LMQBE")) {
-			return LMQBE;
+			if(LMQBE>0) {
+			return LMQBE;}
 		}
-		else {
-			return 0.0;
-		}
+		
+			return 0.00000000000000000000000001;
+				
 	}
 	
 	//Dans cette seconde version la transformation ne fonctionne plus en mode tout/rien mais fait le maximum possible
@@ -199,16 +272,36 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 							this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), max_prod);//augmente le stock de chocolat de marque
 							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
 							journalTransfo.ajouter("Transformation longue de " +max_prod+" kg de "+f+" en "+qt+"kg de"+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
-						
+							
+							//mise à jour du journal de retard
+							if(this.commandes_step.keySet().contains(fevechocoplus(f))) {
+								this.commandes_step.enlever(this.fevechocoplus(f), max_prod);
+								}
+								if(this.commandes_retard.keySet().contains(fevechocoplus(f))) {
+								if(this.commandes_retard.get(this.fevechocoplus(f))>0) {
+									this.commandes_retard.enlever(fevechocoplus(f), max_prod);
+								}
+								}
+							
+							
 					}	
 				else if(this.getMaxPayable(trans, ori)>0 && max_prod>0) {//On récupère le maximum qu'on puisse payer
 					double max_paybale=this.getMaxPayable(trans, ori);
 					NewCap-=max_paybale;//mise à jour de la capacité de production
 					this.getStockfeve().enlever(f,max_paybale);//baisse le stock de feves
-					this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_paybale);//augmente le stock de chocolat
+					this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), max_paybale);//augmente le stock de chocolat
 					journalTransfo.ajouter("Transformation Courte de " +max_paybale+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 					Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_paybale*(prix_transfo+s*prix_ori*s));//paye
-				
+					
+					//mise à jour du journal de retard
+					if(this.commandes_step.keySet().contains(fevechocoplus(f))) {
+						this.commandes_step.enlever(this.fevechocoplus(f), max_prod);
+						}
+						if(this.commandes_retard.keySet().contains(fevechocoplus(f))) {
+						if(this.commandes_retard.get(this.fevechocoplus(f))>0) {
+							this.commandes_retard.enlever(fevechocoplus(f), max_prod);
+						}
+						}
 
 				}
 				}
@@ -228,9 +321,16 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_prod);//augmente le stock de chocolat
 						journalTransfo.ajouter("Transformation Courte de " +max_prod+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
-					
 						
-						
+						//mise à jour du journal de retard
+						if(this.commandes_step.keySet().contains(fevechoco(f))) {
+						this.commandes_step.enlever(this.fevechoco(f), max_prod);
+						}
+						if(this.commandes_retard.keySet().contains(fevechoco(f))) {
+						if(this.commandes_retard.get(this.fevechoco(f))>0) {
+							this.commandes_retard.enlever(fevechoco(f), max_prod);
+						}
+						}
 
 					}
 				else if(this.getMaxPayable(trans, ori)>0) {//On récupère le maximum qu'on puisse payer
@@ -241,6 +341,16 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 					journalTransfo.ajouter("Transformation Courte de " +max_paybale+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 					Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_paybale*(prix_transfo+s*prix_ori*s));//paye
 				
+					//mise à jour du journal de retard
+					if(this.commandes_step.keySet().contains(fevechoco(f))) {
+						this.commandes_step.enlever(this.fevechoco(f), max_prod);
+						}
+						if(this.commandes_retard.keySet().contains(fevechoco(f))) {
+						if(this.commandes_retard.get(this.fevechoco(f))>0) {
+							this.commandes_retard.enlever(fevechoco(f), max_prod);
+						}
+						}
+					
 				}
 			}
 					
