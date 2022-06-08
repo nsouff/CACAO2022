@@ -59,6 +59,9 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 							journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
 							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 40000), cryptogramme,false);
 							journalVente.ajouter("-->aboutit au contrat "+cc);
+							if (cc!=null) {
+								this.mesContratEnTantQueVendeur.add(cc);
+							}
 							journalVente.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------------------");
 						}
 					}
