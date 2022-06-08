@@ -1,5 +1,6 @@
 package abstraction.eq1Producteur1;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -139,6 +140,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		//FEVE
 		if (contrat.getProduit() instanceof Feve) {
 		double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
+		
+		this.getContratCadre().ajouter("Prix moyen " + prixmoyen);
 		if(contrat.getPrix()<prixmoyen*0.75) {
 			this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
 			this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75 );
@@ -169,7 +172,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
-		this.getContratCadre().ajouter( " NOUVEAU CONTRAT " + contrat.getProduit().toString()+ " "  + contrat.getAcheteur().getNom()
+		this.getContratCadre().ajouter(Color.green, Color.black, " NOUVEAU CONTRAT " + contrat.getProduit().toString()+ " "  + contrat.getAcheteur().getNom()
 				+ " PRIX : " + contrat.getPrix());
 	}
 
