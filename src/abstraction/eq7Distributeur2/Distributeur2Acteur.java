@@ -13,6 +13,7 @@ import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Gamme;
 
 
 public class Distributeur2Acteur implements IActeur{
@@ -34,6 +35,16 @@ public class Distributeur2Acteur implements IActeur{
 	
 	//Indicateurs
 	private List<Variable> listeIndicateur;
+	private Variable stock_BQ;
+	private Variable stock_BQ_O;
+	private Variable stock_MQ;
+	private Variable stock_MQ_O;
+	private Variable stock_MQ_B;
+	private Variable stock_MQ_B_O;
+	private Variable stock_HQ;
+	private Variable stock_HQ_O;
+	private Variable stock_HQ_B;
+	private Variable stock_HQ_B_O;
 	private Variable stockTotal;
 	protected Variable totalVente;
 
@@ -96,11 +107,55 @@ public class Distributeur2Acteur implements IActeur{
 	//-----------------------------INDICATEURS-------------------------------------------
 
 	public void initialiserIndicateurs() {
+		this.stock_BQ = new Variable ("Stock de chocolat BQ", this, 0);
+		this.stock_BQ_O = new Variable ("Stock de chocolat BQ Original", this, 0);
+		this.stock_MQ = new Variable ("Stock de chocolat MQ", this, 0);
+		this.stock_MQ_O = new Variable ("Stock de chocolat MQ Original", this, 0);
+		this.stock_MQ_B = new Variable ("Stock de chocolat MQ Bio", this, 0);
+		this.stock_MQ_B_O = new Variable ("Stock de chocolat MQ Bioriginal", this, 0);
+		this.stock_HQ = new Variable ("Stock de chocolat HQ", this, 0);
+		this.stock_HQ_O = new Variable ("Stock de chocolat HQ Original", this, 0);
+		this.stock_HQ_B = new Variable ("Stock de chocolat HQ Bio", this, 0);
+		this.stock_HQ_B_O = new Variable ("Stock de chocolat HQ Bioriginal", this, 0);
 		this.stockTotal = new Variable("Biofour : Stock total",this,0);
 		this.totalVente = new Variable("Biofour : Total des ventes", this, 0);
 	}
 	
 	public void actualiserIndicateurs() {
+		this.chocolats = Filiere.LA_FILIERE.getChocolatsProduits();
+		
+		for (ChocolatDeMarque choco : chocolats) {
+			if(choco.getGamme()==Gamme.HAUTE && choco.isBioEquitable() && choco.isOriginal()) {
+				this.stock_HQ_B_O.setValeur(this,this.stock.getQuantite(choco));
+			}
+			if(choco.getGamme()==Gamme.HAUTE && choco.isBioEquitable()) {
+				this.stock_HQ_B.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.HAUTE && choco.isOriginal()) {
+				this.stock_HQ_O.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.HAUTE) {
+				this.stock_HQ.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.MOYENNE && choco.isBioEquitable() && choco.isOriginal()) {
+				this.stock_MQ_B_O.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.MOYENNE && choco.isBioEquitable()) {
+				this.stock_MQ_B.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.MOYENNE && choco.isOriginal()) {
+				this.stock_MQ_O.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.MOYENNE) {
+				this.stock_MQ.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.BASSE && choco.isOriginal()) {
+				this.stock_BQ_O.setValeur(this,this.stock.getQuantite(choco));;
+			}
+			if(choco.getGamme()==Gamme.BASSE) {
+				this.stock_BQ.setValeur(this,this.stock.getQuantite(choco));;
+			}
+		}
 		this.stockTotal.setValeur(this,this.stock.getQuantiteTotale());
 	}
 	
@@ -108,6 +163,16 @@ public class Distributeur2Acteur implements IActeur{
 	public List<Variable> getIndicateurs() {
 		this.listeIndicateur = new LinkedList<Variable>();
 		
+		this.listeIndicateur.add(stock_BQ);
+		this.listeIndicateur.add(stock_BQ_O);
+		this.listeIndicateur.add(stock_MQ);
+		this.listeIndicateur.add(stock_MQ_O);
+		this.listeIndicateur.add(stock_MQ_B);
+		this.listeIndicateur.add(stock_MQ_B_O);
+		this.listeIndicateur.add(stock_HQ);
+		this.listeIndicateur.add(stock_HQ_O);
+		this.listeIndicateur.add(stock_HQ_B);
+		this.listeIndicateur.add(stock_HQ_B_O);
 		this.listeIndicateur.add(stockTotal);
 		this.listeIndicateur.add(totalVente);	
 		return listeIndicateur;
