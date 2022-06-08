@@ -102,6 +102,9 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		}
 		 
 		journalCCV.ajouter("nouveau contrat cadre vendeur signé");
+		journalCCV.ajouter("Produit : " + contrat.getProduit());
+		journalCCV.ajouter("Echeancier : " + contrat.getEcheancier());
+		journalCCV.ajouter("Prix : " + contrat.getPrix());
 		
 	}
 
