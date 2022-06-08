@@ -24,15 +24,22 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	public static final Double EPSILON_PRIX=5.0;
 	
 	public Demande demande;
+	public int nbStepContrat;
 	
 	protected List<ExemplaireContratCadre> mesContratEnTantQuAcheteur;
 	
 	public Distributeur2Achat() {
 		super();
 		this.mesContratEnTantQuAcheteur = new LinkedList<ExemplaireContratCadre>();
-		this.demande = new Demande(this.chocolats);
+		
+		//Nombre de step sur lequel on gère nos contrat
+		this.nbStepContrat = 10;
 	}
 	
+	public void initialiser() {
+		super.initialiser();
+		this.demande = new Demande(this.chocolats);
+	}
 	
 	//A chaque étape, on créer un contrat cadre pour acheter un produit dont le stock est inférieur au seuil
 	//On réalise alors des contrats avec tous les vendeurs qui le propose afin de voir quel est leur prix
@@ -46,14 +53,13 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	public void next() {
 		super.next();
 		
-		//Nombre de step sur lequel on gère nos contrat
-		int nbStepContrat = 10;
+
 		
 		int currentEtape = Filiere.LA_FILIERE.getEtape();
 		
 		//Pour chaque chocolat produit sur le marché on défini la demande
 		for (ChocolatDeMarque chocProduit : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			double valeur = this.volumeParEtapeMoyenne(chocProduit, currentEtape, nbStepContrat);
+			double valeur = this.volumeParEtapeMoyenne(chocProduit, currentEtape, this.nbStepContrat);
 			this.demande.set(chocProduit, valeur);
 		}
 		
@@ -83,7 +89,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				double venteParStep = demande.get(chocProduit);
 				
 				//On créer un écheancier correspondant à nos besoin
-				Echeancier echeancierAchat = new Echeancier(currentEtape+1,nbStepContrat,venteParStep);
+				Echeancier echeancierAchat = new Echeancier(currentEtape+1,this.nbStepContrat,venteParStep);
 				
 				//On récupère tout les vendeurs actifs
 				List<IVendeurContratCadre> vendeurs = SupVente.getVendeurs(chocProduit);
@@ -163,17 +169,16 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		int currentEtape = Filiere.LA_FILIERE.getEtape();
 		
 
-		//Retourne le volume le plus judicieux à acheter selon le nombre d'étape sur lequel on reparti le contrat
-		double venteParStep = this.volumeParEtapeMoyenne(chocProduit, currentEtape, 10);
-		int nbStepContrat = 10;
-		double quantiteTotale = venteParStep*nbStepContrat;
+		//Retourne la demande restante
+		double venteParStep = this.demande.get(chocProduit);
+		double quantiteTotale = venteParStep*this.nbStepContrat;
 
 		//On ne va pas réaliser de CC si la quantite achetée est < Quantite Min
 		while(quantiteTotale<QuantiteMinEcheancier) {
 			venteParStep+=10;
 		}
 		//On créer un écheancier correspondant à nos besoin
-		Echeancier echeancierAchat = new Echeancier(currentEtape,nbStepContrat,venteParStep);
+		Echeancier echeancierAchat = new Echeancier(currentEtape,this.nbStepContrat,venteParStep);
 		if (lastEcheancier.getStepFin()>ECH_MAX) {
 			return null;
 		}else {
