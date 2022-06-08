@@ -20,12 +20,15 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 	private Journal classement;
+	protected Journal journalCC;
 	
 	public Producteur2VendeurContratCadre() {
 		super();
 		this.mesContratEnTantQueVendeurNonBio = new LinkedList<ExemplaireContratCadre>();
 		this.mesContratEnTantQueVendeurBio = new LinkedList<ExemplaireContratCadre>();
 		this.classement=new Journal(this.getNom()+" classement", this);
+		this.journalCC = new Journal("Cacao Doré Contrats Cadres", this);
+
 	}
 	
 	/**
@@ -281,8 +284,16 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			 this.notificationNouveauContratCadreBio(contrat);
+			 this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE ));
+			 this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+			 this.journalCC.ajouter("Contrat Cadre Bio : " + "Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + "Prix : " + contrat.getPrix() );
+			 
 		}
 		this.notificationNouveauContratCadreNonBio(contrat);
+		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE ));
+		 this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		 this.journalCC.ajouter("Contrat Cadre Non Bio : " + "Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + "Prix : " + contrat.getPrix() );
+		 
 	}
 
 	
