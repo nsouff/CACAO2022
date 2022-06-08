@@ -1,6 +1,7 @@
 package abstraction.eq5Transformateur3;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Set;
 
 //julien
@@ -65,10 +66,14 @@ public class DicoPeremption<Produit> {
 	
 	
 	public void perime(double step) {
+		LinkedList<DateProd<Produit>> aSupp = new  LinkedList<DateProd<Produit>>();
 		for (DateProd<Produit> d : this.getDateProd()) {
-			if (d.getDate()<step || this.peremptions.get(d)<=0) {
-				this.peremptions.remove(d) ;
+			if (d.getDate()<=step || this.peremptions.get(d)<=0 ) {
+				aSupp.add(d) ;
 			}
+		}
+		for(DateProd<Produit> d : aSupp) {
+			this.peremptions.remove(d);
 		}
 	}
 public double trouverPlusUrgent(Produit p) {
