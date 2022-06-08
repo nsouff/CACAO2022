@@ -24,7 +24,7 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 	
 	public Transformateur2Stock(double prixstockage, double notreCapaciteStockage) {
 		this.prixstockage=prixstockage;
-		this.notreCapaciteStockage=notreCapaciteStockage;
+		this.setNotreCapaciteStockage(notreCapaciteStockage);
 	}
 	
 	public void next() {
@@ -141,14 +141,14 @@ public boolean capaciteMaxAtteinte(Stock<Feve> stockfeve,Stock<Chocolat>  stockc
 
 public double augmenterCapacite(Stock<Feve> stockfeve,Stock<Chocolat>  stockchocolat,double notreCapaciteStockage ) {
 	//condition pour augmenter la capacité (par ex. dès qu'on souhaite acheter et que l'on n'a pas de capacité de stockage suffisante, on augmente notre capacité)
-	this.notreCapaciteStockage=Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur();
+	this.setNotreCapaciteStockage(Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur());
 	if (capaciteMaxAtteinte(stockfeve, stockchocolat)) {
 		Filiere.LA_FILIERE.getParametre("limiteStockage").setValeur(this,Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur() +(1.10*(Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur()-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()+500))));
-		double c =this.notreCapaciteStockage+=1.10*(Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur()-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()+500));
+		double c =this.setNotreCapaciteStockage(this.getNotreCapaciteStockage() + 1.10*(Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur()-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal()+500)));
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), 1.10*((Filiere.LA_FILIERE.getParametre("limiteStockage").getValeur())-(this.stockfeve.getStocktotal()+this.stockchocolat.getStocktotal())+500)*Filiere.LA_FILIERE.getIndicateur("prixEntrepot").getValeur());
 	return c;
 	}else {
-		return this.notreCapaciteStockage;
+		return this.getNotreCapaciteStockage();
 	}
 	
 	//si validé alors on augmente le stock d'une quantité définie 
@@ -157,6 +157,15 @@ public double augmenterCapacite(Stock<Feve> stockfeve,Stock<Chocolat>  stockchoc
 
 public Journal getJournalStock() {
 	return journalStock;
+}
+
+public double getNotreCapaciteStockage() {
+	return notreCapaciteStockage;
+}
+
+public double setNotreCapaciteStockage(double notreCapaciteStockage) {
+	this.notreCapaciteStockage = notreCapaciteStockage;
+	return notreCapaciteStockage;
 }
 
 

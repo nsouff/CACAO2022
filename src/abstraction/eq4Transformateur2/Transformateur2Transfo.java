@@ -155,7 +155,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		
 		if (trans.equals("longue")){//dans le cas d'une transformation longue
 			double max_feves=Math.min(this.getStockfeve().getQuantite(f), (1/rdt)*qt);//Récupération du max de fèves que l'on peut utilisé
-			double max_prod=Math.min(max_feves, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
+			double max_stock=Math.min(this.getNotreCapaciteStockage()/2-this.getStockchocolatdemarque().getStocktotal(), max_feves);
+			double max_prod=Math.min(max_stock, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
 
 			
 			if(max_prod>0) {
@@ -185,7 +186,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		if (trans.equals("courte")) {
 
 			double max_feves=Math.min(this.getStockfeve().getQuantite(f), qt);//Récupération du max de fèves que l'on peut utilisé
-			double max_prod=Math.min(max_feves, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
+			double max_stock=Math.min(this.getNotreCapaciteStockage()/2-this.getStockchocolatdemarque().getStocktotal(), max_feves);
+			double max_prod=Math.min(max_stock, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
 				
 			if(max_prod>0 ) {
 					
