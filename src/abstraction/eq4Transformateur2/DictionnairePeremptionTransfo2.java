@@ -33,8 +33,7 @@
 //		super.initialiser();
 //		
 //	}
-//	
-//	//Marie
+
 //	
 //// ajoute un nouveau produit à la Hashmap (lors d'un achat ou d'une trasnformation)
 //	public void ajouterQuant(double date, Produit p, Double quant) {

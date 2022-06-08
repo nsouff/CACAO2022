@@ -100,9 +100,11 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	public Stock<ChocolatDeMarque> GetCommandes(List<ExemplaireContratCadre> CC) {///POUR LA V2
 		Stock comm=new Stock<ChocolatDeMarque>();
 		for(ExemplaireContratCadre c:CC) {
+			if( c.getQuantiteALivrerAuStep()>0) {
 			
 			comm.ajouter(((ChocolatDeMarque)(c.getProduit())), c.getQuantiteALivrerAuStep());
 			
+		}
 		}
 		
 		return comm;
