@@ -1,8 +1,10 @@
 package abstraction.eq2Producteur2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
@@ -16,9 +18,10 @@ import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2VendeurContratCadre extends Producteur2Acteur implements IVendeurContratCadre{
-
+	
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
+	protected HashMap<ExemplaireContratCadre,Integer> mesContratCadreExpire; //Contrat cadres expiré depuis moins de 100 next
 	private Journal classement;
 	protected Journal journalCC;
 	
@@ -166,13 +169,37 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	public void next() {
 		super.next();
-		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
+		
+		// Ajout des contrat expire mais à prendre en compte
+		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
+			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				this.mesContratCadreExpire.put(contrat,Filiere.LA_FILIERE.getEtape());
+				this.mesContratEnTantQueVendeurBio.remove(contrat);
+			}
+		}
+		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurNonBio) {
+			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				this.mesContratCadreExpire.put(contrat,Filiere.LA_FILIERE.getEtape());
+				this.mesContratEnTantQueVendeurNonBio.remove(contrat);
+			}
+		}
+		
+			for (Entry<ExemplaireContratCadre, Integer> m : mesContratCadreExpire.entrySet()) {
+				if(Filiere.LA_FILIERE.getEtape()- m.getValue()> 50) {
+					this.mesContratCadreExpire.remove(m.getKey());
+				}
+			}
+		
+		
+		
+		/*List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurNonBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
 				contratsObsoletes.add(contrat);
 			}
 		}
-		this.mesContratEnTantQueVendeurNonBio.removeAll(contratsObsoletes);
+		this.mesContratEnTantQueVendeurNonBio.removeAll(contratsObsoletes);*/
+		
 		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
 			if (a instanceof IFabricantChocolatDeMarque) {
 				this.classement.ajouter(a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
