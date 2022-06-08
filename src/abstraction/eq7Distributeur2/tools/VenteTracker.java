@@ -7,7 +7,7 @@ import java.util.List;
 import abstraction.eq7Distributeur2.Distributeur2ChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
-public class VenteTracker extends Distributeur2ChocolatDeMarque{
+public class VenteTracker{
 	private HashMap<ChocolatDeMarque,Double> previousVentesQuantite;
 	private HashMap<ChocolatDeMarque,Double> previousVentesPrix;
 	
