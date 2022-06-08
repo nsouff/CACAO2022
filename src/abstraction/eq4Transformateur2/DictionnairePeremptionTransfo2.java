@@ -14,20 +14,22 @@ public class DictionnairePeremptionTransfo2<Produit>{
 	private HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
 	
 	public Set<DateProdTransfo2<Produit>> getDates() {
-		return this.peremption.keySet();
+		return this.peremption.keySet(); //renvoie (date,produit)
 	}
 	public double getQuant(double date, Produit produit) {
 		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,produit);
-		return this.peremption.get(d);
+		return this.peremption.get(d); //renvoie la quantité associé à (date,produit)
 	}
+	//Marie
 	
+// ajoute un nouveau produit à la Hashmap
 	public void ajouterQuant(double date, Produit p, Double quant) {
 		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,p);
 		if(quant>0) {
 			if(this.getDates().contains(d)) {
-				this.peremption.put(d, this.getQuant(date, p)+quant);		
+				this.peremption.put(d, this.getQuant(date, p)+quant);	// si produit à la même date existe déjà, on ajoute seulement la quantité du produit à la quantité déjà présente	
 			}else {
-				this.peremption.put(d, quant);
+				this.peremption.put(d, quant); // s'il n'existe pas de produit à la même date, on rajoute un élément à la Hashmap
 			}
 		}
 	}
@@ -44,15 +46,23 @@ public class DictionnairePeremptionTransfo2<Produit>{
 			}
 		}
 
-double step=12;
-	
-	public void perime(double step) {
+
+public void perime() {
+	for(DateProdTransfo2<Produit>d:this.getDates()) {
+		if(d.getDate()>12) {
+			this.peremption.remove(d);
+		}
+	}
+}	
+
+	/*double step=12;
+	 public void perime(double step) {
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			if(d.getDate()<step||this.peremption.get(d)==0) {
 				this.peremption.remove(d);
 			}
 		}
-	}
+	}*/
 		
 	public void utiliserQuant(Produit p, double quant) {
 		double quantRestante=quant; //quant restante
