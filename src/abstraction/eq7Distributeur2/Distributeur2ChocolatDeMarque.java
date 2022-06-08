@@ -26,7 +26,6 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	private double prixMinHQ_O = 12;
 	private double prixMinHQ_B = 13;
 	private double prixMinHQ_B_O = 14;
-	
 
 	public Distributeur2ChocolatDeMarque() {
 		super();
@@ -43,6 +42,8 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			journalStock.ajouter(choco+" : "+ q+ " kg en stock");
 		}
 		journalStock.ajouter("===========================================");
+	
+	
 	}
 	
 
@@ -51,8 +52,6 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 //		sont placés au dessus pr créer de la marge. Une fois une certaine part de marché acquise sur un chocolat vendu (75%), le prix ne varie plus (pour éviter de baisser les prix sans fin).		
 		
 	public double prix(ChocolatDeMarque choco) {
-		
-		VenteTracker venteTracker = new VenteTracker(this.chocolats);
 		int currentStep = Filiere.LA_FILIERE.getEtape();
 		if (currentStep!=0) {
 		double prix_precedent = Filiere.LA_FILIERE.prixMoyen(choco, currentStep-1);
