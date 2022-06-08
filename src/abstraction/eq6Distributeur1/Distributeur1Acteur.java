@@ -213,7 +213,7 @@ public class Distributeur1Acteur implements IActeur {
 	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
 		if (NotreStock.seuilSecuFaillite() == true) {
-			journal1.ajouter("on risque de faire faillite au prochain tour");
+			journal1.ajouter("On risque de faire faillite au prochain tour");
 		}
 		}
 
