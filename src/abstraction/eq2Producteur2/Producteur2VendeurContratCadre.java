@@ -206,6 +206,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		List<Journal> res=new ArrayList<Journal>();
 		res.add(this.classement);
 		res.add(this.journal);
+		res.add(journalCC);
 		return res;
 	}
 
