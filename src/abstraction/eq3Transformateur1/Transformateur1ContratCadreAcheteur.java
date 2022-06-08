@@ -77,7 +77,6 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 	public void initialiser( ) {
 		super.initialiser();
 	}
-
 	
 	public void next() {
 		super.next();

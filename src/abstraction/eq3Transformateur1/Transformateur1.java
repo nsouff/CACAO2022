@@ -169,7 +169,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
-					stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
+					stockChoco.put(c, stockChoco.get(c)+coutQuantiteTransfo.get(1));
 					//nouveaulot.addQuantité(coutQuantiteTransfo.get(1)) ;
 					//nouveaulot.addDate(Filiere.LA_FILIERE.getEtape()) ;
 					//stockChocoPeremption.get(c).add(nouveaulot);
