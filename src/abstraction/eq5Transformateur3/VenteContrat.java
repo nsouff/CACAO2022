@@ -33,14 +33,21 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		}
 		if (L2.size()!=0) {
 			if (L2.size()== 1) {
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L2.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
+				ExemplaireContratCadre contrat = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L2.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
+				if (contrat != null) {
+					this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+					this.contratsEnCoursVente.add(contrat);
 				}
+			}
 			else {
 				// On choisit aléatoirement un des distributeurs
 				Random randomizer = new Random();
 				IAcheteurContratCadre random = L2.get(randomizer.nextInt(L2.size()));
-				((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(random, (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
-
+				ExemplaireContratCadre contrat = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(random, (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
+				if (contrat != null) {
+					this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+					this.contratsEnCoursVente.add(contrat);
+				}
 			}
 		}
 	}
@@ -48,7 +55,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	
 	//Yves, Karla
 	public boolean vend(Object produit) {
-		if (! (produit instanceof ChocolatDeMarque)) { return false;} // ju
+		if (! (produit instanceof ChocolatDeMarque)|| !(this.getMarquesChocolat().contains(produit))) { return false;} // ju
 		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
 		if (stockChocolat.getProduitsEnStock().contains(c)) {
 			return true;
@@ -69,7 +76,9 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		this.nb_prop += 1;
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
-		Double seuilMax = 0.0;
+		Double seuilMax = 2.0;
+		this.achats.ajouter(seuilMax.toString());
+
 		if (contrat.getProduit() instanceof ChocolatDeMarque) {
 			if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
 				return 2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
@@ -88,7 +97,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
-		Double seuilMax = 0.0;
+		Double seuilMax = 2.0;
 		if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
 			if (contrat.getPrix()>2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur())){
 				this.ventes.ajouter("nous acceptons "+contrat.getPrix().toString());
