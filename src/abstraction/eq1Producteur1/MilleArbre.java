@@ -122,7 +122,16 @@ public class MilleArbre {
 		mecontentement.add(mecontentement_haute);
 		int qualite = this.getQualite();
 		int maladie = this.getStade_maladie();
-		this.setMecontentement(this.getMecontentement() + mecontentement.get(qualite-1)+maladie);
+		this.setMecontentement(this.getMecontentement()+mecontentement.get(qualite-1)+maladie);
+		if (maladie==0) {
+			this.setMecontentement(this.getMecontentement()-5);
+		}
+		if (this.getMecontentement()>30) {
+			double proba= Math.random();
+			if (proba*this.getMecontentement()>28) {
+				this.Regrouper();
+			}
+		}
 	}
 	
 	
