@@ -54,7 +54,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	
 	//Yves, Karla
 	public boolean vend(Object produit) {
-		if (! (produit instanceof ChocolatDeMarque)) { return false;} // ju
+		if (! (produit instanceof ChocolatDeMarque)|| !(this.getMarquesChocolat().contains(produit))) { return false;} // ju
 		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
 		if (stockChocolat.getProduitsEnStock().contains(c)) {
 			return true;
