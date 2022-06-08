@@ -1,6 +1,7 @@
 package abstraction.eq7Distributeur2;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.Color;
@@ -131,14 +132,25 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		*/
 		
 		double demandeAnnee = 7200000000.0;
-		int nbStepParAn = 52;
+		int nbStepParAn = 24;
 		int nbChocolats = this.chocolats.size();
 		int nbDistributeur = 2;
 		
-		double venteJudicieuse = demandeAnnee/(nbChocolats*nbDistributeur*nbStepParAn);
-		this.journalEtudeVente.ajouter("Quantitée determinée judicieuse pour "+chocProduit+" : "+ venteJudicieuse +" kg");
 		
+		double venteBase = demandeAnnee/(nbChocolats*nbDistributeur*nbStepParAn);
+		
+		double quantiteVendue = Filiere.LA_FILIERE.getVentes(chocProduit, currentEtape-1)/nbDistributeur;
+		double quantiteTotale = 0;
+		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			quantiteTotale =  quantiteTotale + (Filiere.LA_FILIERE.getVentes(choco, currentEtape-1)/nbDistributeur);
+		}
+		double venteJudicieuse = (quantiteVendue/quantiteTotale)*venteBase;
+		
+		this.journalEtudeVente.ajouter("Quantitée determinée judicieuse pour "+chocProduit+" : "+ venteJudicieuse +" kg");
 		return venteJudicieuse;
+		
+		 
+		
 		
 	}
 	
