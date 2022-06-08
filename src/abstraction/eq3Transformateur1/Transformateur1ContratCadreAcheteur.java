@@ -26,43 +26,42 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		if (produit instanceof Feve) {
 			if (((Feve)produit) == Feve.FEVE_BASSE || ((Feve)produit) == Feve.FEVE_MOYENNE || ((Feve)produit) == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
 				double quantiteFeveContrat = 0. ;
-				journalCC.ajouter(this.mesContratEnTantQueAcheteur +" contrat cadres acheteurs en cours");
+				journalCCA.ajouter(this.mesContratEnTantQueAcheteur +" contrat cadres acheteurs en cours");
 				for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) {
-					journalCC.ajouter("avant if de achete()");
 					if (produit == c.getProduit()) {
-						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep()+10000;
-						journalCC.ajouter("J'ajoute 100000000000000");
+						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
+						journalCCA.ajouter("J'ajoute 100000000000000");
 					}
 				}
-				journalCC.ajouter("quantite feve contrat en cours : "+ quantiteFeveContrat);
+				journalCCA.ajouter("quantite feve contrat en cours : "+ quantiteFeveContrat);
 				// décide si on est ouvert ou non à des propositions
 				if (quantiteFeveContrat < 0.5*this.quantiteAchatFeve.get(produit)) {
-					journalCC.ajouter("Je souhaite faire un nouveau contrat cadre acheteur");
+					journalCCA.ajouter("Je souhaite faire un nouveau contrat cadre acheteur");
 					return true;
 				}
 			}
 		}
-		journalCC.ajouter("Je ne souhaite pas faire un nouveau contrat cadre acheteur");
+		journalCCA.ajouter("Je ne souhaite pas faire un nouveau contrat cadre acheteur");
 		return false;
 	}
 
 	// négocie un échancier inférieur à 6 échéances; auteur Julien */
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
 		if (contrat.getEcheancier().getNbEcheances()<100) {
-			journalCC.ajouter("J'accepte cet échéancier");
+			journalCCA.ajouter("J'accepte cet échéancier");
 			return contrat.getEcheancier();
 		}
-		journalCC.ajouter("Je refuse cet échéancier");
+		journalCCA.ajouter("Je refuse cet échéancier");
 		return null;
 	}
 
 	// négociation du prix; auteur Julien on accepte tout pour l'instant*/
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit()) + 1000000000000000000000000.) {
-			journalCC.ajouter("J'accepte ce prix"+ contrat.getPrix());
+			journalCCA.ajouter("J'accepte ce prix"+ contrat.getPrix());
 			return contrat.getPrix();
 		} else {
-			journalCC.ajouter("Je propose un nouveau prix car ils ont proposé : "+ contrat.getPrix());
+			journalCCA.ajouter("Je propose un nouveau prix car ils ont proposé : "+ contrat.getPrix());
 			return prixAchatFeve.get(contrat.getProduit());
 			
 		}
@@ -71,7 +70,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		stockFeve.put(((Feve)produit), stockFeve.get(contrat.getProduit())+quantite);
-		journalCC.ajouter("Je receptionne "+ quantite + "kg de "+ (Feve)produit);
+		journalCCA.ajouter("Je receptionne "+ quantite + "kg de "+ (Feve)produit);
 	}
 	
 	// Alexandre
@@ -89,7 +88,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 			}
 		}
 		this.mesContratEnTantQueAcheteur.removeAll(contratsObsoletes);
-		journalCC.ajouter("test contratcadre acheteur/ les contrats cadres acheteur obsoletes ont ete supprimes");
+		journalCCA.ajouter("test contratcadre acheteur/ les contrats cadres acheteur obsoletes ont ete supprimes");
 	}
 
 }
