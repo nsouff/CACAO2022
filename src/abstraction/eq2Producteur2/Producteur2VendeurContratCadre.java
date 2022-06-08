@@ -334,4 +334,10 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 	
+	public Double vente(Feve feve) {
+		Double vente=0.0;
+		return vente;
+	}
+	
+	
 }
