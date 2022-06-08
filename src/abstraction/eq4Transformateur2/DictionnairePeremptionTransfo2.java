@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Set;
 
 import abstraction.eq5Transformateur3.DateProd;
+import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Feve;
 
 //Marie
 public class DictionnairePeremptionTransfo2<Produit>{
@@ -75,6 +78,40 @@ double step=12;
 			}
 		}
 	}
+	//Marie
+	public double quantTotaleProduit(Produit p) {
+		double qtt=0;
+		for(DateProdTransfo2<Produit>d:this.getDates()) {
+			if(d.getProduit()==p) {
+				qtt+=this.peremption.get(d);
+			}
+		}
+		return qtt;
+	}
+	//Marie
+	public double quantTotFeve() {
+		double qtt=0;
+		for(DateProdTransfo2<Produit>d:this.getDates()) {
+			if(d.getProduit()==Feve.FEVE_BASSE || d.getProduit()==Feve.FEVE_HAUTE || d.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE ||d.getProduit()==Feve.FEVE_MOYENNE || d.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
+				qtt+=quantTotaleProduit(d.getProduit());
+			}
+		return qtt;
+	}
+		return qtt;
+	}
+		
+	//Marie
+	public double quantTotChoco() {
+		double qtt=0;
+		for(DateProdTransfo2<Produit>d:this.getDates()) {
+			if(d.getProduit()==Chocolat.BQ || d.getProduit()==Chocolat.BQ_O || d.getProduit()==Chocolat.HQ ||d.getProduit()==Chocolat.HQ_BE ||d.getProduit()==Chocolat.MQ ||d.getProduit()==Chocolat.MQ_BE  ) {
+				qtt+=quantTotaleProduit(d.getProduit());
+			}
+		return qtt;
+	}
+		return qtt;
+			}
+	}
 	
 	/*public void utiliserQtt(int step,Produit p, Double qtt) {
 		DateProdTransfo2 d =new DateProdTransfo2(step,p);
@@ -118,4 +155,4 @@ double step=12;
 		
 	}*/
 
-}
+
