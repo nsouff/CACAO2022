@@ -139,10 +139,10 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	}
 
 	public List<Journal> getJournaux() {
-		List<Journal> res=new ArrayList<Journal>();
-		res.add(this.classement);
-		res.add(this.journalCC);
-		return res;
+		List<Journal> resu=new ArrayList<Journal>();
+		resu.add(this.classement);
+		resu.add(this.journalCC);
+		return resu;
 	}
 	
 	
