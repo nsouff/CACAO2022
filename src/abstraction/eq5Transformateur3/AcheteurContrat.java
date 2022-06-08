@@ -15,7 +15,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
-	//private int nb_nego;
+	private int nb_nego;
 	
 	//Karla / Julien
 	/* Initier un contrat */
