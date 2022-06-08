@@ -63,7 +63,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	private void negoReussie(ExemplaireContratCadre ecc) {
 		journalNegociationCC.ajouter(Color.GREEN, Color.BLACK, "Négociation réussie ! Contrat #" + ecc.getNumero());
 		mesContrats.add(ecc);
-		enRetard.put(ecc.getNumero(),  false);
+		enRetard.put(ecc.getNumero(), false);
 		setPrixVente((ChocolatDeMarque)ecc.getProduit(), ecc.getPrix());
 	}
 	
@@ -117,15 +117,13 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 			journalNegociationCC.ajouter("--> Nous acceptons son écheancier");
 			return contrat.getEcheancier();
 		}
-
 		// TODO: On ne fait actuellement aucune negociation
-		
 		return null;
 	}
 
 	@Override
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		double espere = 5.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
+		double espere = 4 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
 		int nbNego = contrat.getListePrix().size();
 		if (contrat.getPrix() > PRIX_LIMITE * 7.5* facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat())) {
 			double res = 7.5 * facteurPrixChocolat(((ChocolatDeMarque) contrat.getProduit()).getChocolat());
