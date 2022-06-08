@@ -15,7 +15,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
-	private int nb_nego;
+	//private int nb_nego;
 	
 	//Karla / Julien
 	/* Initier un contrat */
@@ -75,14 +75,14 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		Double seuilMax = 0.8*bourse.getCours((Feve)contrat.getProduit()).getValeur();
 		// double seuilMax=2.0;
 		if (prixT < seuilMax) { 
 			this.achats.ajouter("prix acceptable");
 			return prixT;
 		}
 		else {
-			double proportion = 0.70 ;/*+0.05*this.nb_nego;*/
+			double proportion = 0.80 ;/*+0.05*this.nb_nego;*/
 			double nouveauprix = proportion*prixT;
 			if (nouveauprix < seuilMax) { 
 				this.achats.ajouter(" essaie avec nouveau prix");
