@@ -200,6 +200,12 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 		
 		
+		/*List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
+		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurNonBio) {
+			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				contratsObsoletes.add(contrat);
+		
+		this.mesContratEnTantQueVendeurNonBio.removeAll(contratsObsoletes);*/
 		
 		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
 			if (a instanceof IFabricantChocolatDeMarque) {
@@ -211,7 +217,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next "+this.ventePourcent(Feve.FEVE_HAUTE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE)+" Vente sur les 50 dernier next "+this.ventePourcent(Feve.FEVE_MOYENNE));
 		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next "+this.ventePourcent(Feve.FEVE_BASSE));
-	
+		this.journalCC.ajouter("=======================================================================================");
 	}
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
@@ -241,15 +247,15 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 
 	public double propositionPrixBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		double prix = 1.15*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+		double prix = 0.8*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==1){
-			prix = 1.1*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+			prix = 0.5*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		if (this.getClassementTransformateur(contrat.getAcheteur() )==2){
-			prix = 1.07*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+			prix = 0.6*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==3){
-			prix = 1.06*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+			prix = 0.7*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		
 		return prix;
@@ -266,7 +272,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==2){
-				if (Math.random()<0.5) {
+				if (Math.random()<0.6) {
 					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 40% des cas
 				}
 			}	
@@ -319,46 +325,14 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			 this.notificationNouveauContratCadreBio(contrat);
-			 this.journalCC.ajouter("   "+Journal.texteColore(contrat.getAcheteur(),"Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur().getNom()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix()));
+			 this.journalCC.ajouter("Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix() );
 
 		} 
 		else {
 			this.notificationNouveauContratCadreNonBio(contrat);
-			this.journalCC.ajouter("   "+Journal.texteColore(contrat.getAcheteur(),"Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur().getNom()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix()));
+			this.journalCC.ajouter("Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix() );
 		}
 	}
 
 	
-	public Double vente(Feve feve) {
-		Double vente=0.0;
-		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
-			if(contrat.getProduit()==feve) {
-				vente+=contrat.getQuantiteTotale();
-			}
-		}
-		
-		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurNonBio) {
-			if(contrat.getProduit()==feve) {
-				vente+=contrat.getQuantiteTotale();
-			}
-		}
-		
-		for (Entry<ExemplaireContratCadre, Integer> m : mesContratCadreExpire.entrySet()) {
-			if(m.getKey().getProduit()==feve) {
-				vente+=m.getKey().getQuantiteTotale();
-			}
-		}
-		return vente;
-	}
-	
-	public Double ventePourcent(Feve feve){
-		Double venteTotale = 1.0; //Au cas ou on ne vend rien
-		for (Feve f : Feve.values()) {
-			venteTotale+=this.vente(f);
-		}
-	return (this.vente(feve)/venteTotale);
-	}
-
-	
-
 }
