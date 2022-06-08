@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import abstraction.eq8Romu.clients.ClientFinal;
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
+import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements IDistributeurChocolatDeMarque{
@@ -14,21 +16,21 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 	private Map<ChocolatDeMarque, Double> teteGondole; // (nom du chocolat,% en tête de gondole), Emma Humeau 
 	protected Journal journalVente; // Nathan
 	private double qteEnVenteTG; //Emma Humeau
-	protected Variable totalVente; // Nathan
+	protected VariableReadOnly totalVente; // Nathan
 
 	/**
 	 * @author Nathan
 	 */
 	public DistributeurChocolatDeMarque() {
 		super();
-		totalVente = new Variable("Total des ventes", this, 0);
+		totalVente = new VariableReadOnly("Total des ventes", this, 0);
 		journalVente = new Journal("Journal pour les ventes", this);
 		teteGondole = new HashMap<ChocolatDeMarque, Double>();
 	}
 
 	/**
 	 * @author Nathan
-	 * @return la liste des indicateurs faites dans Distributeur1Acteur et la variable totalVente
+	 * @return la liste des indicateurs faite dans Distributeur1Acteur et la variable totalVente
 	 */
 	@Override
 	public List<Variable> getIndicateurs() {
@@ -66,18 +68,20 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 
 	@Override
 	public double prix(ChocolatDeMarque choco) { //Emma humeau
-		Double res = prixVente.get(choco);
-		return (res == null) ? 0.0 : res;
+		return facteurPrixChocolat(choco.getChocolat()) * 10;
+		// Double res = prixVente.get(choco);
+		// return (res == null) ? 0.0 : res;
 	}
 
 	@Override
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) { //Emma Humeau, Nathan
 		double qte =  NotreStock.getStock(choco);
-		if (qte > 200) {
-			qte *= 0.9;
-		}
-		journalVente.ajouter("Nous mettons en vente " + qte + " pour " + choco);
 		return qte;
+		// if (qte > 200) {
+		// 	qte *= 0.9;
+		// }
+		// journalVente.ajouter("Nous mettons en vente " + qte + " pour " + choco);
+		// return qte;
 	}
 
 	@Override
@@ -96,12 +100,12 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 		return qteEnVenteTG;
 	}
 
-	//il faudra rajouter ensuite une liste qui mémorise les ventes
 	@Override
 	public void vendre(ClientFinal client, ChocolatDeMarque choco, double quantite, double montant, int crypto) { //emma Humeau
 		NotreStock.addQte(choco, -quantite);
-		totalVente.ajouter(this, quantite);
+		totalVente.ajouter(this, quantite, crypto);
 		journalVente.ajouter(quantite + " de " + choco + "vient d'être vendu");
+		HistoChoco.get(choco).ajouter(this,quantite,crypto); // Léo Historique qui mémorise les ventes
 	}
 
 	@Override

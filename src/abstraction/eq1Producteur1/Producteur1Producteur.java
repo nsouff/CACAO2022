@@ -106,7 +106,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		double pourcentage_nBE_moyenne = 0.27;
 		double pourcentage_nBE_haute = 0;
 		double pourcentage_BE_moyenne = 0.05;
-		// On calcule le nombre d'arbres par parc à répartir en fonction des définis pourcentages au-dessus
+		// On calcule le nombre d'arbres par parc à répartir en fonction des pourcentages définis au-dessus
 		int nombre_arbre_ghana = (int)Math.floor(nombre_arbre_debut*0.62);
 		int nombre_arbre_cote_divoire = (int)Math.floor(nombre_arbre_debut*0.23);
 		int nombre_arbre_nigeria = (int)Math.floor(nombre_arbre_debut*0.07);
@@ -159,38 +159,39 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		double cours_feve_basse = bourse.getCours(Feve.FEVE_BASSE).getValeur();
 		double cours_feve_moyenne = bourse.getCours(Feve.FEVE_MOYENNE).getValeur();
 		double cours_feve_haute = bourse.getCours(Feve.FEVE_HAUTE).getValeur();
+		int parametre_min_max = 5;
+
+		HashMap<Feve, Double> prixmoyen = new HashMap<Feve, Double>();
 		
-		int parametre_min_max = 10;
-		
-			HashMap<Feve, Double> prixmoyen = this.getPrixmoyenFeve();
-			for (Feve f : this.getFeves().keySet()) {
-				prixmoyen.replace(f, prixmoyen.get(f)/(Filiere.LA_FILIERE.getEtape()+1));
-			
+		for (Feve f : this.getFeves().keySet()) {
+			prixmoyen.put(f, this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()));
 		}
-			
+		
+		this.setMecontentement_basse((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE))));
+		this.setMecontentement_moyenne((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_MOYENNE)-cours_feve_moyenne)/prixmoyen.get(Feve.FEVE_MOYENNE))));
+		this.setMecontentement_haute((int)Math.floor(10*((prixmoyen.get(Feve.FEVE_HAUTE)-cours_feve_haute)/prixmoyen.get(Feve.FEVE_HAUTE))));
+		System.out.println(cours_feve_basse + "   " + prixmoyen.get(Feve.FEVE_BASSE) + "   " + 10*((prixmoyen.get(Feve.FEVE_BASSE)-cours_feve_basse)/prixmoyen.get(Feve.FEVE_BASSE)));
 		if (cours_feve_basse <= bourse.getCours(Feve.FEVE_BASSE).getMin()) {
-			this.setMecontentement_basse(this.getMecontentement_basse()-parametre_min_max);
-		}
-		if (cours_feve_moyenne <= bourse.getCours(Feve.FEVE_MOYENNE).getMin()) {
-			this.setMecontentement_moyenne(this.getMecontentement_moyenne()-parametre_min_max);
-		}
-		if (cours_feve_haute <= bourse.getCours(Feve.FEVE_HAUTE).getMin()) {
-			this.setMecontentement_haute(this.getMecontentement_haute()-parametre_min_max);
-		}
-		if (cours_feve_basse >= bourse.getCours(Feve.FEVE_BASSE).getMax()) {
 			this.setMecontentement_basse(this.getMecontentement_basse()+parametre_min_max);
 		}
-		if (cours_feve_moyenne >= bourse.getCours(Feve.FEVE_MOYENNE).getMax()) {
+		if (cours_feve_moyenne <= bourse.getCours(Feve.FEVE_MOYENNE).getMin()) {
 			this.setMecontentement_moyenne(this.getMecontentement_moyenne()+parametre_min_max);
 		}
-		if (cours_feve_haute >= bourse.getCours(Feve.FEVE_HAUTE).getMax()) {
+		if (cours_feve_haute <= bourse.getCours(Feve.FEVE_HAUTE).getMin()) {
 			this.setMecontentement_haute(this.getMecontentement_haute()+parametre_min_max);
 		}
-		
-		this.setMecontentement_basse(this.getMecontentement_basse()+(int)Math.floor(100*((cours_feve_basse-prixmoyen.get(Feve.FEVE_BASSE)/prixmoyen.get(Feve.FEVE_BASSE)))));
-		this.setMecontentement_moyenne(this.getMecontentement_moyenne()+(int)Math.floor(100*((cours_feve_moyenne-prixmoyen.get(Feve.FEVE_MOYENNE)/prixmoyen.get(Feve.FEVE_MOYENNE)))));
-		this.setMecontentement_haute(this.getMecontentement_haute()+(int)Math.floor(100*((cours_feve_haute-prixmoyen.get(Feve.FEVE_HAUTE)/prixmoyen.get(Feve.FEVE_HAUTE)))));
+		if (cours_feve_basse >= bourse.getCours(Feve.FEVE_BASSE).getMax()) {
+			this.setMecontentement_basse(this.getMecontentement_basse()-parametre_min_max);
+		}
+		if (cours_feve_moyenne >= bourse.getCours(Feve.FEVE_MOYENNE).getMax()) {
+			this.setMecontentement_moyenne(this.getMecontentement_moyenne()-parametre_min_max);
+		}
+		if (cours_feve_haute >= bourse.getCours(Feve.FEVE_HAUTE).getMax()) {
+			this.setMecontentement_haute(this.getMecontentement_haute()-parametre_min_max);
+		}
+	
 	}
+	
 	
 
 	public void next() { //Écrit par Antoine

@@ -1,4 +1,4 @@
-package abstraction.eq7Distributeur2;
+package abstraction.eq7Distributeur2.tools;
 
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 

@@ -75,7 +75,9 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	//Auteur : Khéo
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
+		if (this.getStock(f, false)>quantiteEnKg) {
 		this.retirerQuantite(f, quantiteEnKg);
+		}
 	}
 	
 
@@ -90,24 +92,25 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		double coutStockage=Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur(); 
 		double coutProduction=this.getPrixEntretienArbre().getValeur();
 		double coutTotalFeve= coutProduction + coutStockage*this.getFeves().size();
+		double tauxdecroit = (((0.75-1)/1000000)*this.getStock(f, false) + 1)/this.getStock(f, false) ; //Taux décroissant sur 1 million jusqu'à 75 % 
 		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE 
-			if (Filiere.LA_FILIERE.getEtape()>=1) { // Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
-				if(f==Feve.FEVE_BASSE) {
-					if (cours>coutTotalFeve) {
-						return this.getStock(f, false)*0.3;
+			if (Filiere.LA_FILIERE.getEtape()>=1) { 
+				if (this.getStock(f, false)<1000000) {
+					if(f==Feve.FEVE_BASSE) {
+						if (cours>coutTotalFeve &&((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours)) {
+							return this.getStock(f, false)*0.4;
+						}
+					} else 	if (f==Feve.FEVE_MOYENNE) {
+						if (cours>coutTotalFeve*1.2 &&((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours)) {
+							return this.getStock(f, false)*0.4;
+						}
 					}
-				} else 	if (f==Feve.FEVE_MOYENNE) {
-					if (cours>coutTotalFeve*1.2) {
-						return this.getStock(f, false)*0.2;
-					}
-				} else if(f==Feve.FEVE_HAUTE) {
-					if (cours>coutTotalFeve*1.5) {
-						return (this.getStock(f, false)*0.2);
-					}
+				} else {
+					return this.getStock(f, false);
 				}
 			}
 		}
 		return 0.0 ; 
-	}//pour push
+	}
 
 }
