@@ -27,12 +27,16 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 			if (((Feve)produit) == Feve.FEVE_BASSE || ((Feve)produit) == Feve.FEVE_MOYENNE || ((Feve)produit) == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
 				double quantiteFeveContrat = 0. ;
 				journalCCA.ajouter(this.mesContratEnTantQueAcheteur +" contrat cadres acheteurs en cours");
+				System.out.println("-----------------------------------------------------------");
 				for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) {
 					if (produit == c.getProduit()) {
+						//System.out.println("contrat achete()");
+						//System.out.println(c);
 						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
-						journalCCA.ajouter("J'ajoute 100000000000000");
+						//System.out.println("qtFeveContrat du achete() "+quantiteFeveContrat);
 					}
 				}
+				System.out.println("qtFeveContrat totale du achete() "+quantiteFeveContrat);
 				journalCCA.ajouter("quantite feve contrat en cours : "+ quantiteFeveContrat);
 				// décide si on est ouvert ou non à des propositions
 				if (quantiteFeveContrat < 0.5*this.quantiteAchatFeve.get(produit)) {
@@ -83,7 +87,9 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		// supprime les contrats d'achats obsolètes; auteur Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueAcheteur) {
+			System.out.println(contrat + "qtRestantALivrer " + contrat.getQuantiteRestantALivrer() + "Montant "+ contrat.getMontantRestantARegler());
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				System.out.println("ajouté");
 				contratsObsoletes.add(contrat);
 			}
 		}

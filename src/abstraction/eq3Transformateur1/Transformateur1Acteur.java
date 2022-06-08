@@ -31,8 +31,8 @@ public class Transformateur1Acteur implements IActeur {
 		this.journal = new Journal("Divers",this);
 		this.journalCCA = new Journal("Contrats cadres Acheteurs",this);
 		this.journalCCV = new Journal("CC Vendeurs", this);
-		this.journalAO = new Journal("Appel d Offres", null);
-		this.journalB = new Journal("Bourse", null);
+		this.journalAO = new Journal("Appel d Offres", this);
+		this.journalB = new Journal("Bourse", this);
 	}
 
 	public void initialiser() {
