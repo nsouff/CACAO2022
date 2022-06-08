@@ -78,7 +78,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 		return 0.0;
 	}
 		
-//		Mathis et Camille : le prix des chocolats bioEquitables est mis à chaque étape sous le prix de vente moyen (correspondant à ce chocolat) de l'étape précédente. Au contraire, ceux du non bioEquitable
+//		 Mathis et Camille : le prix des chocolats bioEquitables est mis à chaque étape sous le prix de vente moyen (correspondant à ce chocolat) de l'étape précédente. Au contraire, ceux du non bioEquitable
 //		sont placés au dessus pr créer de la marge. Une fois une certaine part de marché acquise sur un chocolat vendu (75%), le prix ne varie plus (pour éviter de baisser les prix sans fin).		
 		
 //		public double prix(ChocolatDeMarque choco, int currentStep) {
