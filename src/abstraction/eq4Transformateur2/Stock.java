@@ -6,74 +6,86 @@ import abstraction.eq8Romu.filiere.Filiere;
 //auteur Marie
 
 public class Stock<I> {
-		public HashMap<I,Double> quantite_stock;
-		private double stocktotal;
-		
-		
-	public Stock(double stocktotal) {
-		this.setQuantite_stock(new HashMap<I, Double>());
-		this.stocktotal=stocktotal;
+	
+
+	private HashMap<I,Double> stock;
+	
+	//Nawfel
+	public Stock(HashMap<I, Double> stock) {
+		this.stock = stock;
 	}
+	
+	public Stock() {
+		this.stock=new HashMap<I,Double>();
+	}
+	
+	
+	
 	//Marie
+		public double getQuantite(I produit) {
+			if (this.stock.keySet().contains(produit)) {
+				return this.stock.get(produit);
+			}else {
+				return 0;
+			}
+		}
+	
+	
+	//Nawfel
+	//Faire la somme  de toutes les values
 	public double getStocktotal() {
-		return this.stocktotal;
+		double somme=0;
+		for(Double qt :this.stock.values()) {
+			somme=somme+qt;
+		}
+		return somme;
 	}
-	public HashMap<I,Double> getQuantiteStock(){
-		return this.quantite_stock;
-	}
+	
 	// Gabriel
-	public void setStock(double newst) {
-		this.stocktotal = this.stocktotal - newst;
-	}
+//	public void setStock(double newst) {
+//		this.stocktotal = this.stocktotal - newst;
+//	}
 	
 	//Marie
 	public void ajouter (I produit, double qt) {
 		if (qt>0) {	
 			
-			if (this.getQuantite_stock().keySet().contains(produit) ) {
-				this.getQuantite_stock().put(produit, this.getQuantite_stock().get(produit)+qt); //
+			if (this.stock.keySet().contains(produit)) {
+				this.stock.put(produit, this.stock.get(produit)+qt); //
 			}else {
-				this.getQuantite_stock().put(produit, qt);}
+				this.stock.put(produit, qt);}
 	}else{
 		throw new IllegalArgumentException("impossible");
 	}
-	}	
+	}
 	
 	public void enlever (I produit, double qt) {
 	if (qt>0) {	
-		if (this.getQuantite_stock().keySet().contains(produit) ) {
-			this.getQuantite_stock().put(produit, this.getQuantite_stock().get(produit)-qt);
+		if (this.stock.keySet().contains(produit) ) {
+			this.stock.put(produit, this.stock.get(produit)-qt);
 	}}
 	else{
 		throw new IllegalArgumentException("impossible");
 }
 }
-	//Marie
-	public double getQuantite(I produit) {
-		if (this.getQuantite_stock().keySet().contains(produit)) {
-			return this.getQuantite_stock().get(produit);
-		}else {
-			return 0;
-		}
-		
-	}
-	// Marie
-	public double quantiteStockTotale() {
-
-		for(Double d: this.getQuantite_stock().values()) {
-
-			this.stocktotal=this.stocktotal+d;
-		}
-		return this.stocktotal;}
 		
 
 	// Marie
 
 	public double stockRestant(I produit) {
-		return (Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()-this.quantiteStockTotale());
+		return (Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()-this.getStocktotal());
 	}
 
 
+
+	
+	public HashMap<I, Double> getStock() {
+		return stock;
+	}
+
+	public void clear() {
+		this.clear();
+	}
 
 
 	/*public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
@@ -82,11 +94,9 @@ public class Stock<I> {
 
 
 
-
-	public HashMap<I,Double> getQuantite_stock() {
-		return quantite_stock;
-	}
-	public void setQuantite_stock(HashMap<I,Double> quantite_stock) {
-		this.quantite_stock = quantite_stock;
-	}}
+//	public void setQuantite_stock(HashMap<I,Double> quantite_stock) {
+//		this.quantite_stock = quantite_stock;
+//	}
+	
+}
 

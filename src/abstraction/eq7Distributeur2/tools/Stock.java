@@ -1,4 +1,4 @@
-package abstraction.eq7Distributeur2;
+package abstraction.eq7Distributeur2.tools;
 
 import java.util.List;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class Stock implements IStock{
 	private HashMap<ChocolatDeMarque,Variable> seuilRachat;
 	private IActeur acteur;
 	private boolean FONCTIONEL;
-	private int STOCK_INIT=1000000;
+	private double StockInit=100000;
 	
 	/**Méthode constructeur, initialise le stock vide
 	 * @param acteur
@@ -41,8 +41,7 @@ public class Stock implements IStock{
 		
 		//Initialisation des deux à 0
 		for (ChocolatDeMarque choco : listeChocolatsProduits) {
-			System.out.println(choco);
-			reserve.put(choco, new Variable("Stock"+choco.toString(),"Valeur du stock pour "+choco.toString(),acteur,0.,Double.POSITIVE_INFINITY,0));
+			reserve.put(choco, new Variable("Stock"+choco.toString(),"Valeur du stock pour "+choco.toString(),acteur,0.,Double.POSITIVE_INFINITY,StockInit));
 			seuilRachat.put(choco,new Variable("SeuilRachat"+choco.toString(),"Seuil de rachat défini pour "+choco.toString(),acteur,-1.,Double.POSITIVE_INFINITY,0));
 		}
 		this.acteur = acteur;
@@ -60,14 +59,12 @@ public class Stock implements IStock{
 	public double getQuantite(ChocolatDeMarque chocolat) {
 		if (!this.FONCTIONEL) {return 0.0;}
 		
-		Variable v = reserve.get(chocolat);
-		return v.getValeur();
+		return reserve.get(chocolat).getValeur();
 	}
 	
 	private void setQuantite(ChocolatDeMarque chocolat,double quantite) {
 		if (!this.FONCTIONEL) {return ;}
-		Variable v = reserve.get(chocolat);
-		v.setValeur(this.acteur, quantite);
+		reserve.get(chocolat).setValeur(this.acteur, quantite);
 	}
 	
 	public void addProduit(ChocolatDeMarque chocolat, Double quantite) {

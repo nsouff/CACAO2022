@@ -44,11 +44,11 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 * Pas de prise en compte pour l'instant des contrats */
 	public double demande(Feve f, double cours) {
 		if (cours<prixAchatFeve.get(f)) {
-			journal.ajouter("quantiteAchtFeve : " + quantiteAchatFeve.get(f));
+			journalB.ajouter("On souhaite acheter " + quantiteAchatFeve.get(f)*0.5 +" de "+ f);
 			return quantiteAchatFeve.get(f)*0.5;
 			}
 			else {
-			journal.ajouter("Le cours " + cours + " est superieur au prix "+prixAchatFeve.get(f)+" auquel on peut acheter la feve"+ f+", la bourse n'est pas interessante");
+			journalB.ajouter("Le cours " + cours + " est superieur au prix "+prixAchatFeve.get(f)+" auquel on peut acheter la feve"+ f+", la bourse n'est pas interessante.");
 			return 0.;
 			}	
 	}
@@ -57,8 +57,8 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	/** modification du stock de fèves; auteur Anna */
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		stockFeve.put(f, quantiteEnKg + stockFeve.get(f)) ;
-		journal.ajouter(quantiteEnKg+" kg de fèves "+f+" achetées en bourse");
-		journal.ajouter("Le nouveau stock de feve "+ f +" est de " +stockFeve.get(f)+" kg" );
+		journalB.ajouter(quantiteEnKg+" kg de fèves "+ f +" achetées en bourse");
+		journalB.ajouter("Le nouveau stock de feve "+ f +" est de " +stockFeve.get(f)+" kg." );
 	}
 
 	/** */
@@ -80,8 +80,6 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void next() {
 		super.next();
-		journal.ajouter("test journal bourse");
-		
 	}
 	
 }

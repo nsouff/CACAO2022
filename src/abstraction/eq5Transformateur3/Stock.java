@@ -26,14 +26,16 @@ public class Stock<Produit> {
 			}
 		}
 	}
-	
+	//julien 10/05
 	public void utiliser(Produit p, double qtt) {
-	if (qtt > 0 && this.stock.get(p)-qtt >=0 ) {
-		if (this.stock.keySet().contains(p)) {
+	// il faudrait renvoyer une erreur si le produit n'est pas en stock
+	if (this.stock.keySet().contains(p)) {
+		if (qtt > 0 && this.stock.get(p)-qtt >=0 ) {
 			this.stock.put(p, this.stock.get(p)-qtt);	
 			}
 		}
 	}
+	
 
 	// Récupérer la liste des produits en stock
 	public Set<Produit> getProduitsEnStock() {
@@ -41,16 +43,22 @@ public class Stock<Produit> {
 	}
 	//Récupérer les stocks pour un type de produit
 	public Double getstock(Produit p) {
-		return this.stock.get(p);
+		if (this.stock.keySet().contains(p)) {
+			return this.stock.get(p);
+		}
+		return 0.0;
 	}
 
-	//Récupérer la valeur du stock total (tous les types de produits)
-	public Double getstocktotal(Produit p) {
+	//julien
+	public Double getstocktotal() {
 		Double total = 0.0;
 		for (Double q : this.stock.values()) {
 			total += q;
 		}
 		return total;
 	}
+	
+
+
 
 }

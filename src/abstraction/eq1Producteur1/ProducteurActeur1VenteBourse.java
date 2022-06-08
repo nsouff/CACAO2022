@@ -28,7 +28,6 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	//Auteur : Khéo
 	public double offre(Feve f, double cours) {
 		//On met à jour les prix de la HashMap
-		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE
 			
 			if (Filiere.LA_FILIERE.getEtape()>=1) { //Petite dijonction de cas pour le premier tour afin d'éviter d'aller chercher dans une hashmap vide
 				this.getPrixmoyenFeve().put(f, this.getPrixmoyenFeve().get(f)+cours);
@@ -38,16 +37,25 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 			
 			}
 		
-			//On vends en fonction du prix
+			//On vend en fonction du prix
+			if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE
 			if (Filiere.LA_FILIERE.getEtape()>=1) {
 				// Ici, étape + 1 car la 1e etape est l'étape 0, et on y rentre le cours
-				if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1)) <= cours) {
-					return this.getStock(f, false);
-					
+				
+				if (this.getStock(f, false)<1000000) {
+					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 million jusqu'à 75 %
+					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours) {
+						return this.getStock(f, false);
+					}
+				}
+				else {
+					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*0.75 <= cours) {
+
+						return this.getStock(f, false);
+					}
 				}
 			}
 		}
-		
 		return 0.0 ;
 	}
 
@@ -58,6 +66,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	 */
 	//Auteur : Khéo
 	public HashMap<Feve, Double> getPrixmoyenFeve() {
+		
 		return this.prixmoyenFeve;
 	}
 
@@ -66,6 +75,42 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	//Auteur : Khéo
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
+		if (this.getStock(f, false)>quantiteEnKg) {
 		this.retirerQuantite(f, quantiteEnKg);
+		}
 	}
+	
+
+	/**
+	 * offre2 (pour conserver la V1 avant d'être sûr)
+	 * @author laure
+	 * @param f la fève qu'on veut vendre
+	 * @param cours le cours actuel
+	 * @return quantité de fèves à vendre
+	 */
+	public double offre2(Feve f, double cours) {
+		double coutStockage=Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur(); 
+		double coutProduction=this.getPrixEntretienArbre().getValeur();
+		double coutTotalFeve= coutProduction + coutStockage*this.getFeves().size();
+		double tauxdecroit = (((0.75-1)/1000000)*this.getStock(f, false) + 1)/this.getStock(f, false) ; //Taux décroissant sur 1 million jusqu'à 75 % 
+		if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE 
+			if (Filiere.LA_FILIERE.getEtape()>=1) { 
+				if (this.getStock(f, false)<1000000) {
+					if(f==Feve.FEVE_BASSE) {
+						if (cours>coutTotalFeve &&((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours)) {
+							return this.getStock(f, false)*0.4;
+						}
+					} else 	if (f==Feve.FEVE_MOYENNE) {
+						if (cours>coutTotalFeve*1.2 &&((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours)) {
+							return this.getStock(f, false)*0.4;
+						}
+					}
+				} else {
+					return this.getStock(f, false);
+				}
+			}
+		}
+		return 0.0 ; 
+	}
+
 }
