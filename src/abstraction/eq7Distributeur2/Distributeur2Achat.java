@@ -142,7 +142,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		double quantiteVendue = Filiere.LA_FILIERE.getVentes(chocProduit, currentEtape-1)/nbDistributeur;
 		double quantiteTotale = 0;
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			quantiteTotale =  quantiteTotale + (Filiere.LA_FILIERE.getVentes(choco, currentEtape-1)/nbDistributeur);
+			quantiteTotale =  quantiteTotale + (Filiere.LA_FILIERE.getVentes(choco, currentEtape-1)/nbDistributeur);  //à modifier avec classe vente*/
 		}
 		double venteJudicieuse = (quantiteVendue/quantiteTotale)*venteBase;
 		
