@@ -47,17 +47,23 @@ public class VenteTracker extends Distributeur2ChocolatDeMarque{
 	//retourne la quantite de la dernière vente du chocolat choco
 	public Double getPreviousVenteQuantite(ChocolatDeMarque choco) {
 		List<Double> quantites = ventesQuantite.get(choco);
-		Double lastQuantite = quantites.get(quantites.size()-1);
-		previousVentesQuantite.replace(choco, lastQuantite);
-		return previousVentesQuantite.get(choco);
+		if(quantites.size()>=2) {
+			Double lastQuantite = quantites.get(quantites.size()-1);
+			previousVentesQuantite.replace(choco, lastQuantite);
+			return previousVentesQuantite.get(choco);
+		}
+		return 0.0;
 	}
 	
 	//retourne le prix de la dernière vente du chocolat choco
 	public Double getPreviousVentePrix(ChocolatDeMarque choco) {
 		List<Double> quantites = ventesPrix.get(choco);
-		Double lastQuantite = quantites.get(quantites.size()-1);
-		previousVentesPrix.replace(choco, lastQuantite);
-		return previousVentesPrix.get(choco);
+		if(quantites.size()>=2) {
+			Double lastQuantite = quantites.get(quantites.size()-1);
+			previousVentesPrix.replace(choco, lastQuantite);
+			return previousVentesPrix.get(choco);
+		}
+		return 0.0;
 	}
 	
 	//retourne la liste de toutes les quantites vendues pour le chocolat choco (historique)
