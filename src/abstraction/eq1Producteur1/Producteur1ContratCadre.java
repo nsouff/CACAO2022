@@ -49,9 +49,9 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		return false;
 	}
 
-	//@Override
+	@Override
 	//Auteur : Khéo
-	public Echeancier contrePropositionDuVendeur1(ExemplaireContratCadre contrat) {
+	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		this.getContratCadre().ajouter("============================================");
 		this.getContratCadre().ajouter("ACHETEUR " + contrat.getAcheteur().getNom().toString() + " // PRODUIT " + contrat.getProduit().toString());
 		this.getContratCadre().ajouter("Premier échéancier proposé " + contrat.getEcheancier());
@@ -249,8 +249,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	 * @param contrat
 	 * @return Echeancier
 	 */
-	@Override
-	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+	//@Override
+	public Echeancier contrePropositionDuVendeur2(ExemplaireContratCadre contrat) {
 		this.getContratCadre().ajouter("============================================");
 		this.getContratCadre().ajouter("L'acheteur est " + contrat.getAcheteur().toString() + " pour du " + contrat.getProduit().toString());
 		this.getContratCadre().ajouter("Premier échéancier " + contrat.getEcheancier());
@@ -262,30 +262,29 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 					return null;
 				}
 				int test=1;
-				for (int date=contrat.getEcheancier().getStepDebut();date<contrat.getEcheancier().getStepFin(); date++) {
-					//if (contrat.getEcheancier().getQuantite(date)<0.75*this.getStock(Feve.FEVE_BASSE, false)) {
-						System.out.println(contrat.getEcheanciers().toString());
-						//if (contrat.getEcheancier().getQuantite(date)>0.2*this.getStock(Feve.FEVE_BASSE, false)) {
+				//if (contrat.getEcheancier().getQuantiteTotale()<0.75*this.getStock(Feve.FEVE_BASSE, false)) {
+					//if (contrat.getEcheancier().getQuantiteTotale()>0.2*this.getStock(Feve.FEVE_BASSE, false)) {
+						for (int date=contrat.getEcheancier().getStepDebut();date<contrat.getEcheancier().getStepFin(); date++) {
+							System.out.println(contrat.getEcheanciers().toString());
 							if(contrat.getEcheanciers().size()==1) { //1ere contreproposition
 								contrat.getEcheancier().set(date, 0.6*this.getStockBasse().getValeur());
-								
-								System.out.println("type de fève : "+ contrat.getProduit().toString() +"premiere proposition : ut n° "+date+", quantité : "+0.6*this.getStockBasse().getValeur());
+								System.out.println("type de fève : "+ contrat.getProduit().toString() +" : Première proposition : ut n° "+date+", quantité : "+0.6*this.getStockBasse().getValeur());
 							} else {
 								System.out.println("proposition suivante : ut n° "+date+", quantité : "+0.6*this.getStockBasse().getValeur());
 								contrat.getEcheancier().set(date, (contrat.getEcheancier().getQuantite(date)+contrat.getEcheanciers().get(contrat.getEcheanciers().size()-2).getQuantite(date)/2));
 							}
-						//} else {
-							//this.getContratCadre().ajouter("On nous propose trop peu de quantité, on ne vend pas");
-							//test=0;
-						//}
+						}
 					//} else {
-						//this.getContratCadre().ajouter("On n'a pas assez de stock, on ne vend pas");
+						//this.getContratCadre().ajouter("On nous propose trop peu de quantité, on ne vend pas");
 						//test=0;
 					//}
-				}
-				if (test==0) {
-					return null;
-				}
+				//} else {
+					//this.getContratCadre().ajouter("On n'a pas assez de stock, on ne vend pas");
+					//test=0;
+				//}
+				//if (test==0) {
+				//	return null;
+				//}
 				this.getContratCadre().ajouter("On ajoute une quantité pour un nouveau contrat");
 				this.getContratCadre().ajouter("Nouvel échéancier " + contrat.getEcheancier());
 				System.out.println(contrat.getEcheancier());
