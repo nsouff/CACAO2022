@@ -246,7 +246,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		if (this==acteur) {
 		System.out.println("I'll be back... or not... "+this.getNom());
 		} else {
-			System.out.println("Poor "+acteur.getNom()+"... We will miss you. "+this.getNom());
+			System.out.println("Allez hop, rentrez chez vous "+acteur.getNom()+". "+this.getNom());
 		}
 	}
 	
