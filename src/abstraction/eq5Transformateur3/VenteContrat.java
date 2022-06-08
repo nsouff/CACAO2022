@@ -91,7 +91,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 		if (feve != null) {
 			Double seuilMax = bourse.getCours(feve).getMin();
 			//Double seuilMax = 2.0;
-			this.achats.ajouter("seuilMax de " + feve.toString() + "vaut " + seuilMax.toString());
+			//this.achats.ajouter("seuilMax de " + feve.toString() + "vaut " + seuilMax.toString());
 
 			if (contrat.getProduit() instanceof ChocolatDeMarque) {
 				if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
