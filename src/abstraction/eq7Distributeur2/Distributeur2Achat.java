@@ -69,6 +69,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		//Initialisation du superviseur de vente
 		SuperviseurVentesContratCadre SupVente = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		
+		journalContratCadre.ajouter("================================================================================");
 		//Affichage de la liste des vendeurs actifs pour chaque chocolats
 		for (ChocolatDeMarque chocProduit : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			List<IVendeurContratCadre> vendeurs = SupVente.getVendeurs(chocProduit);
@@ -187,22 +188,27 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		
 		//Si jamais on atteint la fin des négociations
 		if (lastEcheancier.getStepFin()>ECH_MAX) {
-			journalContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour dépassement du delai de négociation");
+			if (contrat.getQuantiteTotale() < quantiteTotale) {
+				journalNegociationContratCadre.ajouter("Acceptation sur la quantite avec " + contrat.getVendeur().getNom() + " pour dépassement du delai de négociation, quantite :"+contrat.getQuantiteTotale());
+				return contrat.getEcheancier();
+			}
+			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour dépassement du delai de négociation");
 			return null;
 		}
 		//Si la quantité totale proposée dans le contrat est plus petite que la quantite minimale
 		if (contrat.getQuantiteTotale()<=QuantiteMinEcheancier) {
-			journalContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité reproposée en dessous du seuil de quantite minimale : contrat.getQuantiteTotale() : "+ contrat.getQuantiteTotale());
+			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité reproposée en dessous du seuil de quantite minimale : contrat.getQuantiteTotale() : "+ contrat.getQuantiteTotale());
 			return null;
 		}
 		//Si jamais la quantiteTotale du nouveau contrat est plus petite que 1000kg
 		if (quantiteTotale<=QuantiteMinEcheancier) {
-			journalContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité determinée en dessous du seuil de quantite minimale : quantiteTotale : "+ quantiteTotale);
+			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité determinée en dessous du seuil de quantite minimale : quantiteTotale : "+ quantiteTotale);
 			return null;
 		}
 		if (Math.abs(contrat.getQuantiteTotale()-quantiteTotale)<=DELTA_QUANTITE) {
 			return contrat.getEcheancier();
 		}
+		journalNegociationContratCadre.ajouter("Reproposition d'un contrat avec " + contrat.getVendeur().getNom() + " pour une quantité totale de : "+ quantiteTotale + " (quantite contrat = "+contrat.getQuantiteTotale()+")");
 		return echeancierAchat;
 	}
 
@@ -210,6 +216,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prix = contrat.getPrix();
 		if (prix>PRIX_MAX) {
+			journalNegociationContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour prix au dessus du prix maximal : prix : "+ prix);
 			return -1;
 		}else {
 			if(Math.abs(prix-EPSILON_PRIX)==PRIX_OK || prix<=PRIX_OK) {
@@ -218,7 +225,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				journalContratCadre.ajouter("================================================================================");
 				return prix;
 			}else {
-				return prix-EPSILON_PRIX;
+				return (prix+PRIX_OK)/2;
 			}
 		}
 	}
@@ -236,6 +243,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		Echeancier currentEtape = contrat.getEcheancier();
 		ChocolatDeMarque chocProduit = (ChocolatDeMarque) contrat.getProduit();
 		Double q = contrat.getQuantiteTotale();
-		this.journalContratCadre.ajouter("Nouveau contrat cadre entre "+ v + "et"+ a + "pour une quantitée" + q + "de" + chocProduit + "étalé sur " + currentEtape);
+		this.journalContratCadre.ajouter("Nouveau contrat cadre entre "+ Journal.texteColore(v, v.getNom()) + " et "+ Journal.texteColore(a, a.getNom()) + "pour une quantitée " + q + " de " + chocProduit + " étalé sur " + currentEtape);
 	}
 }
