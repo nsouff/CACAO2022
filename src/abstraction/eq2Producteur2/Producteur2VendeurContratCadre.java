@@ -180,9 +180,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE ));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
-		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE ));
-		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
-		
+		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE));
+		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE));
+		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE));
 	
 	}
 	@Override

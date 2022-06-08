@@ -1,5 +1,7 @@
 package abstraction.eq2Producteur2;
 
+import java.util.Random;
+
 import abstraction.eq8Romu.filiere.Filiere;
 
 //auteure : Fiona Martin 
@@ -18,6 +20,9 @@ public class Parcelle {
 	private int DebutMaladie;
 	private int StadeTensionGeopolitique;
 	private double ImpactRendementParasite;
+	private boolean AleaClimatique;
+	private int DebutAleaClimatique; 
+
 	
 	
 	
@@ -40,6 +45,7 @@ public class Parcelle {
 		this.MAJMaladie();
 		this.MAJTensionGeopo();
 		this.MAJParasite();
+		this.MAJAleaClimatique();
 	}
 
 	public Arbre getTypeArbre() {
@@ -177,7 +183,6 @@ public class Parcelle {
 	public double MAJParasite() {
 		// auteure : Fiona 
 		
-		// les return ne servent à rien; c'était juste pour sortir des if
 		double proba = Math.random();
 		if (this.getTypeArbre() == Arbre.ARBRE_HGB || this.getTypeArbre() == Arbre.ARBRE_MGB) {
 			if (proba < 0.02) {
@@ -231,6 +236,48 @@ public class Parcelle {
 	public void setImpactRendementParasite(double impactRendementParasite) {
 		ImpactRendementParasite = impactRendementParasite;
 	}
-	
 
+	public boolean isAleaClimatique() {
+		return AleaClimatique;
+	}
+
+	public void setAleaClimatique(boolean aleaClimatique) {
+		AleaClimatique = aleaClimatique;
+	}
+
+	public int getDebutAleaClimatique() {
+		return DebutAleaClimatique;
+	}
+
+	public void setDebutAleaClimatique(int debutAleaClimatique) {
+		DebutAleaClimatique = debutAleaClimatique;
+	}
+	
+	public void MAJAleaClimatique() {
+		double dureeAleaClim = 0;
+		if (Filiere.LA_FILIERE.getEtape() >= 8 && this.AleaClimatique == false) {
+			double proba_duree = Math.random();
+			if ( proba_duree <= 0.33) {
+				dureeAleaClim = 1;
+				this.setDebutAleaClimatique(Filiere.LA_FILIERE.getEtape());
+				this.setAleaClimatique(true);
+			}
+			else if (proba_duree <= 0.67){
+				dureeAleaClim = 2;
+				this.setDebutAleaClimatique(Filiere.LA_FILIERE.getEtape());
+				this.setAleaClimatique(true);
+			}
+			else  {
+				dureeAleaClim = 3;
+				this.setDebutAleaClimatique(Filiere.LA_FILIERE.getEtape());
+				this.setAleaClimatique(true);
+		}
+		if (Filiere.LA_FILIERE.getEtape() >= 8 && this.AleaClimatique == true) {
+			while (Filiere.LA_FILIERE.getEtape() - this.getDebutAleaClimatique() <= dureeAleaClim) {
+				dureeAleaClim = dureeAleaClim - 1; 
+			}
+		}
+
+		}
+	}
 }

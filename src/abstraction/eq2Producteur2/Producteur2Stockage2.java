@@ -46,7 +46,6 @@ public class Producteur2Stockage2 extends Producteur2Couts {
 				(L.get(m)).removequantite(r);
 				q=q-r;				
 			}
-		System.out.print(q);
 		}	
 
 	}
