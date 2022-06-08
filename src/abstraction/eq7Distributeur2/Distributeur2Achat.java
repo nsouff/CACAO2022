@@ -153,7 +153,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 
 	@Override
 	public boolean achete(Object produit) {
-		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
+		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<=stock.getSeuilRachat((ChocolatDeMarque)produit)) {
 			return true;
 		}else {
 			return false;
@@ -181,17 +181,19 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		double venteParStep = this.demande.get(chocProduit);
 		double quantiteTotale = venteParStep*this.nbStepContrat;
 
-		//On ne va pas réaliser de CC si la quantite achetée est < Quantite Min
-		while(contrat.getQuantiteTotale()<QuantiteMinEcheancier) {
-			venteParStep+=10;
-		}
 		//On créer un écheancier correspondant à nos besoin
 		Echeancier echeancierAchat = new Echeancier(currentEtape,this.nbStepContrat,venteParStep);
+		
+		//Si jamais on atteint la fin des négociations
 		if (lastEcheancier.getStepFin()>ECH_MAX) {
 			return null;
-		}else {
-			return echeancierAchat;
 		}
+		//Si la quantité totale proposée dans le contrat est plus petite que la quantite minimale
+		if (contrat.getQuantiteTotale()<QuantiteMinEcheancier) {
+			journalContratCadre.ajouter("Arrêt du contrat pour quantité reproposée en dessous du seuil de quantite minimale : contrat.getQuantiteTotale() : "+ contrat.getQuantiteTotale());
+			return null;
+		}
+		return echeancierAchat;
 	}
 
 	@Override
