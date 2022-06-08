@@ -15,5 +15,11 @@ public class DateProdTransfo2<Produit> {
 	public double getDate() {
 		return this.date;
 	}
+	public void setProduit(Produit p) {
+		this.p=p;
+	}
+	public void setDate(double date) {
+		this.date=date;
+	}
 	
 }
