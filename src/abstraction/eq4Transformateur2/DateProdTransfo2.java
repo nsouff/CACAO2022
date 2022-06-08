@@ -1,9 +1,10 @@
 package abstraction.eq4Transformateur2;
 
-public class DateProdTransfo2<Produit> {
+public class DateProdTransfo2<Produit> { //classe contruite pour avoir une Hashmap avec la date,le produit et la quantité
 	protected double date;
 	protected Produit p;
-	
+
+//Marie
 	public DateProdTransfo2(){
 		date=0;
 	}
