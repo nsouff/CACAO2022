@@ -27,7 +27,7 @@ public class AcheteurAO extends AcheteurContrat implements IAcheteurAO {
     @Override
     public double proposerPrix(OffreVente offre) {
     	
-    	if (NotreStock.seuilSecuFaillite() == false) {   //EmmaHumeau
+    	if (NotreStock.seuilSecuFaillite() == true) {   //EmmaHumeau
     		return 0.0;
     	}
 
