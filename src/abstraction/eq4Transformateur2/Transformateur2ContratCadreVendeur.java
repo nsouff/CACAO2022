@@ -57,8 +57,11 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
 						if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
 							journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
-							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 40000), cryptogramme,false);
+							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 4000000), cryptogramme,false);
 							journalVente.ajouter("-->aboutit au contrat "+cc);
+							if (cc!=null) {
+								this.mesContratEnTantQueVendeur.add(cc);
+							}
 							journalVente.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------------------");
 						}
 					}
