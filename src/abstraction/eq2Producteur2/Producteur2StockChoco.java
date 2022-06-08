@@ -65,21 +65,16 @@ public class Producteur2StockChoco extends Producteur2Transfo{
 	
 	public void initialiser() {
 		super.initialiser();
-		for (Feve feve : Feve.values()) {
-			int qt = super.getNbArbre(feve);
-			this.addQuantite(qt, feve);
+		this.addQuantite(3000, Chocolat.HQ_BE);
 		}
 		
 		
-	}
 
 	public void next() {
 		super.next();
-		for(Feve feve : Feve.values()) {
-			this.addQuantite(this.production(feve), feve);
+		this.addQuantite(this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.05, Chocolat.HQ_BE);
+		this.removeQuantite(this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.05, Chocolat.HQ_BE);
 		}
-		this.Peremption();
-		this.Parasites();
-	}
+		
 
 }
