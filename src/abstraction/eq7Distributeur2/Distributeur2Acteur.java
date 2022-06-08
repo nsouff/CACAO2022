@@ -31,6 +31,7 @@ public class Distributeur2Acteur implements IActeur{
 	protected Journal journalStock;
 	protected Journal journalVente;
 	protected Journal journalEtudeVente;
+	protected Journal journalNegociationContratCadre;
 	protected Journal journal;
 	
 	//Indicateurs
@@ -190,6 +191,7 @@ public class Distributeur2Acteur implements IActeur{
 	
 	public void initialiserJournaux() {
 		this.journalContratCadre = new Journal(this.getNom()+" Contrat Cadres", this);
+		this.journalNegociationContratCadre = new Journal(this.getNom()+" Contrat Cadres (Détail négociation)", this);
 		this.journalStock = new Journal(this.getNom()+" Stock", this);
 		this.journalVente = new Journal(this.getNom()+" Vente (Client Final)", this);
 		this.journalEtudeVente = new Journal(this.getNom()+" Etude des ventes (Marché)", this);
@@ -201,6 +203,7 @@ public class Distributeur2Acteur implements IActeur{
 		List<Journal> j= new ArrayList<Journal>();
 		j.add(this.journal);
 		j.add(this.journalContratCadre);
+		j.add(this.journalNegociationContratCadre);
 		j.add(this.journalStock);
 		j.add(this.journalEtudeVente);
 		j.add(this.journalVente);

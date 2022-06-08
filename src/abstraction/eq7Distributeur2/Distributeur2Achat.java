@@ -20,6 +20,7 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteurContratCadre{
 	public static final int EPS_ECH_OK=2;
 	public static final int ECH_MAX=15;
+	public static final Double DELTA_QUANTITE=100000.;
 	public static final Double PRIX_MAX=100.0;
 	public static final Double PRIX_OK=50.0;
 	public static final Double EPSILON_PRIX=5.0;
@@ -82,8 +83,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			//On pose le chocolat en tête de gondole si il est bio et équitable
 			boolean boolTeteGondole = chocProduit.isBioEquitable();
 			
-			//Si la quantite du chocolat en question est inférieure au seuil auquel on a décidé d'en racheter, alors on va en racheter
-			if (stock.getQuantite(chocProduit)<=stock.getSeuilRachat(chocProduit)) {
+			//Si la quantite du chocolat en question est inférieure au seuil auquel on a décidé d'en racheter, alors on va en racheter, et si on doit acheter plus de 1000kg du produit
+			if (stock.getQuantite(chocProduit)<=stock.getSeuilRachat(chocProduit) && this.demande.get(chocProduit)>1000) {
 				
 				
 				//Retourne le volume restant à acheter
@@ -153,7 +154,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 
 	@Override
 	public boolean achete(Object produit) {
-		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<stock.getSeuilRachat((ChocolatDeMarque)produit)) {
+		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<=stock.getSeuilRachat((ChocolatDeMarque)produit)) {
 			return true;
 		}else {
 			return false;
@@ -176,22 +177,33 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		//L'étape actuelle
 		int currentEtape = Filiere.LA_FILIERE.getEtape();
 		
-
 		//Retourne la demande restante
 		double venteParStep = this.demande.get(chocProduit);
 		double quantiteTotale = venteParStep*this.nbStepContrat;
+		
 
-		//On ne va pas réaliser de CC si la quantite achetée est < Quantite Min
-		while(contrat.getQuantiteTotale()<QuantiteMinEcheancier) {
-			venteParStep+=10;
-		}
 		//On créer un écheancier correspondant à nos besoin
 		Echeancier echeancierAchat = new Echeancier(currentEtape,this.nbStepContrat,venteParStep);
+		
+		//Si jamais on atteint la fin des négociations
 		if (lastEcheancier.getStepFin()>ECH_MAX) {
+			journalContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour dépassement du delai de négociation");
 			return null;
-		}else {
-			return echeancierAchat;
 		}
+		//Si la quantité totale proposée dans le contrat est plus petite que la quantite minimale
+		if (contrat.getQuantiteTotale()<=QuantiteMinEcheancier) {
+			journalContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité reproposée en dessous du seuil de quantite minimale : contrat.getQuantiteTotale() : "+ contrat.getQuantiteTotale());
+			return null;
+		}
+		//Si jamais la quantiteTotale du nouveau contrat est plus petite que 1000kg
+		if (quantiteTotale<=QuantiteMinEcheancier) {
+			journalContratCadre.ajouter("Arrêt du contrat avec " + contrat.getVendeur().getNom() + " pour quantité determinée en dessous du seuil de quantite minimale : quantiteTotale : "+ quantiteTotale);
+			return null;
+		}
+		if (Math.abs(contrat.getQuantiteTotale()-quantiteTotale)<=DELTA_QUANTITE) {
+			return contrat.getEcheancier();
+		}
+		return echeancierAchat;
 	}
 
 	@Override
