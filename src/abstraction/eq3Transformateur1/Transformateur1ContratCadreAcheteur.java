@@ -26,22 +26,20 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 		if (produit instanceof Feve) {
 			if (((Feve)produit) == Feve.FEVE_BASSE || ((Feve)produit) == Feve.FEVE_MOYENNE || ((Feve)produit) == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
 				double quantiteFeveContrat = 0. ;
-				journalCCA.ajouter(this.mesContratEnTantQueAcheteur +" contrat cadres acheteurs en cours");
 				for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) {
 					if (produit == c.getProduit()) {
 						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
-						journalCCA.ajouter("J'ajoute 100000000000000");
 					}
 				}
-				journalCCA.ajouter("quantite feve contrat en cours : "+ quantiteFeveContrat);
+				journalCCA.ajouter("On a prévu d'acheter "+ quantiteFeveContrat + " de " + produit +" au prochain tour.");
 				// décide si on est ouvert ou non à des propositions
 				if (quantiteFeveContrat < 0.5*this.quantiteAchatFeve.get(produit)) {
-					journalCCA.ajouter("Je souhaite faire un nouveau contrat cadre acheteur");
+					journalCCA.ajouter("Je souhaite faire un nouveau contrat cadre acheteur de " + produit);
 					return true;
 				}
 			}
 		}
-		journalCCA.ajouter("Je ne souhaite pas faire un nouveau contrat cadre acheteur");
+		journalCCA.ajouter("Je ne souhaite pas faire un nouveau contrat cadre acheteur de " + produit);
 		return false;
 	}
 
@@ -58,7 +56,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 	// négociation du prix; auteur Julien on accepte tout pour l'instant*/
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit()) + 1000000000000000000000000.) {
-			journalCCA.ajouter("J'accepte ce prix"+ contrat.getPrix());
+			journalCCA.ajouter("J'accepte ce prix "+ contrat.getPrix());
 			return contrat.getPrix();
 		} else {
 			journalCCA.ajouter("Je propose un nouveau prix car ils ont proposé : "+ contrat.getPrix());
@@ -88,7 +86,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 			}
 		}
 		this.mesContratEnTantQueAcheteur.removeAll(contratsObsoletes);
-		journalCCA.ajouter("test contratcadre acheteur/ les contrats cadres acheteur obsoletes ont ete supprimes");
+		journalCCA.ajouter("Les contrats cadres acheteur obsoletes ont ete supprimes");
 	}
 
 }
