@@ -238,7 +238,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * @param quantiteAchete
 	 */
 	public void setPrixVente(ChocolatDeMarque c, double prixAchatKilo) {
-		prixVente.put(c, 1.4*prixAchatKilo);
+		// prixVente.put(c, 1.4*prixAchatKilo);
 	}
 	
 	/**
@@ -280,7 +280,7 @@ public class Distributeur1Acteur implements IActeur {
 		return count;
 	}
 	
-	public double getPartMarque(ChocolatDeMarque choco) {
+	/* public double getPartMarque(ChocolatDeMarque choco) {
 		double qualitePercuTotal = 0.0;
 		for (ChocolatDeMarque c : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			if (c.getChocolat() == choco.getChocolat()) {
@@ -288,7 +288,7 @@ public class Distributeur1Acteur implements IActeur {
 			}
 		}
 		return Filiere.LA_FILIERE.qualitePercueMarque(choco.getMarque())/qualitePercuTotal;
-	}
+	} */
 
 	protected double facteurPrixChocolat(Chocolat c) {
 		double res = 1.0;
@@ -306,4 +306,5 @@ public class Distributeur1Acteur implements IActeur {
 		}
 		return res;
 	}
+
 }
