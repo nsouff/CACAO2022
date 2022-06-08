@@ -18,6 +18,9 @@ public class Transformateur3 extends VenteAppel {
 		this.stockFevesVariableH.setValeur(this, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.stockChocolatVariableM.setValeur(this, this.stockChocolat.getstock(Chocolat.MQ_BE)+this.stockChocolat.getstock(Chocolat.MQ_BE_O));
 		this.stockChocolatVariableH.setValeur(this, this.stockChocolat.getstock(Chocolat.HQ_BE)+this.stockChocolat.getstock(Chocolat.HQ_BE_O));
+		
+
 	}
+
 	
 }
