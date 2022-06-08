@@ -42,6 +42,7 @@ public class Distributeur1Acteur implements IActeur {
 	protected Double ChocoTotalTour; // variable qui donne ce qui a été vendu l'année précédente pour le tour correspondant
 	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
 	protected final double partCC = 0.9;
+	protected Journal stockJ;
 	
 	/**
 	 * @return the notreStock
@@ -55,6 +56,7 @@ public class Distributeur1Acteur implements IActeur {
 	 * @author Nolann
 	 */
 	public Distributeur1Acteur() {
+		stockJ = new Journal("Stocks", this);
 		HistoChoco = new HashMap<ChocolatDeMarque, VariableReadOnly>(); // Léo
 		journal1 = new Journal("journal1",this);
 		journalCompte = new Journal("journalCompte",this);
@@ -103,6 +105,14 @@ public class Distributeur1Acteur implements IActeur {
 		NotreStock.initialiser();
 		
 	}
+
+	private void afficherStockJournal() {
+		stockJ.ajouter(Color.BLACK, Color.WHITE, "------------------ Etape " + Filiere.LA_FILIERE.getEtape() + "--------------------");
+		for (ChocolatDeMarque c : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			stockJ.ajouter(c + ": " + NotreStock.getStock(c));
+		}
+		stockJ.ajouter("");
+	}
 	
 	public void next() {
 		//leorouppert
@@ -127,6 +137,7 @@ public class Distributeur1Acteur implements IActeur {
 		}		
 		journal1.ajouter("Tour "+ Filiere.LA_FILIERE.getEtape() +" terminé pour "+ this.getNom());
 	
+		afficherStockJournal();
 	}
 	
 	
@@ -178,6 +189,7 @@ public class Distributeur1Acteur implements IActeur {
 		List<Journal> journaux = new ArrayList<Journal>();
 		journaux.add(journal1);
 		journaux.add(journalCompte);
+		journaux.add(stockJ);
 		return journaux;
 	}
 
@@ -189,8 +201,9 @@ public class Distributeur1Acteur implements IActeur {
 	
 	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
-		NotreStock.seuilSecuFaillite();
-		journal1.ajouter("on risque de faire faillite au prochain tour");
+		if (NotreStock.seuilSecuFaillite() == true) {
+			journal1.ajouter("on risque de faire faillite au prochain tour");
+		}
 		}
 
 	public void notificationOperationBancaire(double montant) {
@@ -268,7 +281,13 @@ public class Distributeur1Acteur implements IActeur {
 	}
 	
 	public double getPartMarque(ChocolatDeMarque choco) {
-		return 1.0/getNbChocolatProduit(choco.getChocolat());
+		double qualitePercuTotal = 0.0;
+		for (ChocolatDeMarque c : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			if (c.getChocolat() == choco.getChocolat()) {
+				qualitePercuTotal += Filiere.LA_FILIERE.qualitePercueMarque(c.getMarque());
+			}
+		}
+		return Filiere.LA_FILIERE.qualitePercueMarque(choco.getMarque())/qualitePercuTotal;
 	}
 
 	protected double facteurPrixChocolat(Chocolat c) {
