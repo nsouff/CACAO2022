@@ -202,7 +202,7 @@ public class Parc {
 		}
 		if (Filiere.LA_FILIERE.getEtape()>=this.getUt_fin_guerre()+Math.ceil((this.getUt_fin_guerre()-this.getUt_debut_guerre())*1.5)) {
 				double chance_guerre = Math.random();
-				if (chance_guerre<=0.15) {
+				if (chance_guerre<=0.05) { //Changement Guerre de 15% à 5%
 					this.setGuerre(true);
 					this.setUt_debut_guerre(Filiere.LA_FILIERE.getEtape());
 					double aléa_durée_guerre = Math.random();

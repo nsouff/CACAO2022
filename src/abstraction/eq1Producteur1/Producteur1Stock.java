@@ -158,10 +158,11 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		}
 	}
 	
-	public void retirerQuantiteParc(Feve f, double quantite, Parc provenance) {
-		if (quantite > this.getStockParc(f, false, provenance)) {
-			int i = 0 ;
-		while (quantite>0) {
+	public double retirerQuantiteParc(Feve f, double quantite, Parc provenance) {
+		
+		
+		int i = 0 ;
+		while (quantite>0 && this.getStockParc(f, false, provenance)>0) {
 			double poids = this.getFeves().get(f).get(i).getPoids() ;
 			
 			if (this.getFeves().get(f).get(i).getProvenance() == provenance) {
@@ -176,7 +177,9 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 			}
 		i += 1 ;
 		}
-		}
+		
+		return quantite; //On peut retourner la quantité à redistribuer
+		
 	}
 	
 	//Auteur : Khéo
