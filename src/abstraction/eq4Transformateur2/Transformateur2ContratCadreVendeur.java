@@ -39,6 +39,7 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
+		
 //<<<<<<< HEAD
 //		
 ////		// Proposition d'un nouveau contrat a tous les acheteurs possibles pour tous nos produits (40Millions de kg de choco à chaque step)
@@ -57,9 +58,12 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
 						if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
 							journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
+							
 							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 4000000), cryptogramme,false);
+							
 							journalVente.ajouter("-->aboutit au contrat "+cc);
-							if (cc!=null) {
+							if (cc!=null) 
+							{
 								this.mesContratEnTantQueVendeur.add(cc);
 							}
 							journalVente.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------------------");
@@ -113,21 +117,21 @@ public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 @Override
 public double propositionPrix(ExemplaireContratCadre contrat) {
 	// TODO Auto-generated method stub
-	return 1;
+	return 6;
 }
 
 @Override
 public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
-//	// TODO Auto-generated method stub
-//	if (contrat.getPrix()<6) {
-//		journalVente.ajouter("Prix trop bas : Rupture du contrat");
-//		return 0.0; //On arrete les négociations si son prix au kg
-//	} else if(contrat.getPrix()>propositionPrix(contrat)) {
-//		return contrat.getPrix();
-//	} else {
-//		return (contrat.getPrix()+propositionPrix(contrat))/2; //On coupe la poire en 2
-//	}
-	return contrat.getPrix();
+	// TODO Auto-generated method stub
+	if (contrat.getPrix()<4) {
+		journalVente.ajouter("Prix trop bas : Rupture du contrat");
+		return 0.0; //On arrete les négociations si son prix au kg
+	} else if(contrat.getPrix()>propositionPrix(contrat)) {
+		return contrat.getPrix();
+	} else {
+		return (contrat.getPrix()+propositionPrix(contrat))/2; //On coupe la poire en 2
+	}
+	
 }
 
 @Override

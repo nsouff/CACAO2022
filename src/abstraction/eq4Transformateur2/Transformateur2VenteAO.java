@@ -52,6 +52,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 		this.getJournalVente().ajouter(Color.black,Color.white,"----------------------------------APPELS D'OFFRES DU STEP------------------------------------------------------");
 		this.getJournalVente().ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
 		double onDoitLivrer = 0;
+		
 		for(ChocolatDeMarque c :this.getStockchocolatdemarque().getStock().keySet()) {
 			for ( ExemplaireContratCadre i : this.mesContratEnTantQueVendeur) {
 				if(i.getProduit().equals(c)) {
@@ -82,6 +83,11 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 		this.getJournalVente().ajouter("");
 		this.getJournalVente().ajouter("");
 		}
+	
+	
+	
+	
+	
 		
 
 @Override
@@ -106,6 +112,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 		if (propositions==null) {
 			return null;
 		} else {
+			
 			
 			this.getJournalVente().ajouter("Oyé Oyé, nous vendons "+propositions.get(0).getOffre().getQuantiteKG()+" kg de "+propositions.get(0).getOffre().getChocolat()+" !");
 			this.getJournalVente().ajouter("Nous avons reçu un total de " + (propositions.size()) + " proposition(s) pour notre offre.");
@@ -180,21 +187,21 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 
 //Gabriel
 public double prixVouluB() { 
-	 return (this.prixMinB.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge; 
+	 return (this.prixMinB.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge; 
 	 // Calcul du prix de vente voulu pour un chocolat de basse 
 	 //qualité en fonction du prix des fèves en bourse, du prix de transformationet du cout de stockage
 }
 public double prixVouluM() { 
-	 return (this.prixMinM.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinM.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
 }
 public double prixVouluMb() { 
-	 return (this.prixMinMb.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinMb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
 }
 public double prixVouluH() { 
-	 return (this.prixMinH.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinH.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
 }
 public double prixVouluHb() { 
-	 return (this.prixMinHb.getValeur()+0.12+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinHb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
 }
 public double prixVouluOri(double prix_achat) { 
 	 return (prix_achat + Filiere.LA_FILIERE.getParametre("coutTransformation").getValeur() + super.coutStockage()*
