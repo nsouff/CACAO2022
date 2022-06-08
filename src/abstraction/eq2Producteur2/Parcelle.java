@@ -16,6 +16,8 @@ public class Parcelle {
 	private boolean Cooperative;
 	private int StadeTransition;
 	private int DebutMaladie;
+	private int StadeTensionGeopolitique;
+	private double ImpactRendementParasite;
 	
 	
 	
@@ -28,64 +30,72 @@ public class Parcelle {
 		this.setAge(age);
 		this.setRendementProgressif(0.2 + Math.random()*0.5);
 		this.setStadeMaladie(0);
-		this.setNbArbres(100_000);
+		this.setNbArbres(10000);
+		this.setImpactRendementParasite(1);
 		
+		
+	}
+	
+	public void next() {
+		this.MAJMaladie();
+		this.MAJTensionGeopo();
+		this.MAJParasite();
 	}
 
 	public Arbre getTypeArbre() {
-		return TypeArbre;
+		return this.TypeArbre;
 	}
 
 	public void setTypeArbre(Arbre typeArbre) {
-		TypeArbre = typeArbre;
+		this.TypeArbre = typeArbre;
 	}
 
 	public int getAge() {
-		return Age;
+		return this.Age;
 	}
 
 	public void setAge(int age) {
-		Age = age;
+		this.Age = age;
 	}
 
 	public int getNbArbres() {
-		return NbArbres;
+		return this.NbArbres;
 	}
 
 	public void setNbArbres(int nbArbres) {
-		NbArbres = nbArbres;
+		this.NbArbres = nbArbres;
 	}
 
 	public int getStadeMaladie() {
-		return StadeMaladie;
+		return this.StadeMaladie;
 	}
 
 	public void setStadeMaladie(int stadeMaladie) {
-	StadeMaladie =stadeMaladie;
+	this.StadeMaladie =stadeMaladie;
 	}
 
 	public boolean isCooperative() {
-		return Cooperative;
+		return this.Cooperative;
 	}
 
 	public void setCooperative(boolean cooperative) {
-		Cooperative = cooperative;
+		this.Cooperative = cooperative;
 	}
 
 	public int getStadeTransition() {
-		return StadeTransition;
+		return this.StadeTransition;
 	}
 
 	public void setStadeTransition(int stadeTransition) {
-		StadeTransition = stadeTransition;
+		this.StadeTransition = stadeTransition;
 	}
 
 	public double getRendementProgressif() {
-		return RendementProgressif;
+		return this.RendementProgressif;
 	}
 
 	public void setRendementProgressif(double rendementProgressif) {
-		RendementProgressif = rendementProgressif;
+		this.RendementProgressif = rendementProgressif;
 	}
 	
 	public void MAJMaladie() { //Écrit par Antoine
@@ -115,28 +125,112 @@ public class Parcelle {
 				}
 			}
 		}
-		if ((StadeMaladie == 1) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 2)) {
+		if ((this.StadeMaladie == 1) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 2)) {
 			this.setStadeMaladie(0);
 		}
-		if ((StadeMaladie == 2) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 5)) {
+		if ((this.StadeMaladie == 2) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 5)) {
 			this.setStadeMaladie(0);
 		}
-		if ((StadeMaladie == 3) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 6)) {
+		if ((this.StadeMaladie == 3) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 6)) {
 			this.setStadeMaladie(0);
 		}
-		if ((StadeMaladie == 4) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 8)) {
+		if ((this.StadeMaladie == 4) && (Filiere.LA_FILIERE.getEtape() - this.getDebutMaladie() == 8)) {
 			this.setStadeMaladie(0);
 		}
 	}
 
 	public int getDebutMaladie() {
-		return DebutMaladie;
+		return this.DebutMaladie;
 	}
 
 	public void setDebutMaladie(int debutMaladie) {
-		DebutMaladie = debutMaladie;
+		this.DebutMaladie = debutMaladie;
 	}
 
+	public int getStadeTensionGeopolitique() {
+		return this.StadeTensionGeopolitique;
+	}
+
+	public void setStadeTensionGeopolitique(int STG) {
+		this.StadeTensionGeopolitique = STG;
+	}
+	
+	public void MAJTensionGeopo() {
+		if (this.StadeTensionGeopolitique != 0) {
+			this.StadeTensionGeopolitique = this.StadeTensionGeopolitique - 1;
+		}
+		
+		else {
+			double d = Math.random();
+			if (d < 0.05) {
+				
+				double d2 = Math.random();
+				while (d2 == 0) {
+					d2 = Math.random();
+				}
+				int dureeTG = (int) Math.ceil(d2*6);
+				this.StadeTensionGeopolitique = dureeTG;
+			}
+		}
+	}
+
+	public double MAJParasite() {
+		// auteure : Fiona 
+		
+		// les return ne servent à rien; c'était juste pour sortir des if
+		double proba = Math.random();
+		if (this.getTypeArbre() == Arbre.ARBRE_HGB || this.getTypeArbre() == Arbre.ARBRE_MGB) {
+			if (proba < 0.02) {
+				double proba_impact = Math.random();
+				if (proba_impact<=0.7) {
+					this.setImpactRendementParasite(0.1);
+					return 0.1;
+				}
+				if (proba_impact<0.2) {
+					this.setImpactRendementParasite(0.5);
+					return 0.5;
+				
+				}
+				if (proba_impact<0.1) {
+					this.setImpactRendementParasite(0.8);
+					return 0.8;
+					
+				}
+			}
+		}
+		
+		else {
+			if (proba < 0.1) {
+				double proba_impact = Math.random();
+				if (proba_impact<=0.7) {
+					this.setImpactRendementParasite(0.1);
+					return 0.1;
+				}
+				if (proba_impact<0.2) {
+					this.setImpactRendementParasite(0.5);
+					return 0.5;
+				
+				}
+				if (proba_impact<0.1) {
+					this.setImpactRendementParasite(0.8);
+					return 0.8;
+					
+				}
+			}
+		}
+			return 1;
+		}
+
+	
+
+
+	public double getImpactRendementParasite() {
+		return ImpactRendementParasite;
+	}
+
+	public void setImpactRendementParasite(double impactRendementParasite) {
+		ImpactRendementParasite = impactRendementParasite;
+	}
 	
 
 }
