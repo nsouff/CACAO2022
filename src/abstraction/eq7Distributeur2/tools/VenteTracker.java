@@ -60,13 +60,13 @@ public class VenteTracker extends Distributeur2ChocolatDeMarque{
 		return previousVentesPrix.get(choco);
 	}
 	
-	//retourne la HashMap de toutes les quantites vendues (historique)
-	public HashMap<ChocolatDeMarque,List<Double>> getVentesQuantite(){
-		return this.ventesQuantite;
+	//retourne la liste de toutes les quantites vendues pour le chocolat choco (historique)
+	public List<Double> getVentesQuantite(ChocolatDeMarque choco){
+		return this.ventesQuantite.get(choco);
 	}
 	
-	//retourne la HashMap de tous les prix de vente (historique)
-		public HashMap<ChocolatDeMarque,List<Double>> getVentesPrix(){
-			return this.ventesPrix;
+	//retourne la liste de tous les prix de vente du chocolat choco (historique)
+		public List<Double> getVentesPrix(ChocolatDeMarque choco){
+			return this.ventesPrix.get(choco);
 		}
 }
