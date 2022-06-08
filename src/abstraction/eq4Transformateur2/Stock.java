@@ -86,15 +86,6 @@ public class Stock<I> {
 	}
 
 
-	/*public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
-		return (this.quantiteStockTotale(produit)*(Filiere.LA_FILIERE.getIndicateur("prix_stockage").getValeur())); // demander a Alexandre comment calculer prix 
-	}*/
-
-
-
-//	public void setQuantite_stock(HashMap<I,Double> quantite_stock) {
-//		this.quantite_stock = quantite_stock;
-//	}
 	
 }
 
