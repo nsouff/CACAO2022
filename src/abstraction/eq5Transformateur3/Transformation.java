@@ -78,16 +78,28 @@ public class Transformation extends AcheteurContrat {
 		}
 	}
 	
-	
+	// Yves
 	public void next() {
 		super.next();
+		double somme = 0;
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
-			if (this.stockFeves.getstock(f) <= this.seuilTransformation.getValeur()) {
-				this.transformation.ajouter("Transformation non originale : ");
-				transformationClassique(f, 0.6*this.stockFeves.getstock(f), false); //60% du stock --> non Original
-				this.transformation.ajouter("Transformation originale : ");
-				transformationClassique(f, 0.3*this.stockFeves.getstock(f), true); // 30% du stock --> Original
-			}
+			somme = somme + this.stockFeves.getstock(f);
+		}
+		if (somme <= this.seuilTransformation.getValeur()) {
+			this.transformation.ajouter("Transformation BIO : ");
+			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0.3*this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE), false); //60% du stock --> BIO
+			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0.3*this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE), false);
+			this.transformation.ajouter("Transformation non BIO : ");
+			transformationClassique(Feve.FEVE_MOYENNE, 0.15*this.stockFeves.getstock(Feve.FEVE_MOYENNE), false);
+			transformationClassique(Feve.FEVE_HAUTE, 0.15*this.stockFeves.getstock(Feve.FEVE_HAUTE), false);// 30% du stock --> non BIO
+		}
+		else {
+			this.transformation.ajouter("Transformation BIO : ");
+			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0.35*this.seuilTransformation.getValeur(), false); //65% du stock --> BIO
+			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0.3*this.seuilTransformation.getValeur(), false);
+			this.transformation.ajouter("Transformation non BIO : ");
+			transformationClassique(Feve.FEVE_MOYENNE, 0.20*this.seuilTransformation.getValeur(), false);
+			transformationClassique(Feve.FEVE_HAUTE, 0.15*this.seuilTransformation.getValeur(), false);// 35% du stock --> non BIO
 		}
 	}
 	
