@@ -11,7 +11,7 @@ public class Demande implements IDemande {
 	private HashMap<ChocolatDeMarque,Double> demandeRestante;
 	private boolean FONCTIONEL;
 	
-	public Demande(IActeur acteur,List<ChocolatDeMarque> listeChocolatsProduits) {
+	public Demande(List<ChocolatDeMarque> listeChocolatsProduits) {
 		//Si aucun chocolat n'est vendu sur le marché
 		if (listeChocolatsProduits.isEmpty()) {
 			this.FONCTIONEL= false; 
