@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Set;
 
 import abstraction.eq5Transformateur3.DateProd;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 //Marie
-public class DictionnairePeremptionTransfo2<Produit>{
+public class DictionnairePeremptionTransfo2<Produit> extends Transformateur2ContratCadreVendeur{
 	
 	private HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
 	
@@ -20,6 +21,18 @@ public class DictionnairePeremptionTransfo2<Produit>{
 		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,produit);
 		return this.peremption.get(d); //renvoie la quantité associé à (date,produit)
 	}
+	
+	public void next() {
+		super.next();
+		this.modifDateProd();
+		
+	}
+	
+	public void initialiser() {
+		super.initialiser();
+		
+	}
+	
 	//Marie
 	
 // ajoute un nouveau produit à la Hashmap
@@ -31,6 +44,12 @@ public class DictionnairePeremptionTransfo2<Produit>{
 			}else {
 				this.peremption.put(d, quant); // s'il n'existe pas de produit à la même date, on rajoute un élément à la Hashmap
 			}
+		}
+	}
+//modifie la date des produits à chaque step
+	public void modifDateProd() {
+		for(DateProdTransfo2<Produit>d:this.getDates()) {
+			d.setDate(d.getDate()+1);
 		}
 	}
 	
@@ -46,7 +65,7 @@ public class DictionnairePeremptionTransfo2<Produit>{
 			}
 		}
 
-
+//retire le produit quand il a dépassé la date de péremption
 public void perime() {
 	for(DateProdTransfo2<Produit>d:this.getDates()) {
 		if(d.getDate()>12) {
@@ -63,7 +82,8 @@ public void perime() {
 			}
 		}
 	}*/
-		
+	
+//modifications lors d'un achat
 	public void utiliserQuant(Produit p, double quant) {
 		double quantRestante=quant; //quant restante
 		
@@ -89,7 +109,7 @@ public void perime() {
 		}
 	}
 	//Marie
-	public double quantTotaleProduit(Produit p) {
+	public double quantTotaleProduit(Produit p) { //calcule la quantité totale d'un produit
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			if(d.getProduit()==p) {
@@ -99,7 +119,7 @@ public void perime() {
 		return qtt;
 	}
 	//Marie
-	public double quantTotFeve() {
+	public double quantTotFeve() { //calcul la quantité totale de fèves
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			if(d.getProduit()==Feve.FEVE_BASSE || d.getProduit()==Feve.FEVE_HAUTE || d.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE ||d.getProduit()==Feve.FEVE_MOYENNE || d.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
@@ -111,7 +131,7 @@ public void perime() {
 	}
 		
 	//Marie
-	public double quantTotChoco() {
+	public double quantTotChoco() { //calcul la quantité totale de chocolats 
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			if(d.getProduit()==Chocolat.BQ || d.getProduit()==Chocolat.BQ_O || d.getProduit()==Chocolat.HQ ||d.getProduit()==Chocolat.HQ_BE ||d.getProduit()==Chocolat.MQ ||d.getProduit()==Chocolat.MQ_BE  ) {
@@ -121,7 +141,34 @@ public void perime() {
 	}
 		return qtt;
 			}
+	
+	
+	@Override
+	public Stock<Chocolat> getStockchocolat() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+	@Override
+	public Journal getJournalcours() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Journal getJournalStock() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Journal getJournalTransfo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Journal getJournalAchat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
 	
 	/*public void utiliserQtt(int step,Produit p, Double qtt) {
 		DateProdTransfo2 d =new DateProdTransfo2(step,p);

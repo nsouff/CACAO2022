@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteur Marie
 
-public abstract class Transformateur2Stock extends Transformateur2ContratCadreVendeur {
+public abstract class Transformateur2Stock extends DictionnairePeremptionTransfo2 {
 	
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat>  stockchocolat;
