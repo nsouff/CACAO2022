@@ -109,6 +109,7 @@ public class Producteur2VendeurContratCadreBio extends Producteur2VendeurContrat
 	@Override
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurBio.add(contrat);
+		this.journalCC.ajouter("Nouveaux CC avec "+contrat.getAcheteur()+" pour un totale de "+contrat.getQuantiteTotale()+" au prix de "+contrat.getPrix());
 
 		
 	}
