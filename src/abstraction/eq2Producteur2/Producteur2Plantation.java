@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
 
-//auteure : Fiona Martin 
+//auteure : Fiona 
 
-public class Plantation  {
+public class Producteur2Plantation{
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
-	public Plantation () {
+	public Producteur2Plantation () {
 		//auteure : Fiona
 		
 		/*
@@ -33,26 +34,27 @@ public class Plantation  {
 		
 		 */
 		
-		NbParcelles = new HashMap<Arbre, List<Parcelle>>();
+		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
 		
-		// 1 parcelle = 100 000 arbres 
+		// 1 parcelle = 10 000 arbres 
 		
 		
-		NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
-		NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
-		NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
+		this.NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
 		
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		ArrayList<Integer> qt = ListeQt(4);
-		
+	System.out.println("plant");	
 		for (int i=0; i<arbres.length; i++) {
 			for (int j=0; j<qt.get(i); j++) {
-			NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
+			this.NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
 			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
 			}
 		}
+		System.out.println("fin plant");	
 	}
 	
 	public ArrayList<Integer> ListeQt(int NbTotalArbres) {
@@ -80,7 +82,7 @@ public class Plantation  {
 	
 	
 	public void next() {
-		this.nextPlantation();
+		this.renouvellement();
 	}
 	
 	
@@ -90,11 +92,11 @@ public class Plantation  {
 		// faire vieillir les arbres à chaque UT 
 		
 		
-		
+	
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
-			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
 			for (Parcelle p : ListeParcelles) {
 				p.setAge(p.getAge()+ 1);
 			}
@@ -114,7 +116,7 @@ public class Plantation  {
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
-			List<Parcelle> ListeParcelles = NbParcelles.get(a);
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
 			List<Parcelle> ParcellesASupprimer = new ArrayList<Parcelle>();
 			
 			for (Parcelle p : ListeParcelles) {
@@ -123,9 +125,10 @@ public class Plantation  {
 				}
 			}
 			for (int i=0; i < ParcellesASupprimer.size(); i++) {
-				NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
-				NbParcelles.get(a).add(new Parcelle(a, 0));
-			}						
+				this.NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
+				this.NbParcelles.get(a).add(new Parcelle(a, 0));
+			}							
+
 	}
 		
 	}	
@@ -158,37 +161,38 @@ public class Plantation  {
 	public int RendementParcelle(Parcelle p) {
 		if (p.getStadeMaladie() == 1 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=2) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.85);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.85);
 			} 		
 		}
 		
 		else if (p.getStadeMaladie() == 2 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=5) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.85);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.85);
 			} 		
 		}
 		
 		else if (p.getStadeMaladie() == 3 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=4) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.8);
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.8);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.8);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.8);
 			} 		
 		}
 		
 		else if (p.getStadeMaladie() == 4 || Filiere.LA_FILIERE.getEtape()-p.getDebutMaladie()<=4) {
 			if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-				return (int) (p.getTypeArbre().getRendementFinal() * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal() * 0.85);
 			}
 			else {
-				return (int) (p.getRendementProgressif()  * 0.85);
+				return (int) (p.getImpactRendementParasite()*p.getRendementProgressif()  * 0.85);
 			} 		
 		}
 		
@@ -196,12 +200,16 @@ public class Plantation  {
 			return 0; 		
 		}
 		
+		else if (p.getImpactRendementParasite()*p.getStadeTensionGeopolitique() != 0) {
+			return 0;
+		}
+		
 		else {
 				if (p.getAge() > p.getTypeArbre().getDureeCroissance()) {
-					return (int) (p.getTypeArbre().getRendementFinal());
+					return (int) (p.getImpactRendementParasite()*p.getTypeArbre().getRendementFinal());
 				}
 				else {
-					return (int) (p.getRendementProgressif());
+					return (int) (p.getImpactRendementParasite()*p.getRendementProgressif());
 				} 		
 			}
 		}
@@ -209,9 +217,13 @@ public class Plantation  {
 		
 		
 
-	
+	/*public int production(Feve feve) {
+		return this.getNbArbre(feve)*2; //methode qui ne fait pas planter la fillière Test seulement avec 2 et qui ne s'affiche correctement dans le journal que pour 3/5 type de feves
+	}*/
 		
-	public int production(Feve typefeve) {
+	
+	
+	public double production(Feve typefeve) {
 		//auteure : Fiona
 		
 		
@@ -219,12 +231,12 @@ public class Plantation  {
 		
 		Arbre typearbre = conversion(typefeve);
 		
-		int ProductionFinale = 0 ;
-		List<Parcelle> ListeParcelles = NbParcelles.get(typearbre);
+		double ProductionFinale = 0.0 ;
+		List<Parcelle> ListeParcelles = this.NbParcelles.get(typearbre);
 		
 		for (Parcelle p : ListeParcelles) {
 			
-			ProductionFinale = (int) (ProductionFinale + RendementParcelle(p))*p.getNbArbres();
+			ProductionFinale = ProductionFinale + RendementParcelle(p)*p.getNbArbres();
 		}
 		return ProductionFinale;
 	}
@@ -235,9 +247,34 @@ public class Plantation  {
 		Arbre arbre = conversion(feve);
 		return this.NbParcelles.get(arbre).size()*1000000 ;
 	}
+
 	
-	
+	public void initialiser() {
+		this.NbParcelles = new HashMap<Arbre, List<Parcelle>>();
+		
+		// 1 parcelle = 100 000 arbres 
+		
+		
+		this.NbParcelles.put(Arbre.ARBRE_HGB, new ArrayList<Parcelle>());	
+		this.NbParcelles.put(Arbre.ARBRE_HG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MGB, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_MG, new ArrayList<Parcelle>());
+		this.NbParcelles.put(Arbre.ARBRE_BG, new ArrayList<Parcelle>());
+		
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		ArrayList<Integer> qt = ListeQt(4);
+		
+
+		for (int i=0; i<arbres.length; i++) {
+			for (int j=0; j<qt.get(i); j++) {
+			this.NbParcelles.get(arbres[i]).add(new Parcelle(arbres[i], 100));
+			// on considère qu'au début de la simulation, les arbres ont tous 100 UT.
+		
+				}
+			}	
+
 	}
+}		
 	
 	
 	
