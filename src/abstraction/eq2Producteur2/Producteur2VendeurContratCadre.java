@@ -255,7 +255,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 			prix = 1.07*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==3){
-			prix = 1.05*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+			prix = 1.06*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		
 		return prix;
