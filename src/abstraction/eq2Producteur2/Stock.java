@@ -15,6 +15,7 @@ public class Stock {
 		this.step_arrivee = duree;
 		this.perime = perime;
 	}
+	
 	public Stock(double quantite) {
 		this.quantite = quantite;
 		this.step_arrivee = Filiere.LA_FILIERE.getEtape();
@@ -22,14 +23,14 @@ public class Stock {
 	}
 
 	public double getQuantite() {
-		return quantite;
+		return this.quantite;
 	}
 
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
 	public int getStep_arrivee() {
-		return step_arrivee;
+		return this.step_arrivee;
 	}
 
 	public void setStep_arrivee(int date_arrivee) {
@@ -37,7 +38,7 @@ public class Stock {
 	}
 	
 	public void addquantite(double q) {
-		this.quantite += q;		
+		this.quantite = this.quantite + q;		
 	}
 	public void removequantite(double q) {
 		this.quantite = this.quantite - q;
@@ -47,7 +48,7 @@ public class Stock {
 	}
 
 	public boolean isPerime() {
-		return perime;
+		return this.perime;
 	}
 
 	public void setPerime(boolean perime) {
