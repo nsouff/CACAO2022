@@ -33,30 +33,30 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 			if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)
 					||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)
 					||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
-				journalCC.ajouter("on veut bien vendre car WTF");
+				journalCCV.ajouter("on veut bien vendre car WTF");
 				return true;
 			}
 		}
-		journalCC.ajouter("on ne veut pas vendre");
+		journalCCV.ajouter("on ne veut pas vendre");
 		return false;
 	}
 
 	// négocie un échancier inférieur à X échéances; auteur Julien */
 	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		if (contrat.getEcheancier().getNbEcheances()<100) {
-			journalCC.ajouter("on aime cet échéancier");
+			journalCCV.ajouter("on aime cet échéancier");
 			return contrat.getEcheancier();
 		}
-		journalCC.ajouter("on chie sur leurs échéances et on refuse car CC long terme");
+		journalCCV.ajouter("on chie sur leurs échéances et on refuse car CC long terme");
 		return null;
 	}
 
 	/** Prix initial = 1.4 x prixVenteMin 
 	 *  Alexandre*/
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		journalCC.ajouter("proposition prix");
+		journalCCV.ajouter("proposition prix");
 		if (!( contrat.getProduit() instanceof ChocolatDeMarque)) {
-			journalCC.ajouter("________________" + contrat.getAcheteur() +" "+ contrat.getProduit());
+			journalCCV.ajouter("________________" + contrat.getAcheteur() +" "+ contrat.getProduit());
 			return 0.;
 		}
 		return this.prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())*1.4;
@@ -66,10 +66,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	// négocie une contreproposition du prix; auteur Julien */
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		if (contrat.getPrix()>prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())) {
-			journalCC.ajouter("on aime ce prix");
+			journalCCV.ajouter("on aime ce prix");
 			return contrat.getPrix();
 		} else {
-			journalCC.ajouter("ça négocie dur les prix");
+			journalCCV.ajouter("ça négocie dur les prix");
 			return Math.max(contrat.getPrix()+prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())/2.0,0.0);
 		}
 		
@@ -101,7 +101,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 			}
 		}
 		 
-		journalCC.ajouter("nouveau contrat cadre vendeur signé");
+		journalCCV.ajouter("nouveau contrat cadre vendeur signé");
 		
 	}
 
@@ -147,7 +147,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
-		journalCC.ajouter("test ContratCadreVendeur / Les contrats cadres vendeur obsolete ont ete supprime");
+		journalCCV.ajouter("test ContratCadreVendeur / Les contrats cadres vendeur obsolete ont ete supprime");
 	}
 	
 	/** 

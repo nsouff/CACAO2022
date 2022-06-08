@@ -292,7 +292,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		}
 		
 		// reset liste des ventes du tour precedent
-		journalCC.ajouter("reset cc");
+		journalCCV.ajouter("reset cc");
 		dernierPrixVenteChocoReset = new dernierPrixVenteChoco();
 		dernierPrixVenteChocoReset.initialiser();
 		
