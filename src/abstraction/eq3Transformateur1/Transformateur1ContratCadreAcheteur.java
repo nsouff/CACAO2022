@@ -28,6 +28,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 				double quantiteFeveContrat = 0. ;
 				journalCC.ajouter(this.mesContratEnTantQueAcheteur +" contrat cadres acheteurs en cours");
 				for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) {
+					journalCC.ajouter("avant if de achete()");
 					if (produit == c.getProduit()) {
 						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep()+10000;
 						journalCC.ajouter("J'ajoute 100000000000000");
@@ -57,7 +58,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 
 	// négociation du prix; auteur Julien on accepte tout pour l'instant*/
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit())) {
+		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit()) + 1000000000000000000000000.) {
 			journalCC.ajouter("J'accepte ce prix"+ contrat.getPrix());
 			return contrat.getPrix();
 		} else {

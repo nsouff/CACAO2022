@@ -169,7 +169,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
-					stockChoco.put(c, stockChoco.get(c)-coutQuantiteTransfo.get(1));
+					stockChoco.put(c, stockChoco.get(c)+coutQuantiteTransfo.get(1));
 					//nouveaulot.addQuantité(coutQuantiteTransfo.get(1)) ;
 					//nouveaulot.addDate(Filiere.LA_FILIERE.getEtape()) ;
 					//stockChocoPeremption.get(c).add(nouveaulot);
@@ -284,7 +284,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				 *  au sinon, on ecrase*/
 				if (Double.compare(dernierPrixVenteChoco.getPrix(distrib, c), 0.) != 0) {
 					journal.ajouter("le dernier prix de vente du chocolat " + c + " au distributeur" + distrib+ " est de " + dernierPrixVenteChoco.getPrix(distrib, c));
-					System.out.println("if ligne 263");
+					
 					dernierPrixVenteChoco.setPrix(distrib, c, dernierPrixVenteChocoReset.getPrix(distrib, c));
 					//System.out.println("bug 1 l 265 ?");
 				}
@@ -327,13 +327,20 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					// creation de l'echeancier
 					Echeancier echeancier = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 5, this.quantiteAchatFeve.get(f)*0.5-quantiteFeveContrat);
 					// initiation d'un contrat cadre avec producteur 1
-					((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(
+					ExemplaireContratCadre contrat = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(
 							(IAcheteurContratCadre)this, 
 							(IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("CAC'AO40"), 
 							f, 
 							echeancier, 
 							cryptogramme, 
 							false);
+					journalCC.ajouter("__________________________new CC_______________________");
+					journalCC.ajouter("contrat avant if is null ?");
+					System.out.println(contrat);
+					if (contrat != null) {
+						journalCC.ajouter("contrat non null");
+						mesContratEnTantQueAcheteur.add(contrat);
+					}
 				}
 			}/** else if (f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) { // BE => prod 2
 				// desire t on un CC  ?
@@ -357,12 +364,14 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		 *  on transforme tout nos stocks puisque 1kg de chocolat coute aussi chère a stocker qu1 kg de feve
 		 *  et que le rendement de la transformation ne peut etre qu'inferieur ou egal a 1*/
 		
+		
 		for (Feve f : stockFeve.keySet()) {
 			
 			// on ne transforme que ces types de feves pour obtenir les chocolats qu'on a prevu de produire
 			if (f == Feve.FEVE_BASSE || f == Feve.FEVE_MOYENNE || f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
 				
 				// on determine la quantite de ce type de feve a transformer
+
 				double quantiteATransformer = this.transfoQt(stockFeve.get(f));
 				journal.ajouter("La quantite a transformer de feves "+ f + "est de "+ this.transfoQt(stockFeve.get(f)));
 				
@@ -406,6 +415,8 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		/** ____________________Appels d'offres____________________
 		 *  Ilyas puis modif apportées par Alexandre*/
+		//System.out.println("next() appel offre");
+		//System.out.println(stockChoco);
 		
 		if (Filiere.LA_FILIERE.getEtape()>=1) {
 			for (Chocolat c : stockChoco.keySet()) {
