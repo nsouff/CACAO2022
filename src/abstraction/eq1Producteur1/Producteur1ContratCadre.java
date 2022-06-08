@@ -1,6 +1,7 @@
 package abstraction.eq1Producteur1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
@@ -179,9 +180,10 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		//FEVE 
 		if (contrat.getProduit() instanceof Feve) {
+		HashMap<Parc, Double> repartition = this.getRepartitionGuerre();
 		double livre = Math.min(this.getStock((Feve)contrat.getProduit(), false), quantite);
 		if (livre>0.0) {
-			this.retirerQuantite((Feve)contrat.getProduit(), livre);;
+			this.venteGuerre(repartition, livre, (Feve)contrat.getProduit());
 		}
 		this.getContratCadre().ajouter("============================================");
 		this.getContratCadre().ajouter("LIVRAISON " + contrat.getProduit() +" "+ contrat.getAcheteur().getNom()+ " Quantité demandée " + quantite +" Livré " + livre 
@@ -189,7 +191,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		return livre;
 		}
 		
-		//FEVE 
+		//CHOCOLAT
 		if (contrat.getProduit() instanceof Feve) {
 		double livre = Math.min(this.getStock((Chocolat)contrat.getProduit()), quantite);
 		if (livre>0.0) {
