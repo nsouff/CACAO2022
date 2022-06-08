@@ -62,12 +62,12 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		this.journalStock=new Journal("O'ptiStock",this);
 		
 		//LES STOCKS INITIAUX----VALEURS A CHOISIR
-		this.stockfeve=new Stock();
-		this.stockfeve.ajouter(Feve.FEVE_BASSE, 8000);
-		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 5000);
-		this.stockfeve.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 5000);
-		this.stockfeve.ajouter(Feve.FEVE_HAUTE, 5000);
-		this.stockfeve.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 5000);
+		this.stockfeve=new Stock(); //50MILLIONS de stock à répartir : 40% de moyenne, 40% de basse, 10%de haute, 5% de chaque BIO
+		this.stockfeve.ajouter(Feve.FEVE_BASSE, 20000000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE, 20000000);
+		this.stockfeve.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 2500000);
+		this.stockfeve.ajouter(Feve.FEVE_HAUTE, 5000000);
+		this.stockfeve.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 2500000);
 		
 		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
@@ -77,11 +77,11 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
 		
 		this.stockchocolatdemarque=new Stock();
-		this.stockchocolatdemarque.ajouter(c1, 5000);
-		this.stockchocolatdemarque.ajouter(c0, 8000);
-		this.stockchocolatdemarque.ajouter(c2, 8000);
-		this.stockchocolatdemarque.ajouter(c3, 8000);
-		this.stockchocolatdemarque.ajouter(c4, 8000);
+		this.stockchocolatdemarque.ajouter(c1, 20000000);
+		this.stockchocolatdemarque.ajouter(c0, 20000000);
+		this.stockchocolatdemarque.ajouter(c2, 2500000);
+		this.stockchocolatdemarque.ajouter(c3, 5000000);
+		this.stockchocolatdemarque.ajouter(c4, 5000000);
 		
 		this.stockchocolat=new Stock();
 		this.stockchocolat.ajouter(Chocolat.MQ,30000);

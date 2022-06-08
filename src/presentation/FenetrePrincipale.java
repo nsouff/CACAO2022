@@ -462,6 +462,8 @@ public class FenetrePrincipale extends JFrame {
 
 		this.add(pSouth, BorderLayout.SOUTH);
 		this.pack();
+		Dimension dim = this.getSize();
+		this.setSize(new Dimension((int)dim.getWidth()+50,(int)dim.getHeight()-100));
 	}
 	public void notificationFaillite(IActeur acteur) {
 		this.boutonsFaillite.get(acteur).setEnabled(false);
