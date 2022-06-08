@@ -211,7 +211,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next "+this.ventePourcent(Feve.FEVE_HAUTE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE)+" Vente sur les 50 dernier next "+this.ventePourcent(Feve.FEVE_MOYENNE));
 		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next "+this.ventePourcent(Feve.FEVE_BASSE));
-	
+		this.journalCC.ajouter("=======================================================================================");
 	}
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {

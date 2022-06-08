@@ -24,7 +24,6 @@ public class Producteur2VendeurBourse extends Producteur2VendeurContratCadre imp
 	}
 
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
-		// TODO Auto-generated method stub
 		this.removeQuantite(quantiteEnKg, f);
 
 	}
