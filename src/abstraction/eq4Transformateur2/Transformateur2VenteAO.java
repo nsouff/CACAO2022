@@ -7,6 +7,7 @@ import abstraction.eq8Romu.appelsOffres.IVendeurAO;
 import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
@@ -45,20 +46,34 @@ public abstract class Transformateur2VenteAO extends Transformateur2AchatAO impl
 		
 		
 		//Pour les Vente en Appel d'Offre. On appelle une offre lorsque un stock de chocolatdemarque depasse les 50000kg, on en propose 8000kg.
-			super.next();	
+		super.next();
+		this.getJournalVente().ajouter("Nous vendons à ce tour les chocolats de basse q au prix minimal de :"+this.prixVouluB());
+		this.getJournalVente().ajouter("Nous vendons à ce tour les chocolats de moyenne q au prix minimal de :"+this.prixVouluM());
+		double onDoitLivrer = 0;
 		for(ChocolatDeMarque c :this.getStockchocolatdemarque().getStock().keySet()) {
-					if(this.getStockchocolatdemarque().getStock().get(c)>3000) {
-						PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, 500.0, false);
-						if (retenue!=null) {
-							this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
-							this.getJournalVente().ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
-						} else {
-							this.getJournalVente().ajouter("pas d'offre retenue");
-						}
-					}
+			for ( ExemplaireContratCadre i : this.mesContratEnTantQueVendeur) {
+				if(i.getProduit().equals(c)) {
+					onDoitLivrer = onDoitLivrer+ i.getQuantiteALivrerAuStep();
 				}
-		
+			
+			}
+		this.getJournalVente().ajouter("Nous avons "+this.getStockchocolatdemarque().getQuantite(c)+"kg de "+ c.getMarque());
+		this.getJournalVente().ajouter("Nous devons livrer "+onDoitLivrer+" kg de "+ c.getMarque());
+		double q = 0.8*(this.getStockchocolatdemarque().getQuantite(c))-onDoitLivrer;
+		if(q>250) {
+			PropositionAchatAO retenue = superviseur.vendreParAO(this, cryptogramme, c, q, false);
+			this.getJournalVente().ajouter("On vend du"+ c +"!");
+		if (retenue!=null) {
+			this.getStockchocolatdemarque().enlever(retenue.getOffre().getChocolat(), retenue.getOffre().getQuantiteKG());
+			this.getJournalVente().ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
+		} 
+		else {
+			this.getJournalVente().ajouter("pas d'offre retenue");
+			}
+		}
 	}
+		
+}
 @Override
 //public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 //	// TODO Auto-generated method stub
@@ -85,9 +100,9 @@ public abstract class Transformateur2VenteAO extends Transformateur2AchatAO impl
 			PropositionAchatAO meilleur_proposition=propositions.get(0);
 			for(PropositionAchatAO p : propositions) {
 				//On choisit l'offre la plus cher qui ne nous met pas en négatif de stock de chocolatdemarque
-				if (p.getPrixKg()>meilleur_proposition.getPrixKg() && p.getOffre().getQuantiteKG()<super.getStockchocolatdemarque().getQuantite(p.getOffre().getChocolat())){
-					meilleur_proposition=p;
-				}
+				//if (p.getPrixKg()>meilleur_proposition.getPrixKg() && p.getOffre().getQuantiteKG()<super.getStockchocolatdemarque().getQuantite(p.getOffre().getChocolat())){
+				//	meilleur_proposition=p;
+				//}
 			}
 			
 			PropositionAchatAO retenue = meilleur_proposition;
