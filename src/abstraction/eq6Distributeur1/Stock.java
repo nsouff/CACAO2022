@@ -142,9 +142,9 @@ public class Stock { //Emma Humeau
 	
 	protected void initialiser() {
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			for (int i = 0; i < 4; i++)
-			addQte(choco, acteur.getPartMarque(choco) * acteur.partDuMarcheVoulu(choco.getChocolat()) * Filiere.LA_FILIERE.getVentes(choco, -24+i));
-			acteur.setPrixVente(choco, 7.5*acteur.facteurPrixChocolat(choco.getChocolat()));
+			for (int i = 0; i < 1; i++)
+			addQte(choco, acteur.partDuMarcheVoulu(choco.getChocolat()) * Filiere.LA_FILIERE.getVentes(choco, -24+i));
+			acteur.setPrixVente(choco, 10 * acteur.facteurPrixChocolat(choco.getChocolat()));
 		}
 	}
 }
