@@ -246,19 +246,20 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 
 
 	public double propositionPrixBio(ExemplaireContratCadre contrat) {
-		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		double prix = 1.15*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+		/*BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		double prix = 0.8*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==1){
-			prix = 1.1*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+			prix = 0.5*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		if (this.getClassementTransformateur(contrat.getAcheteur() )==2){
-			prix = 1.07*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+			prix = 0.6*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==3){
-			prix = 1.06*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+			prix = 0.7*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
 		
-		return prix;
+		return prix;*/
+		return 1.8;
 	}
 
 	
@@ -272,7 +273,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==2){
-				if (Math.random()<0.5) {
+				if (Math.random()<0.6) {
 					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 40% des cas
 				}
 			}	
