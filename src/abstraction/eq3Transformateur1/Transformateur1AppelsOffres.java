@@ -33,9 +33,6 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 	public void next() {
 		super.next();
 		journalAO.ajouter("test");
-		if (stockChoco.get(BQ)>2000) {
-			PropositionAchatAO retenue = superviseurAO.vendreParAO(this, cryptogramme, getChocolatDeMarque(), 2000.0, false);
-
 	}
 
 	/** renvoie la meilleure proposition si celle-ci satisfait au vendeur; auteur Ilyas 
