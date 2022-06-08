@@ -240,7 +240,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 
 	public double propositionPrixBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		double prix = 1.3*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
+		double prix = 1.25*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==1){
 			prix = 1.15*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
