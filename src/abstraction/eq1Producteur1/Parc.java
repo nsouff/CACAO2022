@@ -41,11 +41,6 @@ public class Parc {
 		this.ut_debut_guerre = 0;
 		this.ut_fin_guerre = 0;
 		this.fin_aleas = 0;
-		this.RetourMAJParc = new Journal("CAC'AO40 "+nom+" Le grand remplacement?", ((IActeur)producteur));
-		this.RetourGuerre = new Journal("CAC'AO40 "+nom+" Ils font bien la gueguerre?", ((IActeur)producteur));
-		this.RetourAléas = new Journal("CAC'AO40 "+nom+" Le réchauffement climatique n'est pas un hoax?", ((IActeur)producteur));
-		this.RetourMaladie = new Journal("CAC'AO40 "+ nom + " Prise en compte des maladies?", ((IActeur)producteur));
-		this.RetourRécolte = new Journal("CAC'AO40 "+ nom + " On récolte du Khécao?", ((IActeur)producteur));
 		this.RetourMAJParc = new Journal("CAC'AO40 "+nom+"Renouvellement Parc", ((IActeur)producteur));
 		this.RetourGuerre = new Journal("CAC'AO40 "+nom+"Guerre", ((IActeur)producteur));
 		this.RetourAléas = new Journal("CAC'AO40 "+nom+"Aléas climatiques", ((IActeur)producteur));
@@ -244,6 +239,9 @@ public class Parc {
 		int plantés = 0;
 		int mort_vieillesse = 0;
 		for (int i=0; i<this.getCacaoyers().size(); i++) {
+			if (i==1) {
+				this.getRetourMAJParc().ajouter(this.getArbre(i).getMecontentement()+"   "+this.getArbre(i).getStade_maladie());
+			}
 			MilleArbre arbre_i = this.getArbre(i);
 			arbre_i.MAJMaladie();
 			int qualite = arbre_i.getQualite();
