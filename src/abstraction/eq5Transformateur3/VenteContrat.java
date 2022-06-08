@@ -14,6 +14,7 @@ import abstraction.eq8Romu.filiere.IDistributeurChocolatDeMarque;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
@@ -74,22 +75,36 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	//Yves
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		this.nb_prop += 1;
+		
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
-		Double seuilMax = 2.0;
-		this.achats.ajouter(seuilMax.toString());
+		ChocolatDeMarque c = (ChocolatDeMarque)contrat.getProduit();
+		Gamme gamme = c.getGamme();
+		boolean be = c.isBioEquitable();
+		Feve feve = null;
 
-		if (contrat.getProduit() instanceof ChocolatDeMarque) {
-			if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
-				return 2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
-			}
-			else {
-				return 2*(seuilMax+this.coutTransformation.getValeur());
+		for (Feve f : this.stockFeves.getProduitsEnStock()) {
+			if (f.getGamme() == gamme && f.isBioEquitable() == be) {
+				feve = f;
 			}
 		}
-		else {
-			return 0.0;
+		
+		if (feve != null) {
+			Double seuilMax = bourse.getCours(feve).getMin();
+			//Double seuilMax = 2.0;
+			this.achats.ajouter("seuilMax de " + feve.toString() + "vaut " + seuilMax.toString());
+
+			if (contrat.getProduit() instanceof ChocolatDeMarque) {
+				if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {
+					return 2*(seuilMax+this.coutTransformation.getValeur()+this.coutOriginal.getValeur());
+				}
+				else {
+					return 2*(seuilMax+this.coutTransformation.getValeur());
+				}
+			}
+							
 		}
+		return 0.0;
+
 	}
 
 	@Override
