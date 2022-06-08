@@ -147,11 +147,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		double venteJudicieuse = (quantiteVendue/quantiteTotale)*venteBase;
 		
 		this.journalEtudeVente.ajouter("Quantitée determinée judicieuse pour "+chocProduit+" : "+ venteJudicieuse +" kg");
-		return venteJudicieuse;
-		
-		 
-		
-		
+		return venteJudicieuse;	
 	}
 	
 
