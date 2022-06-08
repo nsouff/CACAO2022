@@ -16,12 +16,15 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	
 	protected DicoFeve quantiteAchatFeve;            /** quantité de fève qu'on souhaite acheter */
 	protected DicoChoco quantiteDemandeeChoco;       /** quantité demandée au tour précédent */
-	protected dernierPrixVenteChoco dernierPrixVenteChoco;          /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat av ec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuxième les chocolats */
+	protected dernierPrixVenteChoco dernierPrixVenteChoco;          /** prix minimum (par unité) négocié au dernier tour auquel on a vendu le chocolat avec tel distributeur - c'est un dictionnaire de dictionnaire dont le premier dictionnaire a pour clé les distributeurs et le deuxième les chocolats */
 	protected dernierPrixVenteChoco dernierPrixVenteChocoReset; /** commence le tour avec des valeurs nulles partout et remplace les valeurs par le prix vente mon negocie durant le tour */
 	protected DicoFeve prixAchatFeve;
 	protected DicoChoco prixVenteMin;        // prix minimal de vente pour chaque chocolat à ce tour (à mettre à jour avec prixVenteMin())
 	protected DicoChoco stockChoco;
 	protected DicoFeve stockFeve;
+
+	protected DicoChocoPeremption stockChocoPeremption ;
+
 	// Alexandre
 	public Transformateur1Bourse() {
 		super();
@@ -33,6 +36,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 		prixVenteMin = new DicoChoco();
 		stockChoco = new DicoChoco();
 		stockFeve = new DicoFeve();
+		stockChocoPeremption= new DicoChocoPeremption();
 		
 	}
 	
@@ -40,15 +44,21 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 * Pas de prise en compte pour l'instant des contrats */
 	public double demande(Feve f, double cours) {
 		if (cours<prixAchatFeve.get(f)) {
+			journalB.ajouter("On souhaite acheter " + quantiteAchatFeve.get(f)*0.5 +" de "+ f);
 			return quantiteAchatFeve.get(f)*0.5;
-		}
-		return 0.;
+			}
+			else {
+			journalB.ajouter("Le cours " + cours + " est superieur au prix "+prixAchatFeve.get(f)+" auquel on peut acheter la feve"+ f+", la bourse n'est pas interessante.");
+			return 0.;
+			}	
 	}
+
 
 	/** modification du stock de fèves; auteur Anna */
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		stockFeve.put(f, quantiteEnKg + stockFeve.get(f)) ;
-		journal.ajouter(quantiteEnKg+" kg de fèves "+f+" achetées en bourse");
+		journalB.ajouter(quantiteEnKg+" kg de fèves "+ f +" achetées en bourse");
+		journalB.ajouter("Le nouveau stock de feve "+ f +" est de " +stockFeve.get(f)+" kg." );
 	}
 
 	/** */
@@ -61,15 +71,15 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	 *  Alexandre*/
 	public void initialiser( ) {
 		super.initialiser();
+		prixAchatFeve.put(Feve.FEVE_BASSE, 10000.);
+		dernierPrixVenteChoco.initialiser();
+		dernierPrixVenteChocoReset.initialiser();
 	}
 	
 	/** 
 	 *  Alexandre*/
 	public void next() {
 		super.next();
-		journal.ajouter("test journal bourse");
-		
 	}
 	
 }
-	
