@@ -39,7 +39,7 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 	/** on veut faire par type de chocolat */
 
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
-		
+		System.out.println("choisir");
 		if (propositions==null) {
 			journal.ajouter("Il n y a pas de propositions d'achat par appel d'offre");
 			return null;
