@@ -38,28 +38,28 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		//il faut régler les qauntités transformées pour chaque types de fèves
 		
 		//Les transformations non originales courtes
-		this.transfo(0.01*cap, false, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.01*cap,false,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.01*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.01*cap,false,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.01*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(this.bestCombi("CBQ")*cap, false, "courte",Feve.FEVE_BASSE);
+		this.transfo(this.bestCombi("CMQ")*cap,false,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(this.bestCombi("CMQBE")*cap,false,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(this.bestCombi("CHQ")*cap,false,"courte",Feve.FEVE_HAUTE);
+		this.transfo(this.bestCombi("CHHBE")*cap,false,"courte",Feve.FEVE_HAUTE_BIO_EQUITABLE);
 		
 		//les transformations originales courtes
-		this.transfo(0.01*cap, true, "courte",Feve.FEVE_BASSE);
-		this.transfo(0.01*cap,true,"courte",Feve.FEVE_MOYENNE);
-		this.transfo(0.01*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo(0.01*cap,true,"courte",Feve.FEVE_HAUTE);
-		this.transfo(0.01*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(this.bestCombi("COBQ")*cap, true, "courte",Feve.FEVE_BASSE);
+		this.transfo(this.bestCombi("COMQ")*cap,true,"courte",Feve.FEVE_MOYENNE);
+		this.transfo(this.bestCombi("COMQBE")*cap,true,"courte",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(this.bestCombi("COHQ")*cap,true,"courte",Feve.FEVE_HAUTE);
+		this.transfo(this.bestCombi("COHQBE")*cap,true,"courte",Feve.FEVE_HAUTE_BIO_EQUITABLE);
 		
 		//les transformations originales longues
-		this.transfo(0.1*cap, true, "longue",Feve.FEVE_BASSE);
-		this.transfo(0.1*cap,true,"longue",Feve.FEVE_MOYENNE);
-		this.transfo(0.1*cap,true,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(this.bestCombi("LOBQ")*cap, true, "longue",Feve.FEVE_BASSE);
+		this.transfo(this.bestCombi("LOMQ")*cap,true,"longue",Feve.FEVE_MOYENNE);
+		this.transfo(this.bestCombi("LOMQBE")*cap,true,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		//les transformations non originales longues
-		this.transfo(0.1*cap, false, "longue",Feve.FEVE_BASSE);
-		this.transfo(0.1*cap,false,"longue",Feve.FEVE_MOYENNE);
-		this.transfo(0.1*cap,false,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+		this.transfo(this.bestCombi("LBQ")*cap, false, "longue",Feve.FEVE_BASSE);
+		this.transfo(this.bestCombi("LMQ")*cap,false,"longue",Feve.FEVE_MOYENNE);
+		this.transfo(this.bestCombi("LMQBE")*cap,false,"longue",Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 		
 		Stock<ChocolatDeMarque> s=this.commandes;
 		
@@ -101,40 +101,71 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	//Commence par remplir less commandes les plus anciennes
 	//honnore les commande par date croissante jusqu'à que ce ne soit plus possible (stock ou capacité de production)
 
-	public void bestCombi(String fev) {//POUR LA V2
+	public double bestCombi(String fev) {//POUR LA V2
 	//initialisation des variables:
 		//transformations courtes originales
-		double COBQ=0.0;
-		double COMQ=0.0;
-		double COMQBE=0.0;
-		double COHQ=0.0;
-		double COHQBE=0.0;
+		double COBQ=0.01;
+		double COMQ=0.01;
+		double COMQBE=0.01;
+		double COHQ=0.01;
+		double COHQBE=0.01;
 		//transformations courtes non originales
-		double CBQ=0.0;
-		double CMQ=0.0;
-		double CMQBE=0.0;
-		double CHQ=0.0;
-		double CHQBE=0.0;
+		double CBQ=0.01;
+		double CMQ=0.01;
+		double CMQBE=0.01;
+		double CHQ=0.01;
+		double CHQBE=0.01;
 		//transformations longues originales
-		double LOBQ=0.0;
-		double LOMQ=0.0;
-		double LOMQBE=0.0;
+		double LOBQ=0.01;
+		double LOMQ=0.01;
+		double LOMQBE=0.01;
 		//transformations longues non originales
-		double LBQ=0.0;
-		double LMQ=0.0;
-		double LMQBE=0.0;
+		double LBQ=0.01;
+		double LMQ=0.01;
+		double LMQBE=0.01;
+		
+		//Calcul des valeurs optimales
 		
 		
 		
+		///
 		
-		
-		
-
-		
-		
-		
-		
-		
+		//retour des valeurs
+		if(fev.equals("COBQ")) {
+			return COBQ;
+		}
+		if(fev.equals("COMQ")) {
+			return COMQ;
+		}if(fev.equals("COMQBE")) {
+			return COMQBE;
+		}if(fev.equals("COHQ")) {
+			return COHQ;
+		}if(fev.equals("COHQBE")) {
+			return COHQBE;
+		}if(fev.equals("CBQ")) {
+			return CBQ;
+		}if(fev.equals("CMQ")) {
+			return CMQ;
+		}if(fev.equals("CMQBE")) {
+			return CMQBE;
+		}if(fev.equals("CHQ")) {
+			return CHQ;
+		}if(fev.equals("CHQBE")) {
+			return CHQBE;
+		}if(fev.equals("LOMQ")) {
+			return LOMQ;
+		}if(fev.equals("LOMQBE")) {
+			return LOMQBE;
+		}if(fev.equals("LBQ")) {
+			return LBQ;
+		}if(fev.equals("LMQ")) {
+			return LMQ;
+		}if(fev.equals("LMQBE")) {
+			return LMQBE;
+		}
+		else {
+			return 0.0;
+		}
 	}
 	
 	//Dans cette seconde version la transformation ne fonctionne plus en mode tout/rien mais fait le maximum possible
@@ -155,8 +186,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		
 		if (trans.equals("longue")){//dans le cas d'une transformation longue
 			double max_feves=Math.min(this.getStockfeve().getQuantite(f), (1/rdt)*qt);//Récupération du max de fèves que l'on peut utilisé
-			double max_stock=Math.min(this.getNotreCapaciteStockage()/2-this.getStockchocolatdemarque().getStocktotal(), max_feves);
-			double max_prod=Math.min(max_stock, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
+			//double max_stock=Math.min(this.getNotreCapaciteStockage()/2-this.getStockchocolatdemarque().getStocktotal(), max_feves);
+			double max_prod=Math.min(max_feves, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
 
 			
 			if(max_prod>0) {
@@ -186,8 +217,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		if (trans.equals("courte")) {
 
 			double max_feves=Math.min(this.getStockfeve().getQuantite(f), qt);//Récupération du max de fèves que l'on peut utilisé
-			double max_stock=Math.min(this.getNotreCapaciteStockage()/2-this.getStockchocolatdemarque().getStocktotal(), max_feves);
-			double max_prod=Math.min(max_stock, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
+			//double max_stock=Math.min(this.getNotreCapaciteStockage()/2-this.getStockchocolatdemarque().getStocktotal(), max_feves);
+			double max_prod=Math.min(max_feves, NewCap);//Choix du maximum qui peut être transformé (soit la capacité de production restante soit le nombre de fève dispo)
 				
 			if(max_prod>0 ) {
 					
