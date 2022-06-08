@@ -2,7 +2,7 @@ package abstraction.eq4Transformateur2;
 
 public class DateProdTransfo2<Produit> {
 	private double date;
-	private Produit p;
+	protected Produit p;
 	
 	public DateProdTransfo2(double date,Produit p) {
 		this.date=date;
@@ -14,6 +14,12 @@ public class DateProdTransfo2<Produit> {
 	}
 	public double getDate() {
 		return this.date;
+	}
+	public void setProduit(Produit p) {
+		this.p=p;
+	}
+	public void setDate(double date) {
+		this.date=date;
 	}
 	
 }
