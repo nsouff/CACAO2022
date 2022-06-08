@@ -1,8 +1,10 @@
 package abstraction.eq5Transformateur3;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
@@ -14,6 +16,7 @@ import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
+	//private int nb_nego;
 	
 	//Karla / Julien
 	/* Initier un contrat */
@@ -43,9 +46,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 		if  (!( produit instanceof Feve) ) {
 			return false;
 		}
-		if (( (Feve) produit).isBioEquitable() && 
-				(( (Feve) produit).getGamme()==Gamme.MOYENNE ||
-						( (Feve) produit).getGamme()==Gamme.HAUTE)) {
+		if (this.stockFeves.getProduitsEnStock().contains((Feve) produit)) {
 			return true;
 		}
 		return false;
@@ -61,22 +62,27 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	}
 
 	// Julien & Karla
+	/* On s'indexe sur la bourse : les contrats sont censés être avantageux 
+	 * donc on accepte si ça l'est et sinon on propose 95% du prix de la bourse
+	 */
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
-		if (prixT < this.seuilMaxAchat) { 
+		//BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		double seuilMax=2.0;
+		if (prixT < seuilMax) { 
 			this.achats.ajouter("prix acceptable");
 			return prixT;
 		}
 		else {
-			double nouveauprix = 0.1*prixT;
-			if (nouveauprix< this.seuilMaxAchat) {
+			double proportion = 0.70 ;/*+0.05*this.nb_nego;*/
+			double nouveauprix = proportion*prixT;
+			if (nouveauprix < seuilMax) { 
 				this.achats.ajouter(" essaie avec nouveau prix");
 				return nouveauprix;
 			}
-			this.achats.ajouter("prix inadapte");
-
-			return 0.0;
 		}
+		return 0.0;
 	}
 
 	// Julien & Karla
@@ -85,6 +91,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	 */
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		this.achats.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+		this.contratsEnCoursAchat.add(contrat);
 
 	}
 
@@ -97,10 +104,24 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	}
 
 	//Karla
+	public LinkedList <ExemplaireContratCadre> majCC(LinkedList <ExemplaireContratCadre> L) {
+		LinkedList <ExemplaireContratCadre> Lcopy = new LinkedList <ExemplaireContratCadre> (L); 
+		for (ExemplaireContratCadre contrat : Lcopy) {
+			if (contrat.getEcheancier().getStepFin() < Filiere.LA_FILIERE.getEtape()) {
+				L.remove(contrat);
+			}
+		}
+		return L ;
+	}
+	
+	//Karla
 	/* on regarde l etat de nos stocks et on lance la procédure demande 
 	acheteur + get vendeur de la classe superviseur vente cadre */
 	public void next() {
 		super.next();
+		
+		/* Mise à jour de la liste des CC en cours */
+		this.contratsEnCoursAchat = majCC(this.contratsEnCoursAchat);
 		
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			
