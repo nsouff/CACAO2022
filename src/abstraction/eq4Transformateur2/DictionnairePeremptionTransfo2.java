@@ -21,6 +21,7 @@ public class DictionnairePeremptionTransfo2<Produit>{
 		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,produit);
 		return this.peremption.get(d); //renvoie la quantité associé à (date,produit)
 	}
+
 	
 	public void next() {
 		super.next();
@@ -35,7 +36,7 @@ public class DictionnairePeremptionTransfo2<Produit>{
 	
 	//Marie
 	
-// ajoute un nouveau produit à la Hashmap
+// ajoute un nouveau produit à la Hashmap (lors d'un achat ou d'une trasnformation)
 	public void ajouterQuant(double date, Produit p, Double quant) {
 		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,p);
 		if(quant>0) {
@@ -46,25 +47,16 @@ public class DictionnairePeremptionTransfo2<Produit>{
 			}
 		}
 	}
+
+//Marie
 //modifie la date des produits à chaque step
 	public void modifDateProd() {
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			d.setDate(d.getDate()+1);
 		}
-	}
+}
 	
-	public void utiliserQuantDate(double date, Produit p, Double quant) {
-		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,p);
-		if(quant>=0) {
-			if(this.getDates().contains(d)&&quant*(-1)<this.getQuant(date, p)) {
-				this.peremption.put(d, this.getQuant(date, p)-quant);
-			}
-			if(this.getDates().contains(d)&&quant*(-1)==this.getQuant(date, p)) {
-				this.peremption.remove(d);
-			}
-			}
-		}
-
+//Marie	
 //retire le produit quand il a dépassé la date de péremption
 public void perime() {
 	for(DateProdTransfo2<Produit>d:this.getDates()) {
@@ -72,43 +64,29 @@ public void perime() {
 			this.peremption.remove(d);
 		}
 	}
-}	
+}
 
-	/*double step=12;
-	 public void perime(double step) {
-		for(DateProdTransfo2<Produit>d:this.getDates()) {
-			if(d.getDate()<step||this.peremption.get(d)==0) {
-				this.peremption.remove(d);
-			}
-		}
-	}*/
-	
-//modifications lors d'un achat
-	public void utiliserQuant(Produit p, double quant) {
-		double quantRestante=quant; //quant restante
-		
-		while(quantRestante>0) {
-			double date=0;
-			double qC=0;
-			
-			for(DateProdTransfo2<Produit>d:this.getDates()) {
-				double step=d.getDate();
-				if(date==0||(step<date && d.getProduit()==p)){
-					date=step;
-					qC=this.getQuant(date, p);
+//Marie	
+//modifications de la quantité lors d'une transformation (pour les fèves) ou d'une vente (chocolats)
+public void utiliserQuantProd(Produit p, double quant) {
+	double quantiteRestante=quant;
+	while(quantiteRestante!=0){
+		for(DateProdTransfo2<Produit>d:this.getDates()) { //on parcourt la Hashmap jusqu'à ce qu'on ait le produit (dans ordre décroissant)
+			if(d.getProduit()==p) {
+				double quantprod=this.peremption.get(d);
+				if(quantprod>quantiteRestante) { //quand la quant est suffisante, on retire seulement la quantité voulue
+					this.peremption.put(d,quantprod-quantiteRestante); 
+				}else {
+					this.peremption.remove(d); 
+					quantiteRestante=quantiteRestante-quantprod;
 				}
-			}
-			if(qC<=quantRestante) {
-				utiliserQuantDate(date,p,qC);
-				quantRestante=quantRestante-qC;
-			}
-			else {
-				utiliserQuantDate(date,p,quantRestante);
-				quantRestante=0;
 			}
 		}
 	}
-	//Marie
+}
+
+	
+//Marie
 	public double quantTotaleProduit(Produit p) { //calcule la quantité totale d'un produit
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
@@ -117,8 +95,9 @@ public void perime() {
 			}
 		}
 		return qtt;
-	}
-	//Marie
+}
+	
+//Marie
 	public double quantTotFeve() { //calcul la quantité totale de fèves
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
@@ -128,9 +107,9 @@ public void perime() {
 		return qtt;
 	}
 		return qtt;
-	}
+}
 		
-	//Marie
+//Marie
 	public double quantTotChoco() { //calcul la quantité totale de chocolats 
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
@@ -140,15 +119,14 @@ public void perime() {
 		return qtt;
 	}
 		return qtt;
-			}
+}
 	
 	
-	@Override
 	public Stock<Chocolat> getStockchocolat() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
+
 	public Journal getJournalcours() {
 		// TODO Auto-generated method stub
 		return null;
@@ -170,46 +148,20 @@ public void perime() {
 	}
 }
 	
-	/*public void utiliserQtt(int step,Produit p, Double qtt) {
-		DateProdTransfo2 d =new DateProdTransfo2(step,p);
-		if (qtt > 0) {
-			
-			if (this.getDates().contains(d)) {	
-				this.peremption.put(d, this.getQtt(d)+qtt);
-				}
-			else {
-				this.peremption.put(d, qtt);
-				
-				}
-			}
-		else {
-			
-				if (this.getDates().contains(d)&& qtt*(-1)<=this.peremption.get(d) ) {	
-					this.peremption.put(d, this.getQtt(d)-qtt);
-					}
-			}
-		
-		}
 	
-	public void perime(int step) {
-		for (DateProdTransfo2 d : this.getDates()) {
-			if (d.getStep()<step || this.peremption.get(d)==0) {
-				this.peremption.remove(d) ;
-			}
-		}
-	}
-	public void utiliser(Produit p, double qtt) {
-		int date = 0;
-		
-		for (DateProdTransfo2 d : this.getDates()) {
-			int step=d.getStep();
-			if (date==0  || (step<date && d.getProduit()==p) ){
-				date=step;
-			};
-		}
-		
-		//utiliserQtt(date,p,qtt)
-		
-	}*/
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
