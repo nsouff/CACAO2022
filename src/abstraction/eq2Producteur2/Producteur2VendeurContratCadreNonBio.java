@@ -22,7 +22,7 @@ import abstraction.eq8Romu.produits.Feve;
 public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur implements IVendeurContratCadre{
 	
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
-	private Journal classement;
+	protected Journal classement;
 	public Producteur2VendeurContratCadreNonBio() {
 		super();
 		this.mesContratEnTantQueVendeurNonBio = new LinkedList<ExemplaireContratCadre>();
@@ -97,8 +97,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 				return contrat.getEcheancier();
 				}
 			else {
-				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) );// on souhaite livrer toute la quatité qu'on a
+				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getStepFin(),this.production((Feve)(contrat.getProduit()))- quantiteTotaleContratEnCours(contrat.getProduit()));    
 				return e;
 			}
 		}	
@@ -168,12 +167,7 @@ public class Producteur2VendeurContratCadreNonBio extends Producteur2Acteur impl
 	}
 
 
-	public List<Journal> getJournaux() {
-		List<Journal> res=new ArrayList<Journal>();
-		res.add(this.classement);
-		res.add(this.journal);
-		return res;
-	}
+
 
 
 }
