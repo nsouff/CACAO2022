@@ -109,6 +109,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 				}
 			}
 		}
+		this.venteTracker.endStepSumUp();
 	}
 	
 	public double volumeParEtapeMoyenne(ChocolatDeMarque chocProduit,int currentEtape,int nbEtape) {
