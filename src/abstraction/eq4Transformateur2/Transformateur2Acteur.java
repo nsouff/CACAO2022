@@ -100,8 +100,8 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 	}
 	
-	//Jad
-	//renvoie le prix seuil de chaque feves
+// Jad
+// Renvoie le prix seuil de chaque feves
 	public Variable getPrixSeuil(Feve f) {
 		if(f.equals(Feve.FEVE_BASSE)) {
 			return this.getPrixSeuilBQ();

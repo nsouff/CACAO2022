@@ -34,43 +34,29 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 		journalVente.ajouter(Color.black,Color.white,"---------------------------------------------------------------------------------------------------------------");
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
+			// A chaque tour, un contrat devient obsolète si la quantité restante à livrer est nulle
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
 				contratsObsoletes.add(contrat);
 			}
 		}
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
-		
-//<<<<<<< HEAD
-//		
-////		// Proposition d'un nouveau contrat a tous les acheteurs possibles pour tous nos produits (40Millions de kg de choco à chaque step)
-////				for (ChocolatDeMarque c : this.getChocolatsProduits()) {
-////					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
-////						if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
-////							journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
-////							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 500000), cryptogramme,false);
-////							journalVente.ajouter("-->aboutit au contrat "+cc);
-////						}
-////					}
-////				}
-//=======
+		for (ChocolatDeMarque c : this.getChocolatsProduits()) {
+			for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
+				if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
+					journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
 
-				for (ChocolatDeMarque c : this.getChocolatsProduits()) {
-					for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
-						if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
-							journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
-							
-							ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 4000000), cryptogramme,false);
-							
-							journalVente.ajouter("-->aboutit au contrat "+cc);
-							if (cc!=null) 
-							{
-								this.mesContratEnTantQueVendeur.add(cc);
-							}
-							journalVente.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------------------");
-						}
+					ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 4000000), cryptogramme,false);
+
+					journalVente.ajouter("-->aboutit au contrat "+cc);
+					if (cc!=null) 
+					{
+						this.mesContratEnTantQueVendeur.add(cc);
 					}
+					journalVente.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------------------");
 				}
-			
+			}
+		}
+
 
 	}
 	
@@ -89,7 +75,7 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 	}
 	
 	
-@Override
+
 public boolean vend(Object produit) {
 	// TODO Auto-generated method stub
 	if (!(produit instanceof ChocolatDeMarque)) {
@@ -110,7 +96,7 @@ public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 			return null; // on est frileux : on ne s'engage dans un contrat cadre que si on a toute la quantite en stock (on pourrait accepter meme si nous n'avons pas tout car nous pouvons produire/acheter pour tenir les engagements) 
 		}
 	} else {
-		return null;// on ne vend pas de ce produit
+		return null;// Nous ne vendons pas de ce produit
 	}
 }
 
