@@ -110,6 +110,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 // Gabriel modifications pour prix minimal au kg
 	public PropositionAchatAO choisir(List<PropositionAchatAO> propositions) {
 		if (propositions==null) {
+			this.getJournalVente().ajouter("Nous n'avons pas reçu d'offres :(");
 			return null;
 		} else {
 			
@@ -128,7 +129,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 			PropositionAchatAO retenue = meilleur_proposition;
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(0))) {
 				if (retenue.getPrixKg()>(this.prixVouluB())) {
-					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					this.getJournalVente().ajouter(Color.white,Color.green," -->" +" Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
 					
 					return retenue;
 				} else {
@@ -138,7 +139,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 			}
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(1))) {
 				if (retenue.getPrixKg()>(this.prixVouluM())) {
-					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					this.getJournalVente().ajouter(Color.white,Color.green," -->" + " Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
 					
 					return retenue;
 				} else {
@@ -149,7 +150,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 			}
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(2))) {
 				if (retenue.getPrixKg()>(this.prixVouluMb())) {
-					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					this.getJournalVente().ajouter(Color.white,Color.green," -->" +" Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
 					
 					return retenue;
 				} else {
@@ -160,7 +161,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 			}
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(3))) {
 				if (retenue.getPrixKg()>(this.prixVouluH())) {
-					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					this.getJournalVente().ajouter(Color.white,Color.green," -->" +" Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
 					
 					return retenue;
 				} else {
@@ -171,7 +172,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 			}
 			if(retenue.getOffre().getChocolat().equals(this.getChocolatsProduits().get(4))) {
 				if (retenue.getPrixKg()>(this.prixVouluHb())) {
-					this.getJournalVente().ajouter("  --> Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
+					this.getJournalVente().ajouter(Color.white,Color.green," -->" +" Nous choisissons l'offre de  "+retenue.getAcheteur().getNom());
 					
 					return retenue;
 				} else {

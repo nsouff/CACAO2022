@@ -7,6 +7,7 @@ import abstraction.eq8Romu.bourseCacao.ExempleAbsAcheteurBourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
+import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
@@ -66,11 +67,11 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 			}
 			this.prixMinHb.setValeur(superviseur, somme5/3);
 		}
-		this.getJournalcours().ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est"+ this.prixMinB.getValeur() + "");
-		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est"+ this.prixMinM.getValeur()+ "");
-		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne bioéquitable sur les trois derniers mois est"+ this.prixMinMb.getValeur()+ "");
-		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute sur les trois derniers mois est"+ this.prixMinH.getValeur()+ "");
-		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute bioéquitable sur les trois derniers mois est"+ this.prixMinHb.getValeur()+ "");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève basse sur les trois derniers mois est de "+ this.prixMinB.getValeur() + " €.");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne sur les trois derniers mois est de "+ this.prixMinM.getValeur()+ " €.");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève moyenne bioéquitable sur les trois derniers mois est de "+ this.prixMinMb.getValeur()+ " €.");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute sur les trois derniers mois est de "+ this.prixMinH.getValeur()+ " €.");
+		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute bioéquitable sur les trois derniers mois est de "+ this.prixMinHb.getValeur()+ " €.");
 		this.journalAchat.ajouter("---------------------------------------------------------------------------------------------------------------");
 		}
 	
