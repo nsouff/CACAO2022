@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import abstraction.eq7Distributeur2.Distributeur2ChocolatDeMarque;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
 
 public class Tracker implements ITracker{
@@ -17,7 +16,11 @@ public class Tracker implements ITracker{
 	
 	private List<ChocolatDeMarque> chocolats;
 	
+	private boolean FONCTIONEL;
+	
 	public Tracker(List<ChocolatDeMarque> listeChocolatsProduits) {
+		this.FONCTIONEL= !listeChocolatsProduits.isEmpty();
+		
 		ventesQuantite = new HashMap<ChocolatDeMarque,List<Double>>();
 		ventesPrix = new HashMap<ChocolatDeMarque,List<Double>>();
 		
@@ -47,12 +50,14 @@ public class Tracker implements ITracker{
 	
 	@Override
 	public void trackVentesQuantite(ChocolatDeMarque choco, Double quantite){
+		if (!this.FONCTIONEL) {return ;}
 		List<Double> quantites = ventesQuantiteEtape.get(choco);
 		quantites.add(quantite);
 	}
 	
 	@Override
 	public void trackVentePrix(ChocolatDeMarque choco, Double prix){
+		if (!this.FONCTIONEL) {return ;}
 		List<Double> prixDeVente = ventesPrixEtape.get(choco);
 		prixDeVente.add(prix);
 	}
@@ -87,43 +92,51 @@ public class Tracker implements ITracker{
 
 	@Override
 	public List<Double> getVentesQuantiteEtapeActuelle(ChocolatDeMarque choco) {
+		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(0.));}
 		return this.ventesQuantiteEtape.get(choco);
 	}
 
 	@Override
 	public List<Double> getVentesPrixEtapeActuelle(ChocolatDeMarque choco) {
+		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(10.));}
 		return this.ventesPrixEtape.get(choco);
 	}
 
 	@Override
 	public Double getPreviousVenteQuantite(ChocolatDeMarque choco) {
+		if (!this.FONCTIONEL) {return 0.;}
 		int lastEtape = this.getVentesQuantite(choco).size()-1;
 		return this.getVentesQuantiteEtape(choco, lastEtape);
 	}
 
 	@Override
 	public Double getPreviousVentePrix(ChocolatDeMarque choco) {
+		if (!this.FONCTIONEL) {return 10.;}
 		int lastEtape = this.getVentesPrix(choco).size()-1;
 		return this.getVentesPrixEtape(choco, lastEtape);
 	}
 
 	@Override
 	public List<Double> getVentesQuantite(ChocolatDeMarque choco) {
+		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(0.));}
 		return this.ventesQuantite.get(choco);
 	}
 
 	@Override
 	public List<Double> getVentesPrix(ChocolatDeMarque choco) {
+		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(10.));}
 		return this.ventesPrix.get(choco);
 	}
 
 	@Override
 	public Double getVentesQuantiteEtape(ChocolatDeMarque choco,int i) {
+		if (!this.FONCTIONEL) {return 0.;}
 		return this.getVentesQuantite(choco).get(i);
 	}
 
 	@Override
 	public Double getVentesPrixEtape(ChocolatDeMarque choco,int i) {
+		if (!this.FONCTIONEL) {return 10.;}
 		return this.getVentesPrix(choco).get(i);
 	}
 
