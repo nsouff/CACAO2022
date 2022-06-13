@@ -34,14 +34,14 @@ public class Producteur1 extends Producteur1ContratCadre{
 		public List<Journal> getJournaux() {
 			List<Journal> res=new ArrayList<Journal>();
 			res.add(this.getContratCadre());
-			for (int j=0;j<4;j++) {
+			/*for (int j=0;j<4;j++) {
 				Parc Parc_j = this.getParc(j);
 				res.add(Parc_j.getRetourMAJParc());
 				res.add(Parc_j.getRetourRécolte());
 				res.add(Parc_j.getRetourGuerre());
 				res.add(Parc_j.getRetourAléas());
 				res.add(Parc_j.getRetourMaladie());
-			}
+			}*/
 			return res;
 		}
 }

@@ -1,9 +1,10 @@
 package abstraction.eq4Transformateur2;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import abstraction.eq8Romu.filiere.Filiere;
-//auteur Marie
+
 
 public class Stock<I> {
 	
@@ -72,13 +73,11 @@ public class Stock<I> {
 
 	// Marie
 
-	public double stockRestant(I produit) {
-		return (Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()-this.getStocktotal());
+	public double stockRestant(I produit,double notreCapaciteStockage) {
+		return (notreCapaciteStockage/2)-this.getStocktotal();
 	}
 
 
-
-	
 	public HashMap<I, Double> getStock() {
 		return stock;
 	}
@@ -88,6 +87,13 @@ public class Stock<I> {
 	}
 
 
+	public double get(I  prod) {
+		return this.stock.get(prod);
+	}
+	
+	public Set<I> keySet() {
+		return this.stock.keySet();
+	}
 	/*public double coutStockage( Filiere.LA_FILIERE.getIndicateur("prix_stockage")) { // demander comment ajouter variables
 		return (this.quantiteStockTotale(produit)*(Filiere.LA_FILIERE.getIndicateur("prix_stockage").getValeur())); // demander a Alexandre comment calculer prix 
 	}*/
@@ -97,6 +103,7 @@ public class Stock<I> {
 //	public void setQuantite_stock(HashMap<I,Double> quantite_stock) {
 //		this.quantite_stock = quantite_stock;
 //	}
+
 	
 }
 
