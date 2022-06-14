@@ -12,7 +12,6 @@ import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
-import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
@@ -24,16 +23,24 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		List<IVendeurContratCadre> L = superviseur.getVendeurs(f); 
 		
-		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 10000); //qtt kg de feves par etape pendant  10 steps
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, qtt); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
 			if (L.size()== 1) {
-				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
+				ExemplaireContratCadre contrat = superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
+				if (contrat != null) {
+					this.achats.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+					this.contratsEnCoursAchat.add(contrat);
+				}
 			}
 			else {
 				// On choisit aleatoirement
 				Random randomizer = new Random();
 				IVendeurContratCadre random = L.get(randomizer.nextInt(L.size()));
-				superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
+				ExemplaireContratCadre contrat = superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), random, (Object)f,  e, this.cryptogramme, false);
+				if (contrat != null) {
+					this.achats.ajouter("Nouveau Contrat Cadre avec"+ contrat.getVendeur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+					this.contratsEnCoursAchat.add(contrat);
+				}
 			}
 		}
 		//Julien else on achete des feve par le biais de la bourse si besoin ( bourse.getCours(f).getValeur() )
@@ -67,9 +74,9 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	 */
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
-		//BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		//Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
-		double seuilMax=2.0;
+		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMin();
+		// double seuilMax=2.0;
 		if (prixT < seuilMax) { 
 			this.achats.ajouter("prix acceptable");
 			return prixT;
@@ -133,9 +140,11 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			if (stocktotal < this.capaciteStockageEQ5) {
 				if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
 					Double placeLibre = this.stockChocolat.getstocktotal() - this.stockFeves.getstocktotal();
+					if (placeLibre > 0) {
 					/* On essaie d'initier un contrat pour une qtt de placeLibre/nombre de types de fèves */
-					Double qtt = placeLibre/4;
-					lanceruncontratAcheteur(f, qtt);
+						Double qtt = placeLibre/4;
+						lanceruncontratAcheteur(f, qtt);
+					}
 				}
 			}
 		}
