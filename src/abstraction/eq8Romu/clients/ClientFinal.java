@@ -86,8 +86,8 @@ public class ClientFinal implements IActeur, IAssermente {
 		this.journalPrix = new Journal(this.getNom()+" prix", this);
 		this.surcoutMemeQualite = new Variable(getNom()+" surcout meme qualite", null, this, 0.25);
 		this.surcoutQualitesDifferentes = new Variable(getNom()+" surcout qualites differentes", null, this, 1.25);
-		this.gainAttractiviteMemeQualite = new Variable(getNom()+" gain attractivite meme qualite", null, this, 0.005); 
-		this.gainAttractiviteQualiteDifferente = new Variable(getNom()+" gain attractivite qualite differentes", null, this, 0.05);
+		this.gainAttractiviteMemeQualite = new Variable(getNom()+" gain attractivite meme qualite", null, this, 0.00005); 
+		this.gainAttractiviteQualiteDifferente = new Variable(getNom()+" gain attractivite qualite differentes", null, this, 0.00005);
 		this.repartitionInitiale = repartitionInitiale;
 
 	}
