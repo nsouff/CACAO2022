@@ -145,7 +145,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 					if (placeLibre > 0.0) {
 					/* On essaie d'initier un contrat pour une qtt de placeLibre/nombre de types de fèves */
 						Double qtt = placeLibre/4;
-						System.out.println(qtt);
+						//System.out.println(qtt);
 						this.nb_nego = 0;
 						lanceruncontratAcheteur(f, qtt);
 					}
