@@ -113,6 +113,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	// modification du stock en fonction de la date de péremption (commencer par le plus ancien, auteur : Anna */
 	 public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		double livre = Math.min(stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()), quantite);
+		livre =Math.max(0.0, livre);
 		if (livre==quantite) {
 			
 			stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())-quantite);
@@ -137,8 +138,8 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 				///} */
 			//}
 		}
-		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),1000.0); 
-		stockChocoPeremption.venteLot(((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 1000.0);
+		//stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),1000.0); 
+		//stockChocoPeremption.venteLot(((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 1000.0);
 	return livre;
 	}
 		
