@@ -11,6 +11,7 @@ import abstraction.eq8Romu.produits.Gamme;
 public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements IDistributeurChocolatDeMarque  {
 	
 	private double capaciteDeVente= Double.MAX_VALUE;
+	private double STOCK_MAX=10E4;
 	
 
 //edgard: 
@@ -53,12 +54,13 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 	public double prix(ChocolatDeMarque choco) {
 		int currentStep = Filiere.LA_FILIERE.getEtape();
 		if (currentStep != 0) {
-			double prix_precedent = Filiere.LA_FILIERE.prixMoyen(choco, currentStep-1);
+			//double prix_precedent = Filiere.LA_FILIERE.prixMoyen(choco, currentStep-1);
+			double prix_precedent = venteTracker.getPreviousVentePrix(choco); 
 	
 			double quantiteTotale = Filiere.LA_FILIERE.getVentes(choco, currentStep-1);
 			double quantiteVendue = venteTracker.getPreviousVenteQuantite(choco); 
 			
-			if (quantiteVendue/quantiteTotale <= 0.75) {
+			if (quantiteVendue/quantiteTotale <= 0.75 && this.stock.getQuantite(choco)>STOCK_MAX) {
 				if (choco.isBioEquitable()) {
 					if (choco.getGamme()==Gamme.HAUTE) {
 						double prix = prix_precedent*0.95;
@@ -68,7 +70,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 						return prix;
 					}
 					if (choco.getGamme()==Gamme.MOYENNE) {
-						double prix = prix_precedent*0.8;
+						double prix = prix_precedent*0.6;
 						if (prix < this.prixMinMQ_B) {
 							prix = this.prixMinMQ_B;
 						}
@@ -104,6 +106,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 						}
 						return prix;
 					}
+				
 				}
 			}
 		}else {
@@ -137,9 +140,12 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			else{
 				return 7.5;
 			}
+			
 		}
 		return 10.420;
+	
 	}
+	
 	
 	public double quantiteEnVente(ChocolatDeMarque choco, int crypto) {
 		if (crypto!=this.cryptogramme) {
