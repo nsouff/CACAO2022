@@ -40,12 +40,12 @@ public class DistributeurChocolatDeMarque extends MarqueDistributeur1 implements
 	 * @author Nathan
 	 * @return La liste des journaux renvoyée dans Distributeur1Acteur et le journal de vente
 	 */
-	@Override
-	public List<Journal> getJournaux() {
-		List<Journal> j = super.getJournaux();
-		j.add(JournalVente);
-		return j;
-	}
+	// @Override
+	// public List<Journal> getJournaux() {
+	// 	List<Journal> j = super.getJournaux();
+	// 	j.add(JournalVente);
+	// 	return j;
+	// }
 
 	/**
 	 * @return the teteGondole
