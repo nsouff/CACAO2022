@@ -268,12 +268,12 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			 this.notificationNouveauContratCadreBio(contrat);
-			 this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur().getNom()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix() );
+			 this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix() );
 
 		} 
 		else {
 			this.notificationNouveauContratCadreNonBio(contrat);
-			this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur().getNom()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix() );
+			this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix() );
 		}
 	}
 
@@ -345,11 +345,11 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		for(ExemplaireContratCadre contrat : contratsExpire) {
 			this.mesContratCadreExpire.remove(contrat);
 		}
-		
+
 		/**
 		 * Affichage Journal  
 		 */
-		
+
 		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
 			if (a instanceof IFabricantChocolatDeMarque) {
 				this.classement.ajouter(a.getColor(),Color.BLACK,a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
@@ -362,8 +362,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_MOYENNE));
 		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_BASSE));
 		this.journalCC.ajouter("=======================================================================================");
-	}
 
+	}
+	
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.removeQuantite(quantite, (Feve)(produit));
 		return quantite;
