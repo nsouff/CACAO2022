@@ -34,7 +34,7 @@ public class Producteur2VendeurBourse extends Producteur2Transfo implements IVen
 
 
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
-		this.journalBourse.ajouter("Vented de "+quantiteEnKg+" de "+f+" au prix de "+coursEnEuroParKg);
+		this.journalBourse.ajouter("Vente de "+quantiteEnKg+" de "+f+" au prix de "+coursEnEuroParKg);
 		this.removeQuantite(quantiteEnKg, f);
 		
 	}
