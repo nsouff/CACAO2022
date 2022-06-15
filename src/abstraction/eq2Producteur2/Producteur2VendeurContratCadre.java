@@ -168,13 +168,13 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public double contrePropositionPrixVendeurNonBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		if (contrat.getQuantiteTotale()>12*(this.production((Feve)contrat.getProduit()))){ // Grosse commande, proposition de prix plus bas
-			if (contrat.getPrix()>0.8 ) {
+			if (contrat.getPrix()>0.5 ) {
 				return contrat.getPrix();}
 			else {
-				return 0.85*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ; }
+				return 0.6*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ; }
 		}
 		else { if(!(contrat.getListePrix().size()>4)) { // plus petite commande, pris plus élévée (4 negociations maximum)
-			return 0.90*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ;}
+			return 0.7*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ;}
 		}
 		return -1.0;
 	}
@@ -233,7 +233,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 
-	/*Methode gènèrale ppour tous les types de fèves, auteur : Jules*/
+	/**
+	 * Methodes gènèrales ppour tous les types de fèves, auteur : Jules
+	 */
 	
 	public void notificationNouveauContratCadreBio(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurBio.add(contrat);
@@ -275,7 +277,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 	}
 
-	/*Methodes pour calculer proportion de vente des CC, auteur : Jules*/
+	/**
+	 * Methodes pour calculer proportion de vente des CC, auteur : Jules
+	 */
 	
 	public double venteDernierNext(Feve f) {
 		Double vente = 0.0;
