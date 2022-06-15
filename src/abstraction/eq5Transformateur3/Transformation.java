@@ -90,19 +90,7 @@ public class Transformation extends AcheteurContrat {
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			somme = somme + this.stockFeves.getstock(f);
 		}
-		if (somme <= this.seuilTransformation.getValeur()) {
-			this.transformation.ajouter("Transformation BIO : ");
-			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)*0.6, true);
-			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)*0.4, false);
-			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.4, false);
-			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.6, true);
-			this.transformation.ajouter("Transformation non BIO : ");
-			transformationClassique(Feve.FEVE_MOYENNE, this.stockFeves.getstock(Feve.FEVE_MOYENNE)*0.6, true);
-			transformationClassique(Feve.FEVE_MOYENNE, this.stockFeves.getstock(Feve.FEVE_MOYENNE)*0.4, false);
-			transformationClassique(Feve.FEVE_HAUTE, this.stockFeves.getstock(Feve.FEVE_HAUTE)*0.4, false);
-			transformationClassique(Feve.FEVE_HAUTE, this.stockFeves.getstock(Feve.FEVE_HAUTE)*0.6, true);
-		}
-		else {
+		
 			int step = Filiere.LA_FILIERE.getEtape();
 			double quantite = Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
 			boolean change=true;
@@ -139,7 +127,7 @@ public class Transformation extends AcheteurContrat {
 				}
 				step +=1;
 			}
-		}
+		
 	}
 	
 }
