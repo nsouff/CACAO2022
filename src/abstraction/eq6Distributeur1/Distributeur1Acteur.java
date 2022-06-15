@@ -64,6 +64,7 @@ public class Distributeur1Acteur implements IActeur {
 		JournalPrincipal = new Journal("Journal Principal",this);
 		JournalCompte = new Journal("Journal Compte",this);
 		JournalVente = new Journal("Journal des Ventes", this);
+		ceQuonAchete = new Journal("Ce qu'on achete", this);
 
 		achat = new HashMap<ChocolatDeMarque, Boolean>();
 
@@ -231,6 +232,7 @@ public class Distributeur1Acteur implements IActeur {
 		journaux.add(JournalCompte);
 		journaux.add(stockJ);
 		journaux.add(ceQuonAchete);
+		journaux.add(JournalVente);
 		return journaux;
 	}
 
