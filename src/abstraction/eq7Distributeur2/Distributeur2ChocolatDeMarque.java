@@ -58,7 +58,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			double quantiteTotale = Filiere.LA_FILIERE.getVentes(choco, currentStep-1);
 			double quantiteVendue = venteTracker.getPreviousVenteQuantite(choco); 
 			
-			if (quantiteVendue/quantiteTotale >= 0.75) {
+			if (quantiteVendue/quantiteTotale <= 0.75) {
 				if (choco.isBioEquitable()) {
 					if (choco.getGamme()==Gamme.HAUTE) {
 						double prix = prix_precedent*0.95;
@@ -68,7 +68,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 						return prix;
 					}
 					if (choco.getGamme()==Gamme.MOYENNE) {
-						double prix = prix_precedent*0.9;
+						double prix = prix_precedent*0.8;
 						if (prix < this.prixMinMQ_B) {
 							prix = this.prixMinMQ_B;
 						}
@@ -91,7 +91,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 						return prix;
 					}
 					if (choco.getGamme()==Gamme.MOYENNE) {
-						double prix = prix_precedent*1.1;
+						double prix = prix_precedent*1;
 						if (prix < this.prixMinMQ) {
 							prix = this.prixMinMQ;
 						}
@@ -120,16 +120,16 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 				return 12.5;
 			}
 			if(choco.getGamme()==Gamme.MOYENNE && choco.isBioEquitable() && choco.isOriginal()) {
-				return 11.5;
-			}
-			if(choco.getGamme()==Gamme.MOYENNE && choco.isBioEquitable()) {
 				return 10.5;
 			}
-			if(choco.getGamme()==Gamme.MOYENNE && choco.isOriginal()) {
+			if(choco.getGamme()==Gamme.MOYENNE && choco.isBioEquitable()) {
 				return 9.5;
 			}
+			if(choco.getGamme()==Gamme.MOYENNE && choco.isOriginal()) {
+				return 9;
+			}
 			if(choco.getGamme()==Gamme.MOYENNE) {
-				return 9.0;
+				return 8.5;
 			}
 			if(choco.getGamme()==Gamme.BASSE && choco.isOriginal()) {
 				return 8.0;
