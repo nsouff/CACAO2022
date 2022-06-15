@@ -21,9 +21,9 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	public static final int EPS_ECH_OK=2;
 	public static final int ECH_MAX=15;
 	public static final Double DELTA_QUANTITE=100000.;
-	public static final Double PRIX_MAX=100.0;
-	public static final Double PRIX_OK=50.0;
-	public static final Double EPSILON_PRIX=5.0;
+	public static final Double PRIX_MAX=20.0;
+	public static final Double PRIX_OK=10.0;
+	public static final Double EPSILON_PRIX=2.0;
 	
 	public Demande demande;
 	public int nbStepContrat;
@@ -84,9 +84,9 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			//On pose le chocolat en tête de gondole si il est bio et équitable
 			boolean boolTeteGondole = chocProduit.isBioEquitable();
 			
+			System.out.println(chocProduit + "  ;   " +stock.getQuantite(chocProduit)+ "  ;   " +stock.getSeuilRachat(chocProduit));
 			//Si la quantite du chocolat en question est inférieure au seuil auquel on a décidé d'en racheter, alors on va en racheter, et si on doit acheter plus de 1000kg du produit
 			if (stock.getQuantite(chocProduit)<=stock.getSeuilRachat(chocProduit) && this.demande.get(chocProduit)>1000) {
-				
 				
 				//Retourne le volume restant à acheter
 				double venteParStep = demande.get(chocProduit);
@@ -114,26 +114,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	
 	public double volumeParEtapeMoyenne(ChocolatDeMarque chocProduit,int currentEtape,int nbEtape) {
 		
-		/*
-		double ventes = 0.0;
-		//On ajoute les quantités vendues à chaque étape depuis nbStep
-		
-		for (int j=currentEtape - nbEtape; j<currentEtape; j++) {
-			ventes+=Filiere.LA_FILIERE.getVentes(chocProduit, j);
-			this.journalEtudeVente.ajouter("Vente à l'Etape "+ j + " de chocolat "+ chocProduit+ " : " +ventes);
-		}
-		this.journalEtudeVente.ajouter("==========================================");
-		double judicieux = ventes/(10*nbEtape);
-		
-		//En attente de résolution d'un bug de Romu
-		if (judicieux<=1000) {
-			return 1001;
-		}
-		else {
-			return judicieux;
-		}
-		*/
-		
 		double demandeAnnee = 7200000000.0;
 		int nbStepParAn = 24;
 		int nbChocolats = this.chocolats.size();
@@ -147,7 +127,7 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			quantiteTotale =  quantiteTotale + (Filiere.LA_FILIERE.getVentes(choco, currentEtape-1)/nbDistributeur);  //à modifier avec classe vente*/
 		}
-		double venteJudicieuse = (quantiteVendue/quantiteTotale)*venteBase;
+		double venteJudicieuse = Math.max((quantiteVendue/quantiteTotale)*venteBase,venteBase/2);
 		
 		this.journalEtudeVente.ajouter("Quantitée determinée judicieuse pour "+chocProduit+" : "+ venteJudicieuse +" kg");
 		return venteJudicieuse;	

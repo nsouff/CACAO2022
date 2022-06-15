@@ -44,6 +44,8 @@ public class Distributeur1Acteur implements IActeur {
 	protected Double TauxTour; // renvoi la part de marché visée par FourAll pour le tour en cours
 	protected final double partCC = 0.9;
 	protected Journal stockJ;
+	protected Map<ChocolatDeMarque, Boolean> achat;
+	private Journal ceQuonAchete;
 	
 	/**
 	 * @return the notreStock
@@ -63,6 +65,7 @@ public class Distributeur1Acteur implements IActeur {
 		JournalCompte = new Journal("Journal Compte",this);
 		JournalVente = new Journal("Journal des Ventes", this);
 
+		achat = new HashMap<ChocolatDeMarque, Boolean>();
 
 		
 		this.prixTotalTour = 100000.0;
@@ -99,8 +102,11 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
+		System.out.println("Init fait");
 		for (ChocolatDeMarque C : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			HistoChoco.put(C, new VariableReadOnly(C.toString(), this,0));
+			achat.put(C, true);
+
 		}
 		NotreStock.initialiser();
 		
@@ -162,7 +168,16 @@ public class Distributeur1Acteur implements IActeur {
 		JournalPrincipal.ajouter("Tour "+ Filiere.LA_FILIERE.getEtape() +" terminé pour "+ this.getNom());
 	
 		afficherStockJournal();
+		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			if (! achat.containsKey(choco)) {
+				achat.put(choco, true);
 
+			}
+			if (HistoChoco.get(choco).getValeur(Filiere.LA_FILIERE.getEtape() - 1) < 0.01*NotreStock.getStock(choco)) {
+				ceQuonAchete.ajouter("on achetera plus de " + choco);
+				achat.put(choco, false);
+			}
+		}
 	}
 	
 	
@@ -215,6 +230,7 @@ public class Distributeur1Acteur implements IActeur {
 		journaux.add(JournalPrincipal);
 		journaux.add(JournalCompte);
 		journaux.add(stockJ);
+		journaux.add(ceQuonAchete);
 		return journaux;
 	}
 
