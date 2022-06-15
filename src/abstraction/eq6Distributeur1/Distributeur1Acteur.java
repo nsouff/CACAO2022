@@ -103,7 +103,6 @@ public class Distributeur1Acteur implements IActeur {
 
 	public void initialiser() {
 		supCCadre = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
-		System.out.println("Init fait");
 		for (ChocolatDeMarque C : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			HistoChoco.put(C, new VariableReadOnly(C.toString(), this,0));
 			achat.put(C, true);
@@ -174,7 +173,7 @@ public class Distributeur1Acteur implements IActeur {
 				achat.put(choco, true);
 
 			}
-			if (HistoChoco.get(choco).getValeur(Filiere.LA_FILIERE.getEtape() - 1) < 0.01*NotreStock.getStock(choco)) {
+			if (HistoChoco.get(choco).getValeur(Filiere.LA_FILIERE.getEtape() - 1) < 0.0001*NotreStock.getStock(choco)) {
 				ceQuonAchete.ajouter("on achetera plus de " + choco);
 				achat.put(choco, false);
 			}
@@ -291,10 +290,10 @@ public class Distributeur1Acteur implements IActeur {
 		switch(c) {
 			case BQ: return 0.7;
 			case BQ_O: return 0.7;
-			case MQ: return 0.0;
-			case MQ_O: return 0.0;
-			case MQ_BE: return 0.0;
-			case MQ_BE_O: return 0.0;
+			case MQ: return 0.5;
+			case MQ_O: return 0.5;
+			case MQ_BE: return 0.5;
+			case MQ_BE_O: return 0.5;
 			case HQ: return 0.3;
 			case HQ_O: return 0.3;
 			case HQ_BE: return 0.3;
