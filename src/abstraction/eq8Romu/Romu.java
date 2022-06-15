@@ -451,9 +451,14 @@ public class Romu implements IActeur, IVendeurBourse, IAcheteurBourse, IMarqueCh
 			case FEVE_BASSE : prix= 1.5;break;
 			}
 		}
-		while (prix*contrat.getQuantiteTotale()>(solde/10.0)) {
+		int nbPas=0;
+		while (nbPas<30 && prix*contrat.getQuantiteTotale()>(solde/10.0)) {
 			prix = 0.75*prix;
+			nbPas++;
 		};
+		if (nbPas==30) {
+			return 0.0;
+		}
 		prix = Math.min(prix, contrat.getPrix());
 		this.journal.ajouter(COLOR_LLGRAY, Color.BLUE, "  CCA : on me propose le prix "+contrat.getPrix()+" -> ma proposition ="+prix);
 		return prix;

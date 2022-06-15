@@ -1,6 +1,7 @@
-package abstraction.eq1Producteur1;
+	package abstraction.eq1Producteur1;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
@@ -13,6 +14,7 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	
 	//Auteur : Khéo
 	private HashMap<Feve, Double> prixmoyenFeve ;
+	private HashMap<Parc, Double> repartitionGuerre;
 	/**
 	 * @param feve
 	 * @param stock
@@ -27,8 +29,8 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 
 	//Auteur : Khéo
 	public double offre(Feve f, double cours) {
-		//On met à jour les prix de la HashMap
-			
+		
+			//On met à jour les prix de la HashMap
 			if (Filiere.LA_FILIERE.getEtape()>=1) { //Petite dijonction de cas pour le premier tour afin d'éviter d'aller chercher dans une hashmap vide
 				this.getPrixmoyenFeve().put(f, this.getPrixmoyenFeve().get(f)+cours);
 			
@@ -37,6 +39,9 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 			
 			}
 		
+			
+			this.repartitionGuerre =  parcGuerre() ;
+			
 			//On vend en fonction du prix
 			if(f!=Feve.FEVE_HAUTE_BIO_EQUITABLE) { //Pas de bourse pour le HAUT_BE
 			if (Filiere.LA_FILIERE.getEtape()>=1) {
@@ -45,13 +50,24 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 				if (this.getStock(f, false)<1000000) {
 					double tauxdecroit = ((0.75-1)/1000000)*this.getStock(f, false) + 1 ; //Taux décroissant sur 1 million jusqu'à 75 %
 					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*tauxdecroit <= cours) {
-						return this.getStock(f, false);
+						double stock = 0 ;
+						if (repartitionGuerre != null) {
+						for (Parc ele : repartitionGuerre.keySet()) {
+							stock += this.getStockParc(f, false, ele);
+						}
+						return stock;
+						}
 					}
 				}
 				else {
 					if ((this.getPrixmoyenFeve().get(f)/(Filiere.LA_FILIERE.getEtape()+1))*0.75 <= cours) {
-
-						return this.getStock(f, false);
+						if (repartitionGuerre !=  null) {
+						double stock = 0 ;
+						for (Parc ele : repartitionGuerre.keySet()) {
+							stock += this.getStockParc(f, false, ele);
+						}
+						return stock;
+						}
 					}
 				}
 			}
@@ -75,9 +91,8 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 	//Auteur : Khéo
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		// TODO Auto-generated method stub
-		if (this.getStock(f, false)>quantiteEnKg) {
-		this.retirerQuantite(f, quantiteEnKg);
-		}
+		
+		venteGuerre(this.repartitionGuerre, quantiteEnKg, f);
 	}
 	
 
@@ -112,5 +127,76 @@ public class ProducteurActeur1VenteBourse extends Producteur1Producteur implemen
 		}
 		return 0.0 ; 
 	}
+	
+	
+	//Auteur : Khéo
+	public HashMap<Parc, Double> parcGuerre(){ //On obtient la répartition qu'il faut en prenant compte les répartition initiales et la mémoire
+		
+		HashMap<Parc, Double> res = new HashMap<Parc, Double>();
+		LinkedList<Parc> guerre = new LinkedList<Parc>() ;
+		
+		for (Parc parc : this.getListeParc()) {
+				
+			if (parc.getNom() == "Ghana") {
+				res.put(parc, 0.62);
+			} else if (parc.getNom() == "Côte d'Ivoire"){
+				res.put(parc, 0.23);
+			} else if (parc.getNom() == "Nigéria"){
+				res.put(parc, 0.08);
+			} else if (parc.getNom() == "Cameroun"){
+				res.put(parc, 0.07);
+			} 
+			if (parc.getGuerre()) { 
+			guerre.add(parc);
+		}
+			
+		}
+		
+		
+		int repart = this.getListeParc().size() - guerre.size() ;
+		
+		if (repart == 0) {
+			return null ; //Tout les parcs sont en guerre 
+		} else {
+			for (Parc enguerre : guerre) {
+				double ajout = res.get(enguerre)/repart ;
+				res.remove(enguerre);
+				
+				for (Parc support : res.keySet()) {
+					if (!guerre.contains(support)) {
+						res.replace(support, res.get(support)+ajout);
+					}
+				}
+				
+			}
+		}
+		
+				
+		return res ;
+	}
+	
+	//auteur : Khéo
+	public void venteGuerre(HashMap<Parc, Double> repart, double quantite, Feve f) {
+				
+		for (Parc parc : repart.keySet()) {
+			double reste = this.retirerQuantiteParc(f, quantite*repart.get(parc), parc); //On retire la quantité multiplié par le pourcentabe calculé avec la guerre
+			if (reste >0) {
+				for (Parc parcreste : repart.keySet()) {
+					reste = this.retirerQuantiteParc(f, quantite*repart.get(parcreste), parcreste);
+				}
+			}
+			
+		}
+	}
+
+
+	/**
+	 * @return the repartitionGuerre
+	 */
+	public HashMap<Parc, Double> getRepartitionGuerre() {
+		return repartitionGuerre;
+	}
+	
+	
 
 }
