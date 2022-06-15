@@ -228,7 +228,9 @@ public class Distributeur1Acteur implements IActeur {
 			+ Choco + " au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
 		}
 		journal1.ajouter("Il y a eu au total : " + this.ChocoTotalTour + "kg de chocolats vendus au total au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
+	
 	}
+	
 	
 	
 
