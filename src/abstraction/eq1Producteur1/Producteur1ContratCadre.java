@@ -59,11 +59,14 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		
 		
 		if(contrat.getProduit() instanceof Feve) {
-		if (contrat.getEcheancier().getQuantiteTotale()<this.getStock((Feve)contrat.getProduit(), false)) {
-			if (contrat.getEcheancier().getQuantiteTotale()<100000) {
+		if (contrat.getEcheancier().getQuantiteTotale()<0.75*this.getStock((Feve)contrat.getProduit(), false)) {
+			if (contrat.getEcheancier().getQuantiteTotale()<0.25*this.getStock((Feve)contrat.getProduit(), false)) {
 				Echeancier newcontrat = contrat.getEcheancier();
-				newcontrat.ajouter(100000-newcontrat.getQuantiteTotale());
-				this.getContratCadre().ajouter("On ajoute une quantité pour un nouveau contrat");
+				double quantite =  0.25*this.getStock((Feve)contrat.getProduit(), false)/newcontrat.getNbEcheances();
+				for (int date=newcontrat.getStepDebut();date<newcontrat.getStepFin(); date++) {
+					newcontrat.set(date,quantite);
+				}
+				this.getContratCadre().ajouter("On réajuste les quantités à 25%");
 				this.getContratCadre().ajouter("Nouvel échéancier " + newcontrat.toString());
 				return newcontrat;
 			} else { //Quantité demandé acceptable
@@ -79,12 +82,15 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	}
 		
 		if(contrat.getProduit() instanceof Chocolat) {
-			if (contrat.getEcheancier().getQuantiteTotale()<this.getStock((Chocolat)contrat.getProduit())) {
-				if (contrat.getEcheancier().getQuantiteTotale()<1000) {
+			if (contrat.getEcheancier().getQuantiteTotale()<0.75*this.getStock((Chocolat)contrat.getProduit())) {
+				if (contrat.getEcheancier().getQuantiteTotale()<0.25*this.getStock((Chocolat)contrat.getProduit())) {
 					Echeancier newcontrat = contrat.getEcheancier();
-					newcontrat.ajouter(1000-newcontrat.getQuantiteTotale());
-					this.getContratCadre().ajouter("On ajoute une quantité pour un nouveau contrat");
-					this.getContratCadre().ajouter("Nouvelle échéancier " + newcontrat.toString());
+					double quantite =  0.25*this.getStock((Chocolat)contrat.getProduit())/newcontrat.getNbEcheances();
+					for (int date=newcontrat.getStepDebut();date<newcontrat.getStepFin(); date++) {
+						newcontrat.set(date,quantite);
+					}
+					this.getContratCadre().ajouter("On réajuste les quantités à 25%");
+					this.getContratCadre().ajouter("Nouvel échéancier " + newcontrat.toString());
 					return newcontrat;
 				} else { //Quantité demandé acceptable
 					this.getContratCadre().ajouter("Quantité demandé acceptable");
@@ -96,11 +102,9 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 				this.getContratCadre().ajouter("Pas assez de quantité dans le stock présent de " + contrat.getProduit().toString());
 				return null;
 			}
-
-			}
-		
+		}
 		this.getContratCadre().ajouter("On ne propose pas ce produit");
-
+		
 		return null;
 	}
 
