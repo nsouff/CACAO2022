@@ -203,26 +203,27 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	
 	public double contrePropositionPrixVendeurBio(ExemplaireContratCadre contrat) {
+		this.journalCC.ajouter("Proposition de l'acheteur : " +contrat.getPrix());
 		double contrepropositionprix = -1.0;
-		if (contrat.getPrix()>0.8*propositionPrix(contrat)) {
+		if (contrat.getPrix()>0.5*propositionPrix(contrat)) {
 			if (getClassementTransformateur( contrat.getAcheteur() )==1){
-				if (Math.random()<0.65) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 60% des cas
+				if (Math.random()<0.9) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 90% des cas
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==2){
-				if (Math.random()<0.6) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 40% des cas
+				if (Math.random()<0.7) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 70% des cas
 				}
 			}	
 			if (getClassementTransformateur( contrat.getAcheteur() )==3){
-				if (Math.random()<0.3) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 20% des cas
+				if (Math.random()<0.5) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 50% des cas
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==4){
-				if (Math.random()<0.1) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 10% des cas
+				if (Math.random()<0.3) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 30% des cas
 				}
 			}
 		}
