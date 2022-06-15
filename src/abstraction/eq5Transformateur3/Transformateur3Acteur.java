@@ -139,7 +139,11 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			this.besoinFeves.put(f, 0.00);
 			this.dispoFeves.put(f, this.stockFeves.getstock(f));
+			
 		}
+		this.capaciteStockageEQ5=this.capaciteStockageEQ5*4;
+		Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), this.prixEntrepot.getValeur()*3);
+		
 	}
 
 	
