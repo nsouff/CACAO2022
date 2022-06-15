@@ -267,6 +267,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	 *  Alexandre*/
 	public void next() {
 		super.next();
+		stockChocoPeremption.supprimeLot(Filiere.LA_FILIERE.getEtape(), stockChoco);
 		
 		/** ____________________MAJ de variabales au debut / Initialisation____________________
 		 *  dernierPrixVenteChoco, listeAO*/
@@ -438,6 +439,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					PropositionAchatAO retenue = superviseurAO.vendreParAO(this, cryptogramme, coco, stockDispo, false);
 					if (retenue!=null) {
 						stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());
+						stockChocoPeremption.venteLot(c, retenue.getOffre().getQuantiteKG());
 						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
 						
 					} else {
