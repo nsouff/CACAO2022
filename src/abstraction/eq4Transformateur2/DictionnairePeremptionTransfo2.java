@@ -10,9 +10,15 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 ////Marie
-public class DictionnairePeremptionTransfo2<Produit> extends Transformateur2ContratCadreVendeur{
+public abstract class DictionnairePeremptionTransfo2<Produit> extends Transformateur2ContratCadreVendeur{
 	
-	private HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
+	protected HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
+	
+	public DictionnairePeremptionTransfo2(){
+		this.peremption= new HashMap<DateProdTransfo2<Produit>,Double>();
+		
+	}
+	
 	
 	public Set<DateProdTransfo2<Produit>> getDates() {
 		return this.peremption.keySet(); //renvoie (date,produit)
@@ -31,6 +37,7 @@ public class DictionnairePeremptionTransfo2<Produit> extends Transformateur2Cont
 	
 	public void initialiser() {
 		super.initialiser();
+//		this.peremption=new HashMap<DateProdTransfo2<Produit> ,Double>();
 	}
 
 
@@ -66,7 +73,25 @@ public class DictionnairePeremptionTransfo2<Produit> extends Transformateur2Cont
 
 ////Marie	
 ////modifications de la quantité lors d'une transformation (pour les fèves) ou d'une vente (chocolats)
-public void utiliserQuantProd(Produit p, double quant) {
+//public void utiliserQuantProd(Produit p, double quant) {
+//	double quantiteRestante=quant;
+//	while(quantiteRestante!=0){
+//		for(DateProdTransfo2<Produit>d:this.getDates()) { //on parcourt la Hashmap jusqu'à ce qu'on ait le produit (dans ordre décroissant)
+//			if(d.getProduit()==p) {
+//				double quantprod=this.peremption.get(d);
+//				if(quantprod>quantiteRestante) { //quand la quant est suffisante, on retire seulement la quantité voulue
+//					this.peremption.put(d,quantprod-quantiteRestante); 
+//				}else {
+//					this.peremption.remove(d); 
+//					quantiteRestante=quantiteRestante-quantprod;
+//				}
+//			}
+//		}
+//	}
+//}
+//
+public void utiliserQuantProd(Object op, double quant) {
+	Produit p = (Produit)op;
 	double quantiteRestante=quant;
 	while(quantiteRestante!=0){
 		for(DateProdTransfo2<Produit>d:this.getDates()) { //on parcourt la Hashmap jusqu'à ce qu'on ait le produit (dans ordre décroissant)
@@ -81,8 +106,7 @@ public void utiliserQuantProd(Produit p, double quant) {
 			}
 		}
 	}
-}
-
+	}
 	
 ////Marie
 	public double quantTotaleProduit(Produit p) { //calcule la quantité totale d'un produit

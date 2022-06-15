@@ -30,7 +30,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	protected double prix_ori;
 	protected double cap;
 	
-	
+	public abstract void utiliserQuantProd(Object p, double quant);
 	
 	
 	
@@ -319,6 +319,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 						NewCap-=max_prod;//mise à jour de la capacité de production
 						this.getStockfeve().enlever(f,max_prod);//baisse le stock de feves
 						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_prod);//augmente le stock de chocolat
+						this.utiliserQuantProd(f, qt);
 						journalTransfo.ajouter("Transformation Courte de " +max_prod+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
 						
@@ -364,16 +365,16 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 		if(f.getGamme().equals(Gamme.BASSE)) {
 			return new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
 		} else if (f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()){
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
+			return new ChocolatDeMarque(Chocolat.MQ,getMarquesChocolat().get(1));
 		}
 		else if(f.getGamme().equals(Gamme.MOYENNE) && f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.MQ_BE,super.getMarquesChocolat().get(2));
+			return new ChocolatDeMarque(Chocolat.MQ_BE,getMarquesChocolat().get(2));
 		}
 		else if(f.getGamme().equals(Gamme.HAUTE) && !f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.HQ,super.getMarquesChocolat().get(3));
+			return new ChocolatDeMarque(Chocolat.HQ,getMarquesChocolat().get(3));
 		}
 		else if(f.getGamme().equals(Gamme.HAUTE) && f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.HQ_BE,super.getMarquesChocolat().get(4));
+			return new ChocolatDeMarque(Chocolat.HQ_BE,getMarquesChocolat().get(4));
 		}
 		return null;
 	}
@@ -382,12 +383,12 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 	//est utile pour la transfo longue : renvoie le chocolat de marque de qualité supérieur à la fève
 	public ChocolatDeMarque fevechocoplus(Feve f) {
 		if(f.getGamme().equals(Gamme.BASSE)) {
-			return new ChocolatDeMarque(Chocolat.MQ,super.getMarquesChocolat().get(1));
+			return new ChocolatDeMarque(Chocolat.MQ,getMarquesChocolat().get(1));
 		} else if (f.getGamme().equals(Gamme.MOYENNE) && !f.isBioEquitable()){
-			return new ChocolatDeMarque(Chocolat.HQ,super.getMarquesChocolat().get(3));			
+			return new ChocolatDeMarque(Chocolat.HQ,getMarquesChocolat().get(3));			
 		}
 		else if (f.getGamme().equals(Gamme.MOYENNE) && f.isBioEquitable()) {
-			return new ChocolatDeMarque(Chocolat.HQ_BE,super.getMarquesChocolat().get(4));
+			return new ChocolatDeMarque(Chocolat.HQ_BE,getMarquesChocolat().get(4));
 		}
 		return null;
 	}
