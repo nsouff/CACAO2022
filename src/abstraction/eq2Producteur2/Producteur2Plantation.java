@@ -138,12 +138,17 @@ public abstract class Producteur2Plantation  {
 		/* 
 		 * Pour le moment on replante automatiquement les arbres qui sont arrivés au bout de leur durée de vie en conservant le type d'arbre.  
 		 */	
+		
+		for (Feve f : Feve.values()) {
+			
+			
+		}
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			
 			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
 			List<Parcelle> ParcellesASupprimer = new ArrayList<Parcelle>();
-			
+		
 			for (Parcelle p : ListeParcelles) {
 				if (p.getAge() == a.getDureeVie()) {
 					ParcellesASupprimer.add(p);	
