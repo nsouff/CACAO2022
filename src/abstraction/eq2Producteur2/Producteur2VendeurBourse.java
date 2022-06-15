@@ -15,7 +15,7 @@ public class Producteur2VendeurBourse extends Producteur2Transfo implements IVen
 
 	public Producteur2VendeurBourse() {
 		super();
-		this.journalBourse= new Journal(this.getNom()+" Bourse CACAO DORE", this);
+		this.journalBourse= new Journal(this.getNom()+" Bourse", this);
 	}
 
 	public double offre(Feve f, double cours) {
