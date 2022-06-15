@@ -21,9 +21,9 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	public static final int EPS_ECH_OK=2;
 	public static final int ECH_MAX=15;
 	public static final Double DELTA_QUANTITE=100000.;
-	public static final Double PRIX_MAX=100.0;
-	public static final Double PRIX_OK=50.0;
-	public static final Double EPSILON_PRIX=5.0;
+	public static final Double PRIX_MAX=20.0;
+	public static final Double PRIX_OK=10.0;
+	public static final Double EPSILON_PRIX=2.0;
 	
 	public Demande demande;
 	public int nbStepContrat;

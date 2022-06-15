@@ -39,7 +39,7 @@ public class Tracker implements ITracker{
 		}
 		
 	}
-	
+
 	private List<Double> newListOneElement(double d) {
 		ArrayList temp = new ArrayList<Double>();
 		temp.add(d);
