@@ -4,13 +4,16 @@ import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurBourse{
 
 	// Karla 
 	public double demande(Feve f, double cours) {
 		
-		if (!(this.stockFeves.getProduitsEnStock().contains(f))) { 
+		if (!(this.stockFeves.getProduitsEnStock().contains(f))|| (this.stockChocolatVariableH.getValeur()>0.33*this.capaciteStockageEQ5 && 
+				f.getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.33*this.capaciteStockageEQ5 && 
+						f.getGamme()==Gamme.MOYENNE )) { 
 			return 0.0;
 		}
 		
