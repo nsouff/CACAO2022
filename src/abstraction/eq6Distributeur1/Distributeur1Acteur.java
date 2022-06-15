@@ -29,8 +29,9 @@ public class Distributeur1Acteur implements IActeur {
 	protected Stock NotreStock;
 	Random ran;
 	protected Map<ChocolatDeMarque,Variable> stockageQte;
-	protected Journal journal1;
-	protected Journal journalCompte;
+	protected Journal JournalPrincipal;
+	protected Journal JournalCompte;
+	protected Journal JournalVente;
 	protected List<Variable> prix; 
 	protected Double prixTotalTour;
 	protected Map<ChocolatDeMarque, Double> prixVente;
@@ -60,12 +61,11 @@ public class Distributeur1Acteur implements IActeur {
 	public Distributeur1Acteur() {
 		stockJ = new Journal("Stocks", this);
 		HistoChoco = new HashMap<ChocolatDeMarque, VariableReadOnly>(); // Léo
-		journal1 = new Journal("journal1",this);
-		journalCompte = new Journal("journalCompte",this);
-		ceQuonAchete = new Journal("ce qu'on achete", this);
+		JournalPrincipal = new Journal("Journal Principal",this);
+		JournalCompte = new Journal("Journal Compte",this);
+		JournalVente = new Journal("Journal des Ventes", this);
 
 		achat = new HashMap<ChocolatDeMarque, Boolean>();
-		
 
 		
 		this.prixTotalTour = 100000.0;
@@ -74,19 +74,16 @@ public class Distributeur1Acteur implements IActeur {
 		ran = new Random();
 		
 		this.ChocoTotalTour = 0.0;
-		
-		journal1 = new Journal("journal1",this);
-		journalCompte = new Journal("journalCompte",this);
 		NotreStock = new Stock(this);
 		for(ChocolatDeMarque c : this.getNotreStock().getMapStock().keySet()) 
 		{
-			journal1.ajouter("ajout d'une variable stock pour le chocolat" + c + "effectué" );
+			JournalPrincipal.ajouter("ajout d'une variable stock pour le chocolat" + c + "effectué" );
 			prix.add(new Variable(c+"",this,0));
-			journal1.ajouter("ajout d'une variable prix pour le chocolat " + c + "effectué");
+			JournalPrincipal.ajouter("ajout d'une variable prix pour le chocolat " + c + "effectué");
 		}	
 		
-		journal1.ajouter("création de la liste de variable des prix terminée");
-		journal1.ajouter("création de la liste de variable stock terminée");
+		JournalPrincipal.ajouter("création de la liste de variable des prix terminée");
+		JournalPrincipal.ajouter("création de la liste de variable stock terminée");
 	}
 	
 	
@@ -147,9 +144,11 @@ public class Distributeur1Acteur implements IActeur {
 	
 	public void next() {
 		//leorouppert
-
-		journal1.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
-		getChocoTotalTour();
+		for (ChocolatDeMarque C : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			JournalVente.ajouter("Ventes de " + C + " au tour  " +Filiere.LA_FILIERE.getEtape()+" : "+ (HistoChoco.get(C).getValeur(Filiere.LA_FILIERE.getEtape(),cryptogramme)-HistoChoco.get(C).getValeur(Filiere.LA_FILIERE.getEtape()-1,cryptogramme)));
+			JournalVente.ajouter("Soit une part de marché de " + 0.01*Math.round(10000*(HistoChoco.get(C).getValeur(Filiere.LA_FILIERE.getEtape(),cryptogramme)-HistoChoco.get(C).getValeur(Filiere.LA_FILIERE.getEtape()-1,cryptogramme))/Filiere.LA_FILIERE.getVentes(C, Filiere.LA_FILIERE.getEtape())) + "%");
+		}
+		JournalPrincipal.ajouter("entrée dans next pour le tour n° " + Filiere.LA_FILIERE.getEtape());
 		/**
 		 *  
 		 * Gestion des compte -> retirer argent :
@@ -158,15 +157,15 @@ public class Distributeur1Acteur implements IActeur {
 		 */
 		//calcul cout sur le tour :
 		
-		journal1.ajouter(getDescription());
+		JournalPrincipal.ajouter(getDescription());
 		
 		prixTotalTour = NotreStock.getCoûtStockageTotale();
 		if (prixTotalTour > 0) {
 			Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), prixTotalTour);
-			journalCompte.ajouter("le compte a été débité de "+prixTotalTour);
-			journalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
+			JournalCompte.ajouter("le compte a été débité de "+prixTotalTour);
+			JournalCompte.ajouter("le il reste"+this.getSolde()+"sur le compte");
 		}		
-		journal1.ajouter("Tour "+ Filiere.LA_FILIERE.getEtape() +" terminé pour "+ this.getNom());
+		JournalPrincipal.ajouter("Tour "+ Filiere.LA_FILIERE.getEtape() +" terminé pour "+ this.getNom());
 	
 		afficherStockJournal();
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
@@ -228,8 +227,8 @@ public class Distributeur1Acteur implements IActeur {
 	@Override
 	public List<Journal> getJournaux() {
 		List<Journal> journaux = new ArrayList<Journal>();
-		journaux.add(journal1);
-		journaux.add(journalCompte);
+		journaux.add(JournalPrincipal);
+		journaux.add(JournalCompte);
 		journaux.add(stockJ);
 		journaux.add(ceQuonAchete);
 		return journaux;
@@ -244,12 +243,12 @@ public class Distributeur1Acteur implements IActeur {
 	//EmmaHumeau
 	public void notificationFaillite(IActeur acteur) {
 		if (NotreStock.seuilSecuFaillite() == true) {
-			journal1.ajouter("On risque de faire faillite au prochain tour");
+			JournalPrincipal.ajouter("On risque de faire faillite au prochain tour");
 		}
 		}
 
 	public void notificationOperationBancaire(double montant) {
-		journalCompte.ajouter("Une opération vient d'avoir lieu d'un montant de " + montant);
+		JournalCompte.ajouter("Une opération vient d'avoir lieu d'un montant de " + montant);
 	}
 
 	// Renvoie le solde actuel de l'acteur
@@ -257,21 +256,6 @@ public class Distributeur1Acteur implements IActeur {
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}
-	
-	/**
-	 * @author Nolann
-	 * renvoie le nombre de kg de chocolats vendus au l'année précédente à la même période  
-	 */
-	public void getChocoTotalTour() {
-		
-		for(ChocolatDeMarque Choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			this.ChocoTotalTour = this.ChocoTotalTour + Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()-24);
-			journal1.ajouter("il y a eu : "+Filiere.LA_FILIERE.getVentes(Choco, Filiere.LA_FILIERE.getEtape()) +" kg de chocolats vendus de type " 
-			+ Choco + " au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
-		}
-		journal1.ajouter("Il y a eu au total : " + this.ChocoTotalTour + "kg de chocolats vendus au total au tour : " + (Filiere.LA_FILIERE.getEtape()-24));
-	}
-	
 	
 
 	/**
