@@ -84,9 +84,9 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			//On pose le chocolat en tête de gondole si il est bio et équitable
 			boolean boolTeteGondole = chocProduit.isBioEquitable();
 			
+			System.out.println(chocProduit + "  ;   " +stock.getQuantite(chocProduit)+ "  ;   " +stock.getSeuilRachat(chocProduit));
 			//Si la quantite du chocolat en question est inférieure au seuil auquel on a décidé d'en racheter, alors on va en racheter, et si on doit acheter plus de 1000kg du produit
 			if (stock.getQuantite(chocProduit)<=stock.getSeuilRachat(chocProduit) && this.demande.get(chocProduit)>1000) {
-				
 				
 				//Retourne le volume restant à acheter
 				double venteParStep = demande.get(chocProduit);
