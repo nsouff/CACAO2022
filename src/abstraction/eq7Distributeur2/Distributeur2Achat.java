@@ -114,26 +114,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 	
 	public double volumeParEtapeMoyenne(ChocolatDeMarque chocProduit,int currentEtape,int nbEtape) {
 		
-		/*
-		double ventes = 0.0;
-		//On ajoute les quantités vendues à chaque étape depuis nbStep
-		
-		for (int j=currentEtape - nbEtape; j<currentEtape; j++) {
-			ventes+=Filiere.LA_FILIERE.getVentes(chocProduit, j);
-			this.journalEtudeVente.ajouter("Vente à l'Etape "+ j + " de chocolat "+ chocProduit+ " : " +ventes);
-		}
-		this.journalEtudeVente.ajouter("==========================================");
-		double judicieux = ventes/(10*nbEtape);
-		
-		//En attente de résolution d'un bug de Romu
-		if (judicieux<=1000) {
-			return 1001;
-		}
-		else {
-			return judicieux;
-		}
-		*/
-		
 		double demandeAnnee = 7200000000.0;
 		int nbStepParAn = 24;
 		int nbChocolats = this.chocolats.size();

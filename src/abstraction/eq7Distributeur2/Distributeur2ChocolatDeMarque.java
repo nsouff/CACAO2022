@@ -58,7 +58,7 @@ public class Distributeur2ChocolatDeMarque extends Distributeur2Achat implements
 			double quantiteTotale = Filiere.LA_FILIERE.getVentes(choco, currentStep-1);
 			double quantiteVendue = venteTracker.getPreviousVenteQuantite(choco); 
 			
-			if (quantiteVendue/quantiteTotale >= 0.75) {
+			if (quantiteVendue/quantiteTotale <= 0.75) {
 				if (choco.isBioEquitable()) {
 					if (choco.getGamme()==Gamme.HAUTE) {
 						double prix = prix_precedent*0.95;
