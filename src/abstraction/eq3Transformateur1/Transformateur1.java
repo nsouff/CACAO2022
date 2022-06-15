@@ -286,7 +286,6 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					journal.ajouter("le dernier prix de vente du chocolat " + c + " au distributeur" + distrib+ " est de " + dernierPrixVenteChoco.getPrix(distrib, c));
 					
 					dernierPrixVenteChoco.setPrix(distrib, c, dernierPrixVenteChocoReset.getPrix(distrib, c));
-					//System.out.println("bug 1 l 265 ?");
 				}
 			}
 		}
@@ -317,23 +316,15 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			
 			// choisit le producteur de feve selon le type de feve desire
 			if (f == Feve.FEVE_BASSE || f == Feve.FEVE_MOYENNE) {  // B et M => prod1
-				//System.out.println("_______________________________________________________________________________________");
 				
 				// calcul de la quantite de feves qui proviennent de contrat deja existant
 				for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) { 
 					if (f == c.getProduit()) {
-						//System.out.println(Filiere.LA_FILIERE.getEtape());
-						//System.out.println("contrat next()");
-						//System.out.println(c+ "  restealivrer "+c.getQuantiteRestantALivrer());
 						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
 						journal.ajouter("La quantite de feve provenant de contrat cadre est de "+ quantiteFeveContrat+ "kg ");
-						//System.out.println("qtFeveContrat du next() "+quantiteFeveContrat);
 					}
 				}
-				
-				System.out.println("qtFeveContrat totale du next() "+quantiteFeveContrat);
-				//System.out.println("mes CC acheteurs");
-				//System.out.println(mesContratEnTantQueAcheteur);
+
 				
 				// desire t on un CC ?
 				
@@ -451,7 +442,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
 						
 					} else {
-						journal.ajouter("pas d'offre retenue");
+						journalAO.ajouter("pas d'offre retenue");
 					}
 				}
 				
