@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Feve;
  *
  */
 
-public class Producteur2StockChoco extends Producteur2Transfo{
+public class Producteur2StockChoco extends Producteur2VendeurContratCadre{
 	
 	protected Integer cryptogramme;
 	protected HashMap<Chocolat,LinkedList<Stock>> StocksChoco;

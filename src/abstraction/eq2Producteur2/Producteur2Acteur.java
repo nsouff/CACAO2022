@@ -17,7 +17,7 @@ import abstraction.eq8Romu.general.VariableReadOnly;
 import abstraction.eq8Romu.produits.Chocolat;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
+public abstract class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	
 	protected int cryptogramme;
 	protected Journal journal;
@@ -240,6 +240,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	public Variable GetStockHausse_BE() {
 		return StockFeveHaute_BE;
 	}
+
 
 
 

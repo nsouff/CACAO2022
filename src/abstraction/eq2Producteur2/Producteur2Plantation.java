@@ -130,19 +130,40 @@ public abstract class Producteur2Plantation  {
 
 	}
 	
+	public abstract double proportionVente(Feve f);
+	
+	public Feve FevePlusVendue() {
+
+		double prop_prec = 0.0;
+		Feve res = null;
+		
+		for(Feve f : Feve.values()) {
+			if (proportionVente(f) > prop_prec) {
+				res = f;
+			}
+			
+			prop_prec = proportionVente(f);
+		}
+		return res;
+	}
+	
 	
 	
 	public void renouvellement() {
 		//auteur : Fiona
 	
 		/* 
-		 * Pour le moment on replante automatiquement les arbres qui sont arrivés au bout de leur durée de vie en conservant le type d'arbre.  
+		 * On ne replante que quand des arbres sont arrivés au bout de leur durée de vie, ie qu'on 
+		 * n'augmente notre parc initial en termes de quantités. 
+		 * 
+		 * Dans Producteur2VendeurContratCadre, proportionVente(Feve f) permet de donner la 
+		 * proportion que représente les ventes de fèves f par rapport aux ventes totales de contrats
+		 * cadres pour les 50 derniers steps. 
+		 * A partir de ces données, on décide de replanter tel ou tel type de fève. 
+		 *
 		 */	
 		
-		for (Feve f : Feve.values()) {
-			
-			
-		}
+
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
 			

@@ -6,7 +6,7 @@ package abstraction.eq2Producteur2;
  *
  */
 
-public class Producteur2Transfo extends Producteur2Acteur {
+public abstract class Producteur2Transfo extends Producteur2StockChoco {
 	
 	
 	public Producteur2Transfo() {
