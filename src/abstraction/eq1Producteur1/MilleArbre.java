@@ -38,7 +38,14 @@ public class MilleArbre {
 		this.stade_maladie = 0;
 		this.ut_debut_maladie = 0;
 		this.cooperative= cooperative;
-		this.qualite = qualite;
+		if ((qualite==1) || (qualite == 2) || (qualite == 3)) { 
+			//1: basse 2: moyenne 3: haute
+			this.qualite = qualite;
+		}
+		else {
+			this.qualite = 1; 
+			System.out.print("Erreur de qualité, qualité donnée = "+qualite);
+		}
 		this.bioequitable = BE;
 		this.transition_bio = false;
 		this.date_transition = 0;
@@ -122,7 +129,16 @@ public class MilleArbre {
 		mecontentement.add(mecontentement_haute);
 		int qualite = this.getQualite();
 		int maladie = this.getStade_maladie();
-		this.setMecontentement(this.getMecontentement() + mecontentement.get(qualite-1)+maladie);
+		this.setMecontentement(this.getMecontentement()+mecontentement.get(qualite-1)+maladie);
+		if (maladie==0) {
+			this.setMecontentement(this.getMecontentement()-5);
+		}
+		if (this.getMecontentement()>30) {
+			double proba= Math.random();
+			if (proba*this.getMecontentement()>28) {
+				this.Regrouper();
+			}
+		}
 	}
 	
 	

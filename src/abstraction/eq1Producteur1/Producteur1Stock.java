@@ -158,10 +158,11 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 		}
 	}
 	
-	public void retirerQuantiteParc(Feve f, double quantite, Parc provenance) {
-		if (quantite > this.getStockParc(f, false, provenance)) {
-			int i = 0 ;
-		while (quantite>0) {
+	public double retirerQuantiteParc(Feve f, double quantite, Parc provenance) {
+		
+		
+		int i = 0 ;
+		while (quantite>0 && this.getStockParc(f, false, provenance)>0 && i < this.getFeves().get(f).size()) {
 			double poids = this.getFeves().get(f).get(i).getPoids() ;
 			
 			if (this.getFeves().get(f).get(i).getProvenance() == provenance) {
@@ -176,7 +177,9 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 			}
 		i += 1 ;
 		}
-		}
+		
+		return quantite; //On peut retourner la quantité à redistribuer
+		
 	}
 	
 	//Auteur : Khéo
@@ -270,7 +273,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	 * Auteur : Laure
 	 * met à jour le stock après des parasites
 	 */
-	public void nextParasites() {
+	public void nextParasites2() {
 		// Differentiation entre gammes / bio :
 		// bio : 25% par UT
 		// non bio : 15% par UT
@@ -324,6 +327,69 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 			double stockAvantPar = this.getStock(Feve, true);
 			double perteStock = stockAvantPar*tauxPerteStock;
 			this.retirerQuantite(Feve, perteStock);
+		}
+	}
+	
+	/**
+	 * @author laure
+	 * Parasites en fonction du parc
+	 */
+	public void nextParasites() {
+		// Differentiation entre gammes / bio :
+		// bio : 25% par UT
+		// non bio : 15% par UT
+		// 3 niveaux de parasites
+		// 1 : 70 %
+		// 2 : 25%
+		// 3 : 5%
+		// 1 : Perte de 10% de la récolte
+		// 2 : Perte de 50% de la récolte
+		// 3 : Perte de 80% de la récolte
+		double aleaParasiteGlobal = 0.0;
+		for (Parc parc : this.getListeParc()) {
+			
+		for(Feve Feve : this.getFeves().keySet()) {
+			
+			aleaParasiteGlobal = Math.random(); //Proba d'avoir un parasite
+			double tauxPerteStock = 0.0;
+			
+			
+			if (Feve.isBioEquitable()) {
+				if (aleaParasiteGlobal <=0.25) { //Force du parasite
+					double aleaForceParasites = Math.random();
+					if (aleaForceParasites <= 0.70) {
+						// On perd 10% de notre stock
+						tauxPerteStock = 0.1;
+					} else if (aleaForceParasites <=0.95) {
+						// On perd 50% de notre stock
+						tauxPerteStock = 0.5;
+					} else {
+						// On perd 80% de notre stock
+						tauxPerteStock = 0.8;
+					}
+				}
+				
+			} else { // Pas bio-équitable moins de chance d'avoir un parasite
+				if (aleaParasiteGlobal <=0.15) {
+					double aleaForceParasites = Math.random();
+					if (aleaForceParasites <= 0.70) {
+						// On perd 10% de notre stock
+						tauxPerteStock = 0.1;
+					} else if (aleaForceParasites <=0.95) {
+						// On perd 50% de notre stock
+						tauxPerteStock = 0.5;
+					} else {
+						// On perd 80% de notre stock
+						tauxPerteStock = 0.8;
+					}
+
+				}
+				
+			}
+			double stockAvantPar = this.getStockParc(Feve, true,parc);
+			double perteStock = stockAvantPar*tauxPerteStock;
+			this.retirerQuantiteParc(Feve, perteStock,parc);
+		}
 		}
 	}
 }
