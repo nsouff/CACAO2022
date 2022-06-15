@@ -85,6 +85,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 
 	
 	//methode pour le bio
+	
 	public double qtiteTotaleContratEnCours(Object produit) {
 		double qtiteTotaleContratEnCours = 0;
 		for ( int i=0; i<mesContratEnTantQueVendeurBio.size();i++) {
@@ -96,6 +97,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 	
 	//methode pour le non bio 
+	
 	public double quantiteTotaleContratEnCours(Object produit) {
 		double quantiteTotaleContratEnCours = 0;
 		for ( int i=0; i<mesContratEnTantQueVendeurNonBio.size();i++) {
@@ -105,15 +107,20 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 		return quantiteTotaleContratEnCours;
 	}
+	
 	//non bio
+	
 	public Echeancier contrePropositionDuVendeurNonBio(ExemplaireContratCadre contrat) {
+		this.journalCC.ajouter("Proposition de Contrat cadre avec l'échéancier : "+contrat.getEcheancier()+"Feve : "+contrat.getProduit());
 		if (vend(contrat.getProduit())) {
 			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < this.production((Feve)(contrat.getProduit()))) { 
+				this.journalCC.ajouter("Echéancier accepté");
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
 				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) );// on souhaite livrer toute la quatité qu'on a
+				this.journalCC.ajouter("Proposition d'un Nouvelle échéancier : "+e);
 				return e;
 			}
 		}	
@@ -123,14 +130,16 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 	public Echeancier contrePropositionDuVendeurBio(ExemplaireContratCadre contrat) {
+		this.journalCC.ajouter("Proposition de Contrat cadre avec l'échéancier : "+contrat.getEcheancier()+"Feve : "+contrat.getProduit());
 		if (vend(contrat.getProduit())) {
 			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())) { 
-
+				this.journalCC.ajouter("Echéancier accepté");
 				return contrat.getEcheancier();
 				}
 			else {
 				Echeancier e = contrat.getEcheancier();
 				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				this.journalCC.ajouter("Proposition d'un Nouvelle échéancier : "+e);
 				return e;
 			}
 		}	
@@ -215,7 +224,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 
-	
+	/*Methode gènèrale ppour tous les types de fèves, auteur : Jules*/
 	
 	public void notificationNouveauContratCadreBio(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurBio.add(contrat);
@@ -257,6 +266,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 	}
 
+	/*Methodes pour calculer proportion de vente des CC, auteur : Jules*/
 	
 	public double venteDernierNext(Feve f) {
 		Double vente = 0.0;
