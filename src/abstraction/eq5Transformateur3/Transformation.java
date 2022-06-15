@@ -92,7 +92,7 @@ public class Transformation extends AcheteurContrat {
 		}
 		
 			int step = Filiere.LA_FILIERE.getEtape();
-			double quantite = Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
+			double quantite = this.seuilTransformation.getValeur();
 			boolean change=true;
 			HashMap<Feve, Double> copieStock = stockFeves.getCopie();
 			while (change && step<Filiere.LA_FILIERE.getEtape()+20) {//quantité échéancier inférieur à ce qui reste à transformer {
