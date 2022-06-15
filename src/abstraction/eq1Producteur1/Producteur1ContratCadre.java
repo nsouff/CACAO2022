@@ -290,6 +290,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 			this.getContratCadre().ajouter("Nouvel échéancier " + contrat.getEcheancier());
 			return contrat.getEcheancier();
 		}
+		
 		return null;
 	}
 	
