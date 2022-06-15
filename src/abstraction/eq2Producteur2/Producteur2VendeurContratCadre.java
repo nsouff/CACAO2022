@@ -212,11 +212,11 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 				this.classement.ajouter(a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
 			}
 		}
-		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE )+" Vente sur les 50 dernier next ");
-		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+" Vente sur les 50 dernier next ");
-		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next ");
-		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE)+" Vente sur les 50 dernier next ");
-		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next ");
+		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE )+" Vente sur les 50 dernier next "+venteDernierNext(Feve.FEVE_HAUTE_BIO_EQUITABLE));
+		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+" Vente sur les 50 dernier next "+venteDernierNext(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next "+venteDernierNext(Feve.FEVE_HAUTE));
+		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE)+" Vente sur les 50 dernier next "+venteDernierNext(Feve.FEVE_MOYENNE));
+		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next "+venteDernierNext(Feve.FEVE_BASSE));
 		this.journalCC.ajouter("=======================================================================================");
 	}
 	@Override
@@ -335,4 +335,23 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 	
+	public double venteDernierNext(Feve f) {
+		Double vente = 0.0;
+		for(ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
+			if(contrat.getProduit().equals(f)) {
+				vente+=contrat.getQuantiteTotale();
+			}
+		}
+		for(ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurNonBio) {
+			if(contrat.getProduit().equals(f)) {
+				vente+=contrat.getQuantiteTotale();
+			}
+		}
+		for (Entry<ExemplaireContratCadre, Integer> m : mesContratCadreExpire.entrySet()) {
+			if(m.getKey().getProduit().equals(f)) {
+				vente+=m.getKey().getQuantiteTotale();
+			}
+		}
+		return vente;
+	}
 }
