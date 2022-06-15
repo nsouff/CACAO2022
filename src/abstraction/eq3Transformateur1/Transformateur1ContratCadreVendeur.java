@@ -103,7 +103,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		 
 		journalCCV.ajouter("nouveau contrat cadre vendeur signé");
 		journalCCV.ajouter("Acheteur : "+ contrat.getAcheteur().getNom());
-		journalCCV.ajouter("Produit : " + contrat.getProduit());
+		journalCCV.ajouter("Produit : " + contrat.getProduit() + " " + ((ChocolatDeMarque)contrat.getProduit()).getChocolat());
 		journalCCV.ajouter("Echeancier : " + contrat.getEcheancier());
 		journalCCV.ajouter("Prix : " + contrat.getPrix());
 		
@@ -113,32 +113,14 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	// modification du stock en fonction de la date de péremption (commencer par le plus ancien, auteur : Anna */
 	 public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		double livre = Math.min(stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()), quantite);
+		livre = Math.max(0., livre);
 		if (livre==quantite) {
 			
 			stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())-quantite);
 			stockChocoPeremption.venteLot(((ChocolatDeMarque)contrat.getProduit()).getChocolat(), quantite);
-			return quantite;
-			//double restecommande=quantite;
-			
-			/**if (restecommande !=0) {
-				if (restecommande < stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()) {
-					//stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()-restecommande) ; 
-					restecommande=0;
-					return restecommande;
-				}
-				if (restecommande == stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()) {
-					stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).remove(0) ;
-					restecommande=0;
-					return restecommande;
-
-			} }}
-				//if (restecommande > stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()) {
-					
-				///} */
-			//}
+			return quantite;					
 		}
-		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),1000.0); 
-		stockChocoPeremption.venteLot(((ChocolatDeMarque)contrat.getProduit()).getChocolat(), 1000.0);
+
 	return livre;
 	}
 		
