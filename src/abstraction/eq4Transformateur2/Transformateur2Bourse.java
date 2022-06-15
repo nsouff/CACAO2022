@@ -38,6 +38,7 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 
 	public void next() {
 		super.next();
+		
 		if(Filiere.LA_FILIERE.getEtape()>2) {
 			BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 			double somme1 = 0;
@@ -72,7 +73,8 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute sur les trois derniers mois est"+ this.prixMinH.getValeur()+ "");
 		this.getJournalcours().ajouter("La moyenne des cours pour la fève haute bioéquitable sur les trois derniers mois est"+ this.prixMinHb.getValeur()+ "");
 		this.journalAchat.ajouter("---------------------------------------------------------------------------------------------------------------");
-		}
+		
+	}
 	
 	public void initialiser() {
 		super.initialiser();
@@ -167,21 +169,23 @@ public double demande(Feve f, double cours) {
 	 
 	 */
 	public double demande(Feve f, double cours) {
-
+		
 			if(cours<this.getPrixSeuil(f).getValeur()) {
 
 				double besoin=Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
 
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)){
+					
 					return besoin;
+					
 				}
 
 			}
 		
 		
-
+		
 		return 0.0;
-
+		
 		}
 
 
