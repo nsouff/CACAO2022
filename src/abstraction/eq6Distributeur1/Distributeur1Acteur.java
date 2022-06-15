@@ -106,8 +106,30 @@ public class Distributeur1Acteur implements IActeur {
 		
 	}
 
+	private int chocolatToInt(Chocolat c) {
+		switch (c) {
+			case BQ: return 1;
+			case BQ_O: return 2;
+			case MQ: return 3;
+			case MQ_O: return 4;
+			case MQ_BE: return 5;
+			case MQ_BE_O: return 6;
+			case HQ: return 7;
+			case HQ_BE: return 8;
+			case HQ_BE_O : return 9;
+			default: return 10;
+		}
+	}
+
 	private void afficherStockJournal() {
 		stockJ.ajouter(Color.BLACK, Color.WHITE, "------------------ Etape " + Filiere.LA_FILIERE.getEtape() + "--------------------");
+		List<ChocolatDeMarque> chocos = Filiere.LA_FILIERE.getChocolatsProduits();
+		chocos.sort((c1, c2) -> {
+			if (c1.getChocolat() == c2.getChocolat()) {
+				return c1.getMarque().compareTo(c2.getMarque());
+			}
+			return chocolatToInt(c1.getChocolat()) - chocolatToInt(c2.getChocolat());
+		});
 		for (ChocolatDeMarque c : Filiere.LA_FILIERE.getChocolatsProduits()) {
 			stockJ.ajouter(c + ": " + NotreStock.getStock(c));
 		}
@@ -138,6 +160,7 @@ public class Distributeur1Acteur implements IActeur {
 		journal1.ajouter("Tour "+ Filiere.LA_FILIERE.getEtape() +" terminé pour "+ this.getNom());
 	
 		afficherStockJournal();
+
 	}
 	
 	
@@ -257,10 +280,10 @@ public class Distributeur1Acteur implements IActeur {
 		switch(c) {
 			case BQ: return 0.7;
 			case BQ_O: return 0.7;
-			case MQ: return 0.5;
-			case MQ_O: return 0.5;
-			case MQ_BE: return 0.5;
-			case MQ_BE_O: return 0.5;
+			case MQ: return 0.0;
+			case MQ_O: return 0.0;
+			case MQ_BE: return 0.0;
+			case MQ_BE_O: return 0.0;
 			case HQ: return 0.3;
 			case HQ_O: return 0.3;
 			case HQ_BE: return 0.3;
