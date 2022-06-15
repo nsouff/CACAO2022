@@ -159,6 +159,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	public double propositionPrixNonBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
+		this.journalCC.ajouter("Proposition Prix : "+0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur());
 		return 0.95*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 	}
 
@@ -195,7 +196,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		if (this.getClassementTransformateur( contrat.getAcheteur() )==3){
 			prix = 0.7*bourse.getCours((Feve)(contrat.getProduit())).getValeur();
 		}
-		
+		this.journalCC.ajouter("Proposition Prix : "+prix);
 		return prix;
 	}
 
