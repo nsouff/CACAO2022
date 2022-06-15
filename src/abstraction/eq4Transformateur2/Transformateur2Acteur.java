@@ -35,12 +35,14 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	//private Variable capaciteStockageFixe;// stock que l'on souhaite en permanence
 	protected Variable prixMinB;
 	protected Variable prixMinM;
+	protected Variable prixMinMb;
+	protected Variable prixMinH;
+	protected Variable prixMinHb;
 	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
 	private Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
 	protected double marge;
 	
 	protected SuperviseurVentesAO superviseur;
-	protected Journal journal;
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
 	
@@ -60,22 +62,33 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.prixSeuilHQ = new Variable("prix seuil haute qualité", "<html>Prix Seuil Haute Qualité</html>",this, 0.0, 10000000, 10);
 		this.prixSeuilHQBE = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Haute Qualité BIO</html>",this, 0.0, 10000000, 10);
 		this.prixMinB = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 4);
-		this.prixMinM = new Variable("prix seuil basse qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
+		this.prixMinM = new Variable("prix seuil moyenne qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
+		this.prixMinMb = new Variable("prix seuil moyenne qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 4);
+		this.prixMinH = new Variable("prix seuil haute qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
+		this.prixMinHb = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.marge = 1.2;
-		this.journal=new Journal("Opti'Cacao activités", this);
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
 		this.stockReferenceFeve=new Stock();
-		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 8000);
-		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 5000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 20000000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE, 20000000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 2500000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_HAUTE, 5000000);
+		this.stockReferenceFeve.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 2500000);
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
+		ChocolatDeMarque c2=new ChocolatDeMarque(Chocolat.MQ_BE,this.getMarquesChocolat().get(2));
+		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.HQ,this.getMarquesChocolat().get(3));
+		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
 		//ajouter des marques de chocolats
 		
 		
 		this.stockReferenceChocolat=new Stock();
-		this.stockReferenceChocolat.ajouter(c1, 5000);
-		this.stockReferenceChocolat.ajouter(c0, 8000);
+		this.stockReferenceChocolat.ajouter(c1, 20000000);
+		this.stockReferenceChocolat.ajouter(c0, 20000000);
+		this.stockReferenceChocolat.ajouter(c2, 2500000);
+		this.stockReferenceChocolat.ajouter(c3, 5000000);
+		this.stockReferenceChocolat.ajouter(c4, 5000000);
 		
 		
 		
@@ -212,9 +225,19 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	} 
 	
 
+	public abstract Journal getJournalcours();
+	public abstract Journal getJournalVente();
+	public abstract Journal getJournalStock();
+	public abstract Journal getJournalTransfo();
+	public abstract Journal getJournalAchat();
+	
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
-		j.add(this.journal);
+		j.add(this.getJournalcours());
+		j.add(this.getJournalVente());
+		j.add(this.getJournalStock());
+		j.add(this.getJournalTransfo());
+		j.add(this.getJournalAchat());
 		return j;
 	}
 	
@@ -223,7 +246,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		if (this==acteur) {
 		System.out.println("I'll be back... or not... "+this.getNom());
 		} else {
-			System.out.println("Poor "+acteur.getNom()+"... We will miss you. "+this.getNom());
+			System.out.println("Allez hop, rentrez chez vous "+acteur.getNom()+". "+this.getNom());
 		}
 	}
 	
