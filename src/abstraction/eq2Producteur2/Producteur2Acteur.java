@@ -156,7 +156,7 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 		}
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coutStockage);
 		
-		//journal, Jules DORE
+		// journal, Jules DORE
 
 		journal.ajouter("Stock Feve Moyenne : "+this.getStock(Feve.FEVE_MOYENNE)+", Production Feve Moyenne : "+this.production(Feve.FEVE_MOYENNE)+", Nombre d'arbre Moyenne : "+this.getNbArbre(Feve.FEVE_MOYENNE)+"");
 		journal.ajouter("Stock Feve Haute : "+this.getStock(Feve.FEVE_HAUTE)+", Production Feve Haute : "+this.production(Feve.FEVE_HAUTE)+", Nombre d'arbre Haute : "+this.getNbArbre(Feve.FEVE_HAUTE)+"");
@@ -223,7 +223,9 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 	public void notificationOperationBancaire(double montant) {
 	}
 	
-	// Renvoie le solde actuel de l'acteur
+	/**
+	 *@return Le solde
+	 */
 	
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
