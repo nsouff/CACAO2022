@@ -43,7 +43,7 @@ public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
 			}			
 		}		
 	}
-	
+	// si la date de préremption est dépassée , supprime le lot du stock , auteur : anna
 	public void supprimeLot(int etape, DicoChoco stockchoco) {
 		for (Chocolat c : Chocolat.values()) {
 			ArrayList<Lot> liste= new ArrayList<Lot>() ;
