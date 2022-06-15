@@ -386,7 +386,6 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 				}
 				
 			}
-			
 			double stockAvantPar = this.getStockParc(Feve, true,parc);
 			double perteStock = stockAvantPar*tauxPerteStock;
 			this.retirerQuantiteParc(Feve, perteStock,parc);
