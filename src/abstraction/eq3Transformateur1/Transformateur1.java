@@ -197,16 +197,14 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			cout = cout + stockFeve.get(f)*coutStockage;
 		}
 		for (Chocolat c : stockChoco.keySet()) {
-			cout = cout + stockChoco.get(c)*coutStockage;
+			cout = cout + stockChoco.get(c)*coutStockage; 
+			
+			if (c == Chocolat.MQ_BE || c == Chocolat.MQ_O || c == Chocolat.MQ) {
+				journal.ajouter("stock " + c.name() + " : " + stockChoco.get(c));
+				journal.ajouter("Notre cout de stockage pour " + c.name() + " est : " + stockChoco.get(c)*coutStockage);
+			}
 		}
-		journal.ajouter("stock choco BQ"+ stockChoco.get(Chocolat.BQ));
-		journal.ajouter("Notre cout de stockage est "+ cout);
-		journal.ajouter("stock choco MQ"+ stockChoco.get(Chocolat.MQ));
-		journal.ajouter("Notre cout de stockage est "+ cout);
-		journal.ajouter("stock choco MQ_BE"+ stockChoco.get(Chocolat.MQ_BE));
-		journal.ajouter("Notre cout de stockage est "+ cout);
-		journal.ajouter("stock choco MQ_O"+ stockChoco.get(Chocolat.MQ_O));
-		journal.ajouter("Notre cout de stockage est "+ cout);
+		journal.ajouter("Notre cout de stockage total est "+ cout);
 		return cout;
 	}
 	
@@ -399,7 +397,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				// on determine la quantite de ce type de feve a transformer
 
 				double quantiteATransformer = this.transfoQt(stockFeve.get(f));
-				journal.ajouter("La quantite a transformer de feves "+ f + "est de "+ this.transfoQt(stockFeve.get(f)));
+				journal.ajouter("La quantite a transformer de feves "+ f + " est de "+ this.transfoQt(stockFeve.get(f)));
 				
 				// on calcule le cout et la quantite de chocolat obtenu
 				if (f.isBioEquitable()) {
