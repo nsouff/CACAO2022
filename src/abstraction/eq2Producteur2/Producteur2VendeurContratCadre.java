@@ -86,11 +86,15 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 	//Toute les fèves
 	
 	public boolean vend(Object produit) {
-		return (produit instanceof Feve);//(produit instanceof Feve);
+		return (produit instanceof Feve);
 	}
 
-	
-	//methode pour le bio
+		
+	/**
+	 * Methode pour le bio 
+	 * @param produit
+	 * @return la quantite par step vendu
+	 */
 	
 	public double qtiteTotaleContratEnCours(Object produit) {
 		double qtiteTotaleContratEnCours = 0;
@@ -102,7 +106,11 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 		return qtiteTotaleContratEnCours;
 	}
 	
-	//methode pour le non bio 
+	/**
+	 * Methode pour le non bio 
+	 * @param produit
+	 * @return la quantite par step vendu
+	 */
 	
 	public double quantiteTotaleContratEnCours(Object produit) {
 		double quantiteTotaleContratEnCours = 0;
@@ -114,7 +122,9 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 		return quantiteTotaleContratEnCours;
 	}
 	
-	//non bio
+	/**
+	 * Methode pour le non bio 
+	 */
 	
 	public Echeancier contrePropositionDuVendeurNonBio(ExemplaireContratCadre contrat) {
 		this.journalCC.ajouter("Proposition de Contrat cadre avec l'échéancier : "+contrat.getEcheancier()+"Feve : "+contrat.getProduit());
@@ -135,6 +145,9 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 		 }
 	}
 
+	/**
+	 * Methode pour bio 
+	 */
 	
 	public Echeancier contrePropositionDuVendeurBio(ExemplaireContratCadre contrat) {
 		this.journalCC.ajouter("Proposition de Contrat cadre avec l'échéancier : "+contrat.getEcheancier()+"Feve : "+contrat.getProduit());
