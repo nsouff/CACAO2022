@@ -125,7 +125,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 				}
 			else {
 				// On propose un echéancier avec les mêmes echéances et une quantité par echéances égale à 1/3 de ceux que l'on peut fournir
-				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getNbEcheances(),(this.production((Feve)(contrat.getProduit())) - this.qtiteTotaleContratEnCours((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())/3);
+				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getNbEcheances(),(this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())/3);
 				this.journalCC.ajouter("Proposition d'un Nouvelle échéancier : "+e);
 				return e;
 			}
@@ -145,7 +145,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 				}
 			else {
 				// On propose un echéancier avec les mêmes echéances et une quantité par echéances égale à 1/3 de ceux que l'on peut fournir
-				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getNbEcheances(),(this.production((Feve)(contrat.getProduit())) - this.qtiteTotaleContratEnCours((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())/3);
+				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getNbEcheances(),(this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())/3);
 				this.journalCC.ajouter("Proposition d'un Nouvelle échéancier : "+e);
 				return e;
 			}
