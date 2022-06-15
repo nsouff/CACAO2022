@@ -204,26 +204,27 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	
 	public double contrePropositionPrixVendeurBio(ExemplaireContratCadre contrat) {
+		this.journalCC.ajouter("Proposition de l'acheteur : " +contrat.getPrix());
 		double contrepropositionprix = -1.0;
-		if (contrat.getPrix()>0.8*propositionPrix(contrat)) {
+		if (contrat.getPrix()>0.5*propositionPrix(contrat)) {
 			if (getClassementTransformateur( contrat.getAcheteur() )==1){
-				if (Math.random()<0.65) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 60% des cas
+				if (Math.random()<0.9) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 90% des cas
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==2){
-				if (Math.random()<0.6) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 40% des cas
+				if (Math.random()<0.7) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 70% des cas
 				}
 			}	
 			if (getClassementTransformateur( contrat.getAcheteur() )==3){
-				if (Math.random()<0.3) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 20% des cas
+				if (Math.random()<0.5) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 50% des cas
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==4){
-				if (Math.random()<0.1) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 10% des cas
+				if (Math.random()<0.3) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 30% des cas
 				}
 			}
 		}
@@ -245,32 +246,32 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 			return this.contrePropositionDuVendeurBio(contrat);
 		}
 		
-		return this.contrePropositionDuVendeurNonBio(contrat);
+		else{return this.contrePropositionDuVendeurNonBio(contrat);}
 	}
 
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			return this.propositionPrixBio(contrat);
 		}
-		return this.propositionPrixNonBio(contrat);
+		else{return this.propositionPrixNonBio(contrat);}
 	}
 	
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			return this.contrePropositionPrixVendeurBio(contrat);
 		}
-		return this.contrePropositionPrixVendeurNonBio(contrat);
+		else{return this.contrePropositionPrixVendeurNonBio(contrat);}
 	}
 
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			 this.notificationNouveauContratCadreBio(contrat);
-			 this.journalCC.ajouter("Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix() );
+			 this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Contrat Cadre Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() +" Quantité : "+contrat.getQuantiteTotale()+ " Prix : " + contrat.getPrix() );
 
 		} 
 		else {
 			this.notificationNouveauContratCadreNonBio(contrat);
-			this.journalCC.ajouter("Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix() );
+			this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Contrat Cadre Non Bio : " + " Acheteur " + contrat.getAcheteur()+ " Produit : " + contrat.getProduit() + " Quantité : "+contrat.getQuantiteTotale()+" Prix : " + contrat.getPrix() );
 		}
 	}
 

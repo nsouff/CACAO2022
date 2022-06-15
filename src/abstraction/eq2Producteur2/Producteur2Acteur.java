@@ -29,6 +29,8 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	private Variable StockChocoHQ;
 	private HashMap<Double, Double> Benefices;
 	private LinkedList<Double> Soldes;
+	private HashMap<Double, Boolean> AugmentationSalaires;
+
 
 	private Variable prixstockage ;
 //	private Variable dureeaffinageBQ ;
@@ -52,6 +54,8 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 //		this.StockChocoHQ = new Variable("StockChocoHQ","Stock de chocolat issue de fève de haute qualité", this, 0.0, 1000000000, this.getStockChoco(Chocolat.HQ_BE);
 		this.Benefices = new HashMap<Double, Double>();
 		this.Soldes = new LinkedList<Double>();
+		this.AugmentationSalaires = new HashMap<Double, Boolean>();
+		this.MainOeuvremecontente = false;
 	}
 
 	public void initialiser() {
@@ -77,10 +81,23 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	
 	public HashMap<Double, Double> MAJBenefices() {
 		// auteur : Fiona 
+		/* 
+		 * Je calcule les bénéfices à chaque étape et je les "sauvegarde" dans la HashMAp Benefices
+		 * 
+		 * Ensuite, si sur les 3 derniers Step on est en bénéfice, j'augmente les salaires
+		 * (ie ajout de "True" dans la HashMap AugmentationSalaires pour le step courant) de 1% de 
+		 * notre bénéfice (certes cela peut sembler dérisoire mais les autres producteurs n'augmentent 
+		 * pas les salaires...)
+		 * 
+		 * Finalement, si on bout de 5 steps de bénéfices les salariés n'ont pas été augmenté, 
+		 * ils sont "mécontents" ce qui diminue le rendement (dans Producteur2Plantation).  
+		 * 
+		 */
 		
 		if (Filiere.LA_FILIERE.getEtape() == 0) {
 			this.Benefices.put((double) Filiere.LA_FILIERE.getEtape(), 0.0);
 			this.Soldes.add(this.getSolde());
+			this.AugmentationSalaires.put((double) Filiere.LA_FILIERE.getEtape(), false);
 			
 		}
 		
@@ -88,6 +105,29 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 			double solde_prec = this.Soldes.getLast();
 			double benefice = this.getSolde() - solde_prec;
 			this.Benefices.put((double) Filiere.LA_FILIERE.getEtape(), benefice);
+		}
+		
+		if (Filiere.LA_FILIERE.getEtape() > 4 && this.Benefices.get((double)Filiere.LA_FILIERE.getEtape()-1)>0 && this.Benefices.get((double)Filiere.LA_FILIERE.getEtape()-2)>0  && this.Benefices.get((double)Filiere.LA_FILIERE.getEtape()-3)>0) {
+			double proba = Math.random();
+			if (proba < 0.33) {
+				this.AugmentationSalaires.put((double) Filiere.LA_FILIERE.getEtape(), true);
+				Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.Benefices.get((double)Filiere.LA_FILIERE.getEtape()-1)*0.01);
+			}
+			else {
+				this.AugmentationSalaires.put((double) Filiere.LA_FILIERE.getEtape(), false);
+			}
+			
+		}		
+		else {
+			this.AugmentationSalaires.put((double) Filiere.LA_FILIERE.getEtape(), false);
+		}
+		
+		
+		if (Filiere.LA_FILIERE.getEtape() > 6 && !this.AugmentationSalaires.get((double)Filiere.LA_FILIERE.getEtape()-1) && !this.AugmentationSalaires.get((double)Filiere.LA_FILIERE.getEtape()-2) && !this.AugmentationSalaires.get((double)Filiere.LA_FILIERE.getEtape()-3) && !this.AugmentationSalaires.get((double)Filiere.LA_FILIERE.getEtape()-4) && !this.AugmentationSalaires.get((double)Filiere.LA_FILIERE.getEtape()-5) ) {
+			this.MainOeuvremecontente = true;
+		}
+		else {
+			this.MainOeuvremecontente = false;
 		}
 		
 		return this.Benefices;
