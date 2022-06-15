@@ -84,7 +84,6 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 			//On pose le chocolat en tête de gondole si il est bio et équitable
 			boolean boolTeteGondole = chocProduit.isBioEquitable();
 			
-			System.out.println(chocProduit + "  ;   " +stock.getQuantite(chocProduit)+ "  ;   " +stock.getSeuilRachat(chocProduit));
 			//Si la quantite du chocolat en question est inférieure au seuil auquel on a décidé d'en racheter, alors on va en racheter, et si on doit acheter plus de 1000kg du produit
 			if (stock.getQuantite(chocProduit)<=stock.getSeuilRachat(chocProduit) && this.demande.get(chocProduit)>1000) {
 				
@@ -136,7 +135,8 @@ public class Distributeur2Achat extends Distributeur2Acteur implements IAcheteur
 
 	@Override
 	public boolean achete(Object produit) {
-		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<=stock.getSeuilRachat((ChocolatDeMarque)produit)) {
+		double demandeRestante = this.demande.get((ChocolatDeMarque) produit);
+		if (produit instanceof ChocolatDeMarque && stock.getQuantite((ChocolatDeMarque)produit)<=stock.getSeuilRachat((ChocolatDeMarque)produit) && demandeRestante < 10000) {
 			return true;
 		}else {
 			return false;
