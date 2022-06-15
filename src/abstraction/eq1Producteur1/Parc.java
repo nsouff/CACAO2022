@@ -22,7 +22,11 @@ public class Parc {
 	private int nombre_non_BE_basse;
 	private int nombre_non_BE_moyenne;
 	private int nombre_non_BE_haute;
-	private int nombre_PAS_CONTENT;
+	private int nombre_PAS_CONTENT_BE_moyenne;
+	private int nombre_PAS_CONTENT_BE_haute;
+	private int nombre_PAS_CONTENT_nBE_basse;
+	private int nombre_PAS_CONTENT_nBE_moyenne;
+	private int nombre_PAS_CONTENT_nBE_haute;
 	private boolean guerre;
 	private int ut_debut_guerre;
 	private int ut_fin_guerre;
@@ -46,7 +50,11 @@ public class Parc {
 		this.nombre_non_BE_basse = 0;
 		this.nombre_non_BE_moyenne = 0;
 		this.nombre_non_BE_haute = 0;
-		this.nombre_PAS_CONTENT = 0;
+		this.nombre_PAS_CONTENT_BE_moyenne = 0;
+		this.nombre_BE_haute = 0;
+		this.nombre_PAS_CONTENT_nBE_basse = 0;
+		this.nombre_PAS_CONTENT_nBE_moyenne = 0;
+		this.nombre_PAS_CONTENT_nBE_haute = 0;
 		this.guerre = false;
 		this.ut_debut_guerre = 0;
 		this.ut_fin_guerre = 0;
@@ -107,8 +115,25 @@ public class Parc {
 	public int getNombre_non_BE_haute() { //Écrit par Antoine
 		return this.nombre_non_BE_haute;
 	}
-	public int getNombre_PAS_CONTENT() { //Écrit par Antoine
-		return this.nombre_PAS_CONTENT;
+	
+	public int getNombre_PAS_CONTENT_BE_moyenne() { //Écrit par Antoine
+		return this.nombre_PAS_CONTENT_BE_moyenne;
+	}
+	
+	public int getNombre_PAS_CONTENT_BE_haute() { //Écrit par Antoine
+		return this.nombre_PAS_CONTENT_BE_haute;
+	}
+	
+	public int getNombre_PAS_CONTENT_nBE_basse() { //Écrit par Antoine
+		return this.nombre_PAS_CONTENT_nBE_basse;
+	}
+	
+	public int getNombre_PAS_CONTENT_nBE_moyenne() { //Écrit par Antoine
+		return this.nombre_PAS_CONTENT_nBE_moyenne;
+	}
+	
+	public int getNombre_PAS_CONTENT_nBE_haute() { //Écrit par Antoine
+		return this.nombre_PAS_CONTENT_nBE_haute;
 	}
 	
 	public boolean getGuerre() { //Écrit par Antoine
@@ -151,8 +176,24 @@ public class Parc {
 		this.nombre_non_BE_haute = i;
 	}
 	
-	public void setNombre_PAS_CONTENT(int i) { //Écrit par Antoine
-		this.nombre_PAS_CONTENT = i;
+	public void setNombre_PAS_CONTENT_BE_moyenne(int i) { //Écrit par Antoine
+		this.nombre_PAS_CONTENT_BE_moyenne = i;
+	}
+	
+	public void setNombre_PAS_CONTENT_BE_haute(int i) { //Écrit par Antoine
+		this.nombre_PAS_CONTENT_BE_haute = i;
+	}
+	
+	public void setNombre_PAS_CONTENT_nBE_basse(int i) { //Écrit par Antoine
+		this.nombre_PAS_CONTENT_nBE_basse = i;
+	}
+	
+	public void setNombre_PAS_CONTENT_nBE_moyenne(int i) { //Écrit par Antoine
+		this.nombre_PAS_CONTENT_nBE_moyenne = i;
+	}
+	
+	public void setNombre_PAS_CONTENT_nBE_haute(int i) { //Écrit par Antoine
+		this.nombre_PAS_CONTENT_nBE_haute = i;
 	}
 	
 	public void setGuerre(boolean b) { //Écrit par Antoine
@@ -217,24 +258,36 @@ public class Parc {
 			if (a.getBioequitable()) {
 				if (a.getQualite()==2) {
 					this.setNombre_BE_moyenne(this.getNombre_BE_moyenne()+i);
+					if (a.getCooperative()) {
+						this.setNombre_PAS_CONTENT_BE_moyenne(this.getNombre_PAS_CONTENT_BE_moyenne()+i);
+					}
 				}
 				if (a.getQualite()==3) {
 					this.setNombre_BE_haute(this.getNombre_BE_haute()+i);
+					if (a.getCooperative()) {
+						this.setNombre_PAS_CONTENT_BE_haute(this.getNombre_PAS_CONTENT_BE_haute()+i);
+					}
 				}
 			}
 			else {
 				if (a.getQualite()==1) {
 					this.setNombre_non_BE_basse(this.getNombre_non_BE_basse()+i);
+					if (a.getCooperative()) {
+						this.setNombre_PAS_CONTENT_nBE_basse(this.getNombre_PAS_CONTENT_nBE_basse()+i);
+					}
 				}
 				if (a.getQualite()==2) {
 					this.setNombre_non_BE_moyenne(this.getNombre_non_BE_moyenne()+i);
+					if (a.getCooperative()) {
+						this.setNombre_PAS_CONTENT_nBE_moyenne(this.getNombre_PAS_CONTENT_nBE_moyenne()+i);
+					}
 				}
 				if (a.getQualite()==3) {
 					this.setNombre_non_BE_haute(this.getNombre_non_BE_haute()+i);
+					if (a.getCooperative()) {
+						this.setNombre_PAS_CONTENT_nBE_haute(this.getNombre_PAS_CONTENT_nBE_haute()+i);
+					}
 				}
-			}
-			if (a.getCooperative()) {
-				this.setNombre_PAS_CONTENT(this.getNombre_PAS_CONTENT()+i);
 			}
 		}
 	}
