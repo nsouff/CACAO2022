@@ -40,6 +40,12 @@ public class Tracker implements ITracker{
 		
 	}
 	
+	private List<Double> newListOneElement(double d) {
+		ArrayList temp = new ArrayList<Double>();
+		temp.add(d);
+		return temp;
+	}
+	
 	@Override
 	public void resetEtapeHashMaps() {
 		for (ChocolatDeMarque choc : this.chocolats) {
@@ -92,13 +98,13 @@ public class Tracker implements ITracker{
 
 	@Override
 	public List<Double> getVentesQuantiteEtapeActuelle(ChocolatDeMarque choco) {
-		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(0.));}
+		if (!this.FONCTIONEL) {return this.newListOneElement(10.);}
 		return this.ventesQuantiteEtape.get(choco);
 	}
 
 	@Override
 	public List<Double> getVentesPrixEtapeActuelle(ChocolatDeMarque choco) {
-		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(10.));}
+		if (!this.FONCTIONEL) {return this.newListOneElement(10.);}
 		return this.ventesPrixEtape.get(choco);
 	}
 
@@ -118,13 +124,13 @@ public class Tracker implements ITracker{
 
 	@Override
 	public List<Double> getVentesQuantite(ChocolatDeMarque choco) {
-		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(0.));}
+		if (!this.FONCTIONEL) {return this.newListOneElement(0.);}
 		return this.ventesQuantite.get(choco);
 	}
 
 	@Override
 	public List<Double> getVentesPrix(ChocolatDeMarque choco) {
-		if (!this.FONCTIONEL) {return new ArrayList<Double>(List.of(10.));}
+		if (!this.FONCTIONEL) {return this.newListOneElement(0.);}
 		return this.ventesPrix.get(choco);
 	}
 
