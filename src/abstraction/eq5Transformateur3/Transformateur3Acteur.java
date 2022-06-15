@@ -239,7 +239,7 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 			boolean isBioequitable = ((ChocolatDeMarque)contrat.getProduit()).isBioEquitable();
 			for (Feve f : this.besoinFeves.keySet()) {
 				if (f.getGamme() == gamme && f.isBioEquitable() == isBioequitable) {
-					this.besoinFeves.put(f, contrat.getQuantiteALivrerAuStep());	
+					this.besoinFeves.put(f, contrat.getQuantiteALivrerAuStep()+this.besoinFeves.get(f));	
 				}
 			}
 			
@@ -250,8 +250,9 @@ public class Transformateur3Acteur implements IActeur, IMarqueChocolat,IFabrican
 			Gamme gamme = ((Feve)contrat.getProduit()).getGamme();
 			boolean isBioequitable = ((Feve)contrat.getProduit()).isBioEquitable();
 			for (Feve f : this.dispoFeves.keySet()) {
+				this.dispoFeves.put(f, this.stockFeves.getstock(f));
 				if (f.getGamme() == gamme && f.isBioEquitable() == isBioequitable) {
-					this.dispoFeves.put(f, this.stockFeves.getstock(f)+contrat.getQuantiteALivrerAuStep());	
+					this.dispoFeves.put(f, this.dispoFeves.get(f)+contrat.getQuantiteALivrerAuStep());	
 				}
 			}
 		}
