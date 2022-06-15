@@ -51,7 +51,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 
 	//@Override
 	//Auteur : Khéo
-	public Echeancier contrePropositionDuVendeur2(ExemplaireContratCadre contrat) {
+	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		this.getContratCadre().ajouter("============================================");
 		this.getContratCadre().ajouter("ACHETEUR " + contrat.getAcheteur().getNom().toString() + " // PRODUIT " + contrat.getProduit().toString());
 		this.getContratCadre().ajouter("Premier échéancier proposé " + contrat.getEcheancier());
@@ -110,12 +110,12 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 
 	//@Override
 	//Auteur : Khéo
-	public double propositionPrix2(ExemplaireContratCadre contrat) {
+	public double propositionPrix(ExemplaireContratCadre contrat) {
 		//FEVE
 		if(contrat.getProduit() instanceof Feve) {
 		if (this.getPrixmoyenFeve().keySet().contains(contrat.getProduit())) {
-			this.getContratCadre().ajouter("Prix proposé " + this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape() );
-			return this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
+			this.getContratCadre().ajouter("Prix proposé " + 1.5*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape() );
+			return 1.5*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 		} else {
 			return 0.0;
 		}
@@ -127,8 +127,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		if(contrat.getProduit() instanceof Chocolat) {
 			
 			if (this.getPrixmoyenFeve().keySet().contains(this.getFev((Chocolat)contrat.getProduit()))) {
-				this.getContratCadre().ajouter("Prix proposé " +3*this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape() );
-				return this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape();
+				this.getContratCadre().ajouter("Prix proposé " + 3*this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape() );
+				return 3*this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape();
 			} else {
 				return 0.0;
 			}
@@ -136,41 +136,6 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		
 		return 0.0;
 		
-	}
-
-	//@Override
-	//Auteur : Khéo
-	public double contrePropositionPrixVendeur1(ExemplaireContratCadre contrat) {
-		//FEVE
-		if (contrat.getProduit() instanceof Feve) {
-		double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
-		
-		this.getContratCadre().ajouter("Prix moyen " + prixmoyen);
-		if(contrat.getPrix()<prixmoyen*0.75) {
-			this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
-			this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75 );
-			return prixmoyen*0.75;	
-		}
-		this.getContratCadre().ajouter("Prix qui passe " + contrat.getPrix().toString());
-		return contrat.getPrix();
-		}
-		
-		
-		
-		//CHOCOLAT
-		if (contrat.getProduit() instanceof Chocolat) {
-			double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
-			if(contrat.getPrix()<prixmoyen*0.75) {
-				this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
-				this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75 );
-				return prixmoyen*0.75;	
-			}
-			this.getContratCadre().ajouter("Prix qui passe " + contrat.getPrix().toString());
-			return contrat.getPrix();
-		}
-		
-		return 0.0;
-	
 	}
 	
 
@@ -255,8 +220,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	 * @param contrat
 	 * @return Echeancier
 	 */
-	@Override
-	public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
+	/*public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 		this.getContratCadre().ajouter("============================================");
 		this.getContratCadre().ajouter("L'acheteur est " + contrat.getAcheteur().toString() + " pour du " + contrat.getProduit().toString());
 		this.getContratCadre().ajouter("Premier échéancier " + contrat.getEcheancier());
@@ -296,42 +260,10 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		}
 		
 		return null;
-	}
+	}*/
 	
 	
-	/**
-	 * @author laure
-	 * @param contrat
-	 * @return prix au kilo du contrat
-	 */
-	@Override
-	public double propositionPrix(ExemplaireContratCadre contrat) {
-		//FEVE
-		if(contrat.getProduit() instanceof Feve) {
-		if (this.getPrixmoyenFeve().keySet().contains(contrat.getProduit()) ) {
-			this.getContratCadre().ajouter("Prix proposé " + (this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape())*1.5);
-			return (1.5*(this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape()));
-		} else {
-			return 0.0;
-		}
-	}
-		
-		
-		//CHOCOLAT 
-		
-		if(contrat.getProduit() instanceof Chocolat) {
-			
-			if (this.getPrixmoyenFeve().keySet().contains(this.getFev((Chocolat)contrat.getProduit()))) {
-				this.getContratCadre().ajouter("Prix proposé " +3*this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape() );
-				return this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape();
-			} else {
-				return 0.0;
-			}
-		}
-		
-		return 0.0;
-		
-	}
+
 	
 	
 	@Override
@@ -349,9 +281,10 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		if(contrat.getPrix()<prixmoyen*1.3) {
 			this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
 			this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75 );
-			return prixmoyen*0.75;	
+			return prixmoyen;	
 		} else if (contrat.getPrix()<prixmoyen*0.75) {
-			return 0.0;
+			this.getContratCadre().ajouter("Prix proposé 75% du prix moyen" + prixmoyen*0.75);
+			return prixmoyen*0.75;
 		}
 		this.getContratCadre().ajouter("Prix qui passe " + contrat.getPrix().toString());
 		return contrat.getPrix();
@@ -364,11 +297,12 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 			double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 			if(contrat.getPrix()<prixmoyen*0.75) {
 				this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
-				this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75 );
+				this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75);
 				return prixmoyen*0.75;	
-			}
+			} else {
 			this.getContratCadre().ajouter("Prix qui passe " + contrat.getPrix().toString());
 			return contrat.getPrix();
+			}
 		}
 		
 		return 0.0;
