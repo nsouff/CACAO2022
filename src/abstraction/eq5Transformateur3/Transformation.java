@@ -1,7 +1,10 @@
 package abstraction.eq5Transformateur3;
 
+import java.util.HashMap;
+
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
+import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
@@ -100,16 +103,42 @@ public class Transformation extends AcheteurContrat {
 			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE)*0.6, true);
 		}
 		else {
-			this.transformation.ajouter("Transformation BIO : ");
-			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0.35*this.seuilTransformation.getValeur()*0.6, true); 
-			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0.3*this.seuilTransformation.getValeur()*0.6, true);
-			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 0.35*this.seuilTransformation.getValeur()*0.4, false); 
-			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, 0.3*this.seuilTransformation.getValeur()*0.4, false);
-			this.transformation.ajouter("Transformation non BIO : ");
-			transformationClassique(Feve.FEVE_MOYENNE, 0.20*this.seuilTransformation.getValeur()*0.6, true);
-			transformationClassique(Feve.FEVE_HAUTE, 0.15*this.seuilTransformation.getValeur()*0.6, true);
-			transformationClassique(Feve.FEVE_MOYENNE, 0.20*this.seuilTransformation.getValeur()*0.4, false);
-			transformationClassique(Feve.FEVE_HAUTE, 0.15*this.seuilTransformation.getValeur()*0.4, false);
+			int step = Filiere.LA_FILIERE.getEtape();
+			double quantite = Filiere.LA_FILIERE.getIndicateur("seuilTransformation").getValeur();
+			boolean change=true;
+			HashMap<Feve, Double> copieStock = stockFeves.getCopie();
+			while (change && step<Filiere.LA_FILIERE.getEtape()+20) {//quantité échéancier inférieur à ce qui reste à transformer {
+				change=false;
+				for (int i=0; i<this.contratsEnCoursVente.size() ;i++){
+					ChocolatDeMarque c = (ChocolatDeMarque)(this.contratsEnCoursVente.get(i)).getProduit();
+					Gamme gamme = c.getGamme();
+					boolean bioequitable = c.isBioEquitable();
+					Feve feveproduit = null;
+					for (Feve f : Feve.values()){
+						if (f.isBioEquitable() == bioequitable && f.getGamme() == gamme){
+							feveproduit = f;
+						}	
+					}
+					boolean original = c.isOriginal();
+					double qtStepCC = this.contratsEnCoursVente.get(i).getEcheancier().getQuantite(step);
+					if (copieStock.get(feveproduit)>=qtStepCC) {
+						copieStock.put(feveproduit, copieStock.get(feveproduit)-qtStepCC);
+						change=true;
+					} else {
+						if (copieStock.get(feveproduit)>0) {
+							qtStepCC=qtStepCC-copieStock.get(feveproduit);
+							copieStock.put(feveproduit,0.0);
+							change=true;
+						}
+						if (qtStepCC>0 && quantite>=qtStepCC) {
+							this.transformationClassique(feveproduit, qtStepCC, original);
+							quantite = quantite -qtStepCC;
+							change=true;
+						}
+					}
+				}
+				step +=1;
+			}
 		}
 	}
 	
