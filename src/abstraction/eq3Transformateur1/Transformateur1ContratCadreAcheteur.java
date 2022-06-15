@@ -39,7 +39,7 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 				}
 			}
 		}
-		journalCCA.ajouter("Je ne souhaite pas faire un nouveau contrat cadre acheteur de " + produit);
+		//journalCCA.ajouter("Je ne souhaite pas faire un nouveau contrat cadre acheteur de " + produit);
 		return false;
 	}
 

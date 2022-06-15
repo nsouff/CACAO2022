@@ -54,11 +54,11 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 	/** Prix initial = 1.4 x prixVenteMin 
 	 *  Alexandre*/
 	public double propositionPrix(ExemplaireContratCadre contrat) {
-		journalCCV.ajouter("proposition prix");
 		if (!( contrat.getProduit() instanceof ChocolatDeMarque)) {
 			journalCCV.ajouter("________________" + contrat.getAcheteur() +" "+ contrat.getProduit()); // pour debugger
 			return 0.;
 		}
+		journalCCV.ajouter("On propose comme prix initial : " + this.prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()));
 		return this.prixVenteMin.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())*1.4;
 		
 	}
@@ -102,6 +102,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		}
 		 
 		journalCCV.ajouter("nouveau contrat cadre vendeur signé");
+		journalCCV.ajouter("Acheteur : "+ contrat.getAcheteur().getNom());
+		journalCCV.ajouter("Produit : " + contrat.getProduit());
+		journalCCV.ajouter("Echeancier : " + contrat.getEcheancier());
+		journalCCV.ajouter("Prix : " + contrat.getPrix());
 		
 	}
 

@@ -281,7 +281,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			for (Chocolat c : dernierPrixVenteChoco.getChocolats()) {
 				/** si aucune vente de ce chocolat avec ce distributeur n'a ete effectuee, on garde les valeurs precedentes 
 				 *  au sinon, on ecrase*/
-				if (Double.compare(dernierPrixVenteChoco.getPrix(distrib, c), 0.) != 0) {
+				if (Double.compare(dernierPrixVenteChocoReset.getPrix(distrib, c), 0.) != 0) {
 					journal.ajouter("le dernier prix de vente du chocolat " + c + " au distributeur" + distrib+ " est de " + dernierPrixVenteChoco.getPrix(distrib, c));
 					
 					dernierPrixVenteChoco.setPrix(distrib, c, dernierPrixVenteChocoReset.getPrix(distrib, c));
