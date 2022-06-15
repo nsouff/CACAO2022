@@ -135,6 +135,10 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			 */
 			Double stocktotal = this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal();
 			
+			for (Feve fv : this.dispoFeves.keySet()) {
+				stocktotal += this.dispoFeves.get(fv);
+			}
+			
 			if (stocktotal < this.capaciteStockageEQ5) {
 
 				//if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
