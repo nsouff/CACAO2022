@@ -24,7 +24,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 	protected HashMap<ExemplaireContratCadre,Integer> mesContratCadreExpire; //Contrat cadres expiré depuis moins de 100 next
-	private Journal classement;
+	protected Journal classement;
 	protected Journal journalCC;
 	
 	public Producteur2VendeurContratCadre() {
@@ -281,9 +281,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	 * Methodes pour calculer proportion de vente des CC, auteur : Jules
 	 */
 	
-	public double vente50DerniersNexts(Feve f) {
-		// auteur : Jules 
-		
+	public double venteDernierNext(Feve f) {
 		Double vente = 0.0;
 		for(ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if(contrat.getProduit().equals(f)) {
@@ -304,13 +302,11 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 	
 	public double proportionVente(Feve f) {
-		// auteur : Jules 
-		
 		Double totale = 0.0001;
 		for (Feve feve : Feve.values()) {
-			totale+=this.vente50DerniersNexts(feve);
+			totale+=this.venteDernierNext(feve);
 		}
-	return (this.vente50DerniersNexts(f)/totale);
+	return (this.venteDernierNext(f)/totale);
 	}
 
 	
@@ -321,7 +317,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public void next() {
 		super.next();
 		
-		// Ajout des contrat expire mais à prendre en compte
+		// Ajout des contrat expire mais à prendre en compte, ie expire il y a moins de 50 step
 		List<ExemplaireContratCadre> contratsBio=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -349,17 +345,26 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		for(ExemplaireContratCadre contrat : contratsExpire) {
 			this.mesContratCadreExpire.remove(contrat);
 		}
-		
-		
 
+		/**
+		 * Affichage Journal  
+		 */
+
+		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
+			if (a instanceof IFabricantChocolatDeMarque) {
+				this.classement.ajouter(a.getColor(),Color.BLACK,a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
+			}
+		}
+		
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE )+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_MOYENNE));
 		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_BASSE));
 		this.journalCC.ajouter("=======================================================================================");
+
 	}
-	@Override
+	
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.removeQuantite(quantite, (Feve)(produit));
 		return quantite;
@@ -369,20 +374,13 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		super.initialiser();
 	}
 
-//	@Override
 	public boolean peutVendre(Object produit) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 
-	public List<Journal> getJournaux() {
-		List<Journal> res=new ArrayList<Journal>();
-		res.add(this.classement);
-		res.add(this.journal);
-		res.add(journalCC);
-		return res;
-	}
+
 
 
 	
