@@ -43,14 +43,14 @@ public class Transformateur1AppelsOffres extends Transformateur1ContratCadreAche
 			journalAO.ajouter("Il n'y a pas de propositions d'achat par appel d'offre.");
 			return null;
 		} else {
-			journalAO.ajouter("propositions : "+propositions);
+			journalAO.ajouter("Ca va on a des propositions");
 			PropositionAchatAO retenue = propositions.get(0);
 			if (retenue.getPrixKg()>this.prixVenteMin.get(propositions.get(0).getOffre().getChocolat().getChocolat())){
-				journalAO.ajouter("  --> je choisis l'offre "+retenue);
+				journalAO.ajouter("  --> je choisis l'offre "+ retenue.getOffre() + " de l'acheteur "+ retenue.getAcheteur().getNom() + " au prix "+ retenue.getPrixKg() + " au kg ");
 				listeAO.add(retenue);
 				return retenue;
 			} else {
-				journalAO.ajouter("  --> je ne retiens rien");
+				journalAO.ajouter("  --> je ne retiens rien en fin de compte");
 				
 				return null;
 			}
