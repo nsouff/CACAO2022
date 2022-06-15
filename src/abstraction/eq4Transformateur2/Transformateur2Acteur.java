@@ -40,7 +40,8 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	protected Variable prixMinHb;
 	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
 	private Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
-	protected double marge;
+	protected double margeAO;
+	protected double margeCC;
 	
 	protected SuperviseurVentesAO superviseur;
 	protected int cryptogramme;
@@ -68,7 +69,8 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.prixMinH = new Variable("prix seuil haute qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		this.prixMinHb = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
-		this.marge = 1.2;
+		this.margeAO = 1.2;
+		this.margeCC=1.05;
 		this.comptFaillite=0;
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
 		this.stockReferenceFeve=new Stock();
@@ -288,7 +290,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 
 	public double getMarge() {
-		return this.marge;
+		return this.margeAO;
 	}
 
 
@@ -341,6 +343,10 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 	public Stock<ChocolatDeMarque> getStockReferenceChocolat() {
 		return stockReferenceChocolat;
+	}
+
+	public double getMargeCC() {
+		return margeCC;
 	}
 
 }
