@@ -49,10 +49,12 @@ public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
 			ArrayList<Lot> liste= new ArrayList<Lot>() ;
 			liste = this.get(c); 
 			for (int i = 0; i < liste.size(); i++) {
-				if (Filiere.LA_FILIERE.getParametre("datePeremption").getValeur()<=  Filiere.LA_FILIERE.getEtape()-liste.get(i).getDate()) {
+				if (Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()<=  Filiere.LA_FILIERE.getEtape()-liste.get(i).getDate()) {
 					liste.remove(i);
+					stockchoco.put(c, stockchoco.get(c)-liste.get(i).getQuantite());
 			}
 		}
+			this.put(c,liste);
 	}
 	}
 }

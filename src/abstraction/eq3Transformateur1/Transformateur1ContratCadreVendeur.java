@@ -117,27 +117,10 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 		if (livre==quantite) {
 			
 			stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),stockChoco.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat())-quantite);
-			return quantite;
-			//double restecommande=quantite;
-			
-			/**if (restecommande !=0) {
-				if (restecommande < stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()) {
-					//stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()-restecommande) ; 
-					restecommande=0;
-					return restecommande;
-				}
-				if (restecommande == stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()) {
-					stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).remove(0) ;
-					restecommande=0;
-					return restecommande;
-
-			} }}
-				//if (restecommande > stockChocoPeremption.get(((ChocolatDeMarque)contrat.getProduit()).getChocolat()).get(0).getQuantite()) {
-					
-				///} */
-			//}
+			stockChocoPeremption.venteLot(((ChocolatDeMarque)contrat.getProduit()).getChocolat(), quantite);
+			return quantite;					
 		}
-		stockChoco.put(((ChocolatDeMarque)contrat.getProduit()).getChocolat(),1000.0); // ??????????
+
 	return livre;
 	}
 		

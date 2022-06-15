@@ -107,9 +107,9 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		if (quantiteAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)<=400) {
 			quantiteAchatFeve.put(Feve.FEVE_MOYENNE_BIO_EQUITABLE,400.);				
 		}
-		journal.ajouter("quantiteAchatFeve : " + quantiteAchatFeve.get(Feve.FEVE_BASSE));
-		journal.ajouter("quantiteAchatFeve : " + quantiteAchatFeve.get(Feve.FEVE_MOYENNE));
-		journal.ajouter("quantiteAchatFeve : " + quantiteAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
+		journal.ajouter("Il faut acheter une quantite " + quantiteAchatFeve.get(Feve.FEVE_BASSE)+ " de "+ Feve.FEVE_BASSE);
+		journal.ajouter("Il faut acheter une quantite " + quantiteAchatFeve.get(Feve.FEVE_MOYENNE)+ " de "+ Feve.FEVE_MOYENNE);
+		journal.ajouter("Il faut acheter une quantite " + quantiteAchatFeve.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+  " de "+ Feve.FEVE_MOYENNE_BIO_EQUITABLE);
 	}
 	
 	/** _______________________________________________LOT TRANSFORMATION DES FEVES ____________________________________________________________*/
@@ -270,6 +270,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	 *  Alexandre*/
 	public void next() {
 		super.next();
+		stockChocoPeremption.supprimeLot(Filiere.LA_FILIERE.getEtape(), stockChoco);
 		
 		/** ____________________MAJ de variabales au debut / Initialisation____________________
 		 *  dernierPrixVenteChoco, listeAO*/
@@ -288,6 +289,10 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					journal.ajouter("le dernier prix de vente du chocolat " + c + " au distributeur" + distrib+ " est de " + dernierPrixVenteChoco.getPrix(distrib, c));
 					
 					dernierPrixVenteChoco.setPrix(distrib, c, dernierPrixVenteChocoReset.getPrix(distrib, c));
+				}
+				else {
+					journal.ajouter("On n'a pas encore vendu de chocolat " + c + " au distributeur" + distrib);
+					
 				}
 			}
 		}
@@ -347,7 +352,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				for (ExemplaireContratCadre c : this.mesContratEnTantQueAcheteur) { 
 					if (f == c.getProduit()) {
 						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
-						journal.ajouter("La quantite de feve provenant de contrat cadre est de "+ quantiteFeveContrat+ "kg ");
+						journalCCA.ajouter("La quantite de feve provenant de contrat cadre est de "+ quantiteFeveContrat+ "kg ");
 					}
 				}
 
@@ -367,7 +372,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 							false);
 
 					if (contrat != null) {
-						journalCCA.ajouter("Un nouveau contrat cadre acheteur vient d'être signé.");
+						journalCCA.ajouter("Un nouveau contrat cadre acheteur vient d'être signé avec "+ contrat.getVendeur().getNom()+" pour un prix de "+contrat.getPrix()+" de feve "+contrat.getProduit());
 						mesContratEnTantQueAcheteur.add(contrat);
 					}
 				}
@@ -467,7 +472,12 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					PropositionAchatAO retenue = superviseurAO.vendreParAO(this, cryptogramme, coco, stockDispo, false);
 					if (retenue!=null) {
 						stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());
+
+						journalAO.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg de " + retenue.getOffre().getChocolat()+" a "+retenue.getAcheteur().getNom());
+
+						stockChocoPeremption.venteLot(c, retenue.getOffre().getQuantiteKG());
 						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
+//github.com/AnnaCharles/CACAO2022
 						
 					} else {
 						journalAO.ajouter("pas d'offre retenue");
