@@ -97,10 +97,10 @@ public class Transformation extends AcheteurContrat {
 			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.4, false);
 			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.6, true);
 			this.transformation.ajouter("Transformation non BIO : ");
-			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_MOYENNE)*0.6, true);
-			transformationClassique(Feve.FEVE_MOYENNE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_MOYENNE)*0.4, false);
-			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE)*0.4, false);
-			transformationClassique(Feve.FEVE_HAUTE_BIO_EQUITABLE, this.stockFeves.getstock(Feve.FEVE_HAUTE)*0.6, true);
+			transformationClassique(Feve.FEVE_MOYENNE, this.stockFeves.getstock(Feve.FEVE_MOYENNE)*0.6, true);
+			transformationClassique(Feve.FEVE_MOYENNE, this.stockFeves.getstock(Feve.FEVE_MOYENNE)*0.4, false);
+			transformationClassique(Feve.FEVE_HAUTE, this.stockFeves.getstock(Feve.FEVE_HAUTE)*0.4, false);
+			transformationClassique(Feve.FEVE_HAUTE, this.stockFeves.getstock(Feve.FEVE_HAUTE)*0.6, true);
 		}
 		else {
 			int step = Filiere.LA_FILIERE.getEtape();
