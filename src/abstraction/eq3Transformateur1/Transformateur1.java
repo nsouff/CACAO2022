@@ -256,11 +256,11 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	/** Alexandre*/
 	public void initialiser() {
 		super.initialiser();
-		//this.rendementHaute = Filiere.LA_FILIERE.getParametre("rendement").getValeur();
-		//this.coutTransfo = Filiere.LA_FILIERE.getParametre("coutTransformateur").getValeur();
-		//this.coutTransfoOriginal = coutTransfo
-			//	+ Filiere.LA_FILIERE.getParametre("coutOrginial").getValeur();
-		//this.coutStockage = 4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();
+		this.rendementHaute = Filiere.LA_FILIERE.getIndicateur("rendement").getValeur();
+		this.coutTransfo = Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur();
+		this.coutTransfoOriginal = coutTransfo
+				+ Filiere.LA_FILIERE.getIndicateur("coutOriginal").getValeur();
+		this.coutStockage = 4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur();
 		
 		
 		
@@ -363,7 +363,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				
 				if (this.achete(f)) {
 					// creation de l'echeancier
-					Echeancier echeancier = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 5, Math.min(this.quantiteAchatFeve.get(f)*0.5-quantiteFeveContrat, 1000.));
+					Echeancier echeancier = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 5, Math.min(this.quantiteAchatFeve.get(f)*0.5-quantiteFeveContrat, 1200.));
 					// initiation d'un contrat cadre avec producteur 1
 					ExemplaireContratCadre contrat = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(
 							(IAcheteurContratCadre)this, 
@@ -382,7 +382,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				// desire t on un CC  ?
 				if (this.achete(f)) {
 					// creation de l'echeancier
-					Echeancier echeancier = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 5, Math.min(this.quantiteAchatFeve.get(f)*0.5-quantiteFeveContrat, 1000.));
+					Echeancier echeancier = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 5, Math.min(this.quantiteAchatFeve.get(f)*0.5-quantiteFeveContrat, 1200.));
 					// initiation d'un contrat cadre avec producteur 2
 					((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeAcheteur(
 							(IAcheteurContratCadre)this, 
