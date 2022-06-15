@@ -345,21 +345,22 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		for(ExemplaireContratCadre contrat : contratsExpire) {
 			this.mesContratCadreExpire.remove(contrat);
 		}
-	
+
 		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
 			if (a instanceof IFabricantChocolatDeMarque) {
-				this.classement.ajouter(a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
-				
+				this.classement.ajouter(a.getColor(),Color.BLACK,a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
 			}
-
+		}
+		
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE )+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_MOYENNE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_MOYENNE));
 		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_BASSE));
-		this.journalCC.ajouter("=======================================================================================");}
+		this.journalCC.ajouter("=======================================================================================");
+		}
 		
-	}
+	
 	@Override
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.removeQuantite(quantite, (Feve)(produit));
