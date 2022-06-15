@@ -216,6 +216,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	}
 	
 	// Renvoie le solde actuel de l'acteur
+	
 	public double getSolde() {
 		return Filiere.LA_FILIERE.getBanque().getSolde(this, this.cryptogramme);
 	}

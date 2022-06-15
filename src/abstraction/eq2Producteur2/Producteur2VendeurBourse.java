@@ -1,10 +1,13 @@
 package abstraction.eq2Producteur2;
 
 import abstraction.eq8Romu.bourseCacao.IVendeurBourse;
+import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
 public class Producteur2VendeurBourse extends Producteur2VendeurContratCadre implements IVendeurBourse {
-
+	
+	private Journal journalBourse;
+	
 	public Producteur2VendeurBourse() {
 		super();
 	}
@@ -23,10 +26,11 @@ public class Producteur2VendeurBourse extends Producteur2VendeurContratCadre imp
 		return  quantiteAVendre;
 	}
 
-	@Override
+
 	public void notificationVente(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
+		this.journalBourse.ajouter("Vented de "+quantiteEnKg+" de "+f+" au prix de "+coursEnEuroParKg);
 		this.removeQuantite(quantiteEnKg, f);
 		
 	}
-
+	
 }
