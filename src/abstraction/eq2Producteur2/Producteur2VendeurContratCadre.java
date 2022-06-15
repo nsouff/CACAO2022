@@ -281,9 +281,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	 * Methodes pour calculer proportion de vente des CC, auteur : Jules
 	 */
 	
-	public double vente50DerniersNexts(Feve f) {
-		// auteur : Jules 
-		
+	public double venteDernierNext(Feve f) {
 		Double vente = 0.0;
 		for(ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if(contrat.getProduit().equals(f)) {
@@ -304,13 +302,11 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 	
 	public double proportionVente(Feve f) {
-		// auteur : Jules 
-		
 		Double totale = 0.0001;
 		for (Feve feve : Feve.values()) {
-			totale+=this.vente50DerniersNexts(feve);
+			totale+=this.venteDernierNext(feve);
 		}
-	return (this.vente50DerniersNexts(f)/totale);
+	return (this.venteDernierNext(f)/totale);
 	}
 
 	
