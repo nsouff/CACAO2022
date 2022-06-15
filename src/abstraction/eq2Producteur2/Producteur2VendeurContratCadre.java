@@ -12,6 +12,7 @@ import abstraction.eq8Romu.contratsCadres.Echeancier;
 import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.IAcheteurContratCadre;
 import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
+import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
 import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
@@ -167,13 +168,13 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public double contrePropositionPrixVendeurNonBio(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		if (contrat.getQuantiteTotale()>12*(this.production((Feve)contrat.getProduit()))){ // Grosse commande, proposition de prix plus bas
-			if (contrat.getPrix()>0.8 ) {
+			if (contrat.getPrix()>0.5 ) {
 				return contrat.getPrix();}
 			else {
-				return 0.85*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ; }
+				return 0.6*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ; }
 		}
 		else { if(!(contrat.getListePrix().size()>4)) { // plus petite commande, pris plus élévée (4 negociations maximum)
-			return 0.90*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ;}
+			return 0.7*bourse.getCours((Feve)(contrat.getProduit())).getValeur() ;}
 		}
 		return -1.0;
 	}
@@ -203,26 +204,27 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	
 	public double contrePropositionPrixVendeurBio(ExemplaireContratCadre contrat) {
+		this.journalCC.ajouter("Proposition de l'acheteur : " +contrat.getPrix());
 		double contrepropositionprix = -1.0;
-		if (contrat.getPrix()>0.8*propositionPrix(contrat)) {
+		if (contrat.getPrix()>0.5*propositionPrix(contrat)) {
 			if (getClassementTransformateur( contrat.getAcheteur() )==1){
-				if (Math.random()<0.65) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 60% des cas
+				if (Math.random()<0.9) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 90% des cas
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==2){
-				if (Math.random()<0.6) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 40% des cas
+				if (Math.random()<0.7) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 70% des cas
 				}
 			}	
 			if (getClassementTransformateur( contrat.getAcheteur() )==3){
-				if (Math.random()<0.3) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 20% des cas
+				if (Math.random()<0.5) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 50% des cas
 				}
 			}
 			if (getClassementTransformateur( contrat.getAcheteur() )==4){
-				if (Math.random()<0.1) {
-					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 10% des cas
+				if (Math.random()<0.3) {
+					contrepropositionprix = contrat.getPrix(); // on ne cherche pas a negocier dans 30% des cas
 				}
 			}
 		}
@@ -231,7 +233,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 
-	/*Methode gènèrale ppour tous les types de fèves, auteur : Jules*/
+	/**
+	 * Methodes gènèrales ppour tous les types de fèves, auteur : Jules
+	 */
 	
 	public void notificationNouveauContratCadreBio(ExemplaireContratCadre contrat) {
 		this.mesContratEnTantQueVendeurBio.add(contrat);
@@ -273,7 +277,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 	}
 
-	/*Methodes pour calculer proportion de vente des CC, auteur : Jules*/
+	/**
+	 * Methodes pour calculer proportion de vente des CC, auteur : Jules
+	 */
 	
 	public double vente50DerniersNexts(Feve f) {
 		// auteur : Jules 
@@ -345,12 +351,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 		
 		
-		
-		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
-			if (a instanceof IFabricantChocolatDeMarque) {
-				this.classement.ajouter(a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
-			}
-		}
+
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE )+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE));
