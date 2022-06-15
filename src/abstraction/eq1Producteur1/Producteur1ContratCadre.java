@@ -129,7 +129,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		if(contrat.getProduit() instanceof Feve) {
 		if (this.getPrixmoyenFeve().keySet().contains(contrat.getProduit())) {
 			this.getContratCadre().ajouter("Prix proposé " + 1.5*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape() );
-			return 1.5*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
+			return 1*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 		} else {
 			return 0.0;
 		}
