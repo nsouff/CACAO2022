@@ -17,7 +17,7 @@ import abstraction.eq8Romu.filiere.IFabricantChocolatDeMarque;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
 
-public class Producteur2VendeurContratCadre extends Producteur2Acteur implements IVendeurContratCadre{
+public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur implements IVendeurContratCadre{
 	
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;

@@ -12,7 +12,7 @@ import abstraction.eq8Romu.produits.Feve;
  *
  */
 
-public class Producteur2StockChoco extends Producteur2Transfo{
+public class Producteur2StockChoco extends Producteur2VendeurContratCadre{
 	
 	protected Integer cryptogramme;
 	protected HashMap<Chocolat,LinkedList<Stock>> StocksChoco;
@@ -56,11 +56,14 @@ public class Producteur2StockChoco extends Producteur2Transfo{
 	
 	public double getStockChoco(Chocolat choco) {
 		double s = 0.0 ;
-		for(Stock stock : this.getStocks().get(choco)) {
-			s = s + stock.getQuantite() ;
-			}
+//		for(Stock stock : this.getStocksChoco().get(choco)) {
+//			s = s + stock.getQuantite() ;
+//			}
 			return s ;	
 		}
+	public HashMap<Chocolat, LinkedList<Stock>> getStocksChoco() {
+		return this.StocksChoco;
+	}
 	
 	
 	public void initialiser() {
@@ -74,6 +77,7 @@ public class Producteur2StockChoco extends Producteur2Transfo{
 		super.next();
 		this.addQuantite(this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.05, Chocolat.HQ_BE);
 		this.removeQuantite(this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE)*0.05, Chocolat.HQ_BE);
+		
 		}
 		
 
