@@ -45,6 +45,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	protected SuperviseurVentesAO superviseur;
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
+	private int comptFaillite;
 	
 
 
@@ -68,6 +69,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.prixMinHb = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.marge = 1.2;
+		this.comptFaillite=0;
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
 		this.stockReferenceFeve=new Stock();
 		this.stockReferenceFeve.ajouter(Feve.FEVE_BASSE, 20000000);
@@ -98,8 +100,8 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 	}
 	
-	//Jad
-	//renvoie le prix seuil de chaque feves
+// Jad
+// Renvoie le prix seuil de chaque feves
 	public Variable getPrixSeuil(Feve f) {
 		if(f.equals(Feve.FEVE_BASSE)) {
 			return this.getPrixSeuilBQ();
@@ -193,7 +195,33 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	}
 	
 	public void next() {
+		List<String> res = new ArrayList<String>();
+		for (IActeur test : Filiere.LA_FILIERE.getActeursSolvables()) {
+			res.add(test.getNom());
+		}
+		System.out.println(res);
+		if (res.contains("BioFour")) {
 			
+		}
+		else {
+			this.stockReferenceFeve.enlever(Feve.FEVE_HAUTE, this.stockReferenceFeve.getQuantite(Feve.FEVE_HAUTE)*0.5);
+		}
+		if (res.contains("EQ3") && res.contains("EQ5")) {
+			System.out.println("ça va");
+		}
+		else {
+			if(this.comptFaillite<1) {
+				this.comptFaillite = 1;
+				List<Feve> fevesCibles = new ArrayList<Feve>();
+				fevesCibles.add(Feve.FEVE_HAUTE_BIO_EQUITABLE);
+				fevesCibles.add(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+				for(Feve f : fevesCibles) {
+					System.out.println(this.stockReferenceFeve.getQuantite(f));
+					this.stockReferenceFeve.ajouter(f, this.stockReferenceFeve.getQuantite(f)*0.2);
+					System.out.println(this.stockReferenceFeve.getQuantite(f));
+				}
+			}
+		}
 	}
 	
 	
