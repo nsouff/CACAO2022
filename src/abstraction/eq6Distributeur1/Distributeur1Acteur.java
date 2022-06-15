@@ -277,7 +277,7 @@ public class Distributeur1Acteur implements IActeur {
 	public void setAllprixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
 		
 		prixAchat.forEach((key,value)->{
-		//if (ChocoTotalTour < 100) {
+		//if (ChocoTotalTour < 100) {                  //Emma Humeau, modif prix
 			//prixVente.put(key, (prixAchat.get(key)));
 		//}
 		//else {
