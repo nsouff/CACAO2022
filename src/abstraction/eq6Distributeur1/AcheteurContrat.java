@@ -244,6 +244,9 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 		Map<ChocolatDeMarque, Echeancier> res = new HashMap<ChocolatDeMarque, Echeancier>();
 		Map<ChocolatDeMarque, Echeancier> echeancierTotal = getEcheanceParChoco();
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
+			if (! achat.get(choco)) {
+				continue;
+			}
 			Echeancier eChoco = echeancierTotal.get(choco);
 			Echeancier e = createEcheancier(eChoco, Filiere.LA_FILIERE.getEtape()+1, choco);
 			if (e.getQuantiteTotale() >= SuperviseurVentesContratCadre.QUANTITE_MIN_ECHEANCIER && e.getQuantiteTotale() > SEUIL_AJOUT_ECHEANCE*attenduNProchainesEtapes(24, choco)*partDuMarcheVoulu(choco.getChocolat())*partCC) {
