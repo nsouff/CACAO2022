@@ -164,6 +164,8 @@ public abstract class Producteur2Plantation  {
 		 *
 		 */	
 		
+		Feve FeveAPlanter = FevePlusVendue();
+		Arbre ArbreAPlanter = conversion(FeveAPlanter);
 
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
 		for (Arbre a: arbres) {
@@ -178,7 +180,7 @@ public abstract class Producteur2Plantation  {
 			}
 			for (int i=0; i < ParcellesASupprimer.size(); i++) {
 				this.NbParcelles.get(a).remove(ParcellesASupprimer.get(i));
-				this.NbParcelles.get(a).add(new Parcelle(a, 0));
+				this.NbParcelles.get(ArbreAPlanter).add(new Parcelle(ArbreAPlanter,0));
 			}							
 			
 		}

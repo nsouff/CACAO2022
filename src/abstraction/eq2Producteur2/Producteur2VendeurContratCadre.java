@@ -281,7 +281,7 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 	 * Methodes pour calculer proportion de vente des CC, auteur : Jules
 	 */
 	
-	public double venteDernierNext(Feve f) {
+	public double vente20DerniersNexts(Feve f) {
 		Double vente = 0.0;
 		for(ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if(contrat.getProduit().equals(f)) {
@@ -304,9 +304,9 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 	public double proportionVente(Feve f) {
 		Double totale = 0.0001;
 		for (Feve feve : Feve.values()) {
-			totale+=this.venteDernierNext(feve);
+			totale+=this.vente20DerniersNexts(feve);
 		}
-	return (this.venteDernierNext(f)/totale);
+	return (this.vente20DerniersNexts(f)/totale);
 	}
 
 	
@@ -338,7 +338,7 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 		
 		List<ExemplaireContratCadre> contratsExpire=new LinkedList<ExemplaireContratCadre>();
 		for (Entry<ExemplaireContratCadre, Integer> m : mesContratCadreExpire.entrySet()) {
-			if(Filiere.LA_FILIERE.getEtape()- m.getValue()> 50) {
+			if(Filiere.LA_FILIERE.getEtape()- m.getValue()> 20) {
 				contratsExpire.add(m.getKey());
 			}
 		}
