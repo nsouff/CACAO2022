@@ -442,7 +442,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
 						
 					} else {
-						journal.ajouter("pas d'offre retenue");
+						journalAO.ajouter("pas d'offre retenue");
 					}
 				}
 				
