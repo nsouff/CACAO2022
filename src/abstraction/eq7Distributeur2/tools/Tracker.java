@@ -75,20 +75,22 @@ public class Tracker implements ITracker{
 		
 		for (ChocolatDeMarque choco : chocolats) {
 			//Somme des quantités
+			sommeQuantite = 0.;
 			for (double q : this.getVentesQuantiteEtapeActuelle(choco)) {
 				sommeQuantite += q;
 			}
 			this.getVentesQuantite(choco).add(sommeQuantite);
 			//Somme des prix
+			sommePrix = 0.;
 			for (double p : this.getVentesPrixEtapeActuelle(choco)) {
 				sommePrix += p;
 			}
-			int nbVentes = this.getVentesPrixEtapeActuelle(choco).size();
+			/*int nbVentes = this.getVentesPrixEtapeActuelle(choco).size();
 			if (nbVentes > 0) {
 				sommePrix = sommePrix/nbVentes;
 			} else {
 				sommePrix = 0.;
-			}
+			}*/
 			this.getVentesPrix(choco).add(sommePrix);
 		}
 		
