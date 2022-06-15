@@ -10,7 +10,7 @@ import abstraction.eq8Romu.produits.Feve;
 
 //auteure : Fiona 
 
-public class Producteur2Plantation{
+public abstract class Producteur2Plantation{
 	
 	private HashMap<Arbre, List<Parcelle>> NbParcelles;
 	
@@ -56,7 +56,7 @@ public class Producteur2Plantation{
 		}
 		System.out.println("fin plant");	
 	}
-	
+	public abstract double getSolde();
 	public ArrayList<Integer> ListeQt(int NbTotalArbres) {
 		//auteure : Fiona
 		
