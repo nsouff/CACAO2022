@@ -49,7 +49,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 		// Nous définissons ensuite la quantité que nous souhaitons vendre par chocolat :
 		// C'est la quantité telle que tous les contrats sont remplis et que 20% du stock initial reste
 		
-			double q = 0.8*(this.getStockchocolatdemarque().getQuantite(c))-onDoitLivrer;
+			double q = 0.95*(this.getStockchocolatdemarque().getQuantite(c))-onDoitLivrer;
 		
 		// Vérification de la quantité minimale autorisée sur le marché
 		
@@ -170,23 +170,23 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 //qualité en fonction du prix des fèves en bourse, du prix de transformation et du cout de stockage
 
 	public double prixVouluB() { // Basse qualité 
-	 return (this.prixMinB.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge; 	 
+	 return (this.prixMinB.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeAO; 	 
 }
 	
 public double prixVouluM() {  // Moyenne qualité
-	 return (this.prixMinM.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinM.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeAO;
 }
 
 public double prixVouluMb() {  // Moyenne qualité bio
-	 return (this.prixMinMb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinMb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeAO;
 }
 
 public double prixVouluH() {   // Haute qualité
-	 return (this.prixMinH.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinH.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeAO;
 }
 
 public double prixVouluHb() { // Haute qualité bio
-	 return (this.prixMinHb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.marge;
+	 return (this.prixMinHb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeAO;
 }
 
 

@@ -2,6 +2,7 @@ package abstraction.eq4Transformateur2;
 
 import java.util.List;
 
+
 import abstraction.eq8Romu.bourseCacao.BourseCacao;
 import abstraction.eq8Romu.bourseCacao.ExempleAbsAcheteurBourseCacao;
 import abstraction.eq8Romu.bourseCacao.IAcheteurBourse;
@@ -76,24 +77,52 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 	this.journalAchat.ajouter("---------------------------------------------------------------------------------------------------------------");
 	}
 
-// Jad
+// Gabriel
 	public double demande(Feve f, double cours) {
-		// Définition du premier critère : le prix
-		if(cours<this.getPrixSeuil(f).getValeur()) {
-			
-			// Nous souhaitons faire une demande en bourse lorsque le stock actuel est plus faible que le stock
-			// de référence que nous nous sommes fixé
-			double besoin=Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
-			
+		// Définition du premier critère : le besoin
+		// Nous souhaitons faire une demande en bourse lorsque le stock actuel est plus faible que le stock
+					// de référence que nous nous sommes fixé
+		double besoin=Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+		
+		if(besoin>0) {
+			if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)) { 
 			// Vérification de la capacité de paiement pour ne pas être blacklisté
-			if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)){
-				return besoin; // Demande en bourse pour un prix satisfaisant et un solde suffisant
 				
+				if(f.getGamme()== Gamme.BASSE) {
+					if(cours<this.prixMinB.getValeur()) {
+							return besoin;
+					}
+				}
+				if(f.getGamme()== Gamme.MOYENNE){
+					if(f.isBioEquitable()) {
+						if(cours<this.prixMinMb.getValeur()) {
+							return besoin;
+						}
+					}
+					else {
+						if(cours<this.prixMinM.getValeur()){
+							return besoin;
+						}
+					}
+				}
+				if(f.getGamme()== Gamme.HAUTE){
+					if(f.isBioEquitable()) {
+						if(cours<this.prixMinHb.getValeur()) {
+							return besoin;
+						}
+					}
+					else {
+						if(cours<this.prixMinH.getValeur()){
+							return besoin;
+						}
+					}
+				}
+			
 			}
 		}
 		return 0.0; // Si l'un des critères n'est pas rempli, pas de demande
 	}
-
+	
 // Marie et Jad
 		public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		this.getStockfeve().ajouter(f,quantiteEnKg); // Actualisation du stock en cas d'achat

@@ -100,16 +100,31 @@ public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 	}
 }
 
+public double prixVoulu(ExemplaireContratCadre contrat) {
+	if (contrat.getProduit().equals(this.getChocolatsProduits().get(0))) {
+		return this.prixVouluB();
+	} else if(contrat.getProduit().equals(this.getChocolatsProduits().get(1))){
+		return this.prixVouluM();
+		
+	} else if(contrat.getProduit().equals(this.getChocolatsProduits().get(2))){
+		return this.prixVouluMb();
+	} else if(contrat.getProduit().equals(this.getChocolatsProduits().get(3))){
+		return this.prixVouluH();
+	} else {
+		return this.prixVouluHb();
+	}
+}
+
 @Override
 public double propositionPrix(ExemplaireContratCadre contrat) {
-	// TODO Auto-generated method stub
-	return 6;
+	return this.prixVoulu(contrat);
+	
 }
 
 @Override
 public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 	// TODO Auto-generated method stub
-	if (contrat.getPrix()<4) {
+	if (contrat.getPrix()<0.3*this.prixVoulu(contrat)) {
 		journalVente.ajouter("Prix trop bas : Rupture du contrat");
 		return 0.0; //On arrete les négociations si son prix au kg
 	} else if(contrat.getPrix()>propositionPrix(contrat)) {
@@ -142,6 +157,25 @@ public List<ExemplaireContratCadre> getMesContratEnTantQueVendeur() {
 
 public Journal getJournalVente() {
 	return journalVente;
+}
+public double prixVouluB() { // Basse qualité 
+	 return (this.prixMinB.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeCC; 	 
+}
+	
+public double prixVouluM() {  // Moyenne qualité
+	 return (this.prixMinM.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeCC;
+}
+
+public double prixVouluMb() {  // Moyenne qualité bio
+	 return (this.prixMinMb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeCC;
+}
+
+public double prixVouluH() {   // Haute qualité
+	 return (this.prixMinH.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeCC;
+}
+
+public double prixVouluHb() { // Haute qualité bio
+	 return (this.prixMinHb.getValeur()+4*Filiere.LA_FILIERE.getParametre("Prix Stockage").getValeur()+ Filiere.LA_FILIERE.getIndicateur("coutTransformation").getValeur())*this.margeCC;
 }
 
 
