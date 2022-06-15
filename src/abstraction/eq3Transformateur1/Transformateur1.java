@@ -159,7 +159,6 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	 * auteur : Anna */
 	
 	public void transfo(double quantiteFeveTransformee, Feve feve, boolean original) {
-		//Lots nouveaulot = new Lots();
 		for (Feve f : stockFeve.keySet()) {
 			if (f == feve) {
 				stockFeve.put(feve, stockFeve.get(feve)-quantiteFeveTransformee);
@@ -170,9 +169,9 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
 					stockChoco.put(c, stockChoco.get(c)+coutQuantiteTransfo.get(1));
-					//nouveaulot.addQuantité(coutQuantiteTransfo.get(1)) ;
-					//nouveaulot.addDate(Filiere.LA_FILIERE.getEtape()) ;
-					//stockChocoPeremption.get(c).add(nouveaulot);
+					Lot nouveaulot= new Lot(stockChoco.get(c)+coutQuantiteTransfo.get(1), Filiere.LA_FILIERE.getEtape());
+					stockChocoPeremption.ajoutLot(c, nouveaulot);
+					
 
 				}
 			}
@@ -268,6 +267,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	 *  Alexandre*/
 	public void next() {
 		super.next();
+		stockChocoPeremption.supprimeLot(Filiere.LA_FILIERE.getEtape(), stockChoco);
 		
 		/** ____________________MAJ de variabales au debut / Initialisation____________________
 		 *  dernierPrixVenteChoco, listeAO*/
@@ -299,10 +299,34 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		dernierPrixVenteChocoReset = new dernierPrixVenteChoco();
 		dernierPrixVenteChocoReset.initialiser();
 		
-		/** MISE A JOUR de lsiteAO
+		/** MISE A JOUR de listeAO
 		 * on le reset en debut de tour pour effacer les AO du tour precedent et pouvoir en ajouter de nouvelles lors des AO
 		 */
 		this.listeAO = new ArrayList<PropositionAchatAO>();
+		
+		/** MISE A JOUR DE demandeChocoPourcent
+		 *  */
+		this.demandeChocoPourcent = new DicoChoco(); //on remet la variable à 0
+		
+		// on calcule les pourcentages par rapport à la qt demandee au tour précédent
+		double qtBio = 0.;
+		double qtNonBio = 0.;
+		// on calcule qtBio et qtNonBio
+		for (Chocolat c : this.quantiteDemandeeChoco.keySet()) {
+			if (c == Chocolat.MQ_BE) {
+				qtBio = this.quantiteDemandeeChoco.get(c);
+			} else if (c == Chocolat.MQ_BE || c == Chocolat.MQ_O) {
+				qtNonBio = qtNonBio + this.quantiteDemandeeChoco.get(c);
+			}
+		}
+		// on calcule les pourcentages
+		for (Chocolat c : this.quantiteDemandeeChoco.keySet()) {
+			if (c == Chocolat.MQ_BE) {
+				this.demandeChocoPourcent.put(c, this.quantiteDemandeeChoco.get(c)/qtBio);
+			} else if (c == Chocolat.MQ_BE || c == Chocolat.MQ_O) {
+				this.demandeChocoPourcent.put(c, this.quantiteDemandeeChoco.get(c)/qtNonBio);
+			}
+		}
 		
 		
 		/** ____________________Choix quantite et prix Feve____________________ */
@@ -396,17 +420,17 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					}
 				} else {
 					ArrayList<Double> prixQtO = this.coutQuantiteTransfo(this.choixTypeTransfo(f.getGamme()), 
-							0.25*quantiteATransformer, 
-							true);                                // 20% de choco M original
+							this.demandeChocoPourcent.get(Chocolat.MQ_O)*quantiteATransformer, 
+							true);                               
 					ArrayList<Double> prixQtSt = this.coutQuantiteTransfo(this.choixTypeTransfo(f.getGamme()), 
-							0.75*quantiteATransformer, 
-							false);                               // 60% de choco M standard
+							this.demandeChocoPourcent.get(Chocolat.MQ_BE)*quantiteATransformer, 
+							false);                              
 					
 					// on verifie qu'on a l'argent pour payer la transformation
 					// defaut de cette condition : il peut arriver qu'on ait assez pour transformer mais plus assez pour ensuite stocker
 					if (prixQtO.get(0) + prixQtSt.get(0) < this.getSolde() ) {
-						this.transfo(0.25*quantiteATransformer, f, true);            // 20% de choco M original
-						this.transfo(0.75*quantiteATransformer, f, false);           // 60% de choco M standard
+						this.transfo(this.demandeChocoPourcent.get(Chocolat.MQ_O)*quantiteATransformer, f, true);
+						this.transfo(this.demandeChocoPourcent.get(Chocolat.MQ_BE)*quantiteATransformer, f, false);
 					}
 				}
 				
@@ -443,7 +467,12 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 					PropositionAchatAO retenue = superviseurAO.vendreParAO(this, cryptogramme, coco, stockDispo, false);
 					if (retenue!=null) {
 						stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());
+
 						journalAO.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg de " + retenue.getOffre().getChocolat()+" a "+retenue.getAcheteur().getNom());
+
+						stockChocoPeremption.venteLot(c, retenue.getOffre().getQuantiteKG());
+						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
+//github.com/AnnaCharles/CACAO2022
 						
 					} else {
 						journalAO.ajouter("pas d'offre retenue");

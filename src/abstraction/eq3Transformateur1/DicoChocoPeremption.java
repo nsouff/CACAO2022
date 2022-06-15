@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Chocolat;
-/* anna*/
+/*création d'une hashmap avec type de choclat, liste de lots (lot = quantité, date de péremption), auteur : anna*/
 public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
-	
+
 	
 	public DicoChocoPeremption() {
 		super();
@@ -43,9 +44,18 @@ public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
 		}		
 	}
 	
-	public void supprimeLot(int etape) {
-		
+	public void supprimeLot(int etape, DicoChoco stockchoco) {
+		for (Chocolat c : Chocolat.values()) {
+			ArrayList<Lot> liste= new ArrayList<Lot>() ;
+			liste = this.get(c); 
+			for (int i = 0; i < liste.size(); i++) {
+				if (Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur()<=  Filiere.LA_FILIERE.getEtape()-liste.get(i).getDate()) {
+					liste.remove(i);
+					stockchoco.put(c, stockchoco.get(c)-liste.get(i).getQuantite());
+			}
+		}
+			this.put(c,liste);
 	}
-	
+	}
 }
 
