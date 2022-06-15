@@ -66,7 +66,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 				for (int date=newcontrat.getStepDebut();date<newcontrat.getStepFin(); date++) {
 					newcontrat.set(date,quantite);
 				}
-				this.getContratCadre().ajouter("On réajuste les quantités à 25%");
+				this.getContratCadre().ajouter("On augmente les quantités à 25%");
 				this.getContratCadre().ajouter("Nouvel échéancier " + newcontrat.toString());
 				return newcontrat;
 			} else { //Quantité demandé acceptable
@@ -75,9 +75,16 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 				return contrat.getEcheancier(); 
 			}
 			
-		} else { //Pas assez de quantité dans le stock présent
+		} else { //Pas assez de quantité dans le stock présent, on propose 35% de notre stock
 			this.getContratCadre().ajouter("Pas assez de quantité dans le stock présent de " + contrat.getProduit().toString());
-			return null;
+			Echeancier newcontrat = contrat.getEcheancier();
+			double quantite =  0.35*this.getStock((Feve)contrat.getProduit(), false)/newcontrat.getNbEcheances();
+			
+			for (int date=newcontrat.getStepDebut();date<=newcontrat.getStepFin(); date++) {
+				newcontrat.set(date,quantite);
+			}
+			this.getContratCadre().ajouter("On propose 35% de notre stock " + newcontrat.toString());
+			return newcontrat;
 		}
 	}
 		
@@ -100,7 +107,14 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 				
 			} else { //Pas assez de quantité dans le stock présent
 				this.getContratCadre().ajouter("Pas assez de quantité dans le stock présent de " + contrat.getProduit().toString());
-				return null;
+				Echeancier newcontrat = contrat.getEcheancier();
+				double quantite =  0.7*this.getStock((Chocolat)contrat.getProduit())/newcontrat.getNbEcheances();
+				
+				for (int date=newcontrat.getStepDebut();date<newcontrat.getStepFin(); date++) {
+					newcontrat.set(date,quantite);
+				}
+				this.getContratCadre().ajouter("On propose 70% de notre stock " + newcontrat.toString());
+				return newcontrat;
 			}
 		}
 		this.getContratCadre().ajouter("On ne propose pas ce produit");
