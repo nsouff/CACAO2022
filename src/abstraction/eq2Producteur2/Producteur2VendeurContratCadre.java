@@ -1,5 +1,6 @@
 package abstraction.eq2Producteur2;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -38,6 +39,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	 * @param transformateur
 	 * @return Un nombre de point qui représente la quantité de fèves non Bio achetée par ce transformateur
 	 */
+	
 	public double getPointTransformateur(IActeur transformateur) {
 		double point=0.000;
 		for (int i=0 ; i<this.mesContratEnTantQueVendeurNonBio.size() ; i++) {
@@ -58,10 +60,12 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 	return Liste;
 	}
-	/*
+	
+	/**
 	 * @param transformateur
 	 * @return un classement du transformateur par rapport aux autres par rapport à l'achat de fèves non Bio
 	 */
+	
 	public int getClassementTransformateur(IActeur transformateur) {
 		int classement=1;
 		if(!getListeTransformateurContratCadre().contains(transformateur)) {
@@ -79,6 +83,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	
 	
 	//Toute les fèves
+	
 	public boolean vend(Object produit) {
 		return (produit instanceof Feve);//(produit instanceof Feve);
 	}
@@ -114,12 +119,12 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		this.journalCC.ajouter("Proposition de Contrat cadre avec l'échéancier : "+contrat.getEcheancier()+"Feve : "+contrat.getProduit());
 		if (vend(contrat.getProduit())) {
 			if (quantiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < this.production((Feve)(contrat.getProduit()))) { 
-				this.journalCC.ajouter("Echéancier accepté");
+				this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Echéancier accepté");
 				return contrat.getEcheancier();
 				}
 			else {
-				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) );// on souhaite livrer toute la quatité qu'on a
+				// On propose un echéancier avec les mêmes echéances et une quantité par echéances égale à 1/3 de ceux que l'on peut fournir
+				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getNbEcheances(),(this.production((Feve)(contrat.getProduit())) - this.qtiteTotaleContratEnCours((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())/3);
 				this.journalCC.ajouter("Proposition d'un Nouvelle échéancier : "+e);
 				return e;
 			}
@@ -129,16 +134,17 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		 }
 	}
 
+	
 	public Echeancier contrePropositionDuVendeurBio(ExemplaireContratCadre contrat) {
 		this.journalCC.ajouter("Proposition de Contrat cadre avec l'échéancier : "+contrat.getEcheancier()+"Feve : "+contrat.getProduit());
 		if (vend(contrat.getProduit())) {
 			if (qtiteTotaleContratEnCours(contrat.getProduit()) + contrat.getQuantiteTotale()/contrat.getEcheancier().getNbEcheances() < (this.production((Feve)contrat.getProduit()) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())) { 
-				this.journalCC.ajouter("Echéancier accepté");
+				this.journalCC.ajouter(Color.GREEN,Color.BLACK,"Echéancier accepté");
 				return contrat.getEcheancier();
 				}
 			else {
-				Echeancier e = contrat.getEcheancier();
-				e.set(e.getStepDebut(), this.production((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances());// on souhaite livrer toute la quatité qu'on a
+				// On propose un echéancier avec les mêmes echéances et une quantité par echéances égale à 1/3 de ceux que l'on peut fournir
+				Echeancier e = new Echeancier(contrat.getEcheancier().getStepDebut(),contrat.getEcheancier().getNbEcheances(),(this.production((Feve)(contrat.getProduit())) - this.qtiteTotaleContratEnCours((Feve)(contrat.getProduit())) + this.getStock((Feve)(contrat.getProduit()))/contrat.getEcheancier().getNbEcheances())/3);
 				this.journalCC.ajouter("Proposition d'un Nouvelle échéancier : "+e);
 				return e;
 			}
@@ -297,7 +303,9 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 	
-	
+	/**
+	 * Methode Next 
+	 */
 	
 	public void next() {
 		super.next();
