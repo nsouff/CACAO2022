@@ -244,21 +244,21 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 			return this.contrePropositionDuVendeurBio(contrat);
 		}
 		
-		return this.contrePropositionDuVendeurNonBio(contrat);
+		else{return this.contrePropositionDuVendeurNonBio(contrat);}
 	}
 
 	public double propositionPrix(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			return this.propositionPrixBio(contrat);
 		}
-		return this.propositionPrixNonBio(contrat);
+		else{return this.propositionPrixNonBio(contrat);}
 	}
 	
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		if((contrat.getProduit()==Feve.FEVE_HAUTE_BIO_EQUITABLE)||(contrat.getProduit()==Feve.FEVE_MOYENNE_BIO_EQUITABLE)) {
 			return this.contrePropositionPrixVendeurBio(contrat);
 		}
-		return this.contrePropositionPrixVendeurNonBio(contrat);
+		else{return this.contrePropositionPrixVendeurNonBio(contrat);}
 	}
 
 	public void notificationNouveauContratCadre(ExemplaireContratCadre contrat) {
