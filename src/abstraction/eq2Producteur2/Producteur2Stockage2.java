@@ -69,7 +69,7 @@ public abstract class Producteur2Stockage2 extends Producteur2Couts {
 	public void initialiser() {
 		super.initialiser();
 		for (Feve feve : Feve.values()) {
-			int qt = super.getNbArbre(feve);
+			int qt = super.getNbArbreTotal(feve);
 			this.addQuantite(qt, feve);
 		}
 		
