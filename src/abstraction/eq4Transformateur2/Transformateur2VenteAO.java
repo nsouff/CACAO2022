@@ -49,7 +49,7 @@ public abstract class Transformateur2VenteAO extends Transformateur2Bourse imple
 		// Nous définissons ensuite la quantité que nous souhaitons vendre par chocolat :
 		// C'est la quantité telle que tous les contrats sont remplis et que 20% du stock initial reste
 		
-			double q = 0.8*(this.getStockchocolatdemarque().getQuantite(c))-onDoitLivrer;
+			double q = 0.95*(this.getStockchocolatdemarque().getQuantite(c))-onDoitLivrer;
 		
 		// Vérification de la quantité minimale autorisée sur le marché
 		
