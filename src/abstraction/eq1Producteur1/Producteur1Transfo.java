@@ -33,5 +33,7 @@ public class Producteur1Transfo extends Producteur1StockChocolat {
 	public void next() {
 		super.next();
 		this.nextTransformation(Feve.FEVE_BASSE, false);
+		this.nextTransformation(Feve.FEVE_MOYENNE, false);
+		this.nextTransformation(Feve.FEVE_MOYENNE_BIO_EQUITABLE, false);
 	}
 }
