@@ -33,18 +33,13 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 
 
 	private Variable prixstockage ;
-//	private Variable dureeaffinageBQ ;
-//	private Variable dureeaffinageMQ ;
-//	private Variable dureeaffinageHQ ;
+
 	
 	// Auteur : Clément
 	
 	public Producteur2Acteur() {
 		super();
 		this.prixstockage= new Variable("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
-//		this.dureeaffinageBQ= new VariableReadOnly("Durée affinage BQ","", this,  0.0, 1000000000, 1) ;
-//		this.dureeaffinageMQ= new VariableReadOnly("Durée affinage MQ","", this,  0.0, 1000000000, 2) ;
-//		this.dureeaffinageHQ= new VariableReadOnly("Durée affinage HQ","", this,  0.0, 1000000000, 3) ;
 		this.journal = new Journal(this.getNom()+" activites", this);
 		this.StockFeveBasse= new Variable("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, this.getStock(Feve.FEVE_BASSE));
 		this.StockFeveMoyenne= new Variable("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE));

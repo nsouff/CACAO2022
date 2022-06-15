@@ -317,7 +317,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	public void next() {
 		super.next();
 		
-		// Ajout des contrat expire mais à prendre en compte
+		// Ajout des contrat expire mais à prendre en compte, ie expire il y a moins de 50 step
 		List<ExemplaireContratCadre> contratsBio=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
@@ -346,6 +346,10 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 			this.mesContratCadreExpire.remove(contrat);
 		}
 		
+		/**
+		 * Affichage Journal  
+		 */
+		
 		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
 			if (a instanceof IFabricantChocolatDeMarque) {
 				this.classement.ajouter(a.getColor(),Color.BLACK,a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
@@ -359,7 +363,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		this.journalCC.ajouter("Quantité par step de Feve BASSE Non BIO  : "+this.quantiteTotaleContratEnCours(Feve.FEVE_BASSE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_BASSE));
 		this.journalCC.ajouter("=======================================================================================");
 	}
-	@Override
+
 	public double livrer(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		this.removeQuantite(quantite, (Feve)(produit));
 		return quantite;
@@ -369,7 +373,6 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		super.initialiser();
 	}
 
-//	@Override
 	public boolean peutVendre(Object produit) {
 		// TODO Auto-generated method stub
 		return true;
