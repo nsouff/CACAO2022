@@ -35,7 +35,7 @@ public class Utilitaire<I> {
 	public double getQuantUtiliseeDepuis(I produit,int n) {
 		double somme=0;
 		if (this.uti.keySet().contains(produit)) {
-			for(int i=0; i<13;i++) {
+			for(int i=0; i<Filiere.LA_FILIERE.getParametre("dureePeremption").getValeur();i++) {
 				somme+=this.uti.get(produit).get(n+i);
 		}
 		}
@@ -56,6 +56,10 @@ public class Utilitaire<I> {
 	}
 	}
 	
+	
+	public void intro(I produit) {
+		this.uti.put(produit, new LinkedList<Double>());
+	}
 
 		
 

@@ -271,7 +271,7 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 				if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, max_prod*(prix_transfo+prix_ori*s))) {//(1/rdt)*qt est la quantité de fève nécessaire pour obtenir qt de chocolat
 							
 							NewCap-=(1/rdt)*qt;//mise à jour de la capacité de production
-
+							
 							this.getStockfeve().enlever(f,max_prod);//baisse le stock de feves	
 							this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), max_prod);//augmente le stock de chocolat de marque
 							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
