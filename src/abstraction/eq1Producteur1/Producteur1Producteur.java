@@ -306,7 +306,7 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 				}
 			}
 			
-			// Si le parc vend on prend en compte le mécontentement lié à la vente
+			// Si le parc vend(=est présent dans la HashMap) on prend en compte le mécontentement lié à la vente
 			if (repartitionGuerre != null) {
 				for (Parc p : repartitionGuerre.keySet()) {
 					if (parc_j == p) {
