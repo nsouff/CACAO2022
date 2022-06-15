@@ -31,55 +31,66 @@ public class Transformateur1ContratCadreAcheteur extends Transformateur1ContratC
 						quantiteFeveContrat = quantiteFeveContrat + c.getQuantiteALivrerAuStep();
 					}
 				}
+				journalCCA.ajouter("On a prévu d'acheter "+ quantiteFeveContrat + " de " + produit +" au prochain tour.");
 				// décide si on est ouvert ou non à des propositions
 				if (quantiteFeveContrat < 0.5*this.quantiteAchatFeve.get(produit)) {
+					journalCCA.ajouter("Je souhaite faire un nouveau contrat cadre acheteur de " + produit);
 					return true;
 				}
 			}
 		}
+		journalCCA.ajouter("Je ne souhaite pas faire un nouveau contrat cadre acheteur de " + produit);
 		return false;
 	}
 
 	// négocie un échancier inférieur à 6 échéances; auteur Julien */
 	public Echeancier contrePropositionDeLAcheteur(ExemplaireContratCadre contrat) {
-		if (contrat.getEcheancier().getNbEcheances()<6) {
+		if (contrat.getEcheancier().getNbEcheances()<100) {
+			journalCCA.ajouter("J'accepte cet échéancier");
 			return contrat.getEcheancier();
 		}
+		journalCCA.ajouter("Je refuse cet échéancier");
 		return null;
 	}
 
-	// négociation du prix; auteur Julien */
+	// négociation du prix; auteur Julien on accepte tout pour l'instant*/
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
-		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit())) {
+		if (contrat.getPrix()<prixAchatFeve.get(contrat.getProduit()) + 1000000000000000000000000.) {
+			journalCCA.ajouter("J'accepte ce prix "+ contrat.getPrix());
 			return contrat.getPrix();
 		} else {
+			journalCCA.ajouter("Je propose un nouveau prix car ils ont proposé : "+ contrat.getPrix());
 			return prixAchatFeve.get(contrat.getProduit());
+			
 		}
 	}
 
 	@Override
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		stockFeve.put(((Feve)produit), stockFeve.get(contrat.getProduit())+quantite);
-		
+		journalCCA.ajouter("Je receptionne "+ quantite + "kg de "+ (Feve)produit);
 	}
 	
 	// Alexandre
 	public void initialiser( ) {
 		super.initialiser();
 	}
-
 	
 	public void next() {
 		super.next();
 		// supprime les contrats d'achats obsolètes; auteur Julien
 		List<ExemplaireContratCadre> contratsObsoletes=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueAcheteur) {
+			//System.out.println(contrat + "qtRestantALivrer " + contrat.getQuantiteRestantALivrer() + "Montant "+ contrat.getMontantRestantARegler());
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {
+				//System.out.println("ajouté");
 				contratsObsoletes.add(contrat);
 			}
 		}
 		this.mesContratEnTantQueAcheteur.removeAll(contratsObsoletes);
-		journal.ajouter("test contratcadre acheteur");
+
+		journalCCA.ajouter("Les contrats cadres acheteur obsoletes ont ete supprimes");
+
 	}
 
 }
