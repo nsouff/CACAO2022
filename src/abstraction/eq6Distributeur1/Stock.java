@@ -142,7 +142,7 @@ public class Stock { //Emma Humeau
 	
 	protected void initialiser() {
 		for (ChocolatDeMarque choco : Filiere.LA_FILIERE.getChocolatsProduits()) {
-			for (int i = 0; i < 1; i++)
+			for (int i = 0; i < 4; i++)
 			addQte(choco, acteur.partDuMarcheVoulu(choco.getChocolat()) * Filiere.LA_FILIERE.getVentes(choco, -24+i));
 			acteur.setPrixVente(choco, 10 * acteur.facteurPrixChocolat(choco.getChocolat()));
 		}

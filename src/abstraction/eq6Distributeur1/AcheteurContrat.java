@@ -14,6 +14,7 @@ import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.ChocolatDeMarque;
+import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAcheteurContratCadre{//leorouppert
 	protected Journal journalNegociationCC;
@@ -151,7 +152,7 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 	public void receptionner(Object produit, double quantite, ExemplaireContratCadre contrat) {
 		double qteAttendu = contrat.getQuantiteALivrerAuStep();
 		if (quantite != qteAttendu) {
-			enRetard.put(contrat.getNumero(), true);
+			// enRetard.put(contrat.getNumero(), true);
 			journalSuiviCC.ajouter(Color.RED, Color.BLACK, "Il manque " + (qteAttendu - quantite) + "Kg de ce que nous etions censé recevoir de " + contrat.getVendeur().getNom() + " pour le contrat #" + contrat.getNumero());
 			
 		}
@@ -217,12 +218,22 @@ public class AcheteurContrat extends DistributeurChocolatDeMarque implements IAc
 
 	private Echeancier createEcheancier(Echeancier aCombler, int stepDebut, ChocolatDeMarque c) {
 		Echeancier e = new Echeancier(stepDebut);
+		double stock = NotreStock.getStock(c);
 		for (int i = stepDebut; i < stepDebut + 24; i++) {
 			double aComblerI = (aCombler == null) ? 0 : aCombler.getQuantite(i);
-			double aAjouter = partCC*Filiere.LA_FILIERE.getVentes(c, (i%24)-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI;
+			if (stock > aComblerI) {
+				aComblerI = 0;
+				stock -= aComblerI;
+			}
+			else {
+				aComblerI -= stock;
+				stock = 0;
+			}
+			double aAjouter = partCC*Filiere.LA_FILIERE.getVentes(c, i-24) * partDuMarcheVoulu(c.getChocolat()) - aComblerI - stock;
 			if (aAjouter > 0) {
 				e.ajouter(aAjouter);
 			}
+			// if (c.getChocolat().getGamme() == Gamme.MOYENNE) System.out.println(aAjouter);
 		}
 		return e;
 	}
