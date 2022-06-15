@@ -57,14 +57,16 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, true);
 					if (retenueenTG!=null) {
 						this.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
-						this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c.name() +"  a "+retenueenTG.getAcheteur().getNom()+" en TG");
+						this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c.name() +"  a "
+						+retenueenTG.getAcheteur().getNom()+" en TG" + "a un prix de " + retenueenTG.getPrixKg());
 					} else {
 						// on essaye sans mettre en TG
 						PropositionAchatAO retenuepasenTG = 
 								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, false);
 						if (retenuepasenTG!=null) {
 							this.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
-							this.ventes.ajouter("vente par AO de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c.name() +" a "+retenuepasenTG.getAcheteur().getNom());
+							this.ventes.ajouter("vente par AO de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c.name() +" a "
+							+retenuepasenTG.getAcheteur().getNom() + "a un prix de " + retenueenTG.getPrixKg());
 						} else {
 							this.ventes.ajouter("pas d'offre retenue");
 						}

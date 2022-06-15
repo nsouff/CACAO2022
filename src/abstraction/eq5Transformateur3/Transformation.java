@@ -9,11 +9,10 @@ import abstraction.eq8Romu.produits.Gamme;
 public class Transformation extends AcheteurContrat {
 
 	// Payer à la banque
-	public boolean payer(double montant) {
+	public void payer(double montant) {
 		if (montant > 0.0) {
-			return Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
+			Filiere.LA_FILIERE.getBanque().virer(Filiere.LA_FILIERE.getActeur("EQ5"), this.cryptogramme, Filiere.LA_FILIERE.getActeur("EQ8"), montant);
 		}
-		return false;
 	}
 	
 	// Transformation Classique

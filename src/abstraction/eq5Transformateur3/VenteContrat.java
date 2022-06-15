@@ -24,7 +24,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	//chgmt 
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
-		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 3, 10000); //10000 kg de chocolat sur 10 steps
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 3, 1000000); //10000 kg de chocolat sur 10 steps
 		List<IAcheteurContratCadre>L2 = new LinkedList<IAcheteurContratCadre>();
 		this.nb_prop = 0;
 		for (IAcheteurContratCadre a : L) {
@@ -163,12 +163,12 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 				if (f.getGamme() == g && f.isBioEquitable() == be) {
 					if (this.stockChocolat.getstock(c) > this.besoinFeves.get(f)) {
 						if (be == true) {
-							ChocolatDeMarque choco = new ChocolatDeMarque(c,"BIO'riginal");
-							lanceruncontratVendeur(choco);	
-							}
+							ChocolatDeMarque choco_O = new ChocolatDeMarque(c,"BIO'riginal");
+							lanceruncontratVendeur(choco_O);	
+						}
 						else {
-							ChocolatDeMarque choco = new ChocolatDeMarque(c,"CHOCO'riginal");
-							lanceruncontratVendeur(choco);
+							ChocolatDeMarque choco_nO = new ChocolatDeMarque(c,"CHOCO'riginal");
+							lanceruncontratVendeur(choco_nO);
 						}
 					}
 				}
