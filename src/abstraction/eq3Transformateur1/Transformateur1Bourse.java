@@ -62,7 +62,7 @@ public class Transformateur1Bourse extends Transformateur1Acteur implements IAch
 	/** modification du stock de fèves; auteur Anna */
 	public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		stockFeve.put(f, quantiteEnKg + stockFeve.get(f)) ;
-		journalB.ajouter(quantiteEnKg+" kg de fèves "+ f +" achetées en bourse");
+		journalB.ajouter(quantiteEnKg+" kg de fèves "+ f +" achetées en bourse au prix de "+coursEnEuroParKg+" euros par kg");
 		journalB.ajouter("Le nouveau stock de feve "+ f +" est de " +stockFeve.get(f)+" kg." );
 	}
 

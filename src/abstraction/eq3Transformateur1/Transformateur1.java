@@ -345,7 +345,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 							false);
 
 					if (contrat != null) {
-						journalCCA.ajouter("Un nouveau contrat cadre acheteur vient d'être signé.");
+						journalCCA.ajouter("Un nouveau contrat cadre acheteur vient d'être signé avec "+ contrat.getVendeur().getNom()+" pour un prix de "+contrat.getPrix()+" de feve "+contrat.getProduit());
 						mesContratEnTantQueAcheteur.add(contrat);
 					}
 				}
@@ -380,7 +380,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				// on determine la quantite de ce type de feve a transformer
 
 				double quantiteATransformer = this.transfoQt(stockFeve.get(f));
-				journal.ajouter("La quantite a transformer de feves "+ f + "est de "+ this.transfoQt(stockFeve.get(f)));
+				journal.ajouter("La quantite a transformer de feves "+ f + " est de "+ this.transfoQt(stockFeve.get(f)));
 				
 				// on calcule le cout et la quantite de chocolat obtenu
 				if (f.isBioEquitable()) {
