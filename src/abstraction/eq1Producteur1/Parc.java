@@ -212,7 +212,9 @@ public class Parc {
 		this.fin_aleas = i;
 	}
 	
-
+	public int getNb_arbres_tot() { //Écrit par Antoine
+		return this.getNombre_BE_haute()+this.getNombre_BE_moyenne()+this.getNombre_non_BE_basse()+this.getNombre_non_BE_moyenne()+this.getNombre_non_BE_haute();
+	}
 	public MilleArbre getArbre(Feve f,int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(f).get(i);
 	}

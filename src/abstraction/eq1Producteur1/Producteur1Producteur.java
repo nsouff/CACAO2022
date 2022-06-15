@@ -167,7 +167,35 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 	
 	public abstract HashMap<Parc, Double> getRepartitionGuerre();
 	
-	public void MAJMecontentement() { //A changer : on ne sait pas si on vend ou pas, on change juste le mécontentement sur le cours actuel -> paramétrer avec feve f ou un booléen de vente en entrée?
+	public Double MAJVente_tot() {
+		HashMap<Feve, Double> venteChoco = getVenteChoco(false);
+		Double vente_tot = 0.0;
+		for (Feve f : venteChoco.keySet()) {
+			vente_tot += venteChoco.get(f);
+		}
+		return vente_tot;
+	}
+	
+	public int MilleArbresAPlanter(Parc p) {
+		double vente_tot = MAJVente_tot();
+		double augmentation_max = 0.02;
+		int nb_arbre = p.getNb_arbres_tot();
+		if (this.getVente_tot()<vente_tot) {
+			double diff = (vente_tot-this.getVente_tot())/vente_tot;
+			this.setVente_tot(vente_tot);
+			if (diff<augmentation_max) {
+				return (int)Math.floor(nb_arbre*diff);
+			}
+			else {
+				return (int)Math.floor(nb_arbre*augmentation_max);
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+	
+	public void MAJMecontentement() { 
 		//Récupération prix actuels de la bourse
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
 		double cours_feve_basse = bourse.getCours(Feve.FEVE_BASSE).getValeur();
@@ -255,33 +283,40 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 
 	public void next() { //Écrit par Antoine
 		super.next();
-		HashMap<Feve, Double> venteChoco = this.getVenteChoco(true);
+		HashMap<Feve, Double> venteChoco_pourcentage = this.getVenteChoco(true);
+		HashMap<Feve, Double> venteChoco = this.getVenteChoco(false);
 		HashMap<Parc, Double> repartitionGuerre = this.getRepartitionGuerre();
 		for (int j=0; j<ListeParc.size();j++) {
 			boolean vente = false;
-			this.getParc(j).MAJAleas();
-			this.recolte = this.getParc(j).Recolte();
+			Parc parc_j = this.getParc(j);
+			parc_j.MAJAleas();
+			this.recolte = parc_j.Recolte();
 			for (Feve f : this.getFeves().keySet()) {
 				if (this.recolte.get(f) > 0) {
-					this.addLot(f, this.recolte.get(f), this.getParc(j));
+					this.addLot(f, this.recolte.get(f), parc_j);
 				}
 			}
 			if (repartitionGuerre != null) {
 				for (Parc p : repartitionGuerre.keySet()) {
-					if (this.getParc(j) == p) {
+					if (parc_j == p) {
 						// Si le parc vend on prend en compte le mécontentement lié à la vente
-						this.getParc(j).MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute(),venteChoco);
+						parc_j.MAJParc(this.getMecontentement_basse(),this.getMecontentement_moyenne(),this.getMecontentement_haute(),venteChoco_pourcentage);
 						vente = true;
 					}
 				}
 			}
 			if (vente==false || repartitionGuerre == null) {
 				//Si le parc ne vend pas on ne prend pas en compte le mécontentement lié à la vente
-				this.getParc(j).MAJParc(0,0,0,venteChoco);
+				parc_j.MAJParc(0,0,0,venteChoco_pourcentage);
+			}
+			if (Filiere.LA_FILIERE.getEtape()%24==0) {
+				int arbreAPlanter = MilleArbresAPlanter(parc_j);
+				parc_j.Planter(arbreAPlanter, venteChoco, false);
 			}
 			
-			this.getParc(j).MAJGuerre();
+			parc_j.MAJGuerre();
 		}
+		
 		if (Filiere.LA_FILIERE.getEtape()>0) {
 			this.MAJMecontentement();
 		}
