@@ -271,9 +271,15 @@ public class Distributeur1Acteur implements IActeur {
 	 *  
 	 */
 	public void setAllprixVente( Map<ChocolatDeMarque,Double> prixAchat,  Map<ChocolatDeMarque,Double> quantiteAchete){
+		
 		prixAchat.forEach((key,value)->{
+		//if (ChocoTotalTour < 100) {
+			//prixVente.put(key, (prixAchat.get(key)));
+		//}
+		//else {
 			prixVente.put(key, (prixAchat.get(key))*2);		
-		});
+		//}
+	});
 	}
 
 	public double partDuMarcheVoulu(Chocolat c) {
