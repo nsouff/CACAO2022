@@ -271,13 +271,16 @@ public abstract class Producteur1Producteur extends Producteur1Stock{
 		
 		for (int j=0;j<4;j++) {
 			prixTotal = prixTotal 
-					+ (this.getParc(j).getNombre_BE_haute()-this.getParc(j).getNombre_PAS_CONTENT_BE_haute())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1
+					+ (this.getParc(j).getNombre_BE_haute()-this.getParc(j).getNombre_PAS_CONTENT_BE_haute())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.2
 					+ (this.getParc(j).getNombre_PAS_CONTENT_BE_haute())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*2
 					+ (this.getParc(j).getNombre_non_BE_haute()-this.getParc(j).getNombre_PAS_CONTENT_nBE_haute())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1
 					+ (this.getParc(j).getNombre_PAS_CONTENT_BE_haute())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1*2
 					+ (this.getParc(j).getNombre_non_BE_moyenne()-this.getParc(j).getNombre_PAS_CONTENT_nBE_moyenne())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()
+					+ (this.getParc(j).getNombre_PAS_CONTENT_nBE_moyenne())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*2
 					+ (this.getParc(j).getNombre_BE_moyenne()-this.getParc(j).getNombre_PAS_CONTENT_BE_moyenne())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1 
-					+ (this.getParc(j).getNombre_non_BE_basse()-this.getParc(j).getNombre_PAS_CONTENT_nBE_basse())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*0.9 ;
+					+ (this.getParc(j).getNombre_PAS_CONTENT_BE_moyenne())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*1.1*2
+					+ (this.getParc(j).getNombre_non_BE_basse()-this.getParc(j).getNombre_PAS_CONTENT_nBE_basse())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*0.9
+					+ (this.getParc(j).getNombre_PAS_CONTENT_nBE_basse())*Filiere.LA_FILIERE.getParametre("CAC'AO40Prix Entretien Arbre").getValeur()*0.9*2;
 		}
 		
 		
