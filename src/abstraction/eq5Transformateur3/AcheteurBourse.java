@@ -11,8 +11,8 @@ public class AcheteurBourse  extends Transformateur3Acteur implements IAcheteurB
 	// Karla 
 	public double demande(Feve f, double cours) {
 		
-		if (!(this.stockFeves.getProduitsEnStock().contains(f))|| (this.stockChocolatVariableH.getValeur()>0.33*this.capaciteStockageEQ5 && 
-				f.getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.33*this.capaciteStockageEQ5 && 
+		if (!(this.stockFeves.getProduitsEnStock().contains(f))|| (this.stockChocolatVariableH.getValeur()>0.25*this.capaciteStockageEQ5 && 
+				f.getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.25*this.capaciteStockageEQ5 && 
 						f.getGamme()==Gamme.MOYENNE )) { 
 			return 0.0;
 		}

@@ -21,8 +21,8 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	//Karla / Julien
 	/* Initier un contrat */
 	public void lanceruncontratAcheteur(Feve f, Double qtt) {
-		if ((this.stockChocolatVariableH.getValeur()>0.33*this.capaciteStockageEQ5 && 
-				f.getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.33*this.capaciteStockageEQ5 && 
+		if ((this.stockChocolatVariableH.getValeur()>0.25*this.capaciteStockageEQ5 && 
+				f.getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.25*this.capaciteStockageEQ5 && 
 						 f.getGamme()==Gamme.MOYENNE ) ) {
 		
 							
@@ -57,8 +57,8 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 
 	// Julien & Karla
 	public boolean achete(Object produit) {
-		if  (!( produit instanceof Feve)|| (this.stockChocolatVariableH.getValeur()>0.33*this.capaciteStockageEQ5 && 
-				((Feve) produit).getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.33*this.capaciteStockageEQ5 && 
+		if  (!( produit instanceof Feve)|| (this.stockChocolatVariableH.getValeur()>0.25*this.capaciteStockageEQ5 && 
+				((Feve) produit).getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.25*this.capaciteStockageEQ5 && 
 						((Feve) produit).getGamme()==Gamme.MOYENNE ) ) {
 			return false;
 		}
