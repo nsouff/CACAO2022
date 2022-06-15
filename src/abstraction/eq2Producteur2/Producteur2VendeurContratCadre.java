@@ -348,7 +348,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 			if (a instanceof IFabricantChocolatDeMarque) {
 				this.classement.ajouter(a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
 				for (Feve feve : Feve.values()) {
-					Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape() +1, 15,(this.production(feve)- this.qtiteTotaleContratEnCours(feve) + this.getStock(feve)/15)/3);
+					Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape() +1, 10,(this.production(feve)- this.qtiteTotaleContratEnCours(feve) + this.getStock(feve)/10)/3);
 					superviseur.demandeVendeur((IAcheteurContratCadre) a,(IVendeurContratCadre) this, feve, e, cryptogramme, false);					
 					
 				}
