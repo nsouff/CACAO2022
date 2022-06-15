@@ -306,19 +306,19 @@ public class Parc {
 			}
 		}
 		if (indice==0) {
-			return new MilleArbre(0,cooperative,false,Filiere.LA_FILIERE.getEtape());
-		}
-		if (indice==1) {
 			return new MilleArbre(1,cooperative,false,Filiere.LA_FILIERE.getEtape());
 		}
-		if (indice==2) {
+		if (indice==1) {
 			return new MilleArbre(2,cooperative,false,Filiere.LA_FILIERE.getEtape());
 		}
+		if (indice==2) {
+			return new MilleArbre(3,cooperative,false,Filiere.LA_FILIERE.getEtape());
+		}
 		if (indice==3) {
-			return new MilleArbre(1,cooperative,true,Filiere.LA_FILIERE.getEtape());
+			return new MilleArbre(2,cooperative,true,Filiere.LA_FILIERE.getEtape());
 		}
 		else {
-			return new MilleArbre(2,cooperative,true,Filiere.LA_FILIERE.getEtape());
+			return new MilleArbre(3,cooperative,true,Filiere.LA_FILIERE.getEtape());
 		}
 	}
 	
@@ -383,7 +383,7 @@ public class Parc {
 				boolean BE = arbre_i.getBioequitable();
 				boolean cooperative=arbre_i.getCooperative();
 				arbre_i.MAJMaladie();
-				//arbre_i.MAJMecontentement(mecontentement_basse,mecontentement_moyenne,mecontentement_haute);
+				arbre_i.MAJMecontentement(mecontentement_basse,mecontentement_moyenne,mecontentement_haute);
 				if (arbre_i.getStade_maladie() == 5) { //Quand un arbre meurt de maladie on le remplace en fonction de la demande
 					malade5+=1;
 					MilleArbre nouvel_arbre = FuturePlantation(venteChoco,cooperative); 
