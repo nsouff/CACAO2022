@@ -195,33 +195,33 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	}
 	
 	public void next() {
-		List<String> res = new ArrayList<String>();
-		for (IActeur test : Filiere.LA_FILIERE.getActeursSolvables()) {
-			res.add(test.getNom());
-		}
-		System.out.println(res);
-		if (res.contains("BioFour")) {
-			
-		}
-		else {
-			this.stockReferenceFeve.enlever(Feve.FEVE_HAUTE, this.stockReferenceFeve.getQuantite(Feve.FEVE_HAUTE)*0.5);
-		}
-		if (res.contains("EQ3") && res.contains("EQ5")) {
-			System.out.println("ça va");
-		}
-		else {
-			if(this.comptFaillite<1) {
-				this.comptFaillite = 1;
-				List<Feve> fevesCibles = new ArrayList<Feve>();
-				fevesCibles.add(Feve.FEVE_HAUTE_BIO_EQUITABLE);
-				fevesCibles.add(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-				for(Feve f : fevesCibles) {
-					System.out.println(this.stockReferenceFeve.getQuantite(f));
-					this.stockReferenceFeve.ajouter(f, this.stockReferenceFeve.getQuantite(f)*0.2);
-					System.out.println(this.stockReferenceFeve.getQuantite(f));
-				}
-			}
-		}
+//		List<String> res = new ArrayList<String>();
+////		for (IActeur test : Filiere.LA_FILIERE.getActeursSolvables()) {
+////			res.add(test.getNom());
+////		}
+////		System.out.println(res);
+////		if (res.contains("BioFour")) {
+////			
+////		}
+////		else {
+////			this.stockReferenceFeve.enlever(Feve.FEVE_HAUTE, this.stockReferenceFeve.getQuantite(Feve.FEVE_HAUTE)*0.5);
+////		}
+////		if (res.contains("EQ3") && res.contains("EQ5")) {
+////			System.out.println("ça va");
+////		}
+////		else {
+////			if(this.comptFaillite<1) {
+////				this.comptFaillite = 1;
+////				List<Feve> fevesCibles = new ArrayList<Feve>();
+////				fevesCibles.add(Feve.FEVE_HAUTE_BIO_EQUITABLE);
+////				fevesCibles.add(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+////				for(Feve f : fevesCibles) {
+////					System.out.println(this.stockReferenceFeve.getQuantite(f));
+////					this.stockReferenceFeve.ajouter(f, this.stockReferenceFeve.getQuantite(f)*0.2);
+////					System.out.println(this.stockReferenceFeve.getQuantite(f));
+////				}
+////			}
+////		}
 	}
 	
 	
