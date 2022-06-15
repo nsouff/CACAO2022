@@ -273,7 +273,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	 * Auteur : Laure
 	 * met à jour le stock après des parasites
 	 */
-	public void nextParasites() {
+	public void nextParasites2() {
 		// Differentiation entre gammes / bio :
 		// bio : 25% par UT
 		// non bio : 15% par UT
@@ -334,7 +334,7 @@ public abstract class Producteur1Stock extends Producteur1Acteur {
 	 * @author laure
 	 * Parasites en fonction du parc
 	 */
-	public void nextParasites2() {
+	public void nextParasites() {
 		// Differentiation entre gammes / bio :
 		// bio : 25% par UT
 		// non bio : 15% par UT

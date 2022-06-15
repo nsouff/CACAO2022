@@ -294,7 +294,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		
 		//CHOCOLAT
 		if (contrat.getProduit() instanceof Chocolat) {
-			double prixmoyen = this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
+			double prixmoyen = this.getPrixmoyenFeve().get(getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape();
 			if(contrat.getPrix()<prixmoyen*0.75) {
 				this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
 				this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75);
