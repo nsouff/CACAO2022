@@ -27,6 +27,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 		
 							
 						}
+		else {
 		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		List<IVendeurContratCadre> L = superviseur.getVendeurs(f); 
 		
@@ -51,6 +52,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			}
 		}
 		//Julien else on achete des feve par le biais de la bourse si besoin ( bourse.getCours(f).getValeur() )
+	}
 	}
 	
 
