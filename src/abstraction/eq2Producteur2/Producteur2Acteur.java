@@ -3,6 +3,7 @@ package abstraction.eq2Producteur2;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	private Variable StockFeveHaute;
 	private Variable StockFeveHaute_BE; 
 	private Variable StockChocoHQ;
+	private HashMap<Double, Double> Benefices;
+	private LinkedList<Double> Soldes;
 
 	private Variable prixstockage ;
 //	private Variable dureeaffinageBQ ;
@@ -47,7 +50,8 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 		this.StockFeveHaute= new Variable("StockFeveHaute", "Stock de Fèves Haute", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE));
 		this.StockFeveHaute_BE= new Variable("StockFeveHaute_BE", "Stock de Fèves Haute BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 //		this.StockChocoHQ = new Variable("StockChocoHQ","Stock de chocolat issue de fève de haute qualité", this, 0.0, 1000000000, this.getStockChoco(Chocolat.HQ_BE);
-		
+		this.Benefices = new HashMap<Double, Double>();
+		this.Soldes = new LinkedList<Double>();
 	}
 
 	public void initialiser() {
@@ -71,9 +75,31 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 		this.cryptogramme = crypto;
 	}
 	
+	public HashMap<Double, Double> MAJBenefices() {
+		// auteur : Fiona 
+		
+		if (Filiere.LA_FILIERE.getEtape() == 0) {
+			this.Benefices.put((double) Filiere.LA_FILIERE.getEtape(), 0.0);
+			this.Soldes.add(this.getSolde());
+			
+		}
+		
+		else {
+			double solde_prec = this.Soldes.getLast();
+			double benefice = this.getSolde() - solde_prec;
+			this.Benefices.put((double) Filiere.LA_FILIERE.getEtape(), benefice);
+		}
+		
+		return this.Benefices;
+
+	}
 
 	public void next() {
 		super.next();
+		
+		this.MAJBenefices();
+	
+		
 		// Cout de production, Jules DORE
 		this.setCoutParKg();
 		double coutProduction = 0.0;
@@ -106,6 +132,7 @@ public class Producteur2Acteur extends Producteur2Stockage2 implements IActeur{
 	}
 	
 	public List<String> getNomsFilieresProposees() {
+		this.getSolde();
 		ArrayList<String> filieres = new ArrayList<String>();
 		filieres.add("Producteur2TestBourse"); 
 		return filieres;
