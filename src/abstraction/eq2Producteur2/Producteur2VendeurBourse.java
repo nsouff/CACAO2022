@@ -1,5 +1,8 @@
 package abstraction.eq2Producteur2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import abstraction.eq8Romu.bourseCacao.IVendeurBourse;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Feve;
@@ -32,5 +35,12 @@ public class Producteur2VendeurBourse extends Producteur2VendeurContratCadre imp
 		this.removeQuantite(quantiteEnKg, f);
 		
 	}
-	
+	public List<Journal> getJournaux() {
+		List<Journal> res=new ArrayList<Journal>();
+		res.add(this.classement);
+		res.add(this.journal);
+		res.add(journalCC);
+		res.add(journalBourse);
+		return res;
+	}
 }

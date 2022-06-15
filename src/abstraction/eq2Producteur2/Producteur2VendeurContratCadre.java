@@ -24,7 +24,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurNonBio;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeurBio;
 	protected HashMap<ExemplaireContratCadre,Integer> mesContratCadreExpire; //Contrat cadres expiré depuis moins de 100 next
-	private Journal classement;
+	protected Journal classement;
 	protected Journal journalCC;
 	
 	public Producteur2VendeurContratCadre() {
@@ -380,13 +380,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 	}
 
 
-	public List<Journal> getJournaux() {
-		List<Journal> res=new ArrayList<Journal>();
-		res.add(this.classement);
-		res.add(this.journal);
-		res.add(journalCC);
-		return res;
-	}
+
 
 
 	
