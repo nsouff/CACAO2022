@@ -36,7 +36,7 @@ public class Producteur1StockChocolat extends ProducteurActeur1VenteBourse {
 		this.StockMQ= new Variable(this.getNom()+"StockCHOCO_MQ", "Stock de Chocolat MQ", 
 				this, 0, 1000000000, this.getStock(Chocolat.MQ));
 		this.StockMQ_BE= new Variable(this.getNom()+"StockCHOCO_MQ_BE", "Stock de Chocolat MQ_BE", 
-				this, 0, 1000000000, this.getStock(Chocolat.BQ));
+				this, 0, 1000000000, this.getStock(Chocolat.MQ_BE));
 	}
 	
 	
