@@ -347,17 +347,7 @@ public class Producteur2VendeurContratCadre extends Producteur2Acteur implements
 		}
 		
 		
-		SuperviseurVentesContratCadre superviseur = new SuperviseurVentesContratCadre();
-		for(IActeur a : Filiere.LA_FILIERE.getActeursSolvables()) {
-			if (a instanceof IFabricantChocolatDeMarque) {
-				this.classement.ajouter(a.getNom()+" : "+this.getClassementTransformateur(a)+", "+this.getPointTransformateur(a));
-				for (Feve feve : Feve.values()) {
-					Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape() +1, 10,(this.production(feve)- this.qtiteTotaleContratEnCours(feve) + this.getStock(feve)/10)/3);
-					superviseur.demandeVendeur((IAcheteurContratCadre) a,(IVendeurContratCadre) this, feve, e, cryptogramme, false);					
-					
-				}
-			}
-		}
+
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_HAUTE_BIO_EQUITABLE )+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve MOYENNE BIO EQUITABLE : "+this.qtiteTotaleContratEnCours(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
 		this.journalCC.ajouter("Quantité par step de Feve HAUTE Non Bio : "+this.quantiteTotaleContratEnCours(Feve.FEVE_HAUTE)+" Vente sur les 50 dernier next "+proportionVente(Feve.FEVE_HAUTE));
