@@ -127,7 +127,16 @@ public class Transformation extends AcheteurContrat {
 				}
 				step +=1;
 			}
+			//for (Feve f : this.stockFeves.getProduitsEnStock()) {
+				//if (this.stockFeves.getstock(f)){
+					
+					
+				}
+				
+			
 		
 	}
 	
-}
+	
+	
+
