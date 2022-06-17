@@ -354,7 +354,7 @@ public abstract class Producteur2Plantation  {
 
 	}
 	
-	public int getNbArbre(Feve feve) {
+	public int getNbArbreTotal(Feve feve) {
 		//auteur : Fiona
 		
 		Arbre arbre = conversion(feve);
