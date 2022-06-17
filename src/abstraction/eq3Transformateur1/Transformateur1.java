@@ -169,6 +169,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
 					stockChoco.put(c, stockChoco.get(c)+coutQuantiteTransfo.get(1));
+					if (stockChoco.get(c)+coutQuantiteTransfo.get(1)<0) System.out.println(" aieeee "+c+"  "+stockChoco.get(c)+" vs "+coutQuantiteTransfo.get(1));
 					Lot nouveaulot= new Lot(stockChoco.get(c)+coutQuantiteTransfo.get(1), Filiere.LA_FILIERE.getEtape());
 					stockChocoPeremption.ajoutLot(c, nouveaulot);
 					
