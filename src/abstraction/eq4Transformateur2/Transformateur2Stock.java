@@ -73,6 +73,7 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 				Filiere.LA_FILIERE.getBanque().virer(this, super.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.coutStockage());
 				journalStock.ajouter(Color.red,Color.white,"Le stock nous coûte "+this.coutStockage());
 				journalStock.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------");
+				//journalStock.ajouter(getDescription());
 	}
 	
 	public void initialiser() {

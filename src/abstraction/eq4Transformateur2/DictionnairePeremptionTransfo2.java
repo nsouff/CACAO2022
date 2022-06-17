@@ -13,10 +13,11 @@ import abstraction.eq8Romu.produits.Feve;
 public abstract class DictionnairePeremptionTransfo2<Produit> extends Transformateur2ContratCadreVendeur{
 	
 	protected HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
+	protected Journal journalperemption;
 	
 	public DictionnairePeremptionTransfo2(){
 		this.peremption= new HashMap<DateProdTransfo2<Produit>,Double>();
-		
+		this.journalperemption=new Journal("Peremption",this);
 	}
 	
 	
@@ -32,17 +33,23 @@ public abstract class DictionnairePeremptionTransfo2<Produit> extends Transforma
 	public void next() {
 		super.next();
 		this.modifDateProd();
+		journalperemption.ajouter("on a :"+ this.quantTotaleProduit(Feve.FEVE_BASSE));
 		
+	}
+	public Journal getJournalPeremption() {
+		return this.journalperemption;
 	}
 	
 	public void initialiser() {
 		super.initialiser();
 //		this.peremption=new HashMap<DateProdTransfo2<Produit> ,Double>();
+		
 	}
 
 
 //// ajoute un nouveau produit à la Hashmap (lors d'un achat ou d'une trasnformation)
-	public void ajouterQuant(double date, Produit p, Double quant) {
+	public void ajouterQuant(double date, Object op, Double quant) {
+		Produit p = (Produit)op;
 		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,p);
 		if(quant>0) {
 			if(this.getDates().contains(d)) {
@@ -109,7 +116,8 @@ public void utiliserQuantProd(Object op, double quant) {
 	}
 	
 ////Marie
-	public double quantTotaleProduit(Produit p) { //calcule la quantité totale d'un produit
+	public double quantTotaleProduit(Object op) { //calcule la quantité totale d'un produit
+		Produit p = (Produit)op;
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			if(d.getProduit()==p) {

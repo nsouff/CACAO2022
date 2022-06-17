@@ -265,6 +265,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	public abstract Journal getJournalStock();
 	public abstract Journal getJournalTransfo();
 	public abstract Journal getJournalAchat();
+	public abstract Journal getJournalPeremption();
 	
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
@@ -273,6 +274,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		j.add(this.getJournalStock());
 		j.add(this.getJournalTransfo());
 		j.add(this.getJournalAchat());
+		j.add(this.getJournalPeremption());
 		return j;
 	}
 	
