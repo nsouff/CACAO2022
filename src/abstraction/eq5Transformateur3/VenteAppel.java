@@ -19,6 +19,7 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 		/* on pourrait comparer les acheteurs en fonction de la fidélité par ex 
 		 * on initie original à 0 de façon à pouvoir calculer le prix qui permet de ne pas vendre à perte
 		 * les propositions sont triées par ordre décroissant de prix -> on ne considère que la première pour l'instant */
+		this.ventes.ajouter("on a " + propositions.size() + " offres par AO");
 		
 		int original = 0;
 		
@@ -51,10 +52,10 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 		super.next();
 		SuperviseurVentesAO superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
 		for (Chocolat c: this.stockChocolat.getProduitsEnStock()) {
-			/* Si on a un stock suffisant, on essaie de liquider la moitie */
+			/* Si on a un stock suffisant, on essaie de liquider une partie */
 			if (this.stockChocolat.getstock(c)>this.SeuilMinChocolat) {
 				PropositionAchatAO retenueenTG = 
-					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, true);
+					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)*0.7, true);
 					if (retenueenTG!=null) {
 						this.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
 						this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c.name() +"  a "
@@ -62,7 +63,7 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 					} else {
 						// on essaye sans mettre en TG
 						PropositionAchatAO retenuepasenTG = 
-								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)/2, false);
+								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)*0.7, false);
 						if (retenuepasenTG!=null) {
 							this.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
 							this.ventes.ajouter("vente par AO de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c.name() +" a "
