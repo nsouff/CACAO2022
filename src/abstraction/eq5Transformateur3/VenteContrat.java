@@ -36,7 +36,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 				this.ventes.ajouter("On initie une demande de cc avec "+ L2.get(0).getNom());
 				ExemplaireContratCadre contrat = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(L2.get(0), (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
 				if (contrat != null) {
-					this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+					this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit() + " a un prix de " + contrat.getPrix());
 					this.contratsEnCoursVente.add(contrat);
 				}
 			}
@@ -47,7 +47,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 				this.ventes.ajouter("On initie une demande de cc avec "+ random.getNom());
 				ExemplaireContratCadre contrat = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).demandeVendeur(random, (IVendeurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), (Object)c, e, this.cryptogramme, true);
 				if (contrat != null) {
-					this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit());
+					this.ventes.ajouter("Nouveau Contrat Cadre avec"+ contrat.getAcheteur() +"sur une periode de " + contrat.getEcheancier().getNbEcheances() + " pour "+ contrat.getProduit() + " a un prix de " + contrat.getPrix());
 					this.contratsEnCoursVente.add(contrat);
 				}
 			}
