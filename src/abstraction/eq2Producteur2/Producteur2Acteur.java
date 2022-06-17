@@ -142,7 +142,7 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 		
 		for(Feve f : Feve.values()) {
 			this.journalplantation.ajouter(f.toString()+" : "+this.difference(f)+", Arbre : " + this.proportionArbre(f)+ ", Vente : " + this.proportionVente(f));
-			this.journalplantation.ajouter(f.toString()+" : "+this.getNbArbre(f));
+			this.journalplantation.ajouter(f.toString()+" : "+this.getNbArbreTotal(f));
 		
 		}
 		this.journalplantation.ajouter("=========================================================================");

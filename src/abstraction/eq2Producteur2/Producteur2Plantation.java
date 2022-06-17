@@ -138,9 +138,9 @@ public abstract class Producteur2Plantation  {
 		Arbre arbre = conversion(feve);
 		Double quantite = 0.0;
 		for (Feve f : Feve.values()) {
-			quantite+=this.getNbArbre(f);
+			quantite+=this.getNbArbreTotal(f);
 		}
-		return (this.getNbArbre(feve)/quantite);
+		return (this.getNbArbreTotal(feve)/quantite);
 	}
 		
 	
@@ -151,12 +151,12 @@ public abstract class Producteur2Plantation  {
 	
 	public void renouvellement2() {
 		for (Feve f : Feve.values()) {
-			if (difference(f)>0.10 && this.getNbArbre(f)< 15000000) {
+			if (difference(f)>0.10 && this.getNbArbreTotal(f)< 15000000) {
 				for (int i=0;i<5;i++) {
 					this.NbParcelles.get(conversion(f)).add(new Parcelle(this.conversion(f),0));
 				}
 			}
-			if (difference(f)<-0.10 && this.getNbArbre(f)>2000000) {
+			if (difference(f)<-0.10 && this.getNbArbreTotal(f)>2000000) {
 				for (int i=0;i<5;i++)
 					this.NbParcelles.get(conversion(f)).remove(this.NbParcelles.get(conversion(f)).get(0));
 				}
