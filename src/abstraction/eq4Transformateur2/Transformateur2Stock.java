@@ -123,7 +123,7 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 						this.journalStock.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
 					}
 				}
-				
+				//Mise à jour des listes des chocolats vendus
 				List<ExemplaireContratCadre> ListCC= this.getMesContratEnTantQueVendeur();
 				
 				for(ExemplaireContratCadre CC : ListCC) {
