@@ -168,6 +168,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
+					
 					stockChoco.put(c, stockChoco.get(c)+coutQuantiteTransfo.get(1));
 					Lot nouveaulot= new Lot(stockChoco.get(c)+coutQuantiteTransfo.get(1), Filiere.LA_FILIERE.getEtape());
 					stockChocoPeremption.ajoutLot(c, nouveaulot);
@@ -194,20 +195,20 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	public double coutStockage() {
 		double cout = 0.;
 		for (Feve f : stockFeve.keySet()) {
-			cout = cout + stockFeve.get(f)*coutStockage;
+			cout = cout + stockFeve.get(f)*this.coutStockage;
 			
-			if (f == Feve.FEVE_BASSE || f == Feve.FEVE_MOYENNE || f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
+			//if (f == Feve.FEVE_BASSE || f == Feve.FEVE_MOYENNE || f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
 				journalSF.ajouter("stock de " + f.name() + " : " + stockFeve.get(f));
-				journalSF.ajouter("Cout de stockage " + f.name() + " : " + stockFeve.get(f)*coutStockage);
-			}
+				journalSF.ajouter("Cout de stockage " + f.name() + " : " + stockFeve.get(f)*this.coutStockage);
+			//}
 		}
 		for (Chocolat c : stockChoco.keySet()) {
-			cout = cout + stockChoco.get(c)*coutStockage; 
+			cout = cout + stockChoco.get(c)*this.coutStockage; 
 			
-			if (c == Chocolat.MQ_BE || c == Chocolat.MQ_O || c == Chocolat.MQ) {
+			//if (c == Chocolat.MQ_BE || c == Chocolat.MQ_O || c == Chocolat.MQ) {
 				journalSC.ajouter("stock de choco " + c.name() + " : " + stockChoco.get(c));
-				journalSC.ajouter("Cout de stockage Choco " + c.name() + " : " + stockChoco.get(c)*coutStockage);
-			}
+				journalSC.ajouter("Cout de stockage Choco " + c.name() + " : " + stockChoco.get(c)*this.coutStockage);
+			//}
 		}
 		journal.ajouter("Notre cout de stockage total est "+ cout);
 		return cout;
@@ -467,7 +468,6 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				}
 				// determine si on lance un appel d'offre ou non
 				if (stockChoco.get(c)>=aLivrer + 250) {
-					journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
 					// on vend notre surplus de chocolat
 					ChocolatDeMarque coco= new ChocolatDeMarque(c, "cote d'or");
 					double stockDispo= stockChoco.get(c) - aLivrer;
