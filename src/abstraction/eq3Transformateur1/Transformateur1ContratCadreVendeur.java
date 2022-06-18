@@ -34,7 +34,7 @@ public class Transformateur1ContratCadreVendeur extends Transformateur1Bourse im
 			if ((((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ)
 					||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_BE)
 					||(((ChocolatDeMarque)produit).getChocolat()==Chocolat.MQ_O)) {
-				journalCCV.ajouter("On veut bien vendre ce chocolat");
+				journalCCV.ajouter("On veut bien vendre " + produit);
 				return true;
 			}
 		}
