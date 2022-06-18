@@ -126,7 +126,6 @@ public class Transformation extends AcheteurContrat {
 			step +=1;
 		}
 		
-
 		
 		/* Si on a rien tranformé et que le stock de chocolat est vide, 
 		 * on transforme pour avoir du stock
@@ -140,4 +139,7 @@ public class Transformation extends AcheteurContrat {
 	}
 	
 }
+	
+	
+	
 
