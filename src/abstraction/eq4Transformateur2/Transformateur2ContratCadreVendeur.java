@@ -25,6 +25,9 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 	protected SuperviseurVentesContratCadre supCCadre;
 	protected List<ExemplaireContratCadre> mesContratEnTantQueVendeur;
 	private Journal journalVente;
+	
+	
+	
 
 
 	public void next() {

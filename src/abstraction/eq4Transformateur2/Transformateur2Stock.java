@@ -2,7 +2,10 @@ package abstraction.eq4Transformateur2;
 
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.List;
 
+import abstraction.eq8Romu.contratsCadres.Echeancier;
+import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
@@ -17,10 +20,10 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat>  stockchocolat;
 	private Stock<ChocolatDeMarque> stockchocolatdemarque;
-	private Utilitaire<Feve> transfo_feve;
-	private Utilitaire<Feve> achat_feve;
-	private Utilitaire<ChocolatDeMarque> transfo_choco;
-	private Utilitaire<ChocolatDeMarque> vente_choco;
+	protected Utilitaire<Feve> transfo_feve;
+	protected Utilitaire<Feve> achat_feve;
+	protected Utilitaire<ChocolatDeMarque> transfo_choco;
+	protected Utilitaire<ChocolatDeMarque> vente_choco;
 	
 	private Journal journalStock;
 	
@@ -121,6 +124,12 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 					}
 				}
 				
+				List<ExemplaireContratCadre> ListCC= this.getMesContratEnTantQueVendeur();
+				
+				for(ExemplaireContratCadre CC : ListCC) {
+					Echeancier E=CC.getEcheancier();
+					this.vente_choco.ajouter((ChocolatDeMarque) CC.getProduit(), E.getQuantite(Filiere.LA_FILIERE.getEtape()-1));
+				}
 				//Listes de toutes les fèves disponibles
 				Feve [] Feves = new Feve[5];
 				Feves[0]=Feve.FEVE_BASSE;
