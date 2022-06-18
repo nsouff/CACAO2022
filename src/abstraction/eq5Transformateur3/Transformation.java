@@ -126,7 +126,16 @@ public class Transformation extends AcheteurContrat {
 			step +=1;
 		}
 		
-	
+		
+		/* Si on a rien tranformé et que le stock de chocolat est vide, 
+		 * on transforme pour avoir du stock
+		 */
+		if (quantite == this.seuilTransformation.getValeur() &&  this.stockChocolat.getstocktotal() == 0) {
+			for (Feve f : this.stockFeves.getProduitsEnStock()) {
+				this.transformationClassique(f, quantite/4*0.6, true);
+				this.transformationClassique(f, quantite/4*0.4, false);
+			}
+		}
 	}
 	
 }
