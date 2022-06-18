@@ -19,9 +19,6 @@ public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
 	
 	// ajouter un lot juste après la transfo ; Julien
 	public void ajoutLot(Chocolat c, Lot lot) {
-		//ArrayList<Lot> liste= new ArrayList<Lot>() ;
-		//liste = this.get(c);
-		//liste.add(lot);
 		this.get(c).add(lot);
 	}
 	
@@ -40,7 +37,6 @@ public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
 					this.get(c).remove(0);
 				}
 			}
-						
 		}		
 	}
 	// si la date de préremption est dépassée , supprime le lot du stock , auteur : anna
@@ -57,6 +53,16 @@ public class DicoChocoPeremption extends HashMap<Chocolat, ArrayList<Lot> >{
 		}
 			this.put(c,liste);
 	}
+	}
+	public double getTotal(Chocolat c) {
+		double sommequantite=0.;
+		ArrayList<Lot> liste= new ArrayList<Lot>() ;
+		liste = this.get(c); 
+		for (int i = 0; i < liste.size(); i++) {
+			sommequantite+=liste.get(i).getQuantite();
+		}
+		return sommequantite;
+		
 	}
 }
 
