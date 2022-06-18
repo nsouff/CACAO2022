@@ -114,6 +114,9 @@ public class Tracker implements ITracker{
 	public Double getPreviousVenteQuantite(ChocolatDeMarque choco) {
 		if (!this.FONCTIONEL) {return 0.;}
 		int lastEtape = this.getVentesQuantite(choco).size()-1;
+		if (lastEtape==-1) {
+			return 200000.;
+		}
 		return this.getVentesQuantiteEtape(choco, lastEtape);
 	}
 
