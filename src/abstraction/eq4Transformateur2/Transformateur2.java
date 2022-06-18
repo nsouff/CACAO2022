@@ -65,6 +65,30 @@ public class Transformateur2 extends Transformateur2VenteAO{
 		return journalcours;
 	}
 
+	@Override
+	public void utiliserQuantProd(Object p, double quant) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ajouterQuant(double date, Object op, Double quant) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Journal getJournalPeremption() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getQuant(double date, Object op) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
 	
