@@ -1,3 +1,7 @@
+//Ce fut la 1ere idée pour prendre en compte les péreption. MAIS abandonnée au profit de la classe Utilitaire
+
+
+
 package abstraction.eq4Transformateur2;
 
 import java.util.HashMap;

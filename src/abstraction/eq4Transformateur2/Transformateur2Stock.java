@@ -88,10 +88,7 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		this.stockchocolatdemarque.ajouter(c2, 2500000);
 		this.stockchocolatdemarque.ajouter(c3, 5000000);
 		this.stockchocolatdemarque.ajouter(c4, 5000000);
-		
-		this.stockchocolat=new Stock();
-		this.stockchocolat.ajouter(Chocolat.MQ,30000);
-		this.stockchocolat.ajouter(Chocolat.BQ, 20000);
+	
 	}
 	
 	public Utilitaire<Feve> getTransfo_feve() {
