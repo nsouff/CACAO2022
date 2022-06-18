@@ -35,11 +35,11 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 		Boolean isBioEquitable = choco.isBioEquitable();
 		for (Feve f : this.stockFeves.getProduitsEnStock()) {
 			if (f.getGamme() == gamme && f.isBioEquitable() == isBioEquitable) {
-				Double seuilMax = bourse.getCours(f).getMin();
+				Double seuilMax = bourse.getCours(f).getValeur();
 				Double prixrentable = seuilMax + this.coutOriginal.getValeur()*original + this.coutTransformation.getValeur();
 				if (lameilleure.getPrixKg()>= prixrentable) {
 					propretenue = lameilleure ;	
-					this.ventes.ajouter(propretenue.toString()+propretenue.getPrixKg());
+					this.ventes.ajouter(propretenue.getAcheteur()+ "prix kg" + propretenue.getPrixKg());
 				}
 			}
 		}

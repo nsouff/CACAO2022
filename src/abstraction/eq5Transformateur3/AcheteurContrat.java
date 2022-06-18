@@ -12,6 +12,7 @@ import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.contratsCadres.SuperviseurVentesContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.produits.Feve;
+import abstraction.eq8Romu.produits.Gamme;
 
 public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContratCadre {
 
@@ -20,10 +21,17 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	//Karla / Julien
 	/* Initier un contrat */
 	public void lanceruncontratAcheteur(Feve f, Double qtt) {
+		if (this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal()>0.9*this.capaciteStockageEQ5 || (this.stockChocolatVariableH.getValeur()>0.25*this.capaciteStockageEQ5 && 
+				f.getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.25*this.capaciteStockageEQ5 && 
+						 f.getGamme()==Gamme.MOYENNE ) ) {
+		
+							
+						}
+		else {
 		SuperviseurVentesContratCadre superviseur = ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre")));
 		List<IVendeurContratCadre> L = superviseur.getVendeurs(f); 
 		
-		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, qtt/10); //qtt kg de feves par etape pendant  10 steps
+		Echeancier e = new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 3, qtt); //qtt kg de feves par etape pendant  10 steps
 		if (L.size()!=0) {
 			if (L.size()== 1) {
 				ExemplaireContratCadre contrat = superviseur.demandeAcheteur((IAcheteurContratCadre)Filiere.LA_FILIERE.getActeur("EQ5"), L.get(0), (Object)f,  e, this.cryptogramme, false);
@@ -45,12 +53,15 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 		}
 		//Julien else on achete des feve par le biais de la bourse si besoin ( bourse.getCours(f).getValeur() )
 	}
+	}
 	
 
 
 	// Julien & Karla
 	public boolean achete(Object produit) {
-		if  (!( produit instanceof Feve) ) {
+		if  (this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal()>0.9*this.capaciteStockageEQ5 || !( produit instanceof Feve)|| (this.stockChocolatVariableH.getValeur()>0.25*this.capaciteStockageEQ5 && 
+				((Feve) produit).getGamme()==Gamme.HAUTE) ||  (this.stockChocolatVariableM.getValeur()>0.25*this.capaciteStockageEQ5 && 
+						((Feve) produit).getGamme()==Gamme.MOYENNE ) ) {
 			return false;
 		}
 		if (this.stockFeves.getProduitsEnStock().contains((Feve) produit)) {
@@ -75,16 +86,13 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 	public double contrePropositionPrixAcheteur(ExemplaireContratCadre contrat) {
 		double prixT = contrat.getPrix();
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getValeur();
-		// double seuilMax=2.0;
+		Double seuilMax = bourse.getCours((Feve)contrat.getProduit()).getMax();
 		if (prixT < seuilMax) { 
 			this.achats.ajouter("prix acceptable");
 			return prixT;
 		}
 		else {
-			double proportion = 1 +0.05*this.nb_nego ;
-			double nouveauprix = proportion*prixT;
-			this.nb_nego += 1;
+			double nouveauprix = 0.7*prixT;
 			if (nouveauprix < seuilMax) { 
 				this.achats.ajouter(" essaie avec nouveau prix");
 				return nouveauprix;
@@ -138,6 +146,10 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 			 */
 			Double stocktotal = this.stockFeves.getstocktotal()+this.stockChocolat.getstocktotal();
 			
+			for (Feve fv : this.dispoFeves.keySet()) {
+				stocktotal += this.dispoFeves.get(fv);
+			}
+			
 			if (stocktotal < this.capaciteStockageEQ5) {
 
 				//if (this.stockFeves.getstock(f) < this.SeuilMinFeves) {
@@ -145,8 +157,7 @@ public class AcheteurContrat extends AcheteurBourse  implements IAcheteurContrat
 					if (placeLibre > 0.0) {
 					/* On essaie d'initier un contrat pour une qtt de placeLibre/nombre de types de fèves */
 						Double qtt = placeLibre/4;
-						this.nb_nego = 0;
-						lanceruncontratAcheteur(f, qtt);
+						lanceruncontratAcheteur(f, qtt/10);
 					}
 				//}
 			}
