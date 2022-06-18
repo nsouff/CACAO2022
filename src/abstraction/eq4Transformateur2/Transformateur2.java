@@ -89,6 +89,12 @@ public class Transformateur2 extends Transformateur2VenteAO{
 		return 0;
 	}
 
+	@Override
+	public double quantTotaleProduit(Object op) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
 	

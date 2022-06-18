@@ -46,17 +46,17 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		this.vente_choco=new Utilitaire<>();
 		
 		//On ajoute nos fèves 
-		this.transfo_feve.intro(Feve.FEVE_BASSE);
-		this.transfo_feve.intro(Feve.FEVE_MOYENNE);
-		this.transfo_feve.intro(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.transfo_feve.intro(Feve.FEVE_HAUTE);
-		this.transfo_feve.intro(Feve.FEVE_HAUTE_BIO_EQUITABLE);
+		this.transfo_feve.intro(Feve.FEVE_BASSE,20000000);//mettre les mêmes valeurs que dans les stocks initiaux
+		this.transfo_feve.intro(Feve.FEVE_MOYENNE,20000000);
+		this.transfo_feve.intro(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 2500000);
+		this.transfo_feve.intro(Feve.FEVE_HAUTE, 5000000);
+		this.transfo_feve.intro(Feve.FEVE_HAUTE_BIO_EQUITABLE, 2500000);
 		
-		this.achat_feve.intro(Feve.FEVE_BASSE);
-		this.achat_feve.intro(Feve.FEVE_MOYENNE);
-		this.achat_feve.intro(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-		this.achat_feve.intro(Feve.FEVE_HAUTE);
-		this.achat_feve.intro(Feve.FEVE_HAUTE_BIO_EQUITABLE);
+		this.achat_feve.intro(Feve.FEVE_BASSE,0);
+		this.achat_feve.intro(Feve.FEVE_MOYENNE,0);
+		this.achat_feve.intro(Feve.FEVE_MOYENNE_BIO_EQUITABLE,0);
+		this.achat_feve.intro(Feve.FEVE_HAUTE,0);
+		this.achat_feve.intro(Feve.FEVE_HAUTE_BIO_EQUITABLE,0);
 		
 		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
@@ -66,17 +66,17 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
 		
 		//On ajoutes nos chocolats
-		this.transfo_choco.intro(c0);
-		this.transfo_choco.intro(c1);
-		this.transfo_choco.intro(c2);
-		this.transfo_choco.intro(c3);
-		this.transfo_choco.intro(c4);
+		this.transfo_choco.intro(c0,20000000);//même valeurs que dans les stocks
+		this.transfo_choco.intro(c1,20000000);
+		this.transfo_choco.intro(c2,2500000);
+		this.transfo_choco.intro(c3,5000000);
+		this.transfo_choco.intro(c4,5000000);
 		
-		this.vente_choco.intro(c0);
-		this.vente_choco.intro(c2);
-		this.vente_choco.intro(c3);
-		this.vente_choco.intro(c4);
-		this.vente_choco.intro(c1);
+		this.vente_choco.intro(c0,0);
+		this.vente_choco.intro(c2,0);
+		this.vente_choco.intro(c3,0);
+		this.vente_choco.intro(c4,0);
+		this.vente_choco.intro(c1,0);
 		
 		//Stock de chocolats
 		this.stockchocolatdemarque=new Stock();
@@ -120,6 +120,8 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 						this.journalStock.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
 					}
 				}
+				
+				//Listes de toutes les fèves disponibles
 				Feve [] Feves = new Feve[5];
 				Feves[0]=Feve.FEVE_BASSE;
 				Feves[1]=Feve.FEVE_MOYENNE;
@@ -128,21 +130,60 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 				Feves[4]=Feve.FEVE_HAUTE_BIO_EQUITABLE;
 				
 				//remise à niveau des listes de péremption
+				for(Feve f: Feves) {
+					if(this.achat_feve.get(f).size()<Filiere.LA_FILIERE.getEtape()-1) {
+						this.achat_feve.get(f).add(0.0);;
+						
+					}
+				}
+				for(Feve f: Feves) {
+					if(this.transfo_feve.get(f).size()<Filiere.LA_FILIERE.getEtape()-1) {
+						this.transfo_feve.get(f).add(0.0);;
+						
+					}
+				}
 				
+				for(ChocolatDeMarque c: this.getChocolatsProduits()) {
+					if(this.transfo_choco.get(c).size()<Filiere.LA_FILIERE.getEtape()-1) {
+						this.transfo_choco.get(c).add(0.0);
+						
+					}
+				}
+				for(ChocolatDeMarque c: this.getChocolatsProduits()) {
+					if(this.vente_choco.get(c).size()<Filiere.LA_FILIERE.getEtape()-1) {
+						this.vente_choco.get(c).add(0.0);
+						
+					}
+				}
 				
 				
 				//maj des stocks
 				for(Feve f: Feves) {
 					
-				int date= (int) (Filiere.LA_FILIERE.getEtape()-Filiere.LA_FILIERE.getParametre("dureePeremption").getValeur());
+				int date= (int) (Filiere.LA_FILIERE.getEtape()-Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur());
 				if (date>0){
 				double diff=this.achat_feve.getQuantiteAuStep(f,date)-this.transfo_feve.getQuantUtiliseeDepuis(f,date);
+				
 				if(diff>0) {
 					this.stockfeve.enlever(f, diff);
+					journalStock.ajouter("Ce tour, "+diff+" kg de "+f+" ont périmé et ont été retiré des stocks.");
 				}
 				}
 				}
 				;
+				for (ChocolatDeMarque c : this.getChocolatsProduits()) {
+					int date= (int) (Filiere.LA_FILIERE.getEtape()-Filiere.LA_FILIERE.getIndicateur("dureePeremption").getValeur());
+					if (date>0){
+					double diff=this.transfo_choco.getQuantiteAuStep(c,date)-this.vente_choco.getQuantUtiliseeDepuis(c,date);
+					
+					if(diff>0) {
+						this.stockchocolatdemarque.enlever(c, diff);
+						journalStock.ajouter("Ce tour, "+diff+" kg de "+c+" ont périmé et ont été retiré des stocks.");
+					}
+					}
+				}
+				
+				
 				
 				
 		//On paye le cout de stockage

@@ -274,7 +274,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		j.add(this.getJournalStock());
 		j.add(this.getJournalTransfo());
 		j.add(this.getJournalAchat());
-		j.add(this.getJournalPeremption());
+		//j.add(this.getJournalPeremption());
 		return j;
 	}
 	
