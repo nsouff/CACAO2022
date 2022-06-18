@@ -159,6 +159,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	 * auteur : Anna */
 	
 	public void transfo(double quantiteFeveTransformee, Feve feve, boolean original) {
+		//System.out.println("_________________________________________Transfo_________________________________________");
 		for (Feve f : stockFeve.keySet()) {
 			if (f == feve) {
 				stockFeve.put(feve, Math.max(0., stockFeve.get(feve)-quantiteFeveTransformee));
@@ -168,6 +169,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		for (Chocolat c : stockChoco.keySet()) {
 			if (c.getGamme()==Gamme.MOYENNE) {
 				if ( c.isBioEquitable()==feve.isBioEquitable() && c.isOriginal()==original ) {
+					//System.out.println("on produit " + stockChoco.get(c)+coutQuantiteTransfo.get(1) + " kg de choco " + c);
 					stockChoco.put(c, stockChoco.get(c)+coutQuantiteTransfo.get(1));
 					if (stockChoco.get(c)+coutQuantiteTransfo.get(1)<0) System.out.println(" aieeee "+c+"  "+stockChoco.get(c)+" vs "+coutQuantiteTransfo.get(1));
 					Lot nouveaulot= new Lot(stockChoco.get(c)+coutQuantiteTransfo.get(1), Filiere.LA_FILIERE.getEtape());
@@ -195,20 +197,20 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	public double coutStockage() {
 		double cout = 0.;
 		for (Feve f : stockFeve.keySet()) {
-			cout = cout + stockFeve.get(f)*coutStockage;
+			cout = cout + stockFeve.get(f)*this.coutStockage;
 			
-			if (f == Feve.FEVE_BASSE || f == Feve.FEVE_MOYENNE || f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
+			//if (f == Feve.FEVE_BASSE || f == Feve.FEVE_MOYENNE || f == Feve.FEVE_MOYENNE_BIO_EQUITABLE) {
 				journalSF.ajouter("stock de " + f.name() + " : " + stockFeve.get(f));
-				journalSF.ajouter("Cout de stockage " + f.name() + " : " + stockFeve.get(f)*coutStockage);
-			}
+				journalSF.ajouter("Cout de stockage " + f.name() + " : " + stockFeve.get(f)*this.coutStockage);
+			//}
 		}
 		for (Chocolat c : stockChoco.keySet()) {
-			cout = cout + stockChoco.get(c)*coutStockage; 
+			cout = cout + stockChoco.get(c)*this.coutStockage; 
 			
-			if (c == Chocolat.MQ_BE || c == Chocolat.MQ_O || c == Chocolat.MQ) {
+			//if (c == Chocolat.MQ_BE || c == Chocolat.MQ_O || c == Chocolat.MQ) {
 				journalSC.ajouter("stock de choco " + c.name() + " : " + stockChoco.get(c));
-				journalSC.ajouter("Cout de stockage Choco " + c.name() + " : " + stockChoco.get(c)*coutStockage);
-			}
+				journalSC.ajouter("Cout de stockage Choco " + c.name() + " : " + stockChoco.get(c)*this.coutStockage);
+			//}
 		}
 		journal.ajouter("Notre cout de stockage total est "+ cout);
 		return cout;
@@ -270,6 +272,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 	/** 
 	 *  Alexandre*/
 	public void next() {
+		
 		super.next();
 		stockChocoPeremption.supprimeLot(Filiere.LA_FILIERE.getEtape(), stockChoco);
 		
@@ -454,7 +457,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 		
 		/** ____________________Appels d'offres____________________
 		 *  Ilyas puis modif apportées par Alexandre*/
-		//System.out.println("next() appel offre");
+		//System.out.println("_________________________________________Appel d'offres_________________________________________");
 		//System.out.println(stockChoco);
 		
 		if (Filiere.LA_FILIERE.getEtape()>=1) {
@@ -468,19 +471,18 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 				}
 				// determine si on lance un appel d'offre ou non
 				if (stockChoco.get(c)>=aLivrer + 250) {
-					journal.ajouter("Etape="+Filiere.LA_FILIERE.getEtape());
 					// on vend notre surplus de chocolat
 					ChocolatDeMarque coco= new ChocolatDeMarque(c, "cote d'or");
 					double stockDispo= stockChoco.get(c) - aLivrer;
 					PropositionAchatAO retenue = superviseurAO.vendreParAO(this, cryptogramme, coco, stockDispo, false);
 					if (retenue!=null) {
+						//System.out.println("on vend " + (stockChoco.get(c)-retenue.getOffre().getQuantiteKG()) + " kg de choco " + c + " par AO");
 						stockChoco.put(c, stockChoco.get(c)-retenue.getOffre().getQuantiteKG());
 
 						journalAO.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg de " + retenue.getOffre().getChocolat()+" a "+retenue.getAcheteur().getNom());
 
 						stockChocoPeremption.venteLot(c, retenue.getOffre().getQuantiteKG());
 						journal.ajouter("vente de "+retenue.getOffre().getQuantiteKG()+" kg a "+retenue.getAcheteur().getNom());
-//github.com/AnnaCharles/CACAO2022
 						
 					} else {
 						journalAO.ajouter("pas d'offre retenue");
@@ -508,7 +510,7 @@ public class Transformateur1 extends Transformateur1AppelsOffres implements IMar
 			// demande provenant des contrats cadre
 			for (ExemplaireContratCadre cc : mesContratEnTantQueVendeur) {
 				if (((ChocolatDeMarque)cc.getProduit()).getChocolat() == c) {
-					qt = qt + cc.getQuantiteALivrerAuStep();
+					qt = qt + cc.getQuantiteALivrerAuStep()*1.6; // coef 1,6 pour qu'on produise un peu plus au cas où de nouveaux CC ont été signés entre notre next() et la fin du tour (cad durant le next des distribs).
 				}
 			}
 			
