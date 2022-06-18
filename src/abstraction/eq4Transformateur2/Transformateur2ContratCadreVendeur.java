@@ -42,15 +42,19 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 		this.mesContratEnTantQueVendeur.removeAll(contratsObsoletes);
 		for (ChocolatDeMarque c : this.getChocolatsProduits()) {
 			for (IActeur acteur : Filiere.LA_FILIERE.getActeurs()) {
+				
 				if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
 					journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
-
-					ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, 4000000), cryptogramme,false);
-
-					journalVente.ajouter("-->aboutit au contrat "+cc);
-					if (cc!=null) 
-					{
-						this.mesContratEnTantQueVendeur.add(cc);
+					
+					//On propose par CC 80% du stock qu'on a pour ce chocolat, si c'est supérieur à 1000kg (pour satisfaire le superviseur)
+					if ((this.getStockchocolatdemarque().getQuantite(c)*0.8)>1000){
+						ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, (this.getStockchocolatdemarque().getQuantite(c)*0.8)/10), cryptogramme,false);
+					
+						journalVente.ajouter("-->aboutit au contrat "+cc);
+						if (cc!=null) 
+						{
+							this.mesContratEnTantQueVendeur.add(cc);
+						}
 					}
 					journalVente.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------------------");
 				}
@@ -89,13 +93,10 @@ public boolean vend(Object produit) {
 public Echeancier contrePropositionDuVendeur(ExemplaireContratCadre contrat) {
 	
 	if (this.getChocolatsProduits().contains(contrat.getProduit())) {
-		if (contrat.getEcheancier().getQuantiteTotale()<this.getStockchocolatdemarque().getStocktotal()) {
-			journalVente.ajouter("Echeancier accepté");
-			return contrat.getEcheancier();
-		} else {
-			return null; // on est frileux : on ne s'engage dans un contrat cadre que si on a toute la quantite en stock (on pourrait accepter meme si nous n'avons pas tout car nous pouvons produire/acheter pour tenir les engagements) 
-		}
+		journalVente.ajouter("Echeancier accepté");
+		return contrat.getEcheancier();
 	} else {
+		this.journalVente.ajouter("On vend pas ce chocolat");
 		return null;// Nous ne vendons pas de ce produit
 	}
 }
@@ -125,6 +126,7 @@ public double propositionPrix(ExemplaireContratCadre contrat) {
 public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 	// TODO Auto-generated method stub
 	if (contrat.getPrix()<0.3*this.prixVoulu(contrat)) {
+		journalVente.ajouter("Prix voulu était de "+this.prixVoulu(contrat) +" mais prix proposé de "+contrat.getPrix());
 		journalVente.ajouter("Prix trop bas : Rupture du contrat");
 		return 0.0; //On arrete les négociations si son prix au kg
 	} else if(contrat.getPrix()>propositionPrix(contrat)) {
