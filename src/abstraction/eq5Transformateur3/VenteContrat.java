@@ -107,8 +107,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	//Yves
 	public double contrePropositionPrixVendeur(ExemplaireContratCadre contrat) {
 		BourseCacao bourse = (BourseCacao)(Filiere.LA_FILIERE.getActeur("BourseCacao"));
-		//Double seuilMin = bourse.getCours(((ChocolatDeMarque)contrat.getProduit()).getChocolat().get).getMax();
-		Double seuilMin=15.0;
+		Double seuilMin = bourse.getCours((Feve)contrat.getProduit()).getMin();
 		//Double seuilMax = 2.0;
 		double original = 0.0;
 		if (((ChocolatDeMarque)(contrat.getProduit())).isOriginal()) {

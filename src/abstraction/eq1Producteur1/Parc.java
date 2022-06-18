@@ -212,9 +212,7 @@ public class Parc {
 		this.fin_aleas = i;
 	}
 	
-	public int getNb_arbres_tot() { //Écrit par Antoine
-		return this.getNombre_BE_haute()+this.getNombre_BE_moyenne()+this.getNombre_non_BE_basse()+this.getNombre_non_BE_moyenne()+this.getNombre_non_BE_haute();
-	}
+
 	public MilleArbre getArbre(Feve f,int i) { //Écrit par Antoine
 		return this.getCacaoyers().get(f).get(i);
 	}
@@ -297,7 +295,6 @@ public class Parc {
 
 	
 	public MilleArbre FuturePlantation(HashMap<Feve, Double> venteChoco,boolean cooperative) { //Écrit par Antoine
-		//On regarde l'écart entre la demande et la production et on choisit comme planter en conséquence
 		double nb_arbre = this.getNombre_non_BE_basse()+this.getNombre_non_BE_moyenne()+this.getNombre_non_BE_haute()+this.getNombre_BE_moyenne()*0.8+this.getNombre_BE_haute()*0.8; //on pondère avec la production pour le BE (la masse de cacao récoltée dépend du nombre d'arbre)
 		LinkedList<Double> ecart_demande = new LinkedList<Double>(Arrays.asList(venteChoco.get(Feve.FEVE_BASSE)-this.getNombre_non_BE_basse()/nb_arbre,venteChoco.get(Feve.FEVE_MOYENNE)-this.getNombre_non_BE_moyenne()/nb_arbre,venteChoco.get(Feve.FEVE_HAUTE)-this.getNombre_non_BE_haute()/nb_arbre,venteChoco.get(Feve.FEVE_MOYENNE_BIO_EQUITABLE)-this.getNombre_BE_moyenne()*0.8/nb_arbre,venteChoco.get(Feve.FEVE_HAUTE_BIO_EQUITABLE)-this.getNombre_BE_haute()*0.8/nb_arbre));
 		double max = ecart_demande.get(0);
@@ -382,14 +379,12 @@ public class Parc {
 			ArrayList<MilleArbre> liste_arbres = this.getListeArbre(f);
 			for (int i=0; i<this.getListeArbre(f).size(); i++) {
 				MilleArbre arbre_i = liste_arbres.get(i);
+				int qualite = arbre_i.getQualite();
+				boolean BE = arbre_i.getBioequitable();
 				boolean cooperative=arbre_i.getCooperative();
-				
-				//On met à jour la maladie et le mécontentement de chaque MilleArbre
 				arbre_i.MAJMaladie();
 				arbre_i.MAJMecontentement(mecontentement_basse,mecontentement_moyenne,mecontentement_haute);
-				
-				//Quand un arbre meurt de maladie on le remplace en fonction de la demande
-				if (arbre_i.getStade_maladie() == 5) { 
+				if (arbre_i.getStade_maladie() == 5) { //Quand un arbre meurt de maladie on le remplace en fonction de la demande
 					malade5+=1;
 					MilleArbre nouvel_arbre = FuturePlantation(venteChoco,cooperative); 
 					this.Planter(nouvel_arbre);
@@ -398,16 +393,12 @@ public class Parc {
 					liste_arbres.remove(arbre_i);
 					this.MAJCompteur(arbre_i, -1);
 				}
-				
-				//Quand un MilleArbre meurt de vieillesse on l'enlève du parc
-				if (arbre_i.Age() == arbre_i.getUt_esperance_vie()) { 
+				if (arbre_i.Age() == arbre_i.getUt_esperance_vie()) { //Quand un arbre meurt de vieillesse on l'enlève du parc
 					liste_arbres.remove(arbre_i);
 					this.MAJCompteur(arbre_i,-1);
 					mort_vieillesse+=1;
 				}
-				
-				//5ans avant qu'un MilleArbre meurt de vieilesse, on plante un nouvel MilleArbre pour répondre à la demande
-				if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) { 
+				if ((arbre_i.getUt_esperance_vie()-arbre_i.Age())==120) { //5ans avant qu'un arbre meurt de vieilesse, on plante un nouvel arbre pour répondre à la demande
 					MilleArbre nouvel_arbre = FuturePlantation(venteChoco,cooperative);
 					this.Planter(nouvel_arbre);
 					this.MAJCompteur(nouvel_arbre,1);
@@ -420,37 +411,46 @@ public class Parc {
 		this.getRetourMaladie().ajouter(malade5+" MilleArbres sont morts de maladie");
 	}
 	
-	public double Parasites(boolean BE) { //Écrit par Antoine
+	public double ParasitesBE() { //Écrit par Antoine
 		double chance_parasite = Math.random();
-		if (BE) {
-			if (chance_parasite<=0.2) {
-				double niveau_parasite = Math.random();
-				if (niveau_parasite<=0.7) {
-					return 0.9;
-				}
-				if ((niveau_parasite>0.7) && (niveau_parasite<=0.95)) {
-					return 0.5;
-				}
-				if ((niveau_parasite>0.95) && (niveau_parasite<=1)) {
-					return 0.2;
-				}
+		if (chance_parasite<=0.2) {
+			double niveau_parasite = Math.random();
+			if (niveau_parasite<=0.7) {
+				return 0.9;
+			}
+			if ((niveau_parasite>0.7) && (niveau_parasite<=0.95)) {
+				return 0.5;
+			}
+			if ((niveau_parasite>0.95) && (niveau_parasite<=1)) {
+				return 0.2;
+			}
+			return 1;
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	public double Parasites_non_BE() { //Écrit par Antoine
+		double chance_parasite = Math.random();
+		if (chance_parasite<=0.04) {
+			double niveau_parasite = Math.random();
+			if (niveau_parasite<=0.7) {
+				return 0.9;
+			}
+			if ((niveau_parasite>0.7) && (niveau_parasite<=0.95)) {
+				return 0.5;
+			}
+			if ((niveau_parasite>0.95) && (niveau_parasite<=1)) {
+				return 0.2;
+			}
+			else {
+				return 1;
 			}
 		}
 		else {
-			if (chance_parasite<=0.04) {
-				double niveau_parasite = Math.random();
-				if (niveau_parasite<=0.7) {
-					return 0.9;
-				}
-				if ((niveau_parasite>0.7) && (niveau_parasite<=0.95)) {
-					return 0.5;
-				}
-				if ((niveau_parasite>0.95) && (niveau_parasite<=1)) {
-					return 0.2;
-				}
-			}
+			return 1;
 		}
-		return 1.0;
 	}
 
 	
@@ -514,8 +514,8 @@ public class Parc {
 		this.getRetourMaladie().ajouter("Il y a actuellement "+malade2+" MilleArbres malades au stade 2");
 		this.getRetourMaladie().ajouter("Il y a actuellement "+malade3+" MilleArbres malades au stade 3");
 		this.getRetourMaladie().ajouter("Il y a actuellement "+malade4+" MilleArbres malades au stade 4");
-		double parasitesBE = Parasites(true);
-		double parasites_non_BE = Parasites(false);
+		double parasitesBE = ParasitesBE();
+		double parasites_non_BE = Parasites_non_BE();
 		BE_moyenne = BE_moyenne*parasitesBE;
 		BE_haute = BE_haute*parasitesBE;
 		non_BE_basse = non_BE_basse*parasites_non_BE;

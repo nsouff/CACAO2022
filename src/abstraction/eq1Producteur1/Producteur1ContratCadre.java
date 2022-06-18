@@ -11,7 +11,6 @@ import abstraction.eq8Romu.contratsCadres.IVendeurContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.produits.Chocolat;
-import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 import abstraction.eq8Romu.produits.Gamme;
 
@@ -40,9 +39,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 			}
 		}
 		
-		if(produit instanceof ChocolatDeMarque && this.getChocolatsProduits().contains(produit)) {
-			Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
-			if(this.getStock(c)>0) { //On peut initier la vente si on a les bonnes quantités
+		if(produit instanceof Chocolat) {
+			if(this.getStock((Chocolat)produit)>0) { //On peut initier la vente si on a les bonnes quantités
 				return true;
 			}
 		}
@@ -90,13 +88,11 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		}
 	}
 		
-		if(contrat.getProduit() instanceof ChocolatDeMarque) {
-			Chocolat c = ((ChocolatDeMarque) contrat.getProduit()).getChocolat();
-			
-			if (contrat.getEcheancier().getQuantiteTotale()<0.75*this.getStock(c)) {
-				if (contrat.getEcheancier().getQuantiteTotale()<0.25*this.getStock(c)) {
+		if(contrat.getProduit() instanceof Chocolat) {
+			if (contrat.getEcheancier().getQuantiteTotale()<0.75*this.getStock((Chocolat)contrat.getProduit())) {
+				if (contrat.getEcheancier().getQuantiteTotale()<0.25*this.getStock((Chocolat)contrat.getProduit())) {
 					Echeancier newcontrat = contrat.getEcheancier();
-					double quantite =  0.25*this.getStock(c)/newcontrat.getNbEcheances();
+					double quantite =  0.25*this.getStock((Chocolat)contrat.getProduit())/newcontrat.getNbEcheances();
 					for (int date=newcontrat.getStepDebut();date<newcontrat.getStepFin(); date++) {
 						newcontrat.set(date,quantite);
 					}
@@ -112,7 +108,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 			} else { //Pas assez de quantité dans le stock présent
 				this.getContratCadre().ajouter("Pas assez de quantité dans le stock présent de " + contrat.getProduit().toString());
 				Echeancier newcontrat = contrat.getEcheancier();
-				double quantite =  0.7*this.getStock(c)/newcontrat.getNbEcheances();
+				double quantite =  0.7*this.getStock((Chocolat)contrat.getProduit())/newcontrat.getNbEcheances();
 				
 				for (int date=newcontrat.getStepDebut();date<newcontrat.getStepFin(); date++) {
 					newcontrat.set(date,quantite);
@@ -133,7 +129,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		if(contrat.getProduit() instanceof Feve) {
 		if (this.getPrixmoyenFeve().keySet().contains(contrat.getProduit())) {
 			this.getContratCadre().ajouter("Prix proposé " + 1.5*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape() );
-			return 1*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
+			return 1.5*this.getPrixmoyenFeve().get(contrat.getProduit())/Filiere.LA_FILIERE.getEtape();
 		} else {
 			return 0.0;
 		}
@@ -142,12 +138,11 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		
 		//CHOCOLAT 
 		
-		if(contrat.getProduit() instanceof ChocolatDeMarque) {
-			Chocolat c = ((ChocolatDeMarque) contrat.getProduit()).getChocolat();
+		if(contrat.getProduit() instanceof Chocolat) {
 			
-			if (this.getPrixmoyenFeve().keySet().contains(this.getFev(c))) {
-				this.getContratCadre().ajouter("Prix proposé " + 3*this.getPrixmoyenFeve().get(this.getFev(c))/Filiere.LA_FILIERE.getEtape() );
-				return 3*this.getPrixmoyenFeve().get(this.getFev(c))/Filiere.LA_FILIERE.getEtape();
+			if (this.getPrixmoyenFeve().keySet().contains(this.getFev((Chocolat)contrat.getProduit()))) {
+				this.getContratCadre().ajouter("Prix proposé " + 3*this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape() );
+				return 3*this.getPrixmoyenFeve().get(this.getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape();
 			} else {
 				return 0.0;
 			}
@@ -185,11 +180,10 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		}
 		
 		//CHOCOLAT
-		if (contrat.getProduit() instanceof ChocolatDeMarque) {
-		Chocolat c = ((ChocolatDeMarque) contrat.getProduit()).getChocolat();	
-		double livre = Math.min(this.getStock(c), quantite);
+		if (contrat.getProduit() instanceof Feve) {
+		double livre = Math.min(this.getStock((Chocolat)contrat.getProduit()), quantite);
 		if (livre>0.0) {
-			this.retirerQuantite(c, livre);;
+			this.retirerQuantite((Chocolat)contrat.getProduit(), livre);;
 		}
 		this.getContratCadre().ajouter("============================================");
 		this.getContratCadre().ajouter("LIVRAISON " + contrat.getProduit() +" "+contrat.getAcheteur().getNom()+ " Quantité demandée " + quantite +" Livré " + livre
@@ -288,7 +282,7 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 	
 	@Override
 	/**
-	 * @author laure, Khéo
+	 * @author laure
 	 * @param contrat
 	 * @return prix contrat 
 	 */
@@ -313,9 +307,8 @@ public class Producteur1ContratCadre extends Producteur1Transfo implements IVend
 		
 		
 		//CHOCOLAT
-		if (contrat.getProduit() instanceof ChocolatDeMarque) {
-			Chocolat c = ((ChocolatDeMarque) contrat.getProduit()).getChocolat();
-			double prixmoyen = this.getPrixmoyenFeve().get(getFev(c))/Filiere.LA_FILIERE.getEtape();
+		if (contrat.getProduit() instanceof Chocolat) {
+			double prixmoyen = this.getPrixmoyenFeve().get(getFev((Chocolat)contrat.getProduit()))/Filiere.LA_FILIERE.getEtape();
 			if(contrat.getPrix()<prixmoyen*0.75) {
 				this.getContratCadre().ajouter("Prix qui passe pas " + contrat.getPrix().toString());
 				this.getContratCadre().ajouter("Notre prix " + prixmoyen*0.75);
