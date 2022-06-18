@@ -150,13 +150,16 @@ public abstract class Producteur2Plantation  {
 	
 	
 	public void renouvellement2() {
+		
+		// auteur : Jules 
+		
 		for (Feve f : Feve.values()) {
 			if (difference(f)>0.10 && this.getNbArbreTotal(f)< 15000000) {
 				for (int i=0;i<5;i++) {
 					this.NbParcelles.get(conversion(f)).add(new Parcelle(this.conversion(f),0));
 				}
 			}
-			if (difference(f)<-0.10 && this.getNbArbreTotal(f)>2000000) {
+			if (difference(f)<-0.10 && this.getNbArbreTotal(f)>20000000) {
 				for (int i=0;i<5;i++)
 					this.NbParcelles.get(conversion(f)).remove(this.NbParcelles.get(conversion(f)).get(0));
 				}
@@ -199,7 +202,7 @@ public abstract class Producteur2Plantation  {
 		 *
 		 */	
 		
-		/**Feve FeveAPlanter = FevePlusVendue();
+		Feve FeveAPlanter = FevePlusVendue();
 		Arbre ArbreAPlanter = conversion(FeveAPlanter);
 
 		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
@@ -218,7 +221,7 @@ public abstract class Producteur2Plantation  {
 				this.NbParcelles.get(ArbreAPlanter).add(new Parcelle(ArbreAPlanter,0));
 			}							
 			
-		}**/
+		}
 		
 		
 	}	
