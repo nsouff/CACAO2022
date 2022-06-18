@@ -62,8 +62,20 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 				}
 			}
 		}
-
-
+		
+//		for( ChocolatDeMarque c : this.stockReferenceChocolat.keySet()) {
+//			double aLivrer = 0;
+//			for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeur) {
+//				if (contrat.getProduit().equals(c)) {
+//					aLivrer = aLivrer + contrat.getQuantiteALivrerAuStep();	
+//				}	
+//			}
+//			if (aLivrer > 0.9*this.getStockReferenceChocolat().getQuantite(c)) {
+//				this.stockReferenceChocolat.ajouter(c, this.getStockReferenceChocolat().getQuantite(c) );
+//			}
+//
+//
+//	}
 	}
 	
 	
