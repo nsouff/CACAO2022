@@ -6,7 +6,6 @@ import abstraction.eq8Romu.appelsOffres.PropositionAchatAO;
 import abstraction.eq8Romu.appelsOffres.SuperviseurVentesAO;
 import abstraction.eq8Romu.bourseCacao.FiliereTestBourse;
 import abstraction.eq8Romu.clients.FiliereTestClientFinal;
-import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.contratsCadres.FiliereTestContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.filiere.IActeur;
@@ -39,20 +38,11 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	protected Variable prixMinMb;
 	protected Variable prixMinH;
 	protected Variable prixMinHb;
-
-	protected Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
-	protected Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
-
-	
-
-	protected HashMap<DateProdTransfo2<Feve>, Double> dicoPeri;
-	protected double marge;
-
-
+	private Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
+	private Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
 	protected double margeAO;
 	protected double margeCC;
 	
-
 	protected SuperviseurVentesAO superviseur;
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
@@ -79,7 +69,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.prixMinH = new Variable("prix seuil haute qualité", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		this.prixMinHb = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
-		this.margeAO = 1.3;
+		this.margeAO = 1.5;
 		this.margeCC=1.30;
 		this.comptFaillite=0;
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
@@ -89,8 +79,8 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.stockReferenceFeve.ajouter(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 2500000);
 		this.stockReferenceFeve.ajouter(Feve.FEVE_HAUTE, 5000000);
 		this.stockReferenceFeve.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 2500000);
-		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
+		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
 		ChocolatDeMarque c2=new ChocolatDeMarque(Chocolat.MQ_BE,this.getMarquesChocolat().get(2));
 		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.HQ,this.getMarquesChocolat().get(3));
 		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
@@ -98,13 +88,13 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		
 		
 		this.stockReferenceChocolat=new Stock();
-		this.stockReferenceChocolat.ajouter(c0, 20000000);
 		this.stockReferenceChocolat.ajouter(c1, 20000000);
+		this.stockReferenceChocolat.ajouter(c0, 20000000);
 		this.stockReferenceChocolat.ajouter(c2, 2500000);
 		this.stockReferenceChocolat.ajouter(c3, 5000000);
 		this.stockReferenceChocolat.ajouter(c4, 5000000);
 		
-		//this.peremption=new DictionnairePeremptionTransfo2();
+		
 		
 		
 
@@ -207,36 +197,34 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	}
 	
 	public void next() {
-//		List<String> res = new ArrayList<String>();
-//		for (IActeur test : Filiere.LA_FILIERE.getActeursSolvables()) {
-//			res.add(test.getNom());
-//		}
-//		
-//		if (res.contains("BioFour")) {
-//			
-//		}
-//		else {
-//			this.stockReferenceFeve.enlever(Feve.FEVE_HAUTE, this.stockReferenceFeve.getQuantite(Feve.FEVE_HAUTE)*0.5);
-//		}
-//		if (res.contains("EQ3") && res.contains("EQ5")) {
-//			
-//		}
-//		else {
-//			if(this.comptFaillite<1) {
-//				this.comptFaillite = 1;
-//				List<Feve> fevesCibles = new ArrayList<Feve>();
-//				fevesCibles.add(Feve.FEVE_HAUTE_BIO_EQUITABLE);
-//				fevesCibles.add(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
-//				for(Feve f : fevesCibles) {
-//					System.out.println(this.stockReferenceFeve.getQuantite(f));
-//					this.stockReferenceFeve.ajouter(f, this.stockReferenceFeve.getQuantite(f)*0.2);
-//					System.out.println(this.stockReferenceFeve.getQuantite(f));
-//				}
-//			}
-//		}
+		List<String> res = new ArrayList<String>();
+		for (IActeur test : Filiere.LA_FILIERE.getActeursSolvables()) {
+			res.add(test.getNom());
+		}
+		
+		if (res.contains("BioFour")) {
 			
 		}
-	
+		else {
+			this.stockReferenceFeve.enlever(Feve.FEVE_HAUTE, this.stockReferenceFeve.getQuantite(Feve.FEVE_HAUTE)*0.5);
+		}
+		if (res.contains("EQ3") && res.contains("EQ5")) {
+			
+		}
+		else {
+			if(this.comptFaillite<1) {
+				this.comptFaillite = 1;
+				List<Feve> fevesCibles = new ArrayList<Feve>();
+				fevesCibles.add(Feve.FEVE_HAUTE_BIO_EQUITABLE);
+				fevesCibles.add(Feve.FEVE_MOYENNE_BIO_EQUITABLE);
+				for(Feve f : fevesCibles) {
+					System.out.println(this.stockReferenceFeve.getQuantite(f));
+					this.stockReferenceFeve.ajouter(f, this.stockReferenceFeve.getQuantite(f)*0.2);
+					System.out.println(this.stockReferenceFeve.getQuantite(f));
+				}
+			}
+		}
+	}
 	
 	
 	public List<String> getNomsFilieresProposees() {
@@ -272,7 +260,6 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	public abstract Journal getJournalStock();
 	public abstract Journal getJournalTransfo();
 	public abstract Journal getJournalAchat();
-	public abstract Journal getJournalPeremption();
 	
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
@@ -281,7 +268,6 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		j.add(this.getJournalStock());
 		j.add(this.getJournalTransfo());
 		j.add(this.getJournalAchat());
-		//j.add(this.getJournalPeremption());
 		return j;
 	}
 	
@@ -323,14 +309,14 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 
 
-//	@Override
-//	public LinkedList<String> getMarquesChocolat() {
+	@Override
+	public LinkedList<String> getMarquesChocolat() {
 //		LinkedList<String> res = new LinkedList<String>();
 //		res.add("O'ptella");
-//		res.add("O'ptibon");
+////		res.add("O'ptibon");
 //		res.add("O'max");
-//		return this.getMarquesChocolat();
-//	}
+		return this.getMarquesChocolat();
+	}
 
 
 	@Override

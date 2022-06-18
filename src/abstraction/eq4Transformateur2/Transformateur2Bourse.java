@@ -83,13 +83,13 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 		// Nous souhaitons faire une demande en bourse lorsque le stock actuel est plus faible que le stock
 					// de référence que nous nous sommes fixé
 		double besoin=Math.max(0.001,this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
-		System.out.println(this.getStockReferenceFeve().getQuantite(f)-this.getStockfeve().getQuantite(f));
+		
 		if(besoin>0) {
 			if(Filiere.LA_FILIERE.getBanque().verifierCapacitePaiement(this, this.cryptogramme, cours*besoin)) { 
 			// Vérification de la capacité de paiement pour ne pas être blacklisté
 				
 				if(f.getGamme()== Gamme.BASSE) {
-				if(cours<this.prixMinB.getValeur()) {
+					if(cours<this.prixMinB.getValeur()) {
 							return besoin;
 					}
 				}
@@ -126,7 +126,6 @@ public abstract class Transformateur2Bourse extends Transformateur2Transfo imple
 // Marie et Jad
 		public void notificationAchat(Feve f, double quantiteEnKg, double coursEnEuroParKg) {
 		this.getStockfeve().ajouter(f,quantiteEnKg); // Actualisation du stock en cas d'achat
-		this.getAchat_feve().ajouter(f,quantiteEnKg);
 		Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), coursEnEuroParKg*quantiteEnKg);
 		this.getJournalAchat().ajouter("Achat de "+quantiteEnKg+" kg de fèves "+f+" pour "+coursEnEuroParKg +" €/kg");
 	}
