@@ -30,7 +30,7 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 	private HashMap<Double, Double> Benefices;
 	private LinkedList<Double> Soldes;
 	private HashMap<Double, Boolean> AugmentationSalaires;
-
+	protected Journal journalplantation ;
 
 	private Variable prixstockage ;
 
@@ -41,6 +41,7 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 		super();
 		this.prixstockage= new Variable("Prix Stockage", "Prix en euros par kilo par step", this,  0.0, 1000000000, 0.01) ;
 		this.journal = new Journal(this.getNom()+" activites", this);
+		this.journalplantation=new Journal("Plantation",this);
 		this.StockFeveBasse= new Variable("StockFeveBasse", "Stock de Fèves Basse", this, 0.0, 1000000000, this.getStock(Feve.FEVE_BASSE));
 		this.StockFeveMoyenne= new Variable("StockFeveMoyenne", "Stock de Fèves Moyenne", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE));
 		this.StockFeveMoyenne_BE= new Variable("StockFeveMoyenne_BE", "Stock de Fèves Moyenne BE", this, 0.0, 1000000000, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
@@ -138,8 +139,13 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 		super.next();
 		
 		this.MAJBenefices();
-	
 		
+		for(Feve f : Feve.values()) {
+			this.journalplantation.ajouter(f.toString()+" : "+this.difference(f)+", Arbre : " + this.proportionArbre(f)+ ", Vente : " + this.proportionVente(f));
+			this.journalplantation.ajouter(f.toString()+" : "+this.getNbArbreTotal(f));
+		
+		}
+		this.journalplantation.ajouter("=========================================================================");
 		// Cout de production, Jules DORE
 		this.setCoutParKg();
 		double coutProduction = 0.0;
@@ -164,7 +170,7 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 		journal.ajouter("Stock Feve Haute BE : "+this.getStock(Feve.FEVE_HAUTE_BIO_EQUITABLE)+", Production Feve Haute BE : "+this.production(Feve.FEVE_HAUTE_BIO_EQUITABLE)+", Nombre d'arbre Haute BE : "+this.getNbArbreTotal(Feve.FEVE_HAUTE_BIO_EQUITABLE)+"");
 		journal.ajouter("Stock Feve Moyenne BE : "+this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+", Production Feve Moyenne BE : "+this.production(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+", Nombre d'arbre Moyenne BE : "+this.getNbArbreTotal(Feve.FEVE_MOYENNE_BIO_EQUITABLE)+"");
 		journal.ajouter("Stock Choco Haute Qualité : "+this.getStockChoco(Chocolat.HQ_BE)+",Transformation Chocolat Haute Qualité : "+this.production(Feve.FEVE_HAUTE)*0.05);
-
+		journal.ajouter("=====================================================");
 		this.GetStockHaute().setValeur(this, this.getStock(Feve.FEVE_HAUTE));
 		this.GetStockMoyenne().setValeur(this, this.getStock(Feve.FEVE_MOYENNE));
 		this.GetStockMoyenne_BE().setValeur(this, this.getStock(Feve.FEVE_MOYENNE_BIO_EQUITABLE));
