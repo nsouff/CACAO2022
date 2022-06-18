@@ -39,11 +39,20 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	protected Variable prixMinMb;
 	protected Variable prixMinH;
 	protected Variable prixMinHb;
+
 	protected Stock<Feve> stockReferenceFeve; //Le stock referent de feve, celui vers lequel on essaye de retourner à chaque etape
 	protected Stock<ChocolatDeMarque> stockReferenceChocolat;//Idem pour choco
+
+	
+
+	protected HashMap<DateProdTransfo2<Feve>, Double> dicoPeri;
+	protected double marge;
+
+
 	protected double margeAO;
 	protected double margeCC;
 	
+
 	protected SuperviseurVentesAO superviseur;
 	protected int cryptogramme;
 	protected double NewCap;//à réinitialiser=cpacité de production au début de chaque tour
@@ -95,7 +104,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.stockReferenceChocolat.ajouter(c3, 5000000);
 		this.stockReferenceChocolat.ajouter(c4, 5000000);
 		
-		
+		//this.peremption=new DictionnairePeremptionTransfo2();
 		
 		
 
@@ -263,6 +272,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 	public abstract Journal getJournalStock();
 	public abstract Journal getJournalTransfo();
 	public abstract Journal getJournalAchat();
+	public abstract Journal getJournalPeremption();
 	
 	public List<Journal> getJournaux() {
 		List<Journal> j= new ArrayList<Journal>();
@@ -271,6 +281,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		j.add(this.getJournalStock());
 		j.add(this.getJournalTransfo());
 		j.add(this.getJournalAchat());
+		//j.add(this.getJournalPeremption());
 		return j;
 	}
 	
@@ -312,14 +323,14 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 
 
 
-	@Override
-	public LinkedList<String> getMarquesChocolat() {
+//	@Override
+//	public LinkedList<String> getMarquesChocolat() {
 //		LinkedList<String> res = new LinkedList<String>();
 //		res.add("O'ptella");
-////		res.add("O'ptibon");
+//		res.add("O'ptibon");
 //		res.add("O'max");
-		return this.getMarquesChocolat();
-	}
+//		return this.getMarquesChocolat();
+//	}
 
 
 	@Override
