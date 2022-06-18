@@ -75,7 +75,7 @@ public abstract class Transformateur2Acteur implements IActeur,IMarqueChocolat, 
 		this.prixMinHb = new Variable("prix seuil haute qualité bio", "<html>Prix Seuil Basse Qualité</html>",this, 0.0, 10000000, 5);
 		//this.capaciteStockageFixe=new Variable("stock theorique desire", "<html>Stock Theorique désiré en permanence</html>",this, 0.0, 1000000.0, 8000);
 		this.margeAO = 1.5;
-		this.margeCC=1.30;
+		this.margeCC=1.1;
 		this.comptFaillite=0;
 		//On crée notre stock referent, qui servira juste de guide pour savoir combien acheter/transformer à chaque tour.
 		this.stockReferenceFeve=new Stock();
