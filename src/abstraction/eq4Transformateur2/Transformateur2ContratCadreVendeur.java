@@ -49,7 +49,9 @@ public abstract class Transformateur2ContratCadreVendeur extends Transformateur2
 				if (acteur!=this && acteur instanceof IAcheteurContratCadre && ((IAcheteurContratCadre)acteur).achete(c)) {
 					journalVente.ajouter("Négociations avec "+acteur.getNom() +" pour "+c);
 					
+					
 					//On propose par CC 10% du stock qu'on a pour ce chocolat, si c'est supérieur à 1000kg (pour satisfaire le superviseur)
+
 					if ((this.getStockchocolatdemarque().getQuantite(c)*0.1)>1000){
 						ExemplaireContratCadre cc = supCCadre.demandeVendeur((IAcheteurContratCadre)acteur, (IVendeurContratCadre)this, (Object)c, new Echeancier(Filiere.LA_FILIERE.getEtape()+1, 10, (this.getStockchocolatdemarque().getQuantite(c)*0.1)/10), cryptogramme,false);
 					

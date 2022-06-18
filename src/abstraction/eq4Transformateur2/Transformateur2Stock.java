@@ -171,8 +171,8 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 				double diff=this.achat_feve.getQuantiteAuStep(f,date)-this.transfo_feve.getQuantUtiliseeDepuis(f,date);
 				
 				if(diff>0) {
-					this.stockfeve.enlever(f, diff);
-					journalStock.ajouter("Ce tour, "+diff+" kg de "+f+" ont périmé et ont été retiré des stocks.");
+					//this.stockfeve.enlever(f, diff);
+					journalStock.ajouter("Ce tour, "+diff+" kg de "+f+" devrait périmé et ont été retiré des stocks.");
 				}
 				}
 				}
@@ -183,8 +183,8 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 					double diff=this.transfo_choco.getQuantiteAuStep(c,date)-this.vente_choco.getQuantUtiliseeDepuis(c,date);
 					
 					if(diff>0) {
-						this.stockchocolatdemarque.enlever(c, diff);
-						journalStock.ajouter("Ce tour, "+diff+" kg de "+c+" ont périmé et ont été retiré des stocks.");
+						//this.stockchocolatdemarque.enlever(c, diff);
+						journalStock.ajouter("Ce tour, "+diff+" kg de "+c+" devrait périmé et ont été retiré des stocks.");
 					}
 					}
 				}
