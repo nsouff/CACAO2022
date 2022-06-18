@@ -330,7 +330,7 @@ public abstract class Producteur2VendeurContratCadre extends Producteur2Acteur i
 	public void next() {
 		super.next();
 		
-		// Ajout des contrat expire mais à prendre en compte, ie expire il y a moins de 50 step
+		// Ajout des contrats expires mais à prendre en compte, ie expire il y a moins de 20 steps
 		List<ExemplaireContratCadre> contratsBio=new LinkedList<ExemplaireContratCadre>();
 		for (ExemplaireContratCadre contrat : this.mesContratEnTantQueVendeurBio) {
 			if (contrat.getQuantiteRestantALivrer()==0.0 && contrat.getMontantRestantARegler()==0.0) {

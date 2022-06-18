@@ -131,6 +131,8 @@ public abstract class Producteur2Acteur extends Producteur2Stockage2 implements 
 		}
 		
 		return this.Benefices;
+		
+		
 
 	}
 

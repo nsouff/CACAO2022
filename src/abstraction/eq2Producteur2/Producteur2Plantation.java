@@ -79,7 +79,7 @@ public abstract class Producteur2Plantation  {
 		
 		ArrayList<Integer> qt = new ArrayList<Integer>();
 		
-		qt.add((int) (Math.ceil((200*NbTotalArbres)/5))); // HGB
+		qt.add((int) (Math.ceil((100*NbTotalArbres)/5))); // HGB
 		qt.add((int) (Math.ceil((800*NbTotalArbres)/5))); // HG
 		qt.add((int) (Math.ceil((400*NbTotalArbres)/5))); // MGB
 		qt.add((int) (Math.ceil((1600*NbTotalArbres)/5))); //MG 
@@ -90,9 +90,23 @@ public abstract class Producteur2Plantation  {
 	
 	
 	public void next() {
+		
 		this.renouvellement();
 		this.proportionBio();
 		this.renouvellement2();
+		Arbre[] arbres = {Arbre.ARBRE_HGB,Arbre.ARBRE_HG,Arbre.ARBRE_MGB,Arbre.ARBRE_MG,Arbre.ARBRE_BG};
+		for (Arbre a: arbres) {
+			
+			List<Parcelle> ListeParcelles = this.NbParcelles.get(a);
+			for (Parcelle p : ListeParcelles) {
+				p.next();
+			}
+			
+		}	
+		
+	
+		
+		
 	}
 	
 	
@@ -199,7 +213,7 @@ public abstract class Producteur2Plantation  {
 		 * 
 		 * Dans Producteur2VendeurContratCadre, proportionVente(Feve f) permet de donner la 
 		 * proportion que représente les ventes de fèves f par rapport aux ventes totales de contrats
-		 * cadres pour les 50 derniers steps. 
+		 * cadres pour les 20 derniers steps. 
 		 * A partir de ces données, on décide de replanter tel ou tel type de fève. 
 		 *
 		 */	
@@ -328,6 +342,8 @@ public abstract class Producteur2Plantation  {
 					return (int) (this.ImpactMecontentement*p.getImpactRendementParasite()*p.getRendementProgressif());
 				} 		
 			}
+		
+	
 		
 		}
 		
