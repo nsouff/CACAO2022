@@ -52,29 +52,40 @@ public class VenteAppel extends VenteContrat implements IVendeurAO {
 		super.next();
 		SuperviseurVentesAO superviseur = (SuperviseurVentesAO)(Filiere.LA_FILIERE.getActeur("Sup.AO"));
 		for (Chocolat c: this.stockChocolat.getProduitsEnStock()) {
-			/* Si on a un stock suffisant, on essaie de liquider une partie */
-			if (this.stockChocolat.getstock(c)>this.SeuilMinChocolat) {
-				PropositionAchatAO retenueenTG = 
-					superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)*0.7, true);
-					if (retenueenTG!=null) {
-						this.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
-						this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c.name() +"  a "
-						+retenueenTG.getAcheteur().getNom()+" en TG" + "a un prix de " + retenueenTG.getPrixKg());
-					} else {
-						// on essaye sans mettre en TG
-						PropositionAchatAO retenuepasenTG = 
-								superviseur.vendreParAO(this, this.cryptogramme, new ChocolatDeMarque(c,"BIO'riginal"), this.stockChocolat.getstock(c)*0.7, false);
-						if (retenuepasenTG!=null) {
-							this.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
-							this.ventes.ajouter("vente par AO de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c.name() +" a "
-							+retenuepasenTG.getAcheteur().getNom() + "a un prix de " + retenueenTG.getPrixKg());
-						} else {
-							this.ventes.ajouter("pas d'offre retenue");
-						}
+			Gamme g = c.getGamme();
+			boolean be = c.isBioEquitable();
+			ChocolatDeMarque cdm = null;
+			for (Feve f : this.stockFeves.getProduitsEnStock()) {
+				if (f.getGamme() == g && f.isBioEquitable() == be) {
+					if (be) { 
+						cdm = new ChocolatDeMarque(c,"BIO'riginal");
+					}
+					else { 
+						cdm = new ChocolatDeMarque(c,"CHOCO'riginal");
+					}
+					/* Si on a un stock suffisant, on essaie de liquider une partie */
+					if (this.stockChocolat.getstock(c)>this.besoinFeves.get(f)) {
+							PropositionAchatAO retenueenTG = superviseur.vendreParAO(this, this.cryptogramme, cdm, this.stockChocolat.getstock(c), true);
+							if (retenueenTG!=null) {
+								this.utiliser(c, retenueenTG.getOffre().getQuantiteKG()); 
+								this.ventes.ajouter("vente par AO de "+retenueenTG.getOffre().getQuantiteKG()+"  kg de " + c.name() +"  a " +retenueenTG.getAcheteur().getNom()+" en TG" + "a un prix de " + retenueenTG.getPrixKg());
+							} 
+							else {
+								// on essaye sans mettre en TG
+								PropositionAchatAO retenuepasenTG = superviseur.vendreParAO(this, this.cryptogramme, cdm, this.stockChocolat.getstock(c), false);
+								if (retenuepasenTG!=null) {
+									this.utiliser(c, retenuepasenTG.getOffre().getQuantiteKG()); 
+									this.ventes.ajouter("vente par AO de "+retenuepasenTG.getOffre().getQuantiteKG()+"kg  de " + c.name() +" a " +retenuepasenTG.getAcheteur().getNom() + "a un prix de " + retenueenTG.getPrixKg());
+								} 
+								else {
+									this.ventes.ajouter("pas d'offre retenue");
+								}
+						
+							}
 					}
 				}
 			}
 		}
-			
+	}		
 
 }

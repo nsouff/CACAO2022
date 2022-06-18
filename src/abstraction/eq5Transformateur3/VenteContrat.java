@@ -18,9 +18,7 @@ import abstraction.eq8Romu.produits.Gamme;
 
 
 public class VenteContrat extends Transformation implements IVendeurContratCadre {
-	
-	protected int nb_prop;
-	
+		
 	//chgmt 
 	public void lanceruncontratVendeur(ChocolatDeMarque c) {
 		List<IAcheteurContratCadre> L =  ((SuperviseurVentesContratCadre)(Filiere.LA_FILIERE.getActeur("Sup.CCadre"))).getAcheteurs(c);
@@ -55,9 +53,11 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 	}
 
 	
-	//Yves, Karla
+	//Yves, Karla, Ju
 	public boolean vend(Object produit) {
-		if (! (produit instanceof ChocolatDeMarque)|| !(this.getMarquesChocolat().contains(produit))) { return false;} // ju
+		if (! (produit instanceof ChocolatDeMarque)|| !(this.getMarquesChocolat().contains(((ChocolatDeMarque)produit).getMarque()))) { 
+			return false;
+			} 
 		Chocolat c = ((ChocolatDeMarque) produit).getChocolat();
 		if (stockChocolat.getProduitsEnStock().contains(c)) {
 			this.ventes.ajouter("on vend bien : " + produit);
@@ -175,6 +175,7 @@ public class VenteContrat extends Transformation implements IVendeurContratCadre
 			for (Feve f : this.stockFeves.getProduitsEnStock()) {
 				if (f.getGamme() == g && f.isBioEquitable() == be) {
 					if (this.stockChocolat.getstock(c) > this.besoinFeves.get(f)) {
+					this.ventes.ajouter("on veut faire un cc pour " + c.toString());
 						if (be == true) {
 							ChocolatDeMarque choco_O = new ChocolatDeMarque(c,"BIO'riginal");
 							lanceruncontratVendeur(choco_O);	
