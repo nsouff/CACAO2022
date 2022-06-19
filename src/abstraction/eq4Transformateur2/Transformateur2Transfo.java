@@ -277,9 +277,9 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 							
 							this.getStockfeve().enlever(f,max_prod);//baisse le stock de feves	
 							this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), max_prod);//augmente le stock de chocolat de marque
-							this.getTransfo_feve().ajouter(f,max_prod);//ajoute le nombre de fèves utilisées (pour péremption)
-							this.getTransfo_choco().ajouter(this.fevechocoplus(f),max_prod);//ajoute le nombre de chocolat produits (pour péremption)
-							this.ajouterQuant(0, this.fevechocoplus(f), max_prod);
+//							this.getTransfo_feve().ajouter(f,max_prod);//ajoute le nombre de fèves utilisées (pour péremption)
+//							this.getTransfo_choco().ajouter(this.fevechocoplus(f),max_prod);//ajoute le nombre de chocolat produits (pour péremption)
+							//this.ajouterQuant(0, this.fevechocoplus(f), max_prod);
 							Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
 							journalTransfo.ajouter("Transformation longue de " +max_prod+" kg de "+f+" en "+qt+"kg de"+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 							//mise à jour des commandes en retard
@@ -300,8 +300,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 					this.getStockfeve().enlever(f,max_paybale);//baisse le stock de feves
 					
 					this.getStockchocolatdemarque().ajouter(this.fevechocoplus(f), max_paybale);//augmente le stock de chocolat
-					this.getTransfo_feve().ajouter(f,max_paybale);//ajoute le nombre de fèves utilisées (pour péremption)
-					this.getTransfo_choco().ajouter(this.fevechocoplus(f),max_paybale);//ajoute le nombre de chocolat produits (pour péremption)
+//					this.getTransfo_feve().ajouter(f,max_paybale);//ajoute le nombre de fèves utilisées (pour péremption)
+//					this.getTransfo_choco().ajouter(this.fevechocoplus(f),max_paybale);//ajoute le nombre de chocolat produits (pour péremption)
 					journalTransfo.ajouter("Transformation Courte de " +max_paybale+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 					Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_paybale*(prix_transfo+s*prix_ori*s));//paye
 					
@@ -331,8 +331,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 						NewCap-=max_prod;//mise à jour de la capacité de production
 						this.getStockfeve().enlever(f,max_prod);//baisse le stock de feves
 						this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_prod);//augmente le stock de chocolat
-						this.getTransfo_feve().ajouter(f,max_prod);//ajoute le nombre de fèves utilisées (pour péremption)
-						this.getTransfo_choco().ajouter(this.fevechoco(f),max_prod);//ajoute le nombre de chocolat produits (pour péremption)
+//						this.getTransfo_feve().ajouter(f,max_prod);//ajoute le nombre de fèves utilisées (pour péremption)
+//						this.getTransfo_choco().ajouter(this.fevechoco(f),max_prod);//ajoute le nombre de chocolat produits (pour péremption)
 						journalTransfo.ajouter("Transformation Courte de " +max_prod+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 						Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_prod*(prix_transfo+s*prix_ori*s));//paye
 						
@@ -352,8 +352,8 @@ public abstract class Transformateur2Transfo<I> extends Transformateur2Stock {
 					NewCap-=max_paybale;//mise à jour de la capacité de production
 					this.getStockfeve().enlever(f,max_paybale);//baisse le stock de feves
 					this.getStockchocolatdemarque().ajouter(this.fevechoco(f), max_paybale);//augmente le stock de chocolat
-					this.getTransfo_feve().ajouter(f,max_paybale);//ajoute le nombre de fèves utilisées (pour péremption)
-					this.getTransfo_choco().ajouter(this.fevechoco(f),max_paybale);//ajoute le nombre de chocolat produits (pour péremption)
+//					this.getTransfo_feve().ajouter(f,max_paybale);//ajoute le nombre de fèves utilisées (pour péremption)
+//					this.getTransfo_choco().ajouter(this.fevechoco(f),max_paybale);//ajoute le nombre de chocolat produits (pour péremption)
 					journalTransfo.ajouter("Transformation Courte de " +max_paybale+" kg de "+f+" en "+this.fevechoco(f).toString()+ " pour "+max_prod*(prix_transfo+prix_ori*s)+"€");
 					Filiere.LA_FILIERE.getBanque().virer(this, this.cryptogramme, Filiere.LA_FILIERE.getBanque(), max_paybale*(prix_transfo+s*prix_ori*s));//paye
 				
