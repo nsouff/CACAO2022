@@ -1,10 +1,4 @@
-//Ce fut la 1ere idée pour prendre en compte les péreption. MAIS abandonnée au profit de la classe Utilitaire
-
-
-
 package abstraction.eq4Transformateur2;
-
-import java.util.Objects;
 
 public class DateProdTransfo2<Produit> { //classe contruite pour avoir une Hashmap avec la date,le produit et la quantité
 	protected double date;
@@ -20,23 +14,6 @@ public class DateProdTransfo2<Produit> { //classe contruite pour avoir une Hashm
 		this.p=p;
 	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(date, p);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DateProdTransfo2 other = (DateProdTransfo2) obj;
-		return Double.doubleToLongBits(date) == Double.doubleToLongBits(other.date) && Objects.equals(p, other.p);
-	}
-
 	public Produit getProduit() {
 		return this.p;
 	}

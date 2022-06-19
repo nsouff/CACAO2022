@@ -2,10 +2,7 @@ package abstraction.eq4Transformateur2;
 
 import java.awt.Color;
 import java.util.HashMap;
-import java.util.List;
 
-import abstraction.eq8Romu.contratsCadres.Echeancier;
-import abstraction.eq8Romu.contratsCadres.ExemplaireContratCadre;
 import abstraction.eq8Romu.filiere.Filiere;
 import abstraction.eq8Romu.general.Journal;
 import abstraction.eq8Romu.general.Variable;
@@ -20,11 +17,6 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 	private Stock<Feve> stockfeve;
 	private Stock<Chocolat>  stockchocolat;
 	private Stock<ChocolatDeMarque> stockchocolatdemarque;
-	protected Utilitaire<Feve> transfo_feve;
-	protected Utilitaire<Feve> achat_feve;
-	protected Utilitaire<ChocolatDeMarque> transfo_choco;
-	protected Utilitaire<ChocolatDeMarque> vente_choco;
-	
 	private Journal journalStock;
 	
 	private double prixstockage;
@@ -42,25 +34,6 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		this.stockfeve.ajouter(Feve.FEVE_HAUTE, 5000000);
 		this.stockfeve.ajouter(Feve.FEVE_HAUTE_BIO_EQUITABLE, 2500000);
 		
-		//On initialise nos utilitaires
-		this.transfo_feve=new Utilitaire();
-		this.transfo_choco= new Utilitaire();
-		this.achat_feve=new Utilitaire<>();
-		this.vente_choco=new Utilitaire<>();
-		
-		//On ajoute nos fèves 
-		this.transfo_feve.intro(Feve.FEVE_BASSE,20000000);//mettre les mêmes valeurs que dans les stocks initiaux
-		this.transfo_feve.intro(Feve.FEVE_MOYENNE,20000000);
-		this.transfo_feve.intro(Feve.FEVE_MOYENNE_BIO_EQUITABLE, 2500000);
-		this.transfo_feve.intro(Feve.FEVE_HAUTE, 5000000);
-		this.transfo_feve.intro(Feve.FEVE_HAUTE_BIO_EQUITABLE, 2500000);
-		
-		this.achat_feve.intro(Feve.FEVE_BASSE,0);
-		this.achat_feve.intro(Feve.FEVE_MOYENNE,0);
-		this.achat_feve.intro(Feve.FEVE_MOYENNE_BIO_EQUITABLE,0);
-		this.achat_feve.intro(Feve.FEVE_HAUTE,0);
-		this.achat_feve.intro(Feve.FEVE_HAUTE_BIO_EQUITABLE,0);
-		
 		//On se fixe une marque pour un type de chocolat
 		ChocolatDeMarque c1=new ChocolatDeMarque(Chocolat.MQ,this.getMarquesChocolat().get(1));
 		ChocolatDeMarque c0=new ChocolatDeMarque(Chocolat.BQ,this.getMarquesChocolat().get(0));
@@ -68,45 +41,18 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 		ChocolatDeMarque c3=new ChocolatDeMarque(Chocolat.HQ,this.getMarquesChocolat().get(3));
 		ChocolatDeMarque c4=new ChocolatDeMarque(Chocolat.HQ_BE,this.getMarquesChocolat().get(4));
 		
-		//On ajoutes nos chocolats
-		this.transfo_choco.intro(c0,20000000);//même valeurs que dans les stocks
-		this.transfo_choco.intro(c1,20000000);
-		this.transfo_choco.intro(c2,2500000);
-		this.transfo_choco.intro(c3,5000000);
-		this.transfo_choco.intro(c4,5000000);
-		
-		this.vente_choco.intro(c0,0);
-		this.vente_choco.intro(c2,0);
-		this.vente_choco.intro(c3,0);
-		this.vente_choco.intro(c4,0);
-		this.vente_choco.intro(c1,0);
-		
-		//Stock de chocolats
 		this.stockchocolatdemarque=new Stock();
 		this.stockchocolatdemarque.ajouter(c1, 20000000);
 		this.stockchocolatdemarque.ajouter(c0, 20000000);
 		this.stockchocolatdemarque.ajouter(c2, 2500000);
 		this.stockchocolatdemarque.ajouter(c3, 5000000);
 		this.stockchocolatdemarque.ajouter(c4, 5000000);
-	
+		
+		this.stockchocolat=new Stock();
+		this.stockchocolat.ajouter(Chocolat.MQ,30000);
+		this.stockchocolat.ajouter(Chocolat.BQ, 20000);
 	}
 	
-	public Utilitaire<Feve> getTransfo_feve() {
-		return transfo_feve;
-	}
-
-	public Utilitaire<Feve> getAchat_feve() {
-		return achat_feve;
-	}
-
-	public Utilitaire<ChocolatDeMarque> getTransfo_choco() {
-		return transfo_choco;
-	}
-
-	public Utilitaire<ChocolatDeMarque> getVente_choco() {
-		return vente_choco;
-	}
-
 	public void next() {
 		super.next();
 		//ON implemente le journal avec des infos sur nos stocks à chaque tour
@@ -120,6 +66,7 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 						this.journalStock.ajouter("stock de chocolat de marque "+c+" : "+this.stockchocolatdemarque.getStock().get(c));
 					}
 				}
+
 				//Mise à jour des listes des chocolats vendus
 //				List<ExemplaireContratCadre> ListCC= this.getMesContratEnTantQueVendeur();
 //				
@@ -189,14 +136,13 @@ public abstract class Transformateur2Stock extends Transformateur2ContratCadreVe
 //					}
 //				}
 				
-				
+			
 				
 				
 		//On paye le cout de stockage
 				Filiere.LA_FILIERE.getBanque().virer(this, super.cryptogramme, Filiere.LA_FILIERE.getBanque(), this.coutStockage());
 				journalStock.ajouter(Color.red,Color.white,"Le stock nous coûte "+this.coutStockage());
 				journalStock.ajouter(Color.white,Color.red,"----------------------------------------------------------------------------------");
-				//journalStock.ajouter(getDescription());
 	}
 	
 	public void initialiser() {

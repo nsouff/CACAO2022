@@ -1,2 +1,0 @@
-Bug au niveau de la péremption : on retire N feve MQBE du stock alors qu'il yen avait moins dans nos stock=> stock négatif.
-On a alors commenté la partie du code qui actualise les stock concernant la péremption.

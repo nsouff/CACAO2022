@@ -1,7 +1,3 @@
-//Ce fut la 1ere idée pour prendre en compte les péreption. MAIS abandonnée au profit de la classe Utilitaire
-
-
-
 package abstraction.eq4Transformateur2;
 
 import java.util.HashMap;
@@ -14,16 +10,9 @@ import abstraction.eq8Romu.produits.ChocolatDeMarque;
 import abstraction.eq8Romu.produits.Feve;
 
 ////Marie
-public abstract class DictionnairePeremptionTransfo2<Produit> extends Transformateur2ContratCadreVendeur{
+public class DictionnairePeremptionTransfo2<Produit> extends Transformateur2ContratCadreVendeur{
 	
-	protected HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
-	protected Journal journalperemption;
-	
-	public DictionnairePeremptionTransfo2(){
-		this.peremption= new HashMap<DateProdTransfo2<Produit>,Double>();
-		this.journalperemption=new Journal("Peremption",this);
-	}
-	
+	private HashMap<DateProdTransfo2<Produit> ,Double> peremption ;
 	
 	public Set<DateProdTransfo2<Produit>> getDates() {
 		return this.peremption.keySet(); //renvoie (date,produit)
@@ -37,23 +26,16 @@ public abstract class DictionnairePeremptionTransfo2<Produit> extends Transforma
 	public void next() {
 		super.next();
 		this.modifDateProd();
-		journalperemption.ajouter("on a :"+ this.quantTotaleProduit(Feve.FEVE_BASSE));
 		
-	}
-	public Journal getJournalPeremption() {
-		return this.journalperemption;
 	}
 	
 	public void initialiser() {
 		super.initialiser();
-//		this.peremption=new HashMap<DateProdTransfo2<Produit> ,Double>();
-		
 	}
 
 
 //// ajoute un nouveau produit à la Hashmap (lors d'un achat ou d'une trasnformation)
-	public void ajouterQuant(double date, Object op, Double quant) {
-		Produit p = (Produit)op;
+	public void ajouterQuant(double date, Produit p, Double quant) {
 		DateProdTransfo2<Produit>d=new DateProdTransfo2<Produit>(date,p);
 		if(quant>0) {
 			if(this.getDates().contains(d)) {
@@ -84,25 +66,7 @@ public abstract class DictionnairePeremptionTransfo2<Produit> extends Transforma
 
 ////Marie	
 ////modifications de la quantité lors d'une transformation (pour les fèves) ou d'une vente (chocolats)
-//public void utiliserQuantProd(Produit p, double quant) {
-//	double quantiteRestante=quant;
-//	while(quantiteRestante!=0){
-//		for(DateProdTransfo2<Produit>d:this.getDates()) { //on parcourt la Hashmap jusqu'à ce qu'on ait le produit (dans ordre décroissant)
-//			if(d.getProduit()==p) {
-//				double quantprod=this.peremption.get(d);
-//				if(quantprod>quantiteRestante) { //quand la quant est suffisante, on retire seulement la quantité voulue
-//					this.peremption.put(d,quantprod-quantiteRestante); 
-//				}else {
-//					this.peremption.remove(d); 
-//					quantiteRestante=quantiteRestante-quantprod;
-//				}
-//			}
-//		}
-//	}
-//}
-//
-public void utiliserQuantProd(Object op, double quant) {
-	Produit p = (Produit)op;
+public void utiliserQuantProd(Produit p, double quant) {
 	double quantiteRestante=quant;
 	while(quantiteRestante!=0){
 		for(DateProdTransfo2<Produit>d:this.getDates()) { //on parcourt la Hashmap jusqu'à ce qu'on ait le produit (dans ordre décroissant)
@@ -117,11 +81,11 @@ public void utiliserQuantProd(Object op, double quant) {
 			}
 		}
 	}
-	}
+}
+
 	
 ////Marie
-	public double quantTotaleProduit(Object op) { //calcule la quantité totale d'un produit
-		Produit p = (Produit)op;
+	public double quantTotaleProduit(Produit p) { //calcule la quantité totale d'un produit
 		double qtt=0;
 		for(DateProdTransfo2<Produit>d:this.getDates()) {
 			if(d.getProduit()==p) {
